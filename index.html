@@ -1685,6 +1685,21 @@
       outline-offset: 2px;
     }
 
+
+
+    /* ===== chart rendering stability fix ===== */
+    .viz svg {
+      max-width: 100%;
+      overflow: visible;
+    }
+
+    .chart-line,
+    .chart-line-secondary,
+    .chart-area,
+    .chart-bar {
+      /* Градиенты задаются inline в SVG с уникальными id для каждого графика. */
+    }
+
   </style>
 </head>
 
@@ -2673,22 +2688,38 @@ plan_totals:
       return new Intl.NumberFormat("ru-RU").format(value);
     }
 
-    function chartDefs() {
+    function safeSvgId(value) {
+      return String(value || "chart")
+        .replace(/[^a-zA-Z0-9_-]/g, "-")
+        .replace(/^-+|-+$/g, "") || "chart";
+    }
+
+    function chartGradientIds(containerId) {
+      const prefix = safeSvgId(containerId);
+      return {
+        line: `${prefix}-line-gradient`,
+        lineSecondary: `${prefix}-line-gradient-secondary`,
+        area: `${prefix}-area-gradient`,
+        bar: `${prefix}-bar-gradient`
+      };
+    }
+
+    function chartDefs(ids) {
       return `
         <defs>
-          <linearGradient id="chartLineGradient" x1="0" x2="1" y1="0" y2="0">
+          <linearGradient id="${ids.line}" x1="0" x2="1" y1="0" y2="0">
             <stop offset="0" stop-color="#2557ff"></stop>
             <stop offset="1" stop-color="#7c3aed"></stop>
           </linearGradient>
-          <linearGradient id="chartLineGradientSecondary" x1="0" x2="1" y1="0" y2="0">
+          <linearGradient id="${ids.lineSecondary}" x1="0" x2="1" y1="0" y2="0">
             <stop offset="0" stop-color="#8b5cf6"></stop>
             <stop offset="1" stop-color="#f55e0b"></stop>
           </linearGradient>
-          <linearGradient id="chartAreaGradient" x1="0" x2="0" y1="0" y2="1">
+          <linearGradient id="${ids.area}" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0" stop-color="#2557ff" stop-opacity=".22"></stop>
             <stop offset="1" stop-color="#2557ff" stop-opacity="0"></stop>
           </linearGradient>
-          <linearGradient id="chartBarGradient" x1="0" x2="0" y1="0" y2="1">
+          <linearGradient id="${ids.bar}" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0" stop-color="#2557ff"></stop>
             <stop offset="1" stop-color="#7c3aed"></stop>
           </linearGradient>
@@ -2731,7 +2762,8 @@ plan_totals:
       const startX = margin.left + Math.max(0, (innerW - totalW) / 2);
       const grid = [0, .25, .5, .75, 1];
 
-      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeSvg(options.label || "")}">${chartDefs()}`;
+      const ids = chartGradientIds(containerId);
+      let svg = `<svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${escapeSvg(options.label || "")}">${chartDefs(ids)}`;
 
       grid.forEach(t => {
         const y = margin.top + innerH - innerH * t;
@@ -2747,7 +2779,8 @@ plan_totals:
         const h = Math.max(4, innerH * (value / max));
         const y = margin.top + innerH - h;
         const cls = d.soft ? "chart-bar-soft" : "chart-bar";
-        svg += `<rect class="${cls}" x="${x}" y="${y}" width="${barW}" height="${h}"></rect>`;
+        const fill = d.soft ? "#e8edf6" : `url(#${ids.bar})`;
+        svg += `<rect class="${cls}" x="${x}" y="${y}" width="${barW}" height="${h}" style="fill: ${fill};" rx="10"></rect>`;
         svg += `<text class="chart-number" x="${x + barW / 2}" y="${Math.max(16, y - 9)}" text-anchor="middle">${formatChartValue(value, options.valueFormatter)}</text>`;
         svg += `<text class="chart-tick" x="${x + barW / 2}" y="${height - 20}" text-anchor="middle">${escapeSvg(d.label)}</text>`;
       });
@@ -2791,9 +2824,11 @@ plan_totals:
       const grid = [0, .25, .5, .75, 1];
       const lineClasses = ["chart-line", "chart-line-secondary"];
       const dotClasses = ["chart-dot", "chart-dot-secondary"];
-      const legendStrokes = ["url(#chartLineGradient)", "url(#chartLineGradientSecondary)"];
+      const ids = chartGradientIds(containerId);
+      const lineStrokes = [`url(#${ids.line})`, `url(#${ids.lineSecondary})`];
+      const legendStrokes = lineStrokes;
 
-      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeSvg(options.label || "")}">${chartDefs()}`;
+      let svg = `<svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${escapeSvg(options.label || "")}">${chartDefs(ids)}`;
 
       grid.forEach(t => {
         const y = margin.top + innerH - innerH * t;
@@ -2816,10 +2851,10 @@ plan_totals:
 
         if (sIndex === 0 && options.area !== false) {
           const area = `${path} L ${points[points.length - 1][0].toFixed(1)} ${margin.top + innerH} L ${points[0][0].toFixed(1)} ${margin.top + innerH} Z`;
-          svg += `<path class="chart-area" d="${area}"></path>`;
+          svg += `<path class="chart-area" d="${area}" style="fill: url(#${ids.area}); opacity: .82;"></path>`;
         }
 
-        svg += `<path class="${lineClasses[sIndex] || "chart-line-secondary"}" d="${path}"></path>`;
+        svg += `<path class="${lineClasses[sIndex] || "chart-line-secondary"}" d="${path}" style="stroke: ${lineStrokes[sIndex] || lineStrokes[1]};"></path>`;
 
         data.forEach((row, i) => {
           const x = xFor(i);
@@ -2946,9 +2981,6 @@ plan_totals:
       if (el) el.addEventListener(eventName, handler);
     };
 
-    renderAllCharts();
-    updatePlanTotals();
-
     const taskModalData = {
       task1: {
         title: "Оптимизация мета-тегов для разделов камня",
@@ -3042,11 +3074,12 @@ plan_totals:
 
     function initTabs() {
       $$(".tabs").forEach(tabGroup => {
-        const wrapper = tabGroup.parentElement;
-        if (!wrapper) return;
-
         const buttons = $$(".tab-btn", tabGroup);
-        const panels = Array.from(wrapper.children).filter(el => el.classList && el.classList.contains("tab-panel"));
+        const panels = buttons
+          .map(button => button.dataset.target ? document.getElementById(button.dataset.target) : null)
+          .filter(Boolean);
+
+        if (!buttons.length || !panels.length) return;
 
         tabGroup.setAttribute("role", "tablist");
 
@@ -3070,7 +3103,9 @@ plan_totals:
             panel.hidden = !active;
           });
 
-          requestAnimationFrame(renderAllCharts);
+          // Графики в скрытых табах иногда теряют SVG-заливку/градиенты при первом показе.
+          // Перерисовываем после того, как нужная панель стала видимой.
+          requestAnimationFrame(() => renderAllCharts());
         }
 
         buttons.forEach((button, index) => {
@@ -3130,6 +3165,12 @@ plan_totals:
       if ($("#projectHourlyRate")) $("#projectHourlyRate").textContent = PROJECT_HOURLY_RATE.toLocaleString("ru-RU") + " ₽";
       if ($("#planTotalCost")) $("#planTotalCost").textContent = total.toLocaleString("ru-RU") + " ₽";
     }
+
+    // Первичная инициализация после объявления PROJECT_HOURLY_RATE и updatePlanTotals.
+    // Раньше updatePlanTotals() вызывалась до объявления PROJECT_HOURLY_RATE,
+    // из-за чего весь скрипт падал, и переключатели/табы не успевали привязать события.
+    renderAllCharts();
+    updatePlanTotals();
 
     const priorityMeta = {
       high: { label: "Высокий приоритет", cls: "red" },
