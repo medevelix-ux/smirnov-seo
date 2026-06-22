@@ -621,6 +621,26 @@
       filter: drop-shadow(0 8px 12px rgba(37, 87, 255, .16));
     }
 
+    .chart-line-secondary {
+      fill: none;
+      stroke: #8b5cf6;
+      stroke-width: 3.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 8px 12px rgba(124, 58, 237, .12));
+    }
+
+    .chart-dot-secondary {
+      fill: #fff;
+      stroke: #8b5cf6;
+      stroke-width: 3;
+    }
+
+    .chart-legend-dot {
+      stroke-width: 4;
+      stroke-linecap: round;
+    }
+
     .chart-area {
       fill: url(#chartAreaGradient);
       opacity: .82;
@@ -1629,6 +1649,42 @@
     }
 
 
+
+    /* ===== functionality fix: independent switch states + hidden tab panels ===== */
+    body .switch {
+      background: #d7ddea !important;
+    }
+
+    body .switch::before {
+      left: 3px !important;
+    }
+
+    body .switch[aria-checked="true"] {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2)) !important;
+    }
+
+    body .switch[aria-checked="true"]::before {
+      left: 21px !important;
+    }
+
+    .toggle-dev {
+      cursor: pointer !important;
+    }
+
+    .toggle-dev:focus-within {
+      outline: 3px solid rgba(37, 87, 255, .18);
+      outline-offset: 2px;
+    }
+
+    .tab-panel[hidden] {
+      display: none !important;
+    }
+
+    .tab-btn:focus-visible {
+      outline: 3px solid rgba(37, 87, 255, .22);
+      outline-offset: 2px;
+    }
+
   </style>
 </head>
 
@@ -2005,11 +2061,24 @@ tabs:
         </div>
 
         <div class="tab-panel" id="traffic-devices">
+          <div class="chart-card">
+            <div class="chart-head">
+              <div>
+                <div class="chart-title">SEO-трафик по устройствам за 12 месяцев</div>
+                <div class="chart-sub">Сравнение Desktop vs Mobile, с отметкой начала SEO-работ</div>
+              </div>
+              <span class="badge blue">Начало SEO: февраль</span>
+            </div>
+            <div class="viz viz-wide" id="chartTrafficDevicesYear" aria-label="SEO-трафик Desktop и Mobile за 12 месяцев"></div>
+          </div>
+
+          <div style="height:16px"></div>
+
           <table>
             <thead><tr><th>Устройство</th><th class="num">Визиты</th><th class="num">Динамика</th><th class="num">Отказы</th><th>Вывод</th></tr></thead>
             <tbody>
-              <tr><td>Mobile</td><td class="num">2 920</td><td class="num"><span class="delta up">+5,5%</span></td><td class="num">28,1%</td><td>Высокая доля, стоит отдельно смотреть конверсию.</td></tr>
-              <tr><td>Desktop</td><td class="num">5 124</td><td class="num"><span class="delta up">+25,1%</span></td><td class="num">21,3%</td><td>Основной прирост качества визитов.</td></tr>
+              <tr><td>Mobile</td><td class="num">2 670</td><td class="num"><span class="delta up">+8,1%</span></td><td class="num">28,1%</td><td>Доля mobile высокая, важно отдельно проверять скорость, форму заявки и первый экран.</td></tr>
+              <tr><td>Desktop</td><td class="num">2 190</td><td class="num"><span class="delta up">+15,3%</span></td><td class="num">21,3%</td><td>Desktop растет быстрее и дает более качественные визиты, но уступает mobile по объему.</td></tr>
             </tbody>
           </table>
         </div>
@@ -2074,21 +2143,34 @@ avg_after_seo = average(monthly_visits after seo_start_date)</div>
           <div class="chart-card">
             <div class="chart-head">
               <div>
+                <div class="chart-title">Динамика SEO-конверсий за 12 месяцев</div>
+                <div class="chart-sub">Достижения выбранных целей из органического поиска</div>
+              </div>
+              <span class="badge blue">Начало SEO: февраль</span>
+            </div>
+            <div class="viz" id="chartConversionsYear" aria-label="Динамика SEO-конверсий за 12 месяцев"></div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-head">
+              <div>
                 <div class="chart-title">Конверсии по выбранным целям</div>
-                <div class="chart-sub">Выбранные цели из органического поиска</div>
+                <div class="chart-sub">Сумма за отчетный месяц: заявки, звонки, мессенджеры и каталог</div>
               </div>
             </div>
             <div class="viz" id="chartGoalBars" aria-label="Конверсии по выбранным целям"></div>
           </div>
+        </div>
 
-          <div class="summary-box">
-            <p><strong>Вывод:</strong> количество целевых действий выросло, но коэффициент конверсии немного снизился. Основной риск — страницы с высоким SEO-трафиком и низкой конверсией.</p>
-            <ul class="list-clean">
-              <li>Проверить страницы с трафиком и низким CR.</li>
-              <li>Проверить цель “Заявка на расчет”.</li>
-              <li>Отдельно оценить мобильную конверсию.</li>
-            </ul>
-          </div>
+        <div style="height:16px"></div>
+
+        <div class="summary-box">
+          <p><strong>Вывод:</strong> количество целевых действий выросло, но коэффициент конверсии немного снизился. Основной риск — страницы с высоким SEO-трафиком и низкой конверсией.</p>
+          <ul class="list-clean">
+            <li>Проверить страницы с трафиком и низким CR.</li>
+            <li>Проверить цель “Заявка на расчет”.</li>
+            <li>Отдельно оценить мобильную конверсию.</li>
+          </ul>
         </div>
 
         <div style="height:16px"></div>
@@ -2598,6 +2680,10 @@ plan_totals:
             <stop offset="0" stop-color="#2557ff"></stop>
             <stop offset="1" stop-color="#7c3aed"></stop>
           </linearGradient>
+          <linearGradient id="chartLineGradientSecondary" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#8b5cf6"></stop>
+            <stop offset="1" stop-color="#f55e0b"></stop>
+          </linearGradient>
           <linearGradient id="chartAreaGradient" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0" stop-color="#2557ff" stop-opacity=".22"></stop>
             <stop offset="1" stop-color="#2557ff" stop-opacity="0"></stop>
@@ -2610,106 +2696,192 @@ plan_totals:
       `;
     }
 
+    function escapeSvg(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
     function niceMax(value) {
+      if (!Number.isFinite(value) || value <= 0) return 10;
       if (value <= 10) return 10;
       const pow = Math.pow(10, Math.floor(Math.log10(value)));
       return Math.ceil(value / pow * 1.12) * pow;
     }
 
+    function formatChartValue(value, formatter) {
+      return formatter ? formatter(value) : formatNumber(Math.round(value));
+    }
+
     function renderBarChart(containerId, data, options = {}) {
       const el = document.getElementById(containerId);
-      if (!el) return;
+      if (!el || !Array.isArray(data) || !data.length) return;
 
-      const width = options.width || 640;
+      const width = options.width || 720;
       const height = options.height || 292;
-      const margin = { top: 26, right: 24, bottom: 48, left: 46 };
+      const margin = { top: 32, right: 26, bottom: 52, left: 54 };
       const innerW = width - margin.left - margin.right;
       const innerH = height - margin.top - margin.bottom;
-      const max = options.max || niceMax(Math.max(...data.map(d => d.value)));
-      const gap = options.gap || 22;
-      const barW = Math.max(34, (innerW - gap * (data.length - 1)) / data.length);
+      const max = options.max || niceMax(Math.max(...data.map(d => Number(d.value) || 0)));
+      const gap = options.gap || 24;
+      const barW = Math.max(38, Math.min(92, (innerW - gap * (data.length - 1)) / data.length));
+      const totalW = barW * data.length + gap * (data.length - 1);
+      const startX = margin.left + Math.max(0, (innerW - totalW) / 2);
       const grid = [0, .25, .5, .75, 1];
 
-      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.label || ""}">${chartDefs()}`;
+      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeSvg(options.label || "")}">${chartDefs()}`;
 
       grid.forEach(t => {
         const y = margin.top + innerH - innerH * t;
         svg += `<line class="chart-grid" x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>`;
-        if (t > 0) svg += `<text class="chart-caption" x="10" y="${y + 4}">${formatNumber(Math.round(max * t))}</text>`;
+        if (t > 0) svg += `<text class="chart-caption" x="12" y="${y + 4}">${formatChartValue(max * t, options.valueFormatter)}</text>`;
       });
 
       svg += `<line class="chart-axis" x1="${margin.left}" y1="${margin.top + innerH}" x2="${width - margin.right}" y2="${margin.top + innerH}"></line>`;
 
       data.forEach((d, i) => {
-        const x = margin.left + i * (barW + gap);
-        const h = Math.max(4, innerH * (d.value / max));
+        const value = Number(d.value) || 0;
+        const x = startX + i * (barW + gap);
+        const h = Math.max(4, innerH * (value / max));
         const y = margin.top + innerH - h;
         const cls = d.soft ? "chart-bar-soft" : "chart-bar";
         svg += `<rect class="${cls}" x="${x}" y="${y}" width="${barW}" height="${h}"></rect>`;
-        svg += `<text class="chart-number" x="${x + barW / 2}" y="${Math.max(16, y - 9)}" text-anchor="middle">${formatNumber(d.value)}</text>`;
-        svg += `<text class="chart-tick" x="${x + barW / 2}" y="${height - 18}" text-anchor="middle">${d.label}</text>`;
+        svg += `<text class="chart-number" x="${x + barW / 2}" y="${Math.max(16, y - 9)}" text-anchor="middle">${formatChartValue(value, options.valueFormatter)}</text>`;
+        svg += `<text class="chart-tick" x="${x + barW / 2}" y="${height - 20}" text-anchor="middle">${escapeSvg(d.label)}</text>`;
       });
 
       svg += `</svg>`;
       el.innerHTML = svg;
+    }
+
+    function getLineChartScale(data, series, options, innerH, margin) {
+      const values = series.flatMap(item => data.map(row => Number(row[item.key]) || 0));
+      const minRaw = Math.min(...values);
+      const maxRaw = Math.max(...values);
+      const pad = (maxRaw - minRaw) * 0.16 || Math.max(1, maxRaw * 0.08);
+      const min = options.min ?? Math.max(0, minRaw - pad);
+      const max = options.max ?? niceMax(maxRaw + pad);
+      const range = max - min || 1;
+      return {
+        min,
+        max,
+        yFor: value => margin.top + innerH - ((value - min) / range) * innerH
+      };
     }
 
     function renderLineChart(containerId, data, options = {}) {
-      const el = document.getElementById(containerId);
-      if (!el) return;
+      return renderMultiLineChart(containerId, data.map(row => ({ ...row, main: row.value })), [
+        { key: "main", label: options.seriesLabel || options.label || "Значение", primary: true }
+      ], options);
+    }
 
-      const width = options.width || 820;
-      const height = options.height || 292;
-      const margin = { top: 28, right: 26, bottom: 48, left: 54 };
+    function renderMultiLineChart(containerId, data, series, options = {}) {
+      const el = document.getElementById(containerId);
+      if (!el || !Array.isArray(data) || !data.length || !Array.isArray(series) || !series.length) return;
+
+      const width = options.width || 900;
+      const height = options.height || 318;
+      const margin = { top: 34, right: 34, bottom: 56, left: 62 };
       const innerW = width - margin.left - margin.right;
       const innerH = height - margin.top - margin.bottom;
-      const values = data.map(d => d.value);
-      const minRaw = Math.min(...values);
-      const maxRaw = Math.max(...values);
-      const pad = (maxRaw - minRaw) * 0.18 || 1;
-      const min = options.min ?? Math.max(0, minRaw - pad);
-      const max = options.max ?? (maxRaw + pad);
-      const yFor = v => margin.top + innerH - ((v - min) / (max - min)) * innerH;
+      const scale = getLineChartScale(data, series, options, innerH, margin);
       const xFor = i => margin.left + (data.length === 1 ? innerW / 2 : innerW * i / (data.length - 1));
-
-      const points = data.map((d, i) => [xFor(i), yFor(d.value)]);
-      const path = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
-      const area = `${path} L ${points[points.length - 1][0].toFixed(1)} ${margin.top + innerH} L ${points[0][0].toFixed(1)} ${margin.top + innerH} Z`;
       const grid = [0, .25, .5, .75, 1];
+      const lineClasses = ["chart-line", "chart-line-secondary"];
+      const dotClasses = ["chart-dot", "chart-dot-secondary"];
+      const legendStrokes = ["url(#chartLineGradient)", "url(#chartLineGradientSecondary)"];
 
-      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.label || ""}">${chartDefs()}`;
+      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeSvg(options.label || "")}">${chartDefs()}`;
 
       grid.forEach(t => {
         const y = margin.top + innerH - innerH * t;
-        const val = min + (max - min) * t;
+        const val = scale.min + (scale.max - scale.min) * t;
         svg += `<line class="chart-grid" x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>`;
-        svg += `<text class="chart-caption" x="10" y="${y + 4}">${options.valueFormatter ? options.valueFormatter(val) : formatNumber(Math.round(val))}</text>`;
+        svg += `<text class="chart-caption" x="12" y="${y + 4}">${formatChartValue(val, options.valueFormatter)}</text>`;
       });
 
-      svg += `<path class="chart-area" d="${area}"></path>`;
-      svg += `<path class="chart-line" d="${path}"></path>`;
+      svg += `<line class="chart-axis" x1="${margin.left}" y1="${margin.top + innerH}" x2="${width - margin.right}" y2="${margin.top + innerH}"></line>`;
 
       if (options.markerIndex !== undefined && data[options.markerIndex]) {
         const x = xFor(options.markerIndex);
-        svg += `<line class="chart-marker" x1="${x}" y1="${margin.top - 4}" x2="${x}" y2="${margin.top + innerH + 8}"></line>`;
-        svg += `<text class="chart-marker-label" x="${x + 9}" y="${margin.top + 14}">${options.markerLabel || "Маркер"}</text>`;
+        svg += `<line class="chart-marker" x1="${x}" y1="${margin.top - 6}" x2="${x}" y2="${margin.top + innerH + 10}"></line>`;
+        svg += `<text class="chart-marker-label" x="${x + 9}" y="${margin.top + 14}">${escapeSvg(options.markerLabel || "Маркер")}</text>`;
       }
 
-      data.forEach((d, i) => {
-        const x = xFor(i);
-        const y = yFor(d.value);
-        const showTick = data.length <= 8 || i === 0 || i === data.length - 1 || i % 2 === 1;
-        svg += `<circle class="chart-dot" cx="${x}" cy="${y}" r="4.5"></circle>`;
-        if (showTick) svg += `<text class="chart-tick" x="${x}" y="${height - 18}" text-anchor="middle">${d.label}</text>`;
+      series.forEach((item, sIndex) => {
+        const points = data.map((row, i) => [xFor(i), scale.yFor(Number(row[item.key]) || 0)]);
+        const path = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
+
+        if (sIndex === 0 && options.area !== false) {
+          const area = `${path} L ${points[points.length - 1][0].toFixed(1)} ${margin.top + innerH} L ${points[0][0].toFixed(1)} ${margin.top + innerH} Z`;
+          svg += `<path class="chart-area" d="${area}"></path>`;
+        }
+
+        svg += `<path class="${lineClasses[sIndex] || "chart-line-secondary"}" d="${path}"></path>`;
+
+        data.forEach((row, i) => {
+          const x = xFor(i);
+          const y = scale.yFor(Number(row[item.key]) || 0);
+          svg += `<circle class="${dotClasses[sIndex] || "chart-dot-secondary"}" cx="${x}" cy="${y}" r="4.2"></circle>`;
+        });
+
+        const last = data[data.length - 1];
+        const lastPoint = points[points.length - 1];
+        const valueLabel = formatChartValue(Number(last[item.key]) || 0, options.valueFormatter);
+        const labelY = Math.max(18, Math.min(height - 68, lastPoint[1] - (sIndex === 0 ? 14 : -18)));
+        svg += `<text class="chart-number" x="${Math.min(width - 118, Math.max(margin.left, lastPoint[0] - 10))}" y="${labelY}">${escapeSvg(item.label)}: ${valueLabel}</text>`;
       });
 
-      const last = data[data.length - 1];
-      const lastPoint = points[points.length - 1];
-      svg += `<text class="chart-number" x="${Math.min(width - 96, lastPoint[0] - 10)}" y="${Math.max(20, lastPoint[1] - 14)}">${options.valueFormatter ? options.valueFormatter(last.value) : formatNumber(last.value)}</text>`;
+      data.forEach((row, i) => {
+        const x = xFor(i);
+        const showTick = data.length <= 8 || i === 0 || i === data.length - 1 || i % 2 === 1;
+        if (showTick) svg += `<text class="chart-tick" x="${x}" y="${height - 22}" text-anchor="middle">${escapeSvg(row.label)}</text>`;
+      });
+
+      let legendX = margin.left;
+      series.forEach((item, i) => {
+        const y = 18;
+        const stroke = legendStrokes[i] || "url(#chartLineGradientSecondary)";
+        svg += `<line class="chart-legend-dot" x1="${legendX}" y1="${y}" x2="${legendX + 18}" y2="${y}" stroke="${stroke}"></line>`;
+        svg += `<text class="chart-caption" x="${legendX + 25}" y="${y + 4}">${escapeSvg(item.label)}</text>`;
+        legendX += Math.max(118, item.label.length * 9 + 52);
+      });
 
       svg += `</svg>`;
       el.innerHTML = svg;
     }
+
+    const trafficYearData = [
+      { label: "июл", value: 3050, desktop: 1620, mobile: 1430 },
+      { label: "авг", value: 3180, desktop: 1670, mobile: 1510 },
+      { label: "сен", value: 3270, desktop: 1700, mobile: 1570 },
+      { label: "окт", value: 3410, desktop: 1760, mobile: 1650 },
+      { label: "ноя", value: 3520, desktop: 1810, mobile: 1710 },
+      { label: "дек", value: 3680, desktop: 1870, mobile: 1810 },
+      { label: "янв", value: 3920, desktop: 1950, mobile: 1970 },
+      { label: "фев", value: 4090, desktop: 2010, mobile: 2080 },
+      { label: "мар", value: 4230, desktop: 2050, mobile: 2180 },
+      { label: "апр", value: 4380, desktop: 2110, mobile: 2270 },
+      { label: "май", value: 4370, desktop: 1900, mobile: 2470 },
+      { label: "июн", value: 4860, desktop: 2190, mobile: 2670 }
+    ];
+
+    const conversionsYearData = [
+      { label: "июл", value: 31 },
+      { label: "авг", value: 34 },
+      { label: "сен", value: 35 },
+      { label: "окт", value: 37 },
+      { label: "ноя", value: 39 },
+      { label: "дек", value: 41 },
+      { label: "янв", value: 42 },
+      { label: "фев", value: 45 },
+      { label: "мар", value: 47 },
+      { label: "апр", value: 49 },
+      { label: "май", value: 50 },
+      { label: "июн", value: 53 }
+    ];
 
     function renderAllCharts() {
       renderLineChart("chartVisibilityScore", [
@@ -2722,27 +2894,39 @@ plan_totals:
         label: "Динамика visibility score",
         min: 150,
         max: 220,
+        height: 292,
         valueFormatter: v => formatNumber(Math.round(v))
       });
 
-      renderLineChart("chartTrafficYear", [
-        { label: "июл", value: 3050 },
-        { label: "авг", value: 3180 },
-        { label: "сен", value: 3270 },
-        { label: "окт", value: 3410 },
-        { label: "ноя", value: 3520 },
-        { label: "дек", value: 3680 },
-        { label: "янв", value: 3920 },
-        { label: "фев", value: 4090 },
-        { label: "мар", value: 4230 },
-        { label: "апр", value: 4380 },
-        { label: "май", value: 4370 },
-        { label: "июн", value: 4860 }
-      ], {
+      renderLineChart("chartTrafficYear", trafficYearData, {
         label: "SEO-трафик за 12 месяцев",
+        seriesLabel: "SEO-трафик",
         height: 318,
         markerIndex: 7,
         markerLabel: "Начало SEO",
+        valueFormatter: v => formatNumber(Math.round(v))
+      });
+
+      renderMultiLineChart("chartTrafficDevicesYear", trafficYearData, [
+        { key: "desktop", label: "ПК" },
+        { key: "mobile", label: "Mobile" }
+      ], {
+        label: "SEO-трафик Desktop и Mobile за 12 месяцев",
+        height: 318,
+        markerIndex: 7,
+        markerLabel: "Начало SEO",
+        area: false,
+        valueFormatter: v => formatNumber(Math.round(v))
+      });
+
+      renderLineChart("chartConversionsYear", conversionsYearData, {
+        label: "Динамика SEO-конверсий за 12 месяцев",
+        seriesLabel: "Конверсии",
+        height: 292,
+        markerIndex: 7,
+        markerLabel: "Начало SEO",
+        min: 25,
+        max: 60,
         valueFormatter: v => formatNumber(Math.round(v))
       });
 
@@ -2757,6 +2941,10 @@ plan_totals:
 
     const $ = (selector, root = document) => root.querySelector(selector);
     const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+    const on = (selector, eventName, handler) => {
+      const el = typeof selector === "string" ? $(selector) : selector;
+      if (el) el.addEventListener(eventName, handler);
+    };
 
     renderAllCharts();
     updatePlanTotals();
@@ -2796,46 +2984,136 @@ plan_totals:
       setTimeout(() => toast.classList.remove("show"), 1700);
     }
 
-    $("#devSwitch").addEventListener("click", () => {
-      const on = !document.body.classList.contains("dev-on");
-      document.body.classList.toggle("dev-on", on);
-      $("#devSwitch").setAttribute("aria-checked", on ? "true" : "false");
-      showToast(on ? "Dev-инструкции включены" : "Dev-инструкции скрыты");
-    });
+    const devSwitchEl = $("#devSwitch");
+    const guestSwitchEl = $("#guestSwitch");
 
-    $("#guestSwitch").addEventListener("click", () => {
-      const on = !document.body.classList.contains("guest-on");
+    function setSwitchState(switchEl, on) {
+      if (!switchEl) return;
+      switchEl.setAttribute("aria-checked", on ? "true" : "false");
+      switchEl.classList.toggle("is-on", on);
+    }
+
+    function setDevMode(on, silent = false) {
+      document.body.classList.toggle("dev-on", on);
+      setSwitchState(devSwitchEl, on);
+
+      if (on) {
+        document.body.classList.remove("guest-on");
+        setSwitchState(guestSwitchEl, false);
+      }
+
+      if (!silent) showToast(on ? "Dev-инструкции включены" : "Dev-инструкции скрыты");
+    }
+
+    function setGuestMode(on, silent = false) {
       document.body.classList.toggle("guest-on", on);
-      $("#guestSwitch").setAttribute("aria-checked", on ? "true" : "false");
+      setSwitchState(guestSwitchEl, on);
+
       if (on) {
         document.body.classList.remove("dev-on");
-        $("#devSwitch").setAttribute("aria-checked", "false");
+        setSwitchState(devSwitchEl, false);
       }
+
       updatePlanTotals();
-      showToast(on ? "Включен просмотр по гостевой ссылке" : "Включен внутренний режим SEO");
-    });
+      if (!silent) showToast(on ? "Включен просмотр по гостевой ссылке" : "Включен внутренний режим SEO");
+    }
 
-    $$(".tabs").forEach(tabGroup => {
-      tabGroup.addEventListener("click", event => {
-        const btn = event.target.closest(".tab-btn");
-        if (!btn) return;
-        const group = tabGroup.dataset.tabs;
-        $$(".tab-btn", tabGroup).forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        const wrapper = tabGroup.parentElement;
-        $$(".tab-panel", wrapper).forEach(panel => panel.classList.remove("active"));
-        $("#" + btn.dataset.target).classList.add("active");
+    function bindSwitch(switchEl, toggleFn) {
+      if (!switchEl) return;
+      const control = switchEl.closest(".toggle-dev") || switchEl;
+      switchEl.setAttribute("tabindex", "0");
+
+      control.addEventListener("click", event => {
+        event.preventDefault();
+        const on = switchEl.getAttribute("aria-checked") !== "true";
+        toggleFn(on);
       });
-    });
 
-    $("#taskFilter").addEventListener("change", event => {
+      switchEl.addEventListener("keydown", event => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        const on = switchEl.getAttribute("aria-checked") !== "true";
+        toggleFn(on);
+      });
+    }
+
+    bindSwitch(devSwitchEl, setDevMode);
+    bindSwitch(guestSwitchEl, setGuestMode);
+
+    function initTabs() {
+      $$(".tabs").forEach(tabGroup => {
+        const wrapper = tabGroup.parentElement;
+        if (!wrapper) return;
+
+        const buttons = $$(".tab-btn", tabGroup);
+        const panels = Array.from(wrapper.children).filter(el => el.classList && el.classList.contains("tab-panel"));
+
+        tabGroup.setAttribute("role", "tablist");
+
+        function activateTab(btn) {
+          if (!btn) return;
+
+          const targetId = btn.dataset.target;
+          const targetPanel = targetId ? document.getElementById(targetId) : null;
+          if (!targetPanel || !panels.includes(targetPanel)) return;
+
+          buttons.forEach(button => {
+            const active = button === btn;
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-selected", active ? "true" : "false");
+            button.setAttribute("tabindex", active ? "0" : "-1");
+          });
+
+          panels.forEach(panel => {
+            const active = panel === targetPanel;
+            panel.classList.toggle("active", active);
+            panel.hidden = !active;
+          });
+
+          requestAnimationFrame(renderAllCharts);
+        }
+
+        buttons.forEach((button, index) => {
+          const targetId = button.dataset.target;
+          button.type = "button";
+          button.setAttribute("role", "tab");
+          if (targetId) button.setAttribute("aria-controls", targetId);
+
+          button.addEventListener("click", () => activateTab(button));
+          button.addEventListener("keydown", event => {
+            if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+            event.preventDefault();
+
+            let nextIndex = index;
+            if (event.key === "ArrowLeft") nextIndex = (index - 1 + buttons.length) % buttons.length;
+            if (event.key === "ArrowRight") nextIndex = (index + 1) % buttons.length;
+            if (event.key === "Home") nextIndex = 0;
+            if (event.key === "End") nextIndex = buttons.length - 1;
+
+            buttons[nextIndex].focus();
+            activateTab(buttons[nextIndex]);
+          });
+        });
+
+        panels.forEach(panel => {
+          panel.setAttribute("role", "tabpanel");
+          panel.setAttribute("tabindex", "0");
+        });
+
+        activateTab(buttons.find(button => button.classList.contains("active")) || buttons[0]);
+      });
+    }
+
+    initTabs();
+
+    on("#taskFilter", "change", event => {
       const value = event.target.value;
       $$("#tasksTable tbody tr").forEach(row => {
         row.style.display = value === "all" || row.dataset.type === value ? "" : "none";
       });
     });
 
-    $("#priorityFilter").addEventListener("change", event => {
+    on("#priorityFilter", "change", event => {
       const value = event.target.value;
       $$("#recommendationsList .rec-card").forEach(card => {
         card.style.display = value === "all" || card.dataset.priority === value ? "" : "none";
@@ -2932,9 +3210,9 @@ plan_totals:
       });
     });
 
-    $("#modalClose").addEventListener("click", () => $("#modalBackdrop").classList.remove("show"));
-    $("#modalBackdrop").addEventListener("click", event => {
-      if (event.target.id === "modalBackdrop") $("#modalBackdrop").classList.remove("show");
+    on("#modalClose", "click", () => $("#modalBackdrop")?.classList.remove("show"));
+    on("#modalBackdrop", "click", event => {
+      if (event.target.id === "modalBackdrop") $("#modalBackdrop")?.classList.remove("show");
     });
 
     const tocLinks = $$(".toc-link");
@@ -2951,13 +3229,13 @@ plan_totals:
 
     sections.forEach(section => observer.observe(section));
 
-    $("#mobileTocBtn").addEventListener("click", () => $("#toc").classList.toggle("open"));
+    on("#mobileTocBtn", "click", () => $("#toc")?.classList.toggle("open"));
     tocLinks.forEach(link => link.addEventListener("click", () => $("#toc").classList.remove("open")));
 
     const moderationBtn = $("#taskModerationBtn");
     if (moderationBtn) moderationBtn.addEventListener("click", () => showToast("Демо: здесь откроется список задач для исключения"));
-    $("#refreshBtn").addEventListener("click", () => showToast("Демо: здесь будет запуск обновления данных"));
-    $("#pdfBtn").addEventListener("click", () => showToast("Демо: здесь будет экспорт PDF"));
+    on("#refreshBtn", "click", () => showToast("Демо: здесь будет запуск обновления данных"));
+    on("#pdfBtn", "click", () => showToast("Демо: здесь будет экспорт PDF"));
   </script>
 </body>
 </html>
