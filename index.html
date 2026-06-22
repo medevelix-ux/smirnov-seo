@@ -1,0 +1,2164 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Webtronica — SEO-отчет проекта</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #f8fbff;
+      --ink: #101828;
+      --muted: #667085;
+      --line: #e5eaf3;
+      --primary: #2557ff;
+      --primary-2: #7c3aed;
+      --primary-soft: #eef3ff;
+      --green: #16a34a;
+      --green-soft: #eaf8ef;
+      --amber: #f55e0b;
+      --amber-soft: #fff6df;
+      --red: #e11d48;
+      --red-soft: #fff1f3;
+      --blue-soft: #edf4ff;
+      --shadow: 0 18px 55px rgba(16, 24, 40, .08);
+      --radius: 22px;
+      --radius-sm: 14px;
+      --side: 288px;
+      --font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 14% 0%, rgba(37, 87, 255, .12), transparent 24rem),
+        radial-gradient(circle at 84% 8%, rgba(124, 16, 67, .12), transparent 30rem),
+        var(--bg);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr var(--side);
+      gap: 24px;
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 22px 22px 64px;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 18px;
+      border: 1px solid rgba(225,64,243,.52);
+      border-radius: 26px;
+      background: rgba(255,255,255,.78);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 10px 35px rgba(16, 24, 40, .07);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 250px;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: white;
+      font-weight: 500;
+      letter-spacing: -.04em;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 12px 24px rgba(37, 87, 255, .2);
+    }
+
+    .brand-title {
+      font-weight: 850;
+      font-size: 17px;
+      letter-spacing: -.03em;
+    }
+
+    .brand-subtitle {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: -2px;
+    }
+
+    .project-strip {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      padding: 0 12px;
+    }
+
+    .project-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .project-chip strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 9px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(16,24,40,.08);
+    }
+
+    .btn.primary {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    }
+
+    .btn.ghost {
+      background: var(--surface-2);
+    }
+
+    .toggle-dev {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    .switch {
+      width: 42px;
+      height: 24px;
+      border-radius: 999px;
+      background: #d7ddea;
+      position: relative;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .switch::before {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      top: 3px;
+      left: 3px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 7px rgba(16,24,40,.18);
+      transition: .2s ease;
+    }
+
+    body.dev-on .switch {
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    }
+
+    body.dev-on .switch::before { left: 21px; }
+
+    main {
+      min-width: 0;
+    }
+
+    aside {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      height: calc(100vh - 120px);
+      overflow: auto;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+    }
+
+    .toc-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-weight: 850;
+      letter-spacing: -.03em;
+    }
+
+    .toc-list {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .toc-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 10px;
+      border-radius: 13px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      transition: .15s ease;
+    }
+
+    .toc-link:hover,
+    .toc-link.active {
+      color: var(--ink);
+      background: var(--primary-soft);
+    }
+
+    .toc-index {
+      width: 24px;
+      height: 24px;
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .toc-link.active .toc-index {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+    }
+
+    .toc-status {
+      margin-left: auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .toc-status.warn { background: var(--amber); }
+    .toc-status.bad { background: var(--red); }
+
+    .hero {
+      padding: 34px;
+      margin-bottom: 24px;
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      background:
+        linear-gradient(120deg, rgba(37,87,255,.12), rgba(124,16,67,.08), rgba(255,255,255,.5)),
+        var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -70px;
+      top: -70px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(37,87,255,.16), transparent 65%);
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.4fr .5fr;
+      gap: 22px;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(225,64,243,.5);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    h1 {
+      margin: 18px 0 12px;
+      font-size: clamp(24px, 5vw, 29px);
+      line-height: 1.02;
+      letter-spacing: -.06em;
+    }
+
+    .hero p {
+      max-width: 760px;
+      color: #472967;
+      font-size: 16px;
+      margin: 0;
+    }
+
+    .hero-card {
+      padding: 18px;
+      border: 1px solid rgba(225,64,243,.52);
+      border-radius: 22px;
+      background: rgba(255,255,255,.76);
+    }
+
+    .hero-card h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .status-row {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .mini-status {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 13px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-size: 13px;
+    }
+
+    .mini-status strong { font-weight: 850; }
+    .mini-status span { color: var(--muted); }
+
+    .section {
+      scroll-margin-top: 110px;
+      margin-bottom: 24px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.52);
+      box-shadow: var(--shadow);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-kicker {
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 850;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 5px;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: -.09em;
+    }
+
+    .section-desc {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 780px;
+      font-size: 14px;
+    }
+
+    .section-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .help {
+      display: inline-grid;
+      place-items: center;
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: help;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .help:hover::after {
+      content: attr(data-tip);
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 310px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 9px rgba(16,24,40,.16);
+      z-index: 60;
+      font-weight: 500;
+      line-height: 1.45;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .metric-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      min-width: 0;
+    }
+
+    .metric-card .label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .metric-card .value {
+      font-size: 30px;
+      line-height: 1;
+      letter-spacing: -.055em;
+      font-weight: 500;
+    }
+
+    .metric-card .note {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .delta.up { color: #087536; background: var(--green-soft); }
+    .delta.down { color: var(--red); background: var(--red-soft); }
+    .delta.flat { color: #536400; background: var(--amber-soft); }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .16s ease;
+    }
+
+    .tab-btn.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 12px 22px rgba(37,87,255,.18);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .chart-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      min-width: 0;
+    }
+
+    .chart-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: center;
+    }
+
+    .chart-title {
+      font-weight: 850;
+      letter-spacing: -.025em;
+    }
+
+    .chart-sub {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+
+    .viz {
+      width: 100%;
+      min-height: 292px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(248,251,255,.72), rgba(255,255,255,.96));
+    }
+
+    .viz svg {
+      width: 100%;
+      height: 292px;
+      display: block;
+    }
+
+    .viz-wide,
+    .viz-wide svg {
+      min-height: 318px;
+      height: 318px;
+    }
+
+    .chart-axis {
+      stroke: #d8e0ed;
+      stroke-width: 1;
+    }
+
+    .chart-grid {
+      stroke: #edf2f8;
+      stroke-width: 1;
+    }
+
+    .chart-line {
+      fill: none;
+      stroke: url(#chartLineGradient);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 8px 12px rgba(37, 87, 255, .16));
+    }
+
+    .chart-area {
+      fill: url(#chartAreaGradient);
+      opacity: .82;
+    }
+
+    .chart-dot {
+      fill: #fff;
+      stroke: #2557ff;
+      stroke-width: 3;
+    }
+
+    .chart-bar {
+      fill: url(#chartBarGradient);
+      rx: 10;
+    }
+
+    .chart-bar-soft {
+      fill: #e8edf6;
+      rx: 10;
+    }
+
+    .chart-tick,
+    .chart-caption {
+      fill: #667085;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .chart-number {
+      fill: #101828;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .chart-marker {
+      stroke: #f59e0b;
+      stroke-width: 2;
+      stroke-dasharray: 6 6;
+    }
+
+    .chart-marker-label {
+      fill: #936400;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .chart-tooltip-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .axis { stroke: #d6ddea; stroke-width: 1; }
+    .gridline { stroke: #eef2f8; stroke-width: 1; }
+    .line-a { fill: none; stroke: url(#gradBlue); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .line-b { fill: none; stroke: #8b5cf6; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .75; }
+    .dot { fill: #fff; stroke: var(--primary); stroke-width: 3; }
+    .bar { fill: url(#barGrad); rx: 5; }
+    .bar-muted { fill: #e8edf6; rx: 5; }
+    .chart-label { fill: #667085; font-size: 11px; font-weight: 700; }
+    .chart-value { fill: #101828; font-size: 12px; font-weight: 850; }
+    .start-marker { stroke: var(--amber); stroke-width: 2; stroke-dasharray: 6 5; }
+    .start-label { fill: #536400; font-size: 11px; font-weight: 850; }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-weight: 850;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    td.num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .nowrap { white-space: nowrap; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .badge.blue { color: #1d4ed8; background: #eaf1ff; }
+    .badge.green { color: #087536; background: var(--green-soft); }
+    .badge.amber { color: #536400; background: var(--amber-soft); }
+    .badge.red { color: var(--red); background: var(--red-soft); }
+    .badge.gray { color: #472967; background: #f2f4f7; }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    select, input[type="search"] {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .summary-box {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background:
+        linear-gradient(135deg, rgba(37,87,255,.08), rgba(124,16,67,.05)),
+        #fff;
+    }
+
+    .summary-box strong {
+      color: var(--ink);
+    }
+
+    .summary-box p {
+      margin: 0;
+      color: #472967;
+    }
+
+    .list-clean {
+      margin: 12px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 5px;
+    }
+
+    .list-clean li {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      color: #472967;
+      font-size: 14px;
+    }
+
+    .list-clean li::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      margin-top: 7px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      flex: 0 0 auto;
+    }
+
+    .task-title {
+      font-weight: 850;
+      color: var(--ink);
+      margin-bottom: 3px;
+    }
+
+    .task-desc {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .dev-note {
+      display: none;
+      margin-top: 18px;
+      border: 1px dashed #b5c5dc;
+      border-radius: 18px;
+      background: #f5fbff;
+      overflow: hidden;
+    }
+
+    body.dev-on .dev-note { display: block; }
+
+    .dev-note summary {
+      cursor: pointer;
+      padding: 14px 16px;
+      font-weight: 500;
+      color: #263b62;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dev-note summary::-webkit-details-marker { display: none; }
+    .dev-note summary::after { content: "⌄"; font-size: 16px; color: var(--muted); }
+    .dev-note[open] summary::after { transform: rotate(180deg); }
+
+    .dev-content {
+      padding: 0 16px 16px;
+      color: #334155;
+      font-size: 13px;
+    }
+
+    .dev-content code,
+    .code {
+      display: block;
+      padding: 12px;
+      border-radius: 13px;
+      background: #0b186;
+      color: #dbeafe;
+      overflow: auto;
+      font-size: 12px;
+      line-height: 1.55;
+      margin-top: 10px;
+      white-space: pre;
+    }
+
+    .rec-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      margin-bottom: 12px;
+    }
+
+    .rec-card.is-done {
+      opacity: .16;
+      background: #f8fafc;
+    }
+
+    .rec-card input {
+      margin-top: 5px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    .rec-title {
+      font-weight: 500;
+      letter-spacing: -.025em;
+      margin-bottom: 6px;
+    }
+
+    .rec-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+
+    .rec-text {
+      margin: 0;
+      color: #472967;
+      font-size: 13px;
+    }
+
+    .copy-btn {
+      white-space: nowrap;
+      align-self: start;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 20px;
+      z-index: 100;
+      background: rgba(15,6,42,.52);
+      backdrop-filter: blur(8px);
+    }
+
+    .modal-backdrop.show { display: grid; }
+
+    .modal {
+      max-width: 760px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 22px;
+      background: #fff;
+      box-shadow: 0 28px 50px rgba(0,0,0,.26);
+      border: 1px solid var(--line);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .modal h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -.04em;
+    }
+
+    .modal-close {
+      border: 0;
+      background: #f2f4f7;
+      border-radius: 12px;
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      z-index: 200;
+      padding: 11px 14px;
+      border-radius: 14px;
+      background: #101828;
+      color: white;
+      box-shadow: 0 15px 35px rgba(16,24,40,.25);
+      font-weight: 700;
+      transition: .2s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-toc-btn {
+      display: none;
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 70;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: white;
+      padding: 13px 16px;
+      font-weight: 850;
+      box-shadow: 0 18px 9px rgba(37,87,255,.28);
+    }
+
+    @media (max-width: 1180px) {
+      .app-shell { grid-template-columns: 1fr; }
+      aside {
+        display: none;
+        position: fixed;
+        right: 18px;
+        bottom: 76px;
+        top: auto;
+        width: min(360px, calc(100vw - 36px));
+        height: auto;
+        max-height: 70vh;
+        z-index: 80;
+      }
+      aside.open { display: block; }
+      .mobile-toc-btn { display: block; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .topbar { flex-wrap: wrap; }
+      .project-strip { order: 3; width: 100%; padding: 0; overflow-x: auto; }
+    }
+
+    @media (max-width: 860px) {
+      .app-shell { padding: 12px 12px 78px; }
+      .grid.cols-4, .grid.cols-3, .grid.cols-2 { grid-template-columns: 1fr; }
+      .section, .hero { padding: 18px; border-radius: 22px; }
+      .section-header { flex-direction: column; }
+      .toolbar { width: 100%; overflow-x: auto; justify-content: flex-start; }
+      th, td { padding: 10px 5px; }
+      table { font-size: 12px; }
+      .rec-card { grid-template-columns: auto 1fr; }
+      .copy-btn { grid-column: 2; justify-self: start; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">W</div>
+        <div>
+          <div class="brand-title">Webtronica</div>
+          <div class="brand-subtitle">SEO monitoring & automation</div>
+        </div>
+      </div>
+
+      <div class="project-strip" aria-label="Параметры отчета">
+        <div class="project-chip">Проект: <strong>magmastones.ru</strong></div>
+        <div class="project-chip">Период: <strong>Июнь 2026</strong></div>
+        <div class="project-chip">Регион: <strong>Москва</strong></div>
+        <div class="project-chip">Тип: <strong>Каталог / услуги</strong></div>
+      </div>
+
+      <div class="toolbar">
+        <label class="toggle-dev" title="Включить технические инструкции в интерфейсе">
+          <span class="switch" id="devSwitch" role="switch" aria-checked="false"></span>
+          Dev-инструкции
+        </label>
+        <button class="btn ghost" id="refreshBtn">↻ Обновить</button>
+        <button class="btn" id="pdfBtn">Экспорт PDF</button>
+        <button class="btn primary" id="createTasksBtn">+ Создать задачи</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section-observe" id="summary">
+        <div class="hero-grid">
+          <div>
+            <span class="eyebrow">Ежемесячный SEO-отчет</span>
+            <h1>Отчет по SEO-проекту MagmaStones за июнь</h1>
+            <p>
+              Интерактивный пример отчета для сайта magmastones.ru: выполненные задачи, видимость, поисковый трафик, конверсии,
+              общий вывод и черновик SEO-плана на следующий месяц. Все цифры и URL демонстрационные.
+            </p>
+          </div>
+          <div class="hero-card">
+            <h3>Краткая сводка</h3>
+            <div class="status-row">
+              <div class="mini-status"><span>Статус месяца</span><strong>Умеренно положительный</strong></div>
+              <div class="mini-status"><span>SEO-трафик</span><strong>+11,2%</strong></div>
+              <div class="mini-status"><span>Целевые действия</span><strong>+6,0%</strong></div>
+              <div class="mini-status"><span>Главный фокус</span><strong>Заявки с коммерческих страниц</strong></div>
+            </div>
+          </div>
+        </div>
+        <div style="height:18px"></div>
+        <div class="grid cols-3">
+          <div class="metric-card">
+            <div class="label">Приоритетные направления <span class="help" data-tip="Список задается в настройках проекта и используется, чтобы в отчете акцентировать внимание на важных страницах и группах запросов.">?</span></div>
+            <div class="note">Мраморные слэбы · Гранит · Травертин · Столешницы из камня</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Дата старта SEO <span class="help" data-tip="Дата задается вручную в карточке проекта. Используется для отметки на графике долгосрочной динамики.">?</span></div>
+            <div class="value" style="font-size:22px;">Февраль 2026</div>
+            <div class="note">Источник: настройки проекта</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Источники данных</div>
+            <div class="note">Bitrix24 · Яндекс.Вебмастер · GSC · Яндекс.Метрика · Webtronica.io опционально</div>
+          </div>
+        </div>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: сводный верхний блок</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> это верхняя витрина отчета. Она собирается после генерации всех разделов и быстро показывает состояние проекта: период, домен, регион, тип сайта, статус месяца, SEO-трафик, конверсии и главный фокус.</p>
+            <p><strong>Откуда берутся данные:</strong> project_settings + итоговые summary из блоков задач, видимости, трафика, конверсий и общего вывода. Приоритетные направления и дата старта SEO задаются в настройках проекта.</p>
+            <div class="code">project_settings:
+  domain = "magmastones.ru"
+  site_type = "catalog_services"
+  main_region = "Москва"
+  yandex_metrica_counter_id
+  bitrix_project_id
+  seo_start_date
+  priority_directions[]
+
+summary_input:
+  tasks.summary
+  visibility.summary
+  traffic.summary
+  conversions.summary
+  overall_conclusion.ai_result
+
+output:
+  hero_cards[]
+  project_chips[]
+  section_statuses[]</div>
+          </div>
+        </details>
+      </section>
+
+      <section class="section section-observe" id="tasks">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Блок 2</div>
+            <h2>Выполненные задачи из Битрикса <span class="help" data-tip="Задачи берутся из главной задачи месяца или через фильтр по проекту, периоду и статусу. ИИ объясняет пользу каждой задачи клиентским языком.">?</span></h2>
+            <p class="section-desc">Показываем, какие SEO-работы были выполнены за месяц, и автоматически объясняем их пользу для проекта.</p>
+          </div>
+          <div class="section-actions">
+            <select id="taskFilter" aria-label="Фильтр задач">
+              <option value="all">Все задачи</option>
+              <option value="technical_seo">Техническая оптимизация</option>
+              <option value="content_seo">Контент</option>
+              <option value="commercial_factors">Коммерческие факторы</option>
+              <option value="analytics">Аналитика</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid cols-4">
+          <div class="metric-card">
+            <div class="label">Выполнено задач <span class="delta up">+8</span></div>
+            <div class="value">24</div>
+            <div class="note">Закрыто в отчетном месяце</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Тех. оптимизация</div>
+            <div class="value">8</div>
+            <div class="note">Индексация, дубли, sitemap</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Контент</div>
+            <div class="value">10</div>
+            <div class="note">Мета-теги, тексты, H1</div>
+          </div>
+          <div class="metric-card">
+            <div class="label">Комм. факторы</div>
+            <div class="value">5</div>
+            <div class="note">Замер, производство, доверие</div>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="summary-box">
+          <p><strong>Шаг перед генерацией:</strong> система выгружает все подзадачи главной задачи месяца из Битрикс24, а ответственный сотрудник может исключить служебные или нежелательные для клиента задачи перед продолжением отчета.</p>
+          <div style="height:10px"></div>
+          <div class="filters">
+            <span class="badge green">В отчете: 24 задачи</span>
+            <span class="badge gray">Исключено вручную: 3</span>
+            <span class="badge amber">Незавершенные, но плановые: 4</span>
+            <button class="btn" id="taskModerationBtn">Открыть предмодерацию</button>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <table id="tasksTable">
+          <thead>
+            <tr>
+              <th>Задача</th>
+              <th>Тип</th>
+              <th>Дата</th>
+              <th>Польза для SEO</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-type="content_seo">
+              <td>
+                <div class="task-title">Оптимизация мета-тегов для разделов камня</div>
+                <div class="task-desc">Title/description для мрамора, гранита и травертина</div>
+              </td>
+              <td><span class="badge blue">Контент</span></td>
+              <td class="nowrap">14.06.2026</td>
+              <td>Усиливает релевантность страниц поисковым запросам и может повлиять на CTR после переобхода.</td>
+              <td><button class="btn" data-modal="task1">Подробнее</button></td>
+            </tr>
+            <tr data-type="technical_seo">
+              <td>
+                <div class="task-title">Проверка canonical и индексации фильтров</div>
+                <div class="task-desc">Фильтры по типу камня, цвету и назначению</div>
+              </td>
+              <td><span class="badge green">Техническая</span></td>
+              <td class="nowrap">18.06.2026</td>
+              <td>Помогает снизить риск дублей и корректнее распределять релевантность между страницами.</td>
+              <td><button class="btn" data-modal="task2">Подробнее</button></td>
+            </tr>
+            <tr data-type="commercial_factors">
+              <td>
+                <div class="task-title">Доработка блоков “замер”, “производство” и “монтаж”</div>
+                <div class="task-desc">Коммерческие посадочные страницы</div>
+              </td>
+              <td><span class="badge amber">Комм. факторы</span></td>
+              <td class="nowrap">22.06.2026</td>
+              <td>Повышает доверие и помогает пользователям быстрее принять решение о покупке.</td>
+              <td><button class="btn" data-modal="task3">Подробнее</button></td>
+            </tr>
+            <tr data-type="analytics">
+              <td>
+                <div class="task-title">Проверка целей Метрики по заявкам</div>
+                <div class="task-desc">Формы, телефон, WhatsApp, Telegram</div>
+              </td>
+              <td><span class="badge gray">Аналитика</span></td>
+              <td class="nowrap">25.06.2026</td>
+              <td>Позволяет корректно оценивать влияние SEO-трафика на целевые действия.</td>
+              <td><button class="btn" data-modal="task4">Подробнее</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: выполненные задачи</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> превращает внутренний список задач из Битрикс24 в понятный клиенту список выполненных SEO-работ. Здесь важно не просто показать названия задач, а объяснить пользу: индексация, релевантность, CTR, коммерческие факторы, аналитика.</p>
+            <p><strong>Откуда брать данные:</strong> основной сценарий — найти главную задачу месяца в формате “{Месяц} {Год}. {домен}” и выгрузить все ее подзадачи, включая подзадачи подзадач. По уточнению ТЗ, в отчетный пул попадают все плановые подзадачи главной задачи месяца, даже если часть закрывается в первые дни следующего периода. Затем ответственный сотрудник должен вручную исключить задачи, которые не нужно показывать клиенту.</p>
+            <p><strong>Зачем нужна предмодерация:</strong> в Битриксе могут быть внутренние обсуждения, служебные проверки или задачи, “о которых клиент знать не должен”. Поэтому перед генерацией отчета нужен экран выбора: список задач → крестик “исключить” → кнопка “Продолжить”.</p>
+            <p><strong>Минимальные поля:</strong> task_id, task_title, task_description, status, comments_text, checklist_items. Дополнительно можно хранить responsible, deadline, time_spent, parent_task_id.</p>
+            <div class="code">bitrix_source:
+  main_task_title = "{month} {year}. {domain}"
+  project_bitrix_id = project.settings.bitrix_project_id
+
+task_selection_flow:
+  1. load all subtasks from main_task
+  2. show moderation screen to responsible employee
+  3. employee excludes internal/client-unwanted tasks
+  4. send remaining tasks to AI classifier
+  5. render grouped client-facing block
+
+ai_output:
+  task_title_client
+  task_type
+  seo_problem
+  usefulness_comment
+  potential_impact[]
+  effect_type
+  confidence</div>
+            <p><strong>Что делает ИИ:</strong> классифицирует задачи по типам SEO-работ, переводит внутренние формулировки в клиентский язык и объясняет потенциальную пользу. ИИ не имеет права писать, что задача уже дала рост позиций или заявок, если это не подтверждено в других блоках.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="section section-observe" id="visibility">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Блок 3</div>
+            <h2>Видимость и позиции <span class="help" data-tip="Данные из Яндекс.Вебмастера и GSC. Для средней позиции: чем меньше значение, тем лучше. position_delta = previous - current.">?</span></h2>
+            <p class="section-desc">Показываем, как изменилась видимость сайта по запросам в Яндексе и Google.</p>
+          </div>
+        </div>
+
+        <div class="tabs" data-tabs="visibilityTabs">
+          <button class="tab-btn active" data-target="vis-all">Все</button>
+          <button class="tab-btn" data-target="vis-yandex">Яндекс</button>
+          <button class="tab-btn" data-target="vis-google">Google</button>
+        </div>
+
+        <div class="tab-panel active" id="vis-all">
+          <div class="grid cols-4">
+            <div class="metric-card">
+              <div class="label">ТОП-10 <span class="delta up">+24</span></div>
+              <div class="value">124</div>
+              <div class="note">Накопительная группа 1–10</div>
+            </div>
+            <div class="metric-card">
+              <div class="label">ТОП-30 <span class="delta up">+42</span></div>
+              <div class="value">410</div>
+              <div class="note">Накопительная группа 1–30</div>
+            </div>
+            <div class="metric-card">
+              <div class="label">Средняя позиция <span class="delta up">+1,1</span></div>
+              <div class="value">13,2</div>
+              <div class="note">Меньше = лучше</div>
+            </div>
+            <div class="metric-card">
+              <div class="label">Запросы 11–20</div>
+              <div class="value">9</div>
+              <div class="note">Зона ближайшего роста</div>
+            </div>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <div class="grid cols-2">
+            <div class="chart-card">
+              <div class="chart-head">
+                <div>
+                  <div class="chart-title">Распределение запросов по позициям</div>
+                  <div class="chart-sub">Интервальные группы, без пересечений</div>
+                </div>
+              </div>
+              <div class="viz" id="chartVisibilityBars" aria-label="Распределение запросов по позициям"></div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-head">
+                <div>
+                  <div class="chart-title">Динамика средней позиции</div>
+                  <div class="chart-sub">Линия построена аккуратно: чем ниже позиция, тем лучше</div>
+                </div>
+              </div>
+              <div class="viz" id="chartAvgPosition" aria-label="Динамика средней позиции"></div>
+            </div>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <table>
+            <thead>
+              <tr><th>Сигнал</th><th>Страница</th><th class="num">Позиция</th><th class="num">Показы</th><th>Рекомендация</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge green">11–20</span> мраморные слэбы купить</td>
+                <td>/catalog/slaby-mramora/</td>
+                <td class="num">12,4</td>
+                <td class="num">2 420</td>
+                <td>Усилить релевантность страницы под коммерческий интент и добавить внутренние ссылки.</td>
+              </tr>
+              <tr>
+                <td><span class="badge amber">Низкий CTR</span> бензиновый гранит 5 квт</td>
+                <td>/catalog/granit/</td>
+                <td class="num">8,5</td>
+                <td class="num">3 100</td>
+                <td>Доработать title/description: цена, наличие, производство, монтаж.</td>
+              </tr>
+              <tr>
+                <td><span class="badge red">Падение</span> травертин для отделки</td>
+                <td>/catalog/travertin/</td>
+                <td class="num">24,7</td>
+                <td class="num">1 650</td>
+                <td>Проверить индексацию, ассортимент, интент и выдачу конкурентов.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-panel" id="vis-yandex">
+          <div class="summary-box">
+            <p><strong>Яндекс:</strong> видимость выросла, ТОП-10 увеличился на 24 запроса. Основная зона роста — коммерческие запросы по категориям.</p>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="vis-google">
+          <div class="summary-box">
+            <p><strong>Google:</strong> динамика смешанная. В отчете использован общий срез, так как региональная детализация на уровне города недоступна.</p>
+          </div>
+        </div>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: видимость и позиции</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> показывает, как сайт виден в поиске по запросам. Блок помогает понять не только “среднюю позицию”, а структуру спроса: сколько запросов уже в ТОП-10, сколько близко к ТОП-10, где есть падение и где сниппет получает мало кликов.</p>
+            <p><strong>Основные источники:</strong> Яндекс.Вебмастер и Google Search Console. По уточнению ТЗ, главный регион в MVP не используется для Яндекс.Вебмастера и GSC как точный региональный фильтр; он преимущественно нужен для трафика. Если в будущем подключается Webtronica.io как источник целочисленных позиций, тогда регион используется для трекинга позиций.</p>
+            <p><strong>Приоритетные направления:</strong> в настройках проекта нужно хранить список важных страниц/направлений. При агрегации данных по Я.Вебмастеру и GSC система должна выделять запросы и URL, которые относятся к этим направлениям, чтобы клиент видел динамику именно по значимым страницам.</p>
+            <p><strong>Webtronica.io как опциональный источник:</strong> можно использовать для ежедневной динамики целочисленных позиций по фиксированному списку запросов. Эти значения нельзя считать абсолютно точными из-за персонализации выдачи; их лучше использовать как тренд.</p>
+            <div class="code">position_delta = avg_position_previous - avg_position_current
+// delta > 0 means improvement
+// delta < 0 means decline
+
+mvp_groups:
+  top_3  = 1..3
+  top_10 = 1..10
+  top_30 = 1..30
+  top_50 = 1..50
+
+quick_growth:
+  avg_position_current >= 11
+  avg_position_current <= 20
+  impressions > 0
+  page_url in priority_directions? boost priority
+
+low_ctr:
+  impressions >= threshold
+  avg_position <= 20
+  ctr < avg_ctr_by_position_group</div>
+            <p><strong>Что передавать в ИИ:</strong> агрегированные сводки по Яндексу/Google, списки запросов 11–20, низкий CTR, падения, рост, предупреждения. Сырые выгрузки целиком не передавать — сначала сгруппировать и отфильтровать.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="section section-observe" id="traffic">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Блок 4</div>
+            <h2>Поисковый трафик из Яндекс.Метрики <span class="help" data-tip="Анализируется только органический поисковый трафик. Важно не смешивать его с рекламой, прямыми заходами и UTM-кампаниями.">?</span></h2>
+            <p class="section-desc">Показываем динамику органического трафика и объясняем, за счет каких срезов произошел рост или снижение.</p>
+          </div>
+        </div>
+
+        <div class="tabs" data-tabs="trafficTabs">
+          <button class="tab-btn active" data-target="traffic-year">12 месяцев</button>
+          <button class="tab-btn" data-target="traffic-days">Дни</button>
+          <button class="tab-btn" data-target="traffic-pages">Посадочные</button>
+          <button class="tab-btn" data-target="traffic-devices">Устройства</button>
+        </div>
+
+        <div class="tab-panel active" id="traffic-year">
+          <div class="chart-card">
+            <div class="chart-head">
+              <div>
+                <div class="chart-title">SEO-трафик за 12 месяцев</div>
+                <div class="chart-sub">С отметкой начала работ нашей компании</div>
+              </div>
+              <span class="badge blue">Начало SEO: февраль</span>
+            </div>
+            <div class="viz viz-wide" id="chartTrafficYear" aria-label="SEO-трафик за 12 месяцев"></div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="traffic-days">
+          <div class="grid cols-2">
+            <div class="metric-card"><div class="label">SEO-трафик <span class="delta up">+11,2%</span></div><div class="value">4 860</div><div class="note">Визиты из органического поиска</div></div>
+            <div class="metric-card"><div class="label">Основной вклад</div><div class="value">Яндекс</div><div class="note">75% абсолютного прироста</div></div>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="traffic-pages">
+          <table>
+            <thead><tr><th>Посадочная страница</th><th class="num">Визиты</th><th class="num">Динамика</th><th>Вывод</th></tr></thead>
+            <tbody>
+              <tr><td>/catalog/slaby-mramora/</td><td class="num">840</td><td class="num"><span class="delta up">+22,5%</span></td><td>Растет спрос на мраморные слэбы, стоит усилить коммерческие блоки.</td></tr>
+              <tr><td>/catalog/granit/</td><td class="num">760</td><td class="num"><span class="delta up">+15,8%</span></td><td>Рост по Яндексу, проверить запросы по гранитным плитам в зоне 11–20.</td></tr>
+              <tr><td>/catalog/travertin/</td><td class="num">410</td><td class="num"><span class="delta down">-12,7%</span></td><td>Проверить позиции, индексацию и соответствие ассортимента интенту.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="tab-panel" id="traffic-devices">
+          <table>
+            <thead><tr><th>Устройство</th><th class="num">Визиты</th><th class="num">Динамика</th><th class="num">Отказы</th><th>Вывод</th></tr></thead>
+            <tbody>
+              <tr><td>Mobile</td><td class="num">2 920</td><td class="num"><span class="delta up">+5,5%</span></td><td class="num">28,1%</td><td>Высокая доля, стоит отдельно смотреть конверсию.</td></tr>
+              <tr><td>Desktop</td><td class="num">5 124</td><td class="num"><span class="delta up">+25,1%</span></td><td class="num">21,3%</td><td>Основной прирост качества визитов.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: поисковый трафик</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> показывает динамику именно органического поискового трафика. Это не весь трафик сайта. Из отчета нужно исключить рекламу, прямые заходы, соцсети, мессенджеры, referral, email, UTM-кампании, внутренние переходы, технические визиты и роботов.</p>
+            <p><strong>Откуда брать данные:</strong> Яндекс.Метрика. ID счетчика хранится в настройках проекта. Там же хранится домен, отчетный период, основной регион, настройки исключения роботов и список приоритетных направлений.</p>
+            <p><strong>Зачем нужен график 12 месяцев:</strong> он показывает долгосрочный тренд, сезонность и динамику до/после старта SEO-работ. Дату старта SEO лучше задавать вручную в карточке проекта. На графике выводится отметка “Начало SEO-работ”. Нельзя автоматически писать, что рост произошел именно из-за SEO — допустима осторожная формулировка “после начала работ наблюдается рост”.</p>
+            <div class="code">metrics:
+  ym:s:visits
+  ym:s:users
+  ym:s:bounceRate
+  ym:s:pageDepth
+  ym:s:avgVisitDurationSeconds
+
+dimensions:
+  ym:s:lastSearchEngineRoot
+  ym:s:startURLPath
+  ym:s:deviceCategory
+  ym:s:date
+  ym:s:month
+
+filters:
+  traffic_source == organic_search
+  exclude_ads == true
+  exclude_robots == true
+
+delta_percent = (current - previous) / previous * 100
+search_engine_share = engine_visits / total_organic_visits * 100
+avg_before_seo = average(monthly_visits before seo_start_date)
+avg_after_seo = average(monthly_visits after seo_start_date)</div>
+            <p><strong>Что должен увидеть программист:</strong> блок состоит из нескольких независимых запросов к Метрике: общая сводка, поисковые системы, дни/недели, устройства, посадочные страницы, 12 месяцев. Каждый запрос нужно кэшировать в рамках report_id.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="section section-observe" id="conversions">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Блок 5</div>
+            <h2>Конверсии из Яндекс.Метрики <span class="help" data-tip="Анализируются только выбранные цели из органического поиска. Технические цели не должны смешиваться с бизнес-конверсиями.">?</span></h2>
+            <p class="section-desc">Показываем, как SEO-трафик влияет на целевые действия пользователей.</p>
+          </div>
+          <div class="section-actions">
+            <button class="btn">Выбрать цели</button>
+          </div>
+        </div>
+
+        <div class="grid cols-4">
+          <div class="metric-card"><div class="label">Достижения целей <span class="delta up">+6,0%</span></div><div class="value">53</div><div class="note">По выбранному набору целей</div></div>
+          <div class="metric-card"><div class="label">Конверсионные визиты <span class="delta up">+5,2%</span></div><div class="value">9</div><div class="note">Визиты с целевым действием</div></div>
+          <div class="metric-card"><div class="label">Конверсия <span class="delta down">-0,03 п.п.</span></div><div class="value">0,53%</div><div class="note">Конверсионные визиты / SEO-визиты</div></div>
+          <div class="metric-card"><div class="label">Цели к проверке</div><div class="value">1</div><div class="note">Заявка на расчет стала 0 на mobile</div></div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="grid cols-2">
+          <div class="chart-card">
+            <div class="chart-head">
+              <div>
+                <div class="chart-title">Конверсии по выбранным целям</div>
+                <div class="chart-sub">Выбранные цели из органического поиска</div>
+              </div>
+            </div>
+            <div class="viz" id="chartGoalBars" aria-label="Конверсии по выбранным целям"></div>
+          </div>
+
+          <div class="summary-box">
+            <p><strong>Вывод:</strong> количество целевых действий выросло, но коэффициент конверсии немного снизился. Основной риск — страницы с высоким SEO-трафиком и низкой конверсией.</p>
+            <ul class="list-clean">
+              <li>Проверить страницы с трафиком и низким CR.</li>
+              <li>Проверить цель “Заявка на расчет”.</li>
+              <li>Отдельно оценить мобильную конверсию.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <table>
+          <thead><tr><th>Страница</th><th class="num">SEO-визиты</th><th class="num">Конверсии</th><th class="num">CR</th><th>Что проверить</th></tr></thead>
+          <tbody>
+            <tr><td>/catalog/slaby-mramora/</td><td class="num">840</td><td class="num">14</td><td class="num">1,67%</td><td>Страница дает заявки, можно усиливать семантику и перелинковку.</td></tr>
+            <tr><td>/catalog/granit/</td><td class="num">760</td><td class="num">5</td><td class="num">0,66%</td><td>Первый экран, CTA “получить расчет”, примеры работ, доверие.</td></tr>
+            <tr><td>/catalog/travertin/</td><td class="num">410</td><td class="num">2</td><td class="num">0,24%</td><td>Интент, наличие материалов, фото проектов, мобильная форма.</td></tr>
+          </tbody>
+        </table>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: конверсии</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> показывает, как SEO-трафик влияет на целевые действия. Важно анализировать только выбранный набор целей и только органический поиск. Нельзя подмешивать цели из рекламы, прямого трафика или технические события.</p>
+            <p><strong>Настройка целей:</strong> пользователь должен выбрать одну или несколько целей Метрики, сохранить набор для проекта и назначить набор по умолчанию. Цели нужно классифицировать: основные, вспомогательные, технические. В клиентский отчет по умолчанию выводить основные и при необходимости вспомогательные цели.</p>
+            <p><strong>Важное различие:</strong> достижения целей и конверсионные визиты — не одно и то же. Если один визит дал несколько событий, достижения целей могут быть больше числа конверсионных визитов. Для общей конверсии лучше использовать converted_visits / organic_visits, если Метрика позволяет получить такой показатель.</p>
+            <div class="code">conversion_rate = converted_visits / organic_visits * 100
+// fallback:
+conversion_rate = goal_reaches / organic_visits * 100
+
+goal_types:
+  primary       // заявка, телефон, расчет, заказ
+  secondary     // каталог, прайс, контакты
+  technical     // scroll, popup, open_form
+
+warnings:
+  goals_not_selected
+  goal_not_found
+  goal_reaches_zero
+  converted_visits_unavailable
+  goals_set_changed
+  cannot_filter_organic
+
+high_traffic_low_conversion:
+  organic_visits >= threshold
+  conversion_rate < avg_seo_conversion_rate * 0.5</div>
+            <p><strong>Что передавать в ИИ:</strong> сводку по выбранным целям, цели с ростом/падением, цели с нулем, страницы с высоким трафиком и низкой конверсией, разбивку по поисковым системам и устройствам. ИИ не должен делать вывод о качестве лидов без CRM.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="section section-observe" id="conclusion">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Блок 6</div>
+            <h2>Общий вывод по отчету <span class="help" data-tip="Общий вывод не анализирует сырые данные заново. Он объединяет готовые краткие выводы предыдущих блоков.">?</span></h2>
+            <p class="section-desc">Краткий клиентский итог месяца на основе выводов по задачам, видимости, трафику и конверсиям.</p>
+          </div>
+        </div>
+
+        <div class="summary-box">
+          <p>
+            <strong>Статус месяца: умеренно положительная динамика.</strong>
+            В отчетном месяце были выполнены работы по технической оптимизации, контенту и коммерческим факторам для приоритетных направлений: мрамор, гранит, травертин и изделия из камня.
+            На фоне этих работ наблюдается рост видимости и органического поискового трафика. Количество целевых действий также выросло,
+            однако коэффициент конверсии немного снизился, поэтому следующий фокус — качество посадочных страниц и заявочные элементы.
+          </p>
+          <div style="height:14px"></div>
+          <div class="grid cols-3">
+            <div class="metric-card">
+              <div class="label">Положительные сигналы</div>
+              <ul class="list-clean">
+                <li>Вырос ТОП-10 по приоритетным направлениям.</li>
+                <li>SEO-трафик +11,2%.</li>
+                <li>Целевые действия +6,0%.</li>
+              </ul>
+            </div>
+            <div class="metric-card">
+              <div class="label">Риски</div>
+              <ul class="list-clean">
+                <li>Конверсия снизилась на 0,06 п.п.</li>
+                <li>Есть страницы с трафиком, но слабой заявочной активностью.</li>
+                <li>Ограничение по региону GSC.</li>
+              </ul>
+            </div>
+            <div class="metric-card">
+              <div class="label">Фокус следующего месяца</div>
+              <div class="value" style="font-size:22px; line-height:1.15;">Заявки с посадочных</div>
+              <div class="note">Доработать коммерческие страницы, которые уже получают SEO-трафик.</div>
+            </div>
+          </div>
+        </div>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: общий вывод</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> это клиентский итог, а не новый аналитический расчет. Он не должен заново анализировать сырые выгрузки. Его задача — аккуратно объединить уже готовые краткие выводы по задачам, видимости, трафику и конверсиям.</p>
+            <p><strong>Почему так:</strong> каждый предыдущий блок уже интерпретировал свои данные. Если снова передать все сырые таблицы, ИИ может сформулировать противоречивые выводы. Поэтому в общий вывод идут только summary, key_facts, status и warnings.</p>
+            <div class="code">input_summaries:
+  tasks:
+    status
+    summary
+    key_facts[]
+    warnings[]
+  visibility:
+    status
+    summary
+    key_facts[]
+    warnings[]
+  traffic:
+    status
+    summary
+    key_facts[]
+    warnings[]
+  conversions:
+    status
+    summary
+    key_facts[]
+    warnings[]
+
+ai_result:
+  overall_status
+  summary
+  positive_signals[]
+  risks[]
+  data_limitations[]
+  next_month_focus
+  confidence</div>
+            <p><strong>Правило для ИИ:</strong> не придумывать новые цифры, не обещать рост, не утверждать прямую причинно-следственную связь. Допустимо писать “на фоне выполненных работ наблюдается…”.</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="section section-observe" id="recommendations">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Блок 7</div>
+            <h2>Рекомендации к SEO-плану <span class="help" data-tip="Это черновик плана для SEO-специалиста. Рекомендации строятся на детальных сигналах: запросы 11–20, низкий CTR, падения, страницы с трафиком и низкой конверсией.">?</span></h2>
+            <p class="section-desc">Формируем болванку задач на следующий месяц на основе данных отчета.</p>
+          </div>
+          <div class="section-actions">
+            <select id="priorityFilter" aria-label="Фильтр рекомендаций">
+              <option value="all">Все приоритеты</option>
+              <option value="high">Высокий</option>
+              <option value="medium">Средний</option>
+              <option value="low">Низкий</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid cols-3">
+          <div class="metric-card"><div class="label">Высокий приоритет</div><div class="value">5</div><div class="note">Взять в работу первыми</div></div>
+          <div class="metric-card"><div class="label">Средний приоритет</div><div class="value">8</div><div class="note">После критичных задач</div></div>
+          <div class="metric-card"><div class="label">Низкий приоритет</div><div class="value">4</div><div class="note">Поддерживающие работы</div></div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div id="recommendationsList">
+          <article class="rec-card" data-priority="high">
+            <input type="checkbox" aria-label="Выбрать задачу">
+            <div>
+              <div class="rec-title">Комплексно доработать страницу гранитов: релевантность + конверсия</div>
+              <div class="rec-meta">
+                <span class="badge red">Высокий</span>
+                <span class="badge blue">content_seo</span>
+                <span class="badge amber">ux_conversion</span>
+              </div>
+              <p class="rec-text">
+                Основание: страница получает высокий SEO-трафик, имеет запросы в зоне 11–20 и конверсию ниже среднего.
+                Проверить title/H1/SEO-текст, внутреннюю перелинковку, первый экран, CTA “получить расчет”, фото работ и форму заявки.
+              </p>
+            </div>
+            <button class="btn copy-btn" data-copy="Проверить и доработать страницу /catalog/granit/: проанализировать запросы 11–20, скорректировать title/H1/SEO-текст, усилить перелинковку, проверить первый экран, CTA “получить расчет”, фото реализованных проектов, преимущества производства и форму заявки.">Скопировать</button>
+          </article>
+
+          <article class="rec-card" data-priority="high">
+            <input type="checkbox" aria-label="Выбрать задачу">
+            <div>
+              <div class="rec-title">Проверить цель “Заявка на расчет” в Метрике</div>
+              <div class="rec-meta">
+                <span class="badge red">Высокий</span>
+                <span class="badge gray">analytics</span>
+              </div>
+              <p class="rec-text">
+                Основание: в прошлом периоде были достижения, а в текущем цель стала равна 0 на мобильных устройствах.
+                Проверить событие формы, селектор кнопки, код Метрики, изменения HTML и мобильный сценарий отправки.
+              </p>
+            </div>
+            <button class="btn copy-btn" data-copy="Проверить настройку цели Метрики “Заявка на расчет”: событие отправки формы, селектор кнопки, код Метрики, изменения HTML, мобильный сценарий и корректность передачи события.">Скопировать</button>
+          </article>
+
+          <article class="rec-card" data-priority="medium">
+            <input type="checkbox" aria-label="Выбрать задачу">
+            <div>
+              <div class="rec-title">Доработать сниппеты по запросам с высокими показами и низким CTR</div>
+              <div class="rec-meta">
+                <span class="badge amber">Средний</span>
+                <span class="badge blue">ctr_optimization</span>
+              </div>
+              <p class="rec-text">
+                Основание: по части запросов сайт часто показывается, но CTR ниже среднего для текущей позиции.
+                Доработать title, description, коммерческие преимущества и микроразметку.
+              </p>
+            </div>
+            <button class="btn copy-btn" data-copy="Собрать запросы с высокими показами и низким CTR. Для связанных страниц доработать title/description, проверить H1, коммерческие преимущества и возможность микроразметки.">Скопировать</button>
+          </article>
+
+          <article class="rec-card" data-priority="medium">
+            <input type="checkbox" aria-label="Выбрать задачу">
+            <div>
+              <div class="rec-title">Проверить просадку страницы травертина</div>
+              <div class="rec-meta">
+                <span class="badge amber">Средний</span>
+                <span class="badge green">monitoring_diagnostics</span>
+              </div>
+              <p class="rec-text">
+                Основание: страница показала падение SEO-трафика и просадку по части запросов.
+                Проверить индексацию, изменения страницы, внутренние ссылки и конкурентов в выдаче.
+              </p>
+            </div>
+            <button class="btn copy-btn" data-copy="Проверить причины просадки страницы /catalog/travertin/: позиции, индексацию, технические ошибки, изменения контента, внутренние ссылки, наличие материалов и выдачу конкурентов.">Скопировать</button>
+          </article>
+
+          <article class="rec-card" data-priority="low">
+            <input type="checkbox" aria-label="Выбрать задачу">
+            <div>
+              <div class="rec-title">Расширить семантику для растущих категорий</div>
+              <div class="rec-meta">
+                <span class="badge gray">Низкий</span>
+                <span class="badge blue">semantic</span>
+              </div>
+              <p class="rec-text">
+                Основание: несколько категорий показывают устойчивый рост SEO-трафика.
+                Можно собрать дополнительные кластеры по цвету, типу камня и назначению, затем подготовить новые посадочные страницы.
+              </p>
+            </div>
+            <button class="btn copy-btn" data-copy="Собрать дополнительные кластеры запросов для растущих направлений: мраморные слэбы, гранит, столешницы, подоконники, облицовка. Проверить потенциал новых теговых/фильтровых страниц.">Скопировать</button>
+          </article>
+        </div>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: рекомендации к SEO-плану</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> формирует черновик SEO-плана для специалиста. Это не клиентский вывод, а рабочая заготовка задач, которую можно проверить, отредактировать и затем перенести в Битрикс24.</p>
+            <p><strong>Откуда брать сигналы:</strong> из всех предыдущих блоков. В отличие от общего вывода, сюда нужно передавать детализированные списки: запросы 11–20, запросы 21–30, низкий CTR, падения, страницы с ростом/падением трафика, страницы с высоким трафиком и низкой конверсией, цели с нулем, мобильные проблемы, выполненные задачи текущего месяца.</p>
+            <p><strong>Как объединять:</strong> если несколько сигналов относятся к одной странице, не создавать 3–4 разные задачи. Нужно собрать их в одну комплексную рекомендацию: релевантность + сниппет + коммерческие факторы + конверсия.</p>
+            <div class="code">recommendation_input:
+  completed_tasks[]
+  visibility:
+    queries_11_20[]
+    queries_21_30[]
+    low_ctr_queries[]
+    declined_queries[]
+    growth_queries[]
+  traffic:
+    landing_pages_growth[]
+    landing_pages_decline[]
+    weak_behavior_pages[]
+    device_insights[]
+  conversions:
+    high_traffic_low_conversion_pages[]
+    goals_to_check[]
+    goals_decline[]
+    device_conversion_insights[]
+  overall_conclusion
+  warnings[]
+
+priority_rules:
+  high:
+    traffic_decline OR conversion_decline OR queries_11_20_high_impressions OR analytics_error
+  medium:
+    low_ctr OR pages_growth_to_boost OR semantic_expansion
+  low:
+    support_tasks OR long_term_tasks OR low_traffic_pages
+
+recommendation_output:
+  task_title
+  category
+  priority
+  basis_from_report
+  affected_pages[]
+  affected_queries[]
+  source_signals[]
+  expected_effect
+  bitrix_task_description
+  confidence</div>
+            <p><strong>Создание задач:</strong> кнопка “Создать задачи” не должна сразу отправлять все в Битрикс24. Сначала SEO-специалист выбирает рекомендации чекбоксами, редактирует название/описание, назначает ответственного и срок. Только после подтверждения создаются задачи.</p>
+          </div>
+        </details>
+      </section>
+    </main>
+
+    <aside id="toc">
+      <div class="toc-title">
+        <span>Оглавление</span>
+        <span class="badge green">online</span>
+      </div>
+      <ul class="toc-list">
+        <li><a class="toc-link active" href="#summary"><span class="toc-index">1</span>Сводка<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#tasks"><span class="toc-index">2</span>Задачи<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#visibility"><span class="toc-index">3</span>Видимость<span class="toc-status warn"></span></a></li>
+        <li><a class="toc-link" href="#traffic"><span class="toc-index">4</span>Трафик<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#conversions"><span class="toc-index">5</span>Конверсии<span class="toc-status warn"></span></a></li>
+        <li><a class="toc-link" href="#conclusion"><span class="toc-index">6</span>Вывод<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#recommendations"><span class="toc-index">7</span>План SEO<span class="toc-status"></span></a></li>
+      </ul>
+      <div style="height:16px"></div>
+      <div class="summary-box" style="font-size:12px;">
+        <p><strong>Dev-режим:</strong> включите переключатель в шапке, чтобы увидеть инструкции для программиста под каждым блоком.</p>
+      </div>
+    </aside>
+  </div>
+
+  <button class="mobile-toc-btn" id="mobileTocBtn">Разделы отчета</button>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalTitle">Детали задачи</h3>
+          <p id="modalSubtitle" style="margin:6px 0 0; color: var(--muted);">Подробности задачи и клиентское пояснение</p>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+      </div>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Скопировано</div>
+
+  <script>
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("ru-RU").format(value);
+    }
+
+    function chartDefs() {
+      return `
+        <defs>
+          <linearGradient id="chartLineGradient" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#2557ff"></stop>
+            <stop offset="1" stop-color="#7c3aed"></stop>
+          </linearGradient>
+          <linearGradient id="chartAreaGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#2557ff" stop-opacity=".22"></stop>
+            <stop offset="1" stop-color="#2557ff" stop-opacity="0"></stop>
+          </linearGradient>
+          <linearGradient id="chartBarGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0" stop-color="#2557ff"></stop>
+            <stop offset="1" stop-color="#7c3aed"></stop>
+          </linearGradient>
+        </defs>
+      `;
+    }
+
+    function niceMax(value) {
+      if (value <= 10) return 10;
+      const pow = Math.pow(10, Math.floor(Math.log10(value)));
+      return Math.ceil(value / pow * 1.12) * pow;
+    }
+
+    function renderBarChart(containerId, data, options = {}) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+
+      const width = options.width || 640;
+      const height = options.height || 292;
+      const margin = { top: 26, right: 24, bottom: 48, left: 46 };
+      const innerW = width - margin.left - margin.right;
+      const innerH = height - margin.top - margin.bottom;
+      const max = options.max || niceMax(Math.max(...data.map(d => d.value)));
+      const gap = options.gap || 22;
+      const barW = Math.max(34, (innerW - gap * (data.length - 1)) / data.length);
+      const grid = [0, .25, .5, .75, 1];
+
+      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.label || ""}">${chartDefs()}`;
+
+      grid.forEach(t => {
+        const y = margin.top + innerH - innerH * t;
+        svg += `<line class="chart-grid" x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>`;
+        if (t > 0) svg += `<text class="chart-caption" x="10" y="${y + 4}">${formatNumber(Math.round(max * t))}</text>`;
+      });
+
+      svg += `<line class="chart-axis" x1="${margin.left}" y1="${margin.top + innerH}" x2="${width - margin.right}" y2="${margin.top + innerH}"></line>`;
+
+      data.forEach((d, i) => {
+        const x = margin.left + i * (barW + gap);
+        const h = Math.max(4, innerH * (d.value / max));
+        const y = margin.top + innerH - h;
+        const cls = d.soft ? "chart-bar-soft" : "chart-bar";
+        svg += `<rect class="${cls}" x="${x}" y="${y}" width="${barW}" height="${h}"></rect>`;
+        svg += `<text class="chart-number" x="${x + barW / 2}" y="${Math.max(16, y - 9)}" text-anchor="middle">${formatNumber(d.value)}</text>`;
+        svg += `<text class="chart-tick" x="${x + barW / 2}" y="${height - 18}" text-anchor="middle">${d.label}</text>`;
+      });
+
+      svg += `</svg>`;
+      el.innerHTML = svg;
+    }
+
+    function renderLineChart(containerId, data, options = {}) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+
+      const width = options.width || 820;
+      const height = options.height || 292;
+      const margin = { top: 28, right: 26, bottom: 48, left: 54 };
+      const innerW = width - margin.left - margin.right;
+      const innerH = height - margin.top - margin.bottom;
+      const values = data.map(d => d.value);
+      const minRaw = Math.min(...values);
+      const maxRaw = Math.max(...values);
+      const pad = (maxRaw - minRaw) * 0.18 || 1;
+      const min = options.min ?? Math.max(0, minRaw - pad);
+      const max = options.max ?? (maxRaw + pad);
+      const yFor = v => margin.top + innerH - ((v - min) / (max - min)) * innerH;
+      const xFor = i => margin.left + (data.length === 1 ? innerW / 2 : innerW * i / (data.length - 1));
+
+      const points = data.map((d, i) => [xFor(i), yFor(d.value)]);
+      const path = points.map((p, i) => `${i === 0 ? "M" : "L"} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
+      const area = `${path} L ${points[points.length - 1][0].toFixed(1)} ${margin.top + innerH} L ${points[0][0].toFixed(1)} ${margin.top + innerH} Z`;
+      const grid = [0, .25, .5, .75, 1];
+
+      let svg = `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="${options.label || ""}">${chartDefs()}`;
+
+      grid.forEach(t => {
+        const y = margin.top + innerH - innerH * t;
+        const val = min + (max - min) * t;
+        svg += `<line class="chart-grid" x1="${margin.left}" y1="${y}" x2="${width - margin.right}" y2="${y}"></line>`;
+        svg += `<text class="chart-caption" x="10" y="${y + 4}">${options.valueFormatter ? options.valueFormatter(val) : formatNumber(Math.round(val))}</text>`;
+      });
+
+      svg += `<path class="chart-area" d="${area}"></path>`;
+      svg += `<path class="chart-line" d="${path}"></path>`;
+
+      if (options.markerIndex !== undefined && data[options.markerIndex]) {
+        const x = xFor(options.markerIndex);
+        svg += `<line class="chart-marker" x1="${x}" y1="${margin.top - 4}" x2="${x}" y2="${margin.top + innerH + 8}"></line>`;
+        svg += `<text class="chart-marker-label" x="${x + 9}" y="${margin.top + 14}">${options.markerLabel || "Маркер"}</text>`;
+      }
+
+      data.forEach((d, i) => {
+        const x = xFor(i);
+        const y = yFor(d.value);
+        const showTick = data.length <= 8 || i === 0 || i === data.length - 1 || i % 2 === 1;
+        svg += `<circle class="chart-dot" cx="${x}" cy="${y}" r="4.5"></circle>`;
+        if (showTick) svg += `<text class="chart-tick" x="${x}" y="${height - 18}" text-anchor="middle">${d.label}</text>`;
+      });
+
+      const last = data[data.length - 1];
+      const lastPoint = points[points.length - 1];
+      svg += `<text class="chart-number" x="${Math.min(width - 96, lastPoint[0] - 10)}" y="${Math.max(20, lastPoint[1] - 14)}">${options.valueFormatter ? options.valueFormatter(last.value) : formatNumber(last.value)}</text>`;
+
+      svg += `</svg>`;
+      el.innerHTML = svg;
+    }
+
+    function renderAllCharts() {
+      renderBarChart("chartVisibilityBars", [
+        { label: "1–3", value: 29 },
+        { label: "4–10", value: 95 },
+        { label: "11–30", value: 286 },
+        { label: "31–50", value: 124 },
+        { label: "50+", value: 86, soft: true }
+      ], { label: "Распределение запросов по позициям", max: 320 });
+
+      renderLineChart("chartAvgPosition", [
+        { label: "май", value: 14.3 },
+        { label: "1 нед.", value: 14.1 },
+        { label: "2 нед.", value: 13.9 },
+        { label: "3 нед.", value: 13.6 },
+        { label: "июнь", value: 13.2 }
+      ], {
+        label: "Динамика средней позиции",
+        min: 12.8,
+        max: 14.6,
+        valueFormatter: v => v.toFixed(1).replace(".", ",")
+      });
+
+      renderLineChart("chartTrafficYear", [
+        { label: "июл", value: 3050 },
+        { label: "авг", value: 3180 },
+        { label: "сен", value: 3270 },
+        { label: "окт", value: 3410 },
+        { label: "ноя", value: 3520 },
+        { label: "дек", value: 3680 },
+        { label: "янв", value: 3920 },
+        { label: "фев", value: 4090 },
+        { label: "мар", value: 4230 },
+        { label: "апр", value: 4380 },
+        { label: "май", value: 4370 },
+        { label: "июн", value: 4860 }
+      ], {
+        label: "SEO-трафик за 12 месяцев",
+        height: 318,
+        markerIndex: 7,
+        markerLabel: "Начало SEO",
+        valueFormatter: v => formatNumber(Math.round(v))
+      });
+
+      renderBarChart("chartGoalBars", [
+        { label: "Заявка", value: 22 },
+        { label: "Тел.", value: 16 },
+        { label: "WA", value: 9 },
+        { label: "Каталог", value: 6, soft: true }
+      ], { label: "Конверсии по выбранным целям", max: 26 });
+    }
+
+
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+
+    renderAllCharts();
+
+    const taskModalData = {
+      task1: {
+        title: "Оптимизация мета-тегов для разделов камня",
+        html: `<p><strong>Тип:</strong> Контентная оптимизация</p>
+               <p><strong>Польза:</strong> усиливает релевантность страниц категории поисковым запросам и может улучшить CTR после переобхода страниц.</p>
+               <p><strong>Потенциальное влияние:</strong> релевантность, CTR, позиции.</p>
+               <p><strong>Эффект:</strong> накопительный.</p>`
+      },
+      task2: {
+        title: "Проверка canonical и индексации фильтров",
+        html: `<p><strong>Тип:</strong> Техническая оптимизация</p>
+               <p><strong>Польза:</strong> помогает снизить риск дублей и корректнее распределять сигналы между посадочными страницами.</p>
+               <p><strong>Потенциальное влияние:</strong> индексация, релевантность, краулинг.</p>`
+      },
+      task3: {
+        title: "Доработка блоков “замер”, “производство” и “монтаж”",
+        html: `<p><strong>Тип:</strong> Коммерческие факторы</p>
+               <p><strong>Польза:</strong> повышает доверие и снижает барьер к заказу, особенно для коммерческих запросов.</p>
+               <p><strong>Потенциальное влияние:</strong> конверсия, поведение, доверие.</p>`
+      },
+      task4: {
+        title: "Проверка целей Метрики по заявкам",
+        html: `<p><strong>Тип:</strong> Аналитика</p>
+               <p><strong>Польза:</strong> позволяет корректно оценивать вклад SEO-трафика в заявки и другие целевые действия.</p>
+               <p><strong>Потенциальное влияние:</strong> качество отчетности и планирование работ.</p>`
+      }
+    };
+
+    function showToast(text = "Скопировано") {
+      const toast = $("#toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 1700);
+    }
+
+    $("#devSwitch").addEventListener("click", () => {
+      const on = !document.body.classList.contains("dev-on");
+      document.body.classList.toggle("dev-on", on);
+      $("#devSwitch").setAttribute("aria-checked", on ? "true" : "false");
+      showToast(on ? "Dev-инструкции включены" : "Dev-инструкции скрыты");
+    });
+
+    $$(".tabs").forEach(tabGroup => {
+      tabGroup.addEventListener("click", event => {
+        const btn = event.target.closest(".tab-btn");
+        if (!btn) return;
+        const group = tabGroup.dataset.tabs;
+        $$(".tab-btn", tabGroup).forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const wrapper = tabGroup.parentElement;
+        $$(".tab-panel", wrapper).forEach(panel => panel.classList.remove("active"));
+        $("#" + btn.dataset.target).classList.add("active");
+      });
+    });
+
+    $("#taskFilter").addEventListener("change", event => {
+      const value = event.target.value;
+      $$("#tasksTable tbody tr").forEach(row => {
+        row.style.display = value === "all" || row.dataset.type === value ? "" : "none";
+      });
+    });
+
+    $("#priorityFilter").addEventListener("change", event => {
+      const value = event.target.value;
+      $$("#recommendationsList .rec-card").forEach(card => {
+        card.style.display = value === "all" || card.dataset.priority === value ? "" : "none";
+      });
+    });
+
+    $$("#recommendationsList input[type='checkbox']").forEach(input => {
+      input.addEventListener("change", () => {
+        input.closest(".rec-card").classList.toggle("is-done", input.checked);
+      });
+    });
+
+    $$(".copy-btn").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        const text = btn.dataset.copy || "";
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast("Описание задачи скопировано");
+        } catch (e) {
+          showToast("Скопируйте вручную");
+        }
+      });
+    });
+
+    $$("#tasksTable [data-modal]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const data = taskModalData[btn.dataset.modal];
+        $("#modalTitle").textContent = data.title;
+        $("#modalBody").innerHTML = data.html;
+        $("#modalBackdrop").classList.add("show");
+      });
+    });
+
+    $("#modalClose").addEventListener("click", () => $("#modalBackdrop").classList.remove("show"));
+    $("#modalBackdrop").addEventListener("click", event => {
+      if (event.target.id === "modalBackdrop") $("#modalBackdrop").classList.remove("show");
+    });
+
+    const tocLinks = $$(".toc-link");
+    const sections = $$(".section-observe");
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      tocLinks.forEach(link => link.classList.remove("active"));
+      const active = $(`.toc-link[href="#${visible.target.id}"]`);
+      if (active) active.classList.add("active");
+    }, { rootMargin: "-20% 0px -70% 0px", threshold: [0.1, 0.3, 0.6] });
+
+    sections.forEach(section => observer.observe(section));
+
+    $("#mobileTocBtn").addEventListener("click", () => $("#toc").classList.toggle("open"));
+    tocLinks.forEach(link => link.addEventListener("click", () => $("#toc").classList.remove("open")));
+
+    const moderationBtn = $("#taskModerationBtn");
+    if (moderationBtn) moderationBtn.addEventListener("click", () => showToast("Демо: здесь откроется список задач для исключения"));
+    $("#refreshBtn").addEventListener("click", () => showToast("Демо: здесь будет запуск обновления данных"));
+    $("#pdfBtn").addEventListener("click", () => showToast("Демо: здесь будет экспорт PDF"));
+    $("#createTasksBtn").addEventListener("click", () => showToast("Демо: сначала подтвердить выбранные задачи"));
+  </script>
+</body>
+</html>
