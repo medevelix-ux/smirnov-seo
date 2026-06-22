@@ -1382,6 +1382,32 @@
     }
 
 
+  
+    .engine-score-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .engine-card { padding: 18px; border: 1px solid var(--line); border-radius: 20px; background: #fff; }
+    .engine-card-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+    .engine-name { font-weight: 900; font-size: 18px; letter-spacing: -.035em; }
+    .engine-kpis { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .engine-kpi { padding: 10px; border-radius: 14px; background: #f8fafc; border: 1px solid #eef2f8; }
+    .engine-kpi span { display: block; color: var(--muted); font-size: 11px; font-weight: 800; margin-bottom: 4px; }
+    .engine-kpi strong { display: block; font-size: 18px; line-height: 1; letter-spacing: -.04em; }
+    .signal-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .signal-item { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: flex-start; padding: 12px; border: 1px solid var(--line); border-radius: 15px; background: #fff; }
+    .signal-num { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 10px; color: #fff; background: linear-gradient(135deg, var(--primary), var(--primary-2)); font-size: 12px; font-weight: 900; }
+    .visibility-funnel { display: grid; gap: 10px; }
+    .funnel-row { display: grid; grid-template-columns: 80px 1fr 80px; gap: 10px; align-items: center; }
+    .funnel-label { color: var(--muted); font-size: 12px; font-weight: 850; }
+    .funnel-bar { height: 12px; border-radius: 999px; background: #eef2f8; overflow: hidden; }
+    .funnel-fill { display:block; height: 100%; border-radius: 999px; background: linear-gradient(135deg, var(--primary), var(--primary-2)); }
+    .funnel-value { text-align: right; font-size: 12px; font-weight: 900; }
+    .cost-summary { margin-top: 16px; padding: 16px; border: 1px solid #cfe8da; border-radius: 18px; background: linear-gradient(135deg, rgba(22, 163, 74, .07), rgba(255,255,255,.94)), #fff; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .cost-cell { padding: 12px; border-radius: 14px; border: 1px solid #dbeee3; background: rgba(255,255,255,.82); }
+    .cost-cell span { display:block; color: var(--muted); font-size: 12px; font-weight: 800; margin-bottom: 4px; }
+    .cost-cell strong { display:block; font-size: 22px; letter-spacing: -.045em; line-height: 1; }
+    .hours-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; padding: 4px 8px; border-radius: 999px; background: #eef3ff; color: #1d4ed8; font-size: 11px; font-weight: 900; }
+    @media (max-width: 960px) { .engine-score-grid, .cost-summary { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) { .signal-item { grid-template-columns: auto 1fr; } .signal-item .badge { grid-column: 2; justify-self: start; } }
+
   </style>
 </head>
 
@@ -1401,6 +1427,7 @@
         <div class="project-chip">Период: <strong>Июнь 2026</strong></div>
         <div class="project-chip">Регион: <strong>Москва</strong></div>
         <div class="project-chip">Тип: <strong>Каталог / услуги</strong></div>
+        <div class="project-chip">Ставка: <strong>3 500 ₽/час</strong></div>
         <div class="project-chip">ТЗ: <strong><a href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing" target="_blank" rel="noopener">Google Doc</a></strong></div>
       </div>
 
@@ -1415,7 +1442,6 @@
         </label>
         <button class="btn ghost" id="refreshBtn">↻ Обновить</button>
         <button class="btn" id="pdfBtn">Экспорт PDF</button>
-        <button class="btn primary" id="createTasksBtn">+ Создать задачи</button>
       </div>
     </header>
 
@@ -1634,140 +1660,80 @@ ai_output:
         <div class="section-header">
           <div>
             <div class="section-kicker">Блок 3</div>
-            <h2>Видимость и позиции <span class="help" data-tip="Данные из Яндекс.Вебмастера и GSC. Для средней позиции: чем меньше значение, тем лучше. position_delta = previous - current.">?</span></h2>
-            <p class="section-desc">Показываем, как изменилась видимость сайта по запросам в Яндексе и Google.</p>
+            <h2>Видимость, спрос и зоны роста в поиске <span class="help" data-tip="Блок сравнивает данные Яндекс.Вебмастера и Google Search Console: показы, клики, CTR, среднюю позицию, ТОП-группы и страницы, которые стоит передать в SEO-план.">?</span></h2>
+            <p class="section-desc">Сначала показываем сравнение Яндекс vs Google, затем детальную аналитику по каждой поисковой системе отдельно.</p>
           </div>
         </div>
 
         <div class="tabs" data-tabs="visibilityTabs">
-          <button class="tab-btn active" data-target="vis-all">Все</button>
+          <button class="tab-btn active" data-target="vis-compare">Яндекс vs Google</button>
           <button class="tab-btn" data-target="vis-yandex">Яндекс</button>
           <button class="tab-btn" data-target="vis-google">Google</button>
         </div>
 
-        <div class="tab-panel active" id="vis-all">
+        <div class="tab-panel active" id="vis-compare">
+          <div class="summary-box"><p><strong>Общая динамика: положительная, но неравномерная.</strong> Яндекс дает основной вклад в рост видимости и кликов. В Google рост слабее, но есть потенциал по запросам в зоне 11–20 и страницам с высоким числом показов при низком CTR.</p></div>
+          <div style="height:16px"></div>
           <div class="grid cols-4">
-            <div class="metric-card">
-              <div class="label">ТОП-10 <span class="delta up">+24</span></div>
-              <div class="value">124</div>
-              <div class="note">Накопительная группа 1–10</div>
-            </div>
-            <div class="metric-card">
-              <div class="label">ТОП-30 <span class="delta up">+42</span></div>
-              <div class="value">410</div>
-              <div class="note">Накопительная группа 1–30</div>
-            </div>
-            <div class="metric-card">
-              <div class="label">Средняя позиция <span class="delta up">+1,1</span></div>
-              <div class="value">13,2</div>
-              <div class="note">Меньше = лучше</div>
-            </div>
-            <div class="metric-card">
-              <div class="label">Запросы 11–20</div>
-              <div class="value">9</div>
-              <div class="note">Зона ближайшего роста</div>
-            </div>
+            <div class="metric-card"><div class="label">Общая видимость <span class="delta up">рост</span></div><div class="value">124</div><div class="note">Запросов в ТОП-10, +18</div></div>
+            <div class="metric-card"><div class="label">Яндекс <span class="delta up">сильнее</span></div><div class="value">82</div><div class="note">ТОП-10, показы +16%, клики +13%</div></div>
+            <div class="metric-card"><div class="label">Google <span class="delta flat">слабый рост</span></div><div class="value">42</div><div class="note">ТОП-10, показы +7%, клики +3%</div></div>
+            <div class="metric-card"><div class="label">Главная зона роста</div><div class="value">31</div><div class="note">Запрос в зоне 11–20 по двум ПС</div></div>
           </div>
-
           <div style="height:16px"></div>
-
           <div class="grid cols-2">
-            <div class="chart-card">
-              <div class="chart-head">
-                <div>
-                  <div class="chart-title">Распределение запросов по позициям</div>
-                  <div class="chart-sub">Интервальные группы, без пересечений</div>
-                </div>
+            <div class="chart-card"><div class="chart-head"><div><div class="chart-title">Динамика visibility score</div><div class="chart-sub">Условный индекс видимости: чем выше, тем лучше</div></div></div><div class="viz" id="chartVisibilityScore" aria-label="Динамика visibility score"></div></div>
+            <div class="chart-card"><div class="chart-head"><div><div class="chart-title">Эффективность по поисковым системам</div><div class="chart-sub">Видимость, спрос, клики и потенциал</div></div></div>
+              <div class="engine-score-grid">
+                <div class="engine-card"><div class="engine-card-head"><div class="engine-name">Яндекс</div><span class="badge green">Высокая эффективность</span></div><div class="engine-kpis"><div class="engine-kpi"><span>Показы</span><strong>42 800</strong></div><div class="engine-kpi"><span>Клики</span><strong>1 740</strong></div><div class="engine-kpi"><span>CTR</span><strong>4,1%</strong></div><div class="engine-kpi"><span>11–20</span><strong>19</strong></div></div></div>
+                <div class="engine-card"><div class="engine-card-head"><div class="engine-name">Google</div><span class="badge amber">Средняя эффективность</span></div><div class="engine-kpis"><div class="engine-kpi"><span>Показы</span><strong>25 600</strong></div><div class="engine-kpi"><span>Клики</span><strong>720</strong></div><div class="engine-kpi"><span>CTR</span><strong>2,8%</strong></div><div class="engine-kpi"><span>11–20</span><strong>12</strong></div></div></div>
               </div>
-              <div class="viz" id="chartVisibilityBars" aria-label="Распределение запросов по позициям"></div>
-            </div>
-
-            <div class="chart-card">
-              <div class="chart-head">
-                <div>
-                  <div class="chart-title">Динамика средней позиции</div>
-                  <div class="chart-sub">Линия построена аккуратно: чем ниже позиция, тем лучше</div>
-                </div>
-              </div>
-              <div class="viz" id="chartAvgPosition" aria-label="Динамика средней позиции"></div>
             </div>
           </div>
-
           <div style="height:16px"></div>
-
-          <table>
-            <thead>
-              <tr><th>Сигнал</th><th>Страница</th><th class="num">Позиция</th><th class="num">Показы</th><th>Рекомендация</th></tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><span class="badge green">11–20</span> мраморные слэбы купить</td>
-                <td>/catalog/slaby-mramora/</td>
-                <td class="num">12,4</td>
-                <td class="num">2 420</td>
-                <td>Усилить релевантность страницы под коммерческий интент и добавить внутренние ссылки.</td>
-              </tr>
-              <tr>
-                <td><span class="badge amber">Низкий CTR</span> бензиновый гранит 5 квт</td>
-                <td>/catalog/granit/</td>
-                <td class="num">8,5</td>
-                <td class="num">3 100</td>
-                <td>Доработать title/description: цена, наличие, производство, монтаж.</td>
-              </tr>
-              <tr>
-                <td><span class="badge red">Падение</span> травертин для отделки</td>
-                <td>/catalog/travertin/</td>
-                <td class="num">24,7</td>
-                <td class="num">1 650</td>
-                <td>Проверить индексацию, ассортимент, интент и выдачу конкурентов.</td>
-              </tr>
-            </tbody>
-          </table>
+          <table><thead><tr><th>Показатель</th><th class="num">Яндекс</th><th class="num">Google</th><th>Вывод</th></tr></thead><tbody>
+            <tr><td>Запросов в анализе</td><td class="num">780</td><td class="num">520</td><td>В Яндексе больше данных по видимости.</td></tr>
+            <tr><td>Показы</td><td class="num">42 800</td><td class="num">25 600</td><td>Основной спрос и охват сейчас формирует Яндекс.</td></tr>
+            <tr><td>Клики</td><td class="num">1 740</td><td class="num">720</td><td>Яндекс дает больше переходов из поиска.</td></tr>
+            <tr><td>CTR</td><td class="num">4,1%</td><td class="num">2,8%</td><td>В Google слабее кликабельность сниппетов.</td></tr>
+            <tr><td>Средняя позиция</td><td class="num">12,8</td><td class="num">15,4</td><td>Яндекс ближе к ТОПу.</td></tr>
+            <tr><td>ТОП-10</td><td class="num">82</td><td class="num">42</td><td>Яндекс сильнее по текущей видимости.</td></tr>
+            <tr><td>ТОП-30</td><td class="num">280</td><td class="num">130</td><td>В Google есть зона для роста.</td></tr>
+            <tr><td>Запросы 11–20</td><td class="num">19</td><td class="num">12</td><td>Потенциал есть в обеих ПС.</td></tr>
+            <tr><td>Низкий CTR</td><td class="num">14</td><td class="num">18</td><td>Google требует отдельной доработки title/description.</td></tr>
+            <tr><td>Просадки</td><td class="num">6</td><td class="num">9</td><td>Google выглядит менее стабильным.</td></tr>
+          </tbody></table>
+          <div style="height:16px"></div>
+          <div class="grid cols-2">
+            <div class="summary-box"><p><strong>Куда смотреть в первую очередь:</strong></p><ul class="list-clean"><li>Яндекс растет быстрее — закрепить рост по мраморным слэбам и граниту.</li><li>Google дает меньше кликов при росте показов — проверить сниппеты.</li><li>Травертин просел в обеих ПС — вынести диагностику в план работ.</li></ul></div>
+            <div class="summary-box"><p><strong>Что передать в SEO-план:</strong></p><ul class="signal-list"><li class="signal-item"><span class="signal-num">1</span><span>/catalog/granit/ — запросы 11–20 в Яндексе и Google.</span><span class="badge red">Высокий</span></li><li class="signal-item"><span class="signal-num">2</span><span>/catalog/travertin/ — просадка в обеих ПС.</span><span class="badge red">Высокий</span></li><li class="signal-item"><span class="signal-num">3</span><span>/stoleshnicy/ — высокий спрос, низкий CTR.</span><span class="badge amber">Средний</span></li></ul></div>
+          </div>
         </div>
 
         <div class="tab-panel" id="vis-yandex">
-          <div class="summary-box">
-            <p><strong>Яндекс:</strong> видимость выросла, ТОП-10 увеличился на 24 запроса. Основная зона роста — коммерческие запросы по категориям.</p>
-          </div>
+          <div class="grid cols-4"><div class="metric-card"><div class="label">Показы <span class="delta up">+16%</span></div><div class="value">42 800</div><div class="note">Яндекс.Вебмастер</div></div><div class="metric-card"><div class="label">Клики <span class="delta up">+13%</span></div><div class="value">1 740</div><div class="note">Переходы из Яндекса</div></div><div class="metric-card"><div class="label">CTR <span class="delta down">-0,1 п.п.</span></div><div class="value">4,1%</div><div class="note">Кликабельность сниппетов</div></div><div class="metric-card"><div class="label">Средняя позиция <span class="delta up">+1,3</span></div><div class="value">12,8</div><div class="note">Меньше = лучше</div></div></div>
+          <div style="height:16px"></div>
+          <div class="grid cols-2"><div class="chart-card"><div class="chart-head"><div><div class="chart-title">Воронка видимости Яндекса</div><div class="chart-sub">Раздельные диапазоны позиций</div></div></div><div class="visibility-funnel"><div class="funnel-row"><span class="funnel-label">1–3</span><span class="funnel-bar"><span class="funnel-fill" style="width:18%"></span></span><span class="funnel-value">18 +3</span></div><div class="funnel-row"><span class="funnel-label">4–10</span><span class="funnel-bar"><span class="funnel-fill" style="width:64%"></span></span><span class="funnel-value">64 +11</span></div><div class="funnel-row"><span class="funnel-label">11–20</span><span class="funnel-bar"><span class="funnel-fill" style="width:19%"></span></span><span class="funnel-value">19 +5</span></div><div class="funnel-row"><span class="funnel-label">21–30</span><span class="funnel-bar"><span class="funnel-fill" style="width:100%"></span></span><span class="funnel-value">199 +39</span></div><div class="funnel-row"><span class="funnel-label">31–50</span><span class="funnel-bar"><span class="funnel-fill" style="width:48%"></span></span><span class="funnel-value">96 -8</span></div><div class="funnel-row"><span class="funnel-label">50+</span><span class="funnel-bar"><span class="funnel-fill" style="width:36%"></span></span><span class="funnel-value">72 -14</span></div></div></div>
+            <div class="chart-card"><div class="chart-head"><div><div class="chart-title">Приоритетные направления в Яндексе</div><div class="chart-sub">Срез по направлениям проекта</div></div></div><table><thead><tr><th>Направление</th><th class="num">ТОП-10</th><th class="num">Показы</th><th>Статус</th></tr></thead><tbody><tr><td>Мраморные слэбы</td><td class="num">18</td><td class="num">12 400</td><td><span class="badge green">Рост</span></td></tr><tr><td>Гранит</td><td class="num">14</td><td class="num">10 800</td><td><span class="badge amber">Потенциал</span></td></tr><tr><td>Травертин</td><td class="num">6</td><td class="num">4 600</td><td><span class="badge red">Просадка</span></td></tr><tr><td>Столешницы</td><td class="num">9</td><td class="num">7 900</td><td><span class="badge amber">Низкий CTR</span></td></tr></tbody></table></div></div>
+          <div style="height:16px"></div><table><thead><tr><th>Тип сигнала</th><th>Запрос / страница</th><th class="num">Позиция</th><th class="num">Показы</th><th>Что сделать</th></tr></thead><tbody><tr><td><span class="badge green">11–20</span></td><td>мраморные слэбы купить<br><span class="task-desc">/catalog/slaby-mramora/</span></td><td class="num">12,4</td><td class="num">2 420</td><td>Усилить релевантность и перелинковку.</td></tr><tr><td><span class="badge amber">Низкий CTR</span></td><td>гранитные плиты<br><span class="task-desc">/catalog/granit/</span></td><td class="num">8,9</td><td class="num">3 100</td><td>Доработать title/description и коммерческий сниппет.</td></tr><tr><td><span class="badge red">Просадка</span></td><td>травертин для отделки<br><span class="task-desc">/catalog/travertin/</span></td><td class="num">24,7</td><td class="num">1 650</td><td>Проверить индексацию, контент и конкурентов.</td></tr></tbody></table>
+          <div style="height:16px"></div><div class="summary-box"><p><strong>ИИ-вывод по Яндексу:</strong> Яндекс показывает уверенный рост по видимости и кликам. Основные точки роста — мраморные слэбы и гранит. В план работ стоит передать диагностику травертина и доработку сниппетов по страницам с высоким спросом.</p></div>
         </div>
 
         <div class="tab-panel" id="vis-google">
-          <div class="summary-box">
-            <p><strong>Google:</strong> динамика смешанная. В отчете использован общий срез, так как региональная детализация на уровне города недоступна.</p>
-          </div>
+          <div class="grid cols-4"><div class="metric-card"><div class="label">Показы <span class="delta up">+7%</span></div><div class="value">25 600</div><div class="note">Google Search Console</div></div><div class="metric-card"><div class="label">Клики <span class="delta up">+3%</span></div><div class="value">720</div><div class="note">Переходы из Google</div></div><div class="metric-card"><div class="label">CTR <span class="delta down">-0,3 п.п.</span></div><div class="value">2,8%</div><div class="note">Ниже, чем в Яндексе</div></div><div class="metric-card"><div class="label">Средняя позиция <span class="delta flat">+0,2</span></div><div class="value">15,4</div><div class="note">Меньше = лучше</div></div></div>
+          <div style="height:16px"></div>
+          <div class="grid cols-2"><div class="chart-card"><div class="chart-head"><div><div class="chart-title">Воронка видимости Google</div><div class="chart-sub">Раздельные диапазоны позиций</div></div></div><div class="visibility-funnel"><div class="funnel-row"><span class="funnel-label">1–3</span><span class="funnel-bar"><span class="funnel-fill" style="width:12%"></span></span><span class="funnel-value">12 +1</span></div><div class="funnel-row"><span class="funnel-label">4–10</span><span class="funnel-bar"><span class="funnel-fill" style="width:30%"></span></span><span class="funnel-value">30 +3</span></div><div class="funnel-row"><span class="funnel-label">11–20</span><span class="funnel-bar"><span class="funnel-fill" style="width:24%"></span></span><span class="funnel-value">12 +2</span></div><div class="funnel-row"><span class="funnel-label">21–30</span><span class="funnel-bar"><span class="funnel-fill" style="width:100%"></span></span><span class="funnel-value">118 +19</span></div><div class="funnel-row"><span class="funnel-label">31–50</span><span class="funnel-bar"><span class="funnel-fill" style="width:68%"></span></span><span class="funnel-value">80 -2</span></div><div class="funnel-row"><span class="funnel-label">50+</span><span class="funnel-bar"><span class="funnel-fill" style="width:60%"></span></span><span class="funnel-value">71 -6</span></div></div></div>
+          <div class="chart-card"><div class="chart-head"><div><div class="chart-title">Приоритетные направления в Google</div><div class="chart-sub">Срез по направлениям проекта</div></div></div><table><thead><tr><th>Направление</th><th class="num">ТОП-10</th><th class="num">Показы</th><th>Статус</th></tr></thead><tbody><tr><td>Мраморные слэбы</td><td class="num">9</td><td class="num">6 800</td><td><span class="badge green">Рост</span></td></tr><tr><td>Гранит</td><td class="num">7</td><td class="num">5 900</td><td><span class="badge amber">Потенциал</span></td></tr><tr><td>Травертин</td><td class="num">3</td><td class="num">2 400</td><td><span class="badge red">Просадка</span></td></tr><tr><td>Столешницы</td><td class="num">5</td><td class="num">4 200</td><td><span class="badge amber">Низкий CTR</span></td></tr></tbody></table></div></div>
+          <div style="height:16px"></div><table><thead><tr><th>Тип сигнала</th><th>Запрос / страница</th><th class="num">Позиция</th><th class="num">Показы</th><th>Что сделать</th></tr></thead><tbody><tr><td><span class="badge green">11–20</span></td><td>гранит для фасада<br><span class="task-desc">/catalog/granit/</span></td><td class="num">13,7</td><td class="num">1 220</td><td>Усилить блоки по применению и примеры работ.</td></tr><tr><td><span class="badge amber">Низкий CTR</span></td><td>мрамор для столешницы<br><span class="task-desc">/stoleshnicy/</span></td><td class="num">7,4</td><td class="num">2 600</td><td>Доработать сниппет и первый экран.</td></tr><tr><td><span class="badge red">Просадка</span></td><td>травертин натуральный<br><span class="task-desc">/catalog/travertin/</span></td><td class="num">28,2</td><td class="num">920</td><td>Проверить соответствие интента и контента.</td></tr></tbody></table>
+          <div style="height:16px"></div><div class="summary-box"><p><strong>ИИ-вывод по Google:</strong> Google показывает более слабый рост, чем Яндекс. Основная проблема — ниже CTR и меньше запросов в ТОП-10. Потенциал есть по страницам гранита и столешниц, а травертин требует отдельной диагностики.</p></div>
         </div>
 
-        <details class="dev-note">
-          <summary>Инструкция для программиста: видимость и позиции</summary>
-          <div class="dev-content">
-            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.%20%D0%92%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C%20%D0%B8%20%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%B8%20%D0%BF%D0%BE%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%B0%D0%BC" target="_blank" rel="noopener">3. Видимость и позиции</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.7.%20%D0%93%D1%80%D1%83%D0%BF%D0%BF%D1%8B%20%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%B9" target="_blank" rel="noopener">3.7 Группы позиций</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.15.%20%D0%9B%D0%BE%D0%B3%D0%B8%D0%BA%D0%B0%20%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B1%D1%8B%D1%81%D1%82%D1%80%D1%8B%D1%85%20%D0%B7%D0%BE%D0%BD%20%D1%80%D0%BE%D1%81%D1%82%D0%B0" target="_blank" rel="noopener">3.15 Быстрые зоны роста</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.19.%20%D0%9F%D1%80%D0%BE%D0%BC%D1%82%20%D0%B4%D0%BB%D1%8F%20%D0%98%D0%98%20%D0%BF%D0%BE%20%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%20%D0%B2%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%B8%20%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%B9" target="_blank" rel="noopener">3.19 Промт видимости</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
-            <p><strong>Что делает блок:</strong> показывает, как сайт виден в поиске по запросам. Блок помогает понять не только “среднюю позицию”, а структуру спроса: сколько запросов уже в ТОП-10, сколько близко к ТОП-10, где есть падение и где сниппет получает мало кликов.</p>
-            <p><strong>Основные источники:</strong> Яндекс.Вебмастер и Google Search Console. По уточнению ТЗ, главный регион в MVP не используется для Яндекс.Вебмастера и GSC как точный региональный фильтр; он преимущественно нужен для трафика. Если в будущем подключается Webtronica.io как источник целочисленных позиций, тогда регион используется для трекинга позиций.</p>
-            <p><strong>Приоритетные направления:</strong> в настройках проекта нужно хранить список важных страниц/направлений. При агрегации данных по Я.Вебмастеру и GSC система должна выделять запросы и URL, которые относятся к этим направлениям, чтобы клиент видел динамику именно по значимым страницам.</p>
-            <p><strong>Webtronica.io как опциональный источник:</strong> можно использовать для ежедневной динамики целочисленных позиций по фиксированному списку запросов. Эти значения нельзя считать абсолютно точными из-за персонализации выдачи; их лучше использовать как тренд.</p>
-            <div class="code">position_delta = avg_position_previous - avg_position_current
-// delta > 0 means improvement
-// delta < 0 means decline
+        <details class="dev-note"><summary>Инструкция для программиста: видимость и позиции</summary><div class="dev-content"><p><strong>Что делает блок:</strong> сравнивает Яндекс и Google на обзорной вкладке, а затем показывает подробную аналитику по каждой поисковой системе отдельно.</p><p><strong>Источники:</strong> Яндекс.Вебмастер и Google Search Console. Webtronica.io и трекер позиций в MVP не используются.</p><p><strong>Связь с блоком 7:</strong> в SEO-план передавать не все запросы, а готовые сигналы по URL: 11–20, низкий CTR, просадки, проблемы по приоритетным направлениям.</p><div class="code">visibility_score = top_3*1.0 + positions_4_10*0.7 + positions_11_30*0.3 + positions_31_50*0.1
 
-mvp_groups:
-  top_3  = 1..3
-  top_10 = 1..10
-  top_30 = 1..30
-  top_50 = 1..50
-
-quick_growth:
-  avg_position_current >= 11
-  avg_position_current <= 20
-  impressions > 0
-  page_url in priority_directions? boost priority
-
-low_ctr:
-  impressions >= threshold
-  avg_position <= 20
-  ctr < avg_ctr_by_position_group</div>
-            <p><strong>Что передавать в ИИ:</strong> агрегированные сводки по Яндексу/Google, списки запросов 11–20, низкий CTR, падения, рост, предупреждения. Сырые выгрузки целиком не передавать — сначала сгруппировать и отфильтровать.</p>
-          </div>
-        </details>
+tabs:
+  compare: yandex_vs_google_summary, visibility_score_dynamics, engine_efficiency_table, seo_plan_signals
+  yandex: summary, visibility_funnel, priority_directions, quick_growth_11_20, declines, low_ctr, pages_to_improve
+  google: same_as_yandex</div></div></details>
       </section>
 
       <section class="section section-observe" id="traffic">
@@ -2195,6 +2161,10 @@ ai_result:
                   <option value="low">Низкий</option>
                 </select>
               </div>
+              <div class="custom-plan-field">
+                <label for="customPlanHours">Кол-во часов</label>
+                <input id="customPlanHours" type="number" min="0" step="0.5" value="4" placeholder="Например: 4">
+              </div>
             </div>
 
             <div class="custom-plan-grid full">
@@ -2218,7 +2188,7 @@ ai_result:
             <div class="plan-head">
               <div>
                 <div class="plan-title">Доработка коммерческих посадочных страниц по граниту и мраморным слэбам</div>
-                <p class="plan-text">Планируем усилить релевантность страниц под коммерческие запросы, обновить мета-теги, добавить уточнения по производству, замеру, монтажу и примерам работ.</p>
+                <p class="plan-text">Планируем усилить релевантность страниц под коммерческие запросы, обновить мета-теги, добавить уточнения по производству, замеру, монтажу и примерам работ.</p><span class="hours-badge" data-plan-hours="14">14 часов</span>
               </div>
               <span class="badge red">Высокий приоритет</span>
             </div>
@@ -2228,7 +2198,7 @@ ai_result:
             <div class="plan-head">
               <div>
                 <div class="plan-title">Проверка и корректировка целей Яндекс.Метрики</div>
-                <p class="plan-text">Проверим корректность отслеживания заявок на расчет, кликов по телефону и мессенджерам, чтобы отчет по SEO-конверсиям был точным.</p>
+                <p class="plan-text">Проверим корректность отслеживания заявок на расчет, кликов по телефону и мессенджерам, чтобы отчет по SEO-конверсиям был точным.</p><span class="hours-badge" data-plan-hours="3">3 часа</span>
               </div>
               <span class="badge red">Высокий приоритет</span>
             </div>
@@ -2238,7 +2208,7 @@ ai_result:
             <div class="plan-head">
               <div>
                 <div class="plan-title">Диагностика просадки страницы травертина</div>
-                <p class="plan-text">Проверим позиции, индексацию, наличие материалов, внутренние ссылки и выдачу конкурентов, чтобы определить причину снижения трафика.</p>
+                <p class="plan-text">Проверим позиции, индексацию, наличие материалов, внутренние ссылки и выдачу конкурентов, чтобы определить причину снижения трафика.</p><span class="hours-badge" data-plan-hours="5">5 часов</span>
               </div>
               <span class="badge amber">Средний приоритет</span>
             </div>
@@ -2248,11 +2218,17 @@ ai_result:
             <div class="plan-head">
               <div>
                 <div class="plan-title">Расширение семантики по изделиям из натурального камня</div>
-                <p class="plan-text">Подготовим новые группы запросов по назначению, типу камня и изделиям: столешницы, подоконники, облицовка, лестницы.</p>
+                <p class="plan-text">Подготовим новые группы запросов по назначению, типу камня и изделиям: столешницы, подоконники, облицовка, лестницы.</p><span class="hours-badge" data-plan-hours="8">8 часов</span>
               </div>
               <span class="badge gray">Низкий приоритет</span>
             </div>
           </div>
+          </div>
+
+          <div class="cost-summary">
+            <div class="cost-cell"><span>Всего часов по плану</span><strong id="planTotalHours">30</strong></div>
+            <div class="cost-cell"><span>Стоимость часа проекта</span><strong id="projectHourlyRate">3 500 ₽</strong></div>
+            <div class="cost-cell"><span>Общая стоимость работ</span><strong id="planTotalCost">105 000 ₽</strong></div>
           </div>
         </div>
 
@@ -2263,7 +2239,7 @@ ai_result:
             <p><strong>Что делает блок:</strong> формирует два разных слоя: внутренние рекомендации ИИ для SEO-специалиста и обработанный план работ, который можно показывать клиенту по гостевой ссылке. Внутренний слой не должен быть доступен клиенту.</p>
             <p><strong>Внутренний слой “Рекомендации к SEO-плану”:</strong> видит только SEO-специалист. Здесь отображаются сырые рекомендации ИИ, основание из отчета, затронутые страницы/запросы, источник сигнала, уверенность, чекбоксы выбора и кнопки копирования/переноса.</p>
             <p><strong>Клиентский слой “План работ по SEO на следующий месяц”:</strong> формируется после обработки рекомендаций специалистом. В гостевой ссылке показывается именно этот слой: понятные формулировки задач без внутренних технических комментариев, без уверенности ИИ и без служебных сигналов.</p>
-            <p><strong>Кастомный пункт плана:</strong> SEO-специалист должен иметь возможность добавить пункт вручную, даже если его не предложил ИИ. Это нужно, когда клиент обозначает новый приоритетный раздел, направление или услугу, и из-за этого план на следующий месяц нужно скорректировать. Такой пункт должен иметь источник <code>manual</code> или <code>client_priority</code>, краткое клиентское описание, приоритет и флаг показа в гостевой ссылке.</p>
+            <p><strong>Кастомный пункт плана:</strong> SEO-специалист должен иметь возможность добавить пункт вручную, даже если его не предложил ИИ. Это нужно, когда клиент обозначает новый приоритетный раздел, направление или услугу, и из-за этого план на следующий месяц нужно скорректировать. Такой пункт должен иметь источник <code>manual</code> или <code>client_priority</code>, краткое клиентское описание, приоритет, количество часов и флаг показа в гостевой ссылке.</p>
             <p><strong>Откуда брать сигналы:</strong> из всех предыдущих блоков. В отличие от общего вывода, сюда нужно передавать детализированные списки: запросы 11–20, запросы 21–30, низкий CTR, падения, страницы с ростом/падением трафика, страницы с высоким трафиком и низкой конверсией, цели с нулем, мобильные проблемы, выполненные задачи текущего месяца.</p>
             <p><strong>Как объединять:</strong> если несколько сигналов относятся к одной странице, не создавать 3–4 разные задачи. Нужно собрать их в одну комплексную рекомендацию: релевантность + сниппет + коммерческие факторы + конверсия.</p>
             <div class="code">recommendation_input:
@@ -2328,11 +2304,20 @@ custom_plan_item:
   client_title
   client_description
   priority
+  planned_hours
   planned_month
   show_in_guest_report
   created_by
   created_at
-  bitrix_task_id</div>
+  bitrix_task_id
+
+project_settings:
+  client_hourly_rate
+  currency = "RUB"
+
+plan_totals:
+  total_hours = sum(plan_items.planned_hours)
+  total_cost = total_hours * project_settings.client_hourly_rate</div>
             <p><strong>Премодерация плана:</strong> процесс аналогичен блоку “Выполненные задачи”. Только там специалист исключает лишние задачи из уже выполненных работ, а здесь он выбирает и редактирует будущие задачи. До публикации гостевой ссылки у каждого пункта плана должен быть флаг <code>show_in_guest_report</code>.</p>
             <p><strong>Правило для кастомных пунктов:</strong> ручной пункт не обязан иметь основание в данных отчета, но должен иметь основание в управленческом решении: клиент обозначил новый приоритет, требуется подготовить посадочную страницу, проверить спрос или скорректировать фокус работ. В интерфейсе нужно явно отличать такие пункты от ИИ-рекомендаций.</p>
             <p><strong>Создание задач:</strong> кнопка “Создать задачи” не должна сразу отправлять все в Битрикс24. Сначала SEO-специалист выбирает рекомендации чекбоксами, редактирует название/описание, назначает ответственного и срок. Только после подтверждения создаются задачи. После создания задачи желательно сохранить связь <code>plan_item_id → bitrix_task_id</code>.</p>
@@ -2506,25 +2491,17 @@ custom_plan_item:
     }
 
     function renderAllCharts() {
-      renderBarChart("chartVisibilityBars", [
-        { label: "1–3", value: 29 },
-        { label: "4–10", value: 95 },
-        { label: "11–30", value: 286 },
-        { label: "31–50", value: 124 },
-        { label: "50+", value: 86, soft: true }
-      ], { label: "Распределение запросов по позициям", max: 320 });
-
-      renderLineChart("chartAvgPosition", [
-        { label: "май", value: 14.3 },
-        { label: "1 нед.", value: 14.1 },
-        { label: "2 нед.", value: 13.9 },
-        { label: "3 нед.", value: 13.6 },
-        { label: "июнь", value: 13.2 }
+      renderLineChart("chartVisibilityScore", [
+        { label: "май", value: 165 },
+        { label: "1 нед.", value: 172 },
+        { label: "2 нед.", value: 181 },
+        { label: "3 нед.", value: 190 },
+        { label: "июнь", value: 207 }
       ], {
-        label: "Динамика средней позиции",
-        min: 12.8,
-        max: 14.6,
-        valueFormatter: v => v.toFixed(1).replace(".", ",")
+        label: "Динамика visibility score",
+        min: 150,
+        max: 220,
+        valueFormatter: v => formatNumber(Math.round(v))
       });
 
       renderLineChart("chartTrafficYear", [
@@ -2561,6 +2538,7 @@ custom_plan_item:
     const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
 
     renderAllCharts();
+    updatePlanTotals();
 
     const taskModalData = {
       task1: {
@@ -2643,6 +2621,16 @@ custom_plan_item:
     });
 
 
+    const PROJECT_HOURLY_RATE = 3500;
+
+    function updatePlanTotals() {
+      const hours = $$(".hours-badge[data-plan-hours]").reduce((sum, el) => sum + (parseFloat(el.dataset.planHours || "0") || 0), 0);
+      const total = hours * PROJECT_HOURLY_RATE;
+      if ($("#planTotalHours")) $("#planTotalHours").textContent = hours.toLocaleString("ru-RU", { maximumFractionDigits: 1 });
+      if ($("#projectHourlyRate")) $("#projectHourlyRate").textContent = PROJECT_HOURLY_RATE.toLocaleString("ru-RU") + " ₽";
+      if ($("#planTotalCost")) $("#planTotalCost").textContent = total.toLocaleString("ru-RU") + " ₽";
+    }
+
     const priorityMeta = {
       high: { label: "Высокий приоритет", cls: "red" },
       medium: { label: "Средний приоритет", cls: "amber" },
@@ -2655,6 +2643,7 @@ custom_plan_item:
         const title = ($("#customPlanTitle")?.value || "").trim();
         const description = ($("#customPlanDescription")?.value || "").trim();
         const priority = ($("#customPlanPriority")?.value || "medium");
+        const hours = parseFloat($("#customPlanHours")?.value || "0") || 0;
         const showGuest = $("#customPlanShowGuest")?.checked ?? true;
 
         if (!title || !description) {
@@ -2673,6 +2662,7 @@ custom_plan_item:
               <p class="plan-text">${description}</p>
               <div style="height:8px"></div>
               <span class="manual-source">Источник: клиентский приоритет</span>
+              <span class="hours-badge" data-plan-hours="${hours}">${hours.toLocaleString("ru-RU")} ч.</span>
             </div>
             <span class="badge ${meta.cls}">${meta.label}</span>
           </div>
@@ -2684,8 +2674,10 @@ custom_plan_item:
         $("#customPlanTitle").value = "";
         $("#customPlanDescription").value = "";
         $("#customPlanPriority").value = "medium";
+        $("#customPlanHours").value = "4";
         $("#customPlanShowGuest").checked = true;
 
+        updatePlanTotals();
         showToast("Кастомный пункт добавлен в план");
       });
     }
@@ -2744,7 +2736,6 @@ custom_plan_item:
     if (moderationBtn) moderationBtn.addEventListener("click", () => showToast("Демо: здесь откроется список задач для исключения"));
     $("#refreshBtn").addEventListener("click", () => showToast("Демо: здесь будет запуск обновления данных"));
     $("#pdfBtn").addEventListener("click", () => showToast("Демо: здесь будет экспорт PDF"));
-    $("#createTasksBtn").addEventListener("click", () => showToast("Демо: сначала обработать рекомендации и утвердить клиентский план, включая кастомные пункты"));
   </script>
 </body>
 </html>
