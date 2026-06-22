@@ -811,6 +811,284 @@
       font-size: 12px;
     }
 
+
+
+
+    .custom-plan-box {
+      margin: 18px 0;
+      padding: 18px;
+      border: 1px solid #dbe6ff;
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, rgba(37,87,255,.065), rgba(124,58,237,.04)),
+        #fff;
+    }
+
+    .custom-plan-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .custom-plan-title strong {
+      display: block;
+      font-size: 15px;
+      letter-spacing: -.02em;
+    }
+
+    .custom-plan-title span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .custom-plan-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .custom-plan-grid.full {
+      grid-template-columns: 1fr;
+    }
+
+    .custom-plan-field label {
+      display: block;
+      margin-bottom: 6px;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .custom-plan-field textarea {
+      width: 100%;
+      min-height: 88px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .custom-plan-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .custom-plan-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #475467;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .manual-source {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f2f4f7;
+      color: #475467;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    body.guest-on .custom-plan-box {
+      display: none !important;
+    }
+
+    @media (max-width: 860px) {
+      .custom-plan-grid { grid-template-columns: 1fr; }
+      .custom-plan-actions { align-items: flex-start; flex-direction: column; }
+    }
+
+
+    .seo-only-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef3ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .guest-only-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eaf8ef;
+      color: #087536;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .workflow-line {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .workflow-step {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      position: relative;
+    }
+
+    .workflow-step strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .workflow-step span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .plan-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      margin-bottom: 12px;
+    }
+
+    .plan-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .plan-title {
+      font-weight: 900;
+      letter-spacing: -.025em;
+    }
+
+    .plan-text {
+      margin: 0;
+      color: #475467;
+      font-size: 13px;
+    }
+
+    .client-plan {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid #cfe8da;
+      border-radius: 20px;
+      background:
+        linear-gradient(135deg, rgba(22, 163, 74, .07), rgba(255,255,255,.9)),
+        #fff;
+    }
+
+    body.guest-on .seo-only,
+    body.guest-on .dev-note,
+    body.guest-on .doc-links {
+      display: none !important;
+    }
+
+    body.guest-on .topbar {
+      border-color: #bfe7cf;
+      background: rgba(248, 255, 251, .86);
+    }
+
+    body.guest-on .client-plan {
+      margin-top: 0;
+    }
+
+    body.guest-on #recommendations .section-desc::after {
+      content: " В гостевой версии скрыты внутренние рекомендации ИИ и показывается только план, обработанный SEO-специалистом.";
+      color: #087536;
+      font-weight: 700;
+    }
+
+    @media (max-width: 860px) {
+      .workflow-line { grid-template-columns: 1fr; }
+      .plan-head { flex-direction: column; }
+    }
+
+
+    .doc-links {
+      margin: 12px 0 16px;
+      padding: 14px;
+      border: 1px solid #dbe6ff;
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(37, 87, 255, .06), rgba(124, 58, 237, .045)),
+        #ffffff;
+    }
+
+    .doc-links-title {
+      margin-bottom: 10px;
+      color: #263b62;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    .doc-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .doc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #cddaff;
+      background: #fff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 850;
+      transition: .16s ease;
+    }
+
+    .doc-link::before {
+      content: "↗";
+      font-weight: 900;
+    }
+
+    .doc-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(37, 87, 255, .12);
+      border-color: #9cb5ff;
+    }
+
+    .doc-links-note {
+      margin: 10px 0 0;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+
     .dev-note {
       display: none;
       margin-top: 18px;
@@ -1019,6 +1297,91 @@
       .rec-card { grid-template-columns: auto 1fr; }
       .copy-btn { grid-column: 2; justify-self: start; }
     }
+  
+    /* Header layout fix: prevents project chips, switches, and buttons from overlapping on desktop */
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(220px, 260px) minmax(280px, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand {
+      min-width: 0;
+    }
+
+    .project-strip {
+      min-width: 0;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .project-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .project-chip {
+      flex: 0 0 auto;
+    }
+
+    .toolbar {
+      min-width: 0;
+      justify-self: end;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 560px;
+      row-gap: 8px;
+    }
+
+    .toggle-dev {
+      flex: 0 0 auto;
+      min-width: max-content;
+    }
+
+    .topbar .btn {
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 1380px) {
+      .topbar {
+        grid-template-columns: minmax(210px, 260px) 1fr;
+      }
+
+      .toolbar {
+        grid-column: 2;
+        grid-row: 1;
+        max-width: none;
+      }
+
+      .project-strip {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .brand,
+      .toolbar,
+      .project-strip {
+        grid-column: 1;
+        grid-row: auto;
+        justify-self: stretch;
+      }
+
+      .toolbar {
+        justify-content: flex-start;
+      }
+    }
+
+
   </style>
 </head>
 
@@ -1038,12 +1401,17 @@
         <div class="project-chip">Период: <strong>Июнь 2026</strong></div>
         <div class="project-chip">Регион: <strong>Москва</strong></div>
         <div class="project-chip">Тип: <strong>Каталог / услуги</strong></div>
+        <div class="project-chip">ТЗ: <strong><a href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing" target="_blank" rel="noopener">Google Doc</a></strong></div>
       </div>
 
       <div class="toolbar">
         <label class="toggle-dev" title="Включить технические инструкции в интерфейсе">
           <span class="switch" id="devSwitch" role="switch" aria-checked="false"></span>
           Dev-инструкции
+        </label>
+        <label class="toggle-dev" title="Включить режим просмотра по гостевой ссылке для клиента">
+          <span class="switch" id="guestSwitch" role="switch" aria-checked="false"></span>
+          Гостевая ссылка
         </label>
         <button class="btn ghost" id="refreshBtn">↻ Обновить</button>
         <button class="btn" id="pdfBtn">Экспорт PDF</button>
@@ -1092,6 +1460,7 @@
         <details class="dev-note">
           <summary>Инструкция для программиста: сводный верхний блок</summary>
           <div class="dev-content">
+            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=0.%20%D0%9E%D0%B3%D0%BB%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%20%D0%BE%D1%82%D1%87%D0%B5%D1%82%D0%B0" target="_blank" rel="noopener">0. Оглавление</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=1.%20%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B0%D1%8F%20%D1%81%D0%B2%D0%BE%D0%B4%D0%BA%D0%B0%20%D0%BF%D0%BE%20%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D1%83" target="_blank" rel="noopener">1. Краткая сводка</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=%D0%BF%D1%80%D0%B8%D0%BE%D1%80%D0%B8%D1%82%D0%B5%D1%82%D0%BD%D1%8B%D1%85%20%D0%BD%D0%B0%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B9" target="_blank" rel="noopener">Настройки проекта</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
             <p><strong>Что делает блок:</strong> это верхняя витрина отчета. Она собирается после генерации всех разделов и быстро показывает состояние проекта: период, домен, регион, тип сайта, статус месяца, SEO-трафик, конверсии и главный фокус.</p>
             <p><strong>Откуда берутся данные:</strong> project_settings + итоговые summary из блоков задач, видимости, трафика, конверсий и общего вывода. Приоритетные направления и дата старта SEO задаются в настройках проекта.</p>
             <div class="code">project_settings:
@@ -1231,9 +1600,10 @@ output:
         <details class="dev-note">
           <summary>Инструкция для программиста: выполненные задачи</summary>
           <div class="dev-content">
+            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=2.%20%D0%92%D1%8B%D0%BF%D0%BE%D0%BB%D0%BD%D0%B5%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8%20%D0%B8%D0%B7%20%D0%91%D0%B8%D1%82%D1%80%D0%B8%D0%BA%D1%81%D0%B0" target="_blank" rel="noopener">2. Задачи из Битрикса</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=2.5.%20%D0%9B%D0%BE%D0%B3%D0%B8%D0%BA%D0%B0%20%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B8%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87" target="_blank" rel="noopener">2.5 Группировка задач</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=2.10.%20%D0%9F%D1%80%D0%BE%D0%BC%D1%82%20%D0%B4%D0%BB%D1%8F%20%D0%98%D0%98%20%D0%BF%D0%BE%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%D0%BC%20%D0%B8%D0%B7%20%D0%91%D0%B8%D1%82%D1%80%D0%B8%D0%BA%D1%81%D0%B0" target="_blank" rel="noopener">2.10 Промт задач</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=2.11.%20%D0%9F%D1%80%D0%BE%D0%BC%D1%82%20%D0%B4%D0%BB%D1%8F%20%D0%BA%D1%80%D0%B0%D1%82%D0%BA%D0%BE%D0%B3%D0%BE%20%D0%B2%D1%8B%D0%B2%D0%BE%D0%B4%D0%B0%20%D0%BF%D0%BE%20%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%20%D0%B7%D0%B0%D0%B4%D0%B0%D1%87" target="_blank" rel="noopener">2.11 Вывод по задачам</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
             <p><strong>Что делает блок:</strong> превращает внутренний список задач из Битрикс24 в понятный клиенту список выполненных SEO-работ. Здесь важно не просто показать названия задач, а объяснить пользу: индексация, релевантность, CTR, коммерческие факторы, аналитика.</p>
             <p><strong>Откуда брать данные:</strong> основной сценарий — найти главную задачу месяца в формате “{Месяц} {Год}. {домен}” и выгрузить все ее подзадачи, включая подзадачи подзадач. По уточнению ТЗ, в отчетный пул попадают все плановые подзадачи главной задачи месяца, даже если часть закрывается в первые дни следующего периода. Затем ответственный сотрудник должен вручную исключить задачи, которые не нужно показывать клиенту.</p>
-            <p><strong>Зачем нужна предмодерация:</strong> в Битриксе могут быть внутренние обсуждения, служебные проверки или задачи, “о которых клиент знать не должен”. Поэтому перед генерацией отчета нужен экран выбора: список задач → крестик “исключить” → кнопка “Продолжить”.</p>
+            <p><strong>Зачем нужна предмодерация:</strong> в Битриксе могут быть внутренние обсуждения, служебные проверки или задачи, “о которых клиент знать не должен”. Поэтому перед генерацией отчета нужен экран выбора: список задач → крестик “исключить” → кнопка “Продолжить”. Для гостевой ссылки клиент должен видеть только задачи с флагом <code>show_in_guest_report = true</code>.</p>
             <p><strong>Минимальные поля:</strong> task_id, task_title, task_description, status, comments_text, checklist_items. Дополнительно можно хранить responsible, deadline, time_spent, parent_task_id.</p>
             <div class="code">bitrix_source:
   main_task_title = "{month} {year}. {domain}"
@@ -1243,8 +1613,9 @@ task_selection_flow:
   1. load all subtasks from main_task
   2. show moderation screen to responsible employee
   3. employee excludes internal/client-unwanted tasks
-  4. send remaining tasks to AI classifier
-  5. render grouped client-facing block
+  4. save flags: include_in_report, show_in_guest_report
+  5. send remaining tasks to AI classifier
+  6. render grouped client-facing block
 
 ai_output:
   task_title_client
@@ -1369,6 +1740,7 @@ ai_output:
         <details class="dev-note">
           <summary>Инструкция для программиста: видимость и позиции</summary>
           <div class="dev-content">
+            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.%20%D0%92%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D1%8C%20%D0%B8%20%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%B8%20%D0%BF%D0%BE%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%BC%20%D0%B7%D0%B0%D0%BF%D1%80%D0%BE%D1%81%D0%B0%D0%BC" target="_blank" rel="noopener">3. Видимость и позиции</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.7.%20%D0%93%D1%80%D1%83%D0%BF%D0%BF%D1%8B%20%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%B9" target="_blank" rel="noopener">3.7 Группы позиций</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.15.%20%D0%9B%D0%BE%D0%B3%D0%B8%D0%BA%D0%B0%20%D0%BE%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F%20%D0%B1%D1%8B%D1%81%D1%82%D1%80%D1%8B%D1%85%20%D0%B7%D0%BE%D0%BD%20%D1%80%D0%BE%D1%81%D1%82%D0%B0" target="_blank" rel="noopener">3.15 Быстрые зоны роста</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=3.19.%20%D0%9F%D1%80%D0%BE%D0%BC%D1%82%20%D0%B4%D0%BB%D1%8F%20%D0%98%D0%98%20%D0%BF%D0%BE%20%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%20%D0%B2%D0%B8%D0%B4%D0%B8%D0%BC%D0%BE%D1%81%D1%82%D0%B8%20%D0%B8%20%D0%BF%D0%BE%D0%B7%D0%B8%D1%86%D0%B8%D0%B9" target="_blank" rel="noopener">3.19 Промт видимости</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
             <p><strong>Что делает блок:</strong> показывает, как сайт виден в поиске по запросам. Блок помогает понять не только “среднюю позицию”, а структуру спроса: сколько запросов уже в ТОП-10, сколько близко к ТОП-10, где есть падение и где сниппет получает мало кликов.</p>
             <p><strong>Основные источники:</strong> Яндекс.Вебмастер и Google Search Console. По уточнению ТЗ, главный регион в MVP не используется для Яндекс.Вебмастера и GSC как точный региональный фильтр; он преимущественно нужен для трафика. Если в будущем подключается Webtronica.io как источник целочисленных позиций, тогда регион используется для трекинга позиций.</p>
             <p><strong>Приоритетные направления:</strong> в настройках проекта нужно хранить список важных страниц/направлений. При агрегации данных по Я.Вебмастеру и GSC система должна выделять запросы и URL, которые относятся к этим направлениям, чтобы клиент видел динамику именно по значимым страницам.</p>
@@ -1458,6 +1830,7 @@ low_ctr:
         <details class="dev-note">
           <summary>Инструкция для программиста: поисковый трафик</summary>
           <div class="dev-content">
+            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=4.%20%D0%9F%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D1%8B%D0%B9%20%D1%82%D1%80%D0%B0%D1%84%D0%B8%D0%BA%20%D0%B8%D0%B7%20%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%9C%D0%B5%D1%82%D1%80%D0%B8%D0%BA%D0%B8" target="_blank" rel="noopener">4. Поисковый трафик</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=4.4.%20%D0%94%D0%BE%D0%BB%D0%B3%D0%BE%D1%81%D1%80%D0%BE%D1%87%D0%BD%D0%B0%D1%8F%20%D0%B4%D0%B8%D0%BD%D0%B0%D0%BC%D0%B8%D0%BA%D0%B0%20%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%20%D1%82%D1%80%D0%B0%D1%84%D0%B8%D0%BA%D0%B0%20%D0%B7%D0%B0%2012%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86%D0%B5%D0%B2" target="_blank" rel="noopener">4.4 График 12 месяцев</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=4.11.%20%D0%9B%D0%BE%D0%B3%D0%B8%D0%BA%D0%B0%20%D0%B0%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%20%D0%BF%D0%BE%D1%81%D0%B0%D0%B4%D0%BE%D1%87%D0%BD%D1%8B%D1%85%20%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86" target="_blank" rel="noopener">4.11 Посадочные страницы</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=4.16.%20%D0%A7%D1%82%D0%BE%20%D0%B4%D0%BE%D0%BB%D0%B6%D0%B5%D0%BD%20%D0%B4%D0%B5%D0%BB%D0%B0%D1%82%D1%8C%20%D0%98%D0%98" target="_blank" rel="noopener">4.16 ИИ по трафику</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
             <p><strong>Что делает блок:</strong> показывает динамику именно органического поискового трафика. Это не весь трафик сайта. Из отчета нужно исключить рекламу, прямые заходы, соцсети, мессенджеры, referral, email, UTM-кампании, внутренние переходы, технические визиты и роботов.</p>
             <p><strong>Откуда брать данные:</strong> Яндекс.Метрика. ID счетчика хранится в настройках проекта. Там же хранится домен, отчетный период, основной регион, настройки исключения роботов и список приоритетных направлений.</p>
             <p><strong>Зачем нужен график 12 месяцев:</strong> он показывает долгосрочный тренд, сезонность и динамику до/после старта SEO-работ. Дату старта SEO лучше задавать вручную в карточке проекта. На графике выводится отметка “Начало SEO-работ”. Нельзя автоматически писать, что рост произошел именно из-за SEO — допустима осторожная формулировка “после начала работ наблюдается рост”.</p>
@@ -1545,6 +1918,7 @@ avg_after_seo = average(monthly_visits after seo_start_date)</div>
         <details class="dev-note">
           <summary>Инструкция для программиста: конверсии</summary>
           <div class="dev-content">
+            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=5.%20%D0%9A%D0%BE%D0%BD%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D0%B8%20%D0%B8%D0%B7%20%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%9C%D0%B5%D1%82%D1%80%D0%B8%D0%BA%D0%B8" target="_blank" rel="noopener">5. Конверсии</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=5.4.%20%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%20%D0%B2%D1%8B%D0%B1%D0%BE%D1%80%D0%B0%20%D1%86%D0%B5%D0%BB%D0%B5%D0%B9" target="_blank" rel="noopener">5.4 Выбор целей</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=5.16.%20%D0%93%D1%80%D1%83%D0%BF%D0%BF%D1%8B%20%D0%BF%D0%BE%D1%81%D0%B0%D0%B4%D0%BE%D1%87%D0%BD%D1%8B%D1%85%20%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86" target="_blank" rel="noopener">5.16 Высокий трафик / низкая CR</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=5.25.%20%D0%9F%D1%80%D0%BE%D0%BC%D1%82%20%D0%B4%D0%BB%D1%8F%20%D0%98%D0%98%20%D0%BF%D0%BE%20%D0%B1%D0%BB%D0%BE%D0%BA%D1%83%20%D0%BA%D0%BE%D0%BD%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D0%B9" target="_blank" rel="noopener">5.25 Промт конверсий</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
             <p><strong>Что делает блок:</strong> показывает, как SEO-трафик влияет на целевые действия. Важно анализировать только выбранный набор целей и только органический поиск. Нельзя подмешивать цели из рекламы, прямого трафика или технические события.</p>
             <p><strong>Настройка целей:</strong> пользователь должен выбрать одну или несколько целей Метрики, сохранить набор для проекта и назначить набор по умолчанию. Цели нужно классифицировать: основные, вспомогательные, технические. В клиентский отчет по умолчанию выводить основные и при необходимости вспомогательные цели.</p>
             <p><strong>Важное различие:</strong> достижения целей и конверсионные визиты — не одно и то же. Если один визит дал несколько событий, достижения целей могут быть больше числа конверсионных визитов. Для общей конверсии лучше использовать converted_visits / organic_visits, если Метрика позволяет получить такой показатель.</p>
@@ -1618,6 +1992,7 @@ high_traffic_low_conversion:
         <details class="dev-note">
           <summary>Инструкция для программиста: общий вывод</summary>
           <div class="dev-content">
+            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=6.%20%D0%9E%D0%B1%D1%89%D0%B8%D0%B9%20%D0%B2%D1%8B%D0%B2%D0%BE%D0%B4%20%D0%BF%D0%BE%20%D0%BE%D1%82%D1%87%D0%B5%D1%82%D1%83" target="_blank" rel="noopener">6. Общий вывод</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=6.4.%20%D0%9B%D0%BE%D0%B3%D0%B8%D0%BA%D0%B0%20%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%D0%BE%D0%B1%D1%89%D0%B5%D0%B3%D0%BE%20%D0%B2%D1%8B%D0%B2%D0%BE%D0%B4%D0%B0" target="_blank" rel="noopener">6.4 Логика вывода</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=6.10.%20%D0%9F%D1%80%D0%BE%D0%BC%D1%82%20%D0%B4%D0%BB%D1%8F%20%D0%98%D0%98" target="_blank" rel="noopener">6.10 Промт вывода</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
             <p><strong>Что делает блок:</strong> это клиентский итог, а не новый аналитический расчет. Он не должен заново анализировать сырые выгрузки. Его задача — аккуратно объединить уже готовые краткие выводы по задачам, видимости, трафику и конверсиям.</p>
             <p><strong>Почему так:</strong> каждый предыдущий блок уже интерпретировал свои данные. Если снова передать все сырые таблицы, ИИ может сформулировать противоречивые выводы. Поэтому в общий вывод идут только summary, key_facts, status и warnings.</p>
             <div class="code">input_summaries:
@@ -1663,7 +2038,9 @@ ai_result:
             <p class="section-desc">Формируем болванку задач на следующий месяц на основе данных отчета.</p>
           </div>
           <div class="section-actions">
-            <select id="priorityFilter" aria-label="Фильтр рекомендаций">
+            <span class="seo-only-label seo-only">Внутренний блок SEO</span>
+            <span class="guest-only-label">Клиентский план ниже</span>
+            <select id="priorityFilter" class="seo-only" aria-label="Фильтр рекомендаций">
               <option value="all">Все приоритеты</option>
               <option value="high">Высокий</option>
               <option value="medium">Средний</option>
@@ -1672,15 +2049,22 @@ ai_result:
           </div>
         </div>
 
-        <div class="grid cols-3">
-          <div class="metric-card"><div class="label">Высокий приоритет</div><div class="value">5</div><div class="note">Взять в работу первыми</div></div>
-          <div class="metric-card"><div class="label">Средний приоритет</div><div class="value">8</div><div class="note">После критичных задач</div></div>
-          <div class="metric-card"><div class="label">Низкий приоритет</div><div class="value">4</div><div class="note">Поддерживающие работы</div></div>
-        </div>
+        <div class="seo-only">
+          <div class="summary-box">
+            <p><strong>Внутренний черновик рекомендаций:</strong> этот блок видит SEO-специалист. Он выбирает полезные рекомендации, редактирует формулировки, назначает ответственных и переносит утвержденные пункты в клиентский план работ на следующий месяц.</p>
+          </div>
 
-        <div style="height:16px"></div>
+          <div style="height:16px"></div>
 
-        <div id="recommendationsList">
+          <div class="grid cols-3">
+            <div class="metric-card"><div class="label">Высокий приоритет</div><div class="value">5</div><div class="note">Взять в работу первыми</div></div>
+            <div class="metric-card"><div class="label">Средний приоритет</div><div class="value">8</div><div class="note">После критичных задач</div></div>
+            <div class="metric-card"><div class="label">Низкий приоритет</div><div class="value">4</div><div class="note">Поддерживающие работы</div></div>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <div id="recommendationsList">
           <article class="rec-card" data-priority="high">
             <input type="checkbox" aria-label="Выбрать задачу">
             <div>
@@ -1761,12 +2145,125 @@ ai_result:
             </div>
             <button class="btn copy-btn" data-copy="Собрать дополнительные кластеры запросов для растущих направлений: мраморные слэбы, гранит, столешницы, подоконники, облицовка. Проверить потенциал новых теговых/фильтровых страниц.">Скопировать</button>
           </article>
+          </div>
+        </div>
+
+        <div class="client-plan" id="clientPlan">
+          <div class="section-header" style="margin-bottom: 12px;">
+            <div>
+              <div class="section-kicker">Клиентская версия</div>
+              <h2 style="font-size: 20px;">План работ по SEO на июль 2026 <span class="help" data-tip="Это уже не сырые рекомендации ИИ, а обработанный SEO-специалистом план, который можно показывать клиенту по гостевой ссылке.">?</span></h2>
+              <p class="section-desc">План формируется из выбранных рекомендаций, редактируется SEO-специалистом и показывается клиенту при отправке гостевой ссылки.</p>
+            </div>
+            <span class="guest-only-label">Виден клиенту</span>
+          </div>
+
+          <div class="workflow-line">
+            <div class="workflow-step">
+              <strong>1. ИИ-рекомендации</strong>
+              <span>Система формирует внутренний список задач на основе отчета.</span>
+            </div>
+            <div class="workflow-step">
+              <strong>2. Обработка SEO-специалистом</strong>
+              <span>Специалист выбирает, редактирует, объединяет и назначает приоритеты.</span>
+            </div>
+            <div class="workflow-step">
+              <strong>3. Клиентский план</strong>
+              <span>В гостевой ссылке клиент видит только согласованный план работ.</span>
+            </div>
+          </div>
+
+          <div class="custom-plan-box seo-only">
+            <div class="custom-plan-title">
+              <div>
+                <strong>Добавить кастомный пункт в план</strong>
+                <span>Для случаев, когда клиент обозначил новый приоритет, которого нет среди ИИ-рекомендаций.</span>
+              </div>
+              <span class="seo-only-label">Ручное добавление</span>
+            </div>
+
+            <div class="custom-plan-grid">
+              <div class="custom-plan-field">
+                <label for="customPlanTitle">Название пункта плана</label>
+                <input id="customPlanTitle" type="search" placeholder="Например: Проработка нового раздела “Оникс для интерьера”">
+              </div>
+              <div class="custom-plan-field">
+                <label for="customPlanPriority">Приоритет</label>
+                <select id="customPlanPriority">
+                  <option value="high">Высокий</option>
+                  <option value="medium" selected>Средний</option>
+                  <option value="low">Низкий</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="custom-plan-grid full">
+              <div class="custom-plan-field">
+                <label for="customPlanDescription">Описание для клиента</label>
+                <textarea id="customPlanDescription" placeholder="Что планируем сделать и зачем это нужно. Например: собрать семантику, проверить спрос, подготовить структуру посадочной страницы и рекомендации по коммерческим блокам."></textarea>
+              </div>
+            </div>
+
+            <div class="custom-plan-actions">
+              <label class="custom-plan-check">
+                <input id="customPlanShowGuest" type="checkbox" checked>
+                Показывать клиенту в гостевой ссылке
+              </label>
+              <button class="btn primary" id="addCustomPlanBtn">+ Добавить в план</button>
+            </div>
+          </div>
+
+          <div id="clientPlanItems">
+          <div class="plan-card">
+            <div class="plan-head">
+              <div>
+                <div class="plan-title">Доработка коммерческих посадочных страниц по граниту и мраморным слэбам</div>
+                <p class="plan-text">Планируем усилить релевантность страниц под коммерческие запросы, обновить мета-теги, добавить уточнения по производству, замеру, монтажу и примерам работ.</p>
+              </div>
+              <span class="badge red">Высокий приоритет</span>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-head">
+              <div>
+                <div class="plan-title">Проверка и корректировка целей Яндекс.Метрики</div>
+                <p class="plan-text">Проверим корректность отслеживания заявок на расчет, кликов по телефону и мессенджерам, чтобы отчет по SEO-конверсиям был точным.</p>
+              </div>
+              <span class="badge red">Высокий приоритет</span>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-head">
+              <div>
+                <div class="plan-title">Диагностика просадки страницы травертина</div>
+                <p class="plan-text">Проверим позиции, индексацию, наличие материалов, внутренние ссылки и выдачу конкурентов, чтобы определить причину снижения трафика.</p>
+              </div>
+              <span class="badge amber">Средний приоритет</span>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-head">
+              <div>
+                <div class="plan-title">Расширение семантики по изделиям из натурального камня</div>
+                <p class="plan-text">Подготовим новые группы запросов по назначению, типу камня и изделиям: столешницы, подоконники, облицовка, лестницы.</p>
+              </div>
+              <span class="badge gray">Низкий приоритет</span>
+            </div>
+          </div>
+          </div>
         </div>
 
         <details class="dev-note">
           <summary>Инструкция для программиста: рекомендации к SEO-плану</summary>
           <div class="dev-content">
-            <p><strong>Что делает блок:</strong> формирует черновик SEO-плана для специалиста. Это не клиентский вывод, а рабочая заготовка задач, которую можно проверить, отредактировать и затем перенести в Битрикс24.</p>
+            <div class="doc-links"><div class="doc-links-title">Полная глава ТЗ в Google Doc</div><div class="doc-links-row"><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=7.%20%D0%A0%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B8%20%D0%BA%20SEO-%D0%BF%D0%BB%D0%B0%D0%BD%D1%83%20%D0%BD%D0%B0%20%D1%81%D0%BB%D0%B5%D0%B4%D1%83%D1%8E%D1%89%D0%B8%D0%B9%20%D0%BC%D0%B5%D1%81%D1%8F%D1%86" target="_blank" rel="noopener">7. SEO-план</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=7.3.%20%D0%9A%D0%B0%D0%BA%D0%B8%D0%B5%20%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5%20%D0%BD%D1%83%D0%B6%D0%BD%D0%BE%20%D0%BF%D0%B5%D1%80%D0%B5%D0%B4%D0%B0%D0%B2%D0%B0%D1%82%D1%8C%20%D0%BD%D0%B0%20%D0%B2%D1%85%D0%BE%D0%B4" target="_blank" rel="noopener">7.3 Входные данные</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=7.6.%20%D0%9B%D0%BE%D0%B3%D0%B8%D0%BA%D0%B0%20%D1%84%D0%BE%D1%80%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20%D1%80%D0%B5%D0%BA%D0%BE%D0%BC%D0%B5%D0%BD%D0%B4%D0%B0%D1%86%D0%B8%D0%B9" target="_blank" rel="noopener">7.6 Сигналы рекомендаций</a><a class="doc-link" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing#:~:text=7.13.%20%D0%9F%D1%80%D0%BE%D0%BC%D1%82%20%D0%B4%D0%BB%D1%8F%20%D0%98%D0%98" target="_blank" rel="noopener">7.13 Промт плана</a></div><p class="doc-links-note">В макете оставлены краткие инструкции. Подробные промты, группировки, поля и правила — в Google Doc. Если нужен 100% переход к заголовку в Google Docs, замените href на ссылку, полученную через “Copy link to heading”.</p></div>
+            <p><strong>Что делает блок:</strong> формирует два разных слоя: внутренние рекомендации ИИ для SEO-специалиста и обработанный план работ, который можно показывать клиенту по гостевой ссылке. Внутренний слой не должен быть доступен клиенту.</p>
+            <p><strong>Внутренний слой “Рекомендации к SEO-плану”:</strong> видит только SEO-специалист. Здесь отображаются сырые рекомендации ИИ, основание из отчета, затронутые страницы/запросы, источник сигнала, уверенность, чекбоксы выбора и кнопки копирования/переноса.</p>
+            <p><strong>Клиентский слой “План работ по SEO на следующий месяц”:</strong> формируется после обработки рекомендаций специалистом. В гостевой ссылке показывается именно этот слой: понятные формулировки задач без внутренних технических комментариев, без уверенности ИИ и без служебных сигналов.</p>
+            <p><strong>Кастомный пункт плана:</strong> SEO-специалист должен иметь возможность добавить пункт вручную, даже если его не предложил ИИ. Это нужно, когда клиент обозначает новый приоритетный раздел, направление или услугу, и из-за этого план на следующий месяц нужно скорректировать. Такой пункт должен иметь источник <code>manual</code> или <code>client_priority</code>, краткое клиентское описание, приоритет и флаг показа в гостевой ссылке.</p>
             <p><strong>Откуда брать сигналы:</strong> из всех предыдущих блоков. В отличие от общего вывода, сюда нужно передавать детализированные списки: запросы 11–20, запросы 21–30, низкий CTR, падения, страницы с ростом/падением трафика, страницы с высоким трафиком и низкой конверсией, цели с нулем, мобильные проблемы, выполненные задачи текущего месяца.</p>
             <p><strong>Как объединять:</strong> если несколько сигналов относятся к одной странице, не создавать 3–4 разные задачи. Нужно собрать их в одну комплексную рекомендацию: релевантность + сниппет + коммерческие факторы + конверсия.</p>
             <div class="code">recommendation_input:
@@ -1808,8 +2305,37 @@ recommendation_output:
   source_signals[]
   expected_effect
   bitrix_task_description
-  confidence</div>
-            <p><strong>Создание задач:</strong> кнопка “Создать задачи” не должна сразу отправлять все в Битрикс24. Сначала SEO-специалист выбирает рекомендации чекбоксами, редактирует название/описание, назначает ответственного и срок. Только после подтверждения создаются задачи.</p>
+  confidence
+
+seo_plan_item_after_moderation:
+  plan_item_id
+  source_type              // ai_recommendation | manual | client_priority
+  source_recommendation_ids[]
+  client_title
+  client_description
+  internal_comment
+  priority
+  planned_month
+  role
+  responsible
+  deadline
+  show_in_guest_report
+  bitrix_task_id
+
+custom_plan_item:
+  plan_item_id
+  source_type = "client_priority"
+  client_title
+  client_description
+  priority
+  planned_month
+  show_in_guest_report
+  created_by
+  created_at
+  bitrix_task_id</div>
+            <p><strong>Премодерация плана:</strong> процесс аналогичен блоку “Выполненные задачи”. Только там специалист исключает лишние задачи из уже выполненных работ, а здесь он выбирает и редактирует будущие задачи. До публикации гостевой ссылки у каждого пункта плана должен быть флаг <code>show_in_guest_report</code>.</p>
+            <p><strong>Правило для кастомных пунктов:</strong> ручной пункт не обязан иметь основание в данных отчета, но должен иметь основание в управленческом решении: клиент обозначил новый приоритет, требуется подготовить посадочную страницу, проверить спрос или скорректировать фокус работ. В интерфейсе нужно явно отличать такие пункты от ИИ-рекомендаций.</p>
+            <p><strong>Создание задач:</strong> кнопка “Создать задачи” не должна сразу отправлять все в Битрикс24. Сначала SEO-специалист выбирает рекомендации чекбоксами, редактирует название/описание, назначает ответственного и срок. Только после подтверждения создаются задачи. После создания задачи желательно сохранить связь <code>plan_item_id → bitrix_task_id</code>.</p>
           </div>
         </details>
       </section>
@@ -2078,6 +2604,17 @@ recommendation_output:
       showToast(on ? "Dev-инструкции включены" : "Dev-инструкции скрыты");
     });
 
+    $("#guestSwitch").addEventListener("click", () => {
+      const on = !document.body.classList.contains("guest-on");
+      document.body.classList.toggle("guest-on", on);
+      $("#guestSwitch").setAttribute("aria-checked", on ? "true" : "false");
+      if (on) {
+        document.body.classList.remove("dev-on");
+        $("#devSwitch").setAttribute("aria-checked", "false");
+      }
+      showToast(on ? "Включен просмотр по гостевой ссылке" : "Включен внутренний режим SEO");
+    });
+
     $$(".tabs").forEach(tabGroup => {
       tabGroup.addEventListener("click", event => {
         const btn = event.target.closest(".tab-btn");
@@ -2104,6 +2641,55 @@ recommendation_output:
         card.style.display = value === "all" || card.dataset.priority === value ? "" : "none";
       });
     });
+
+
+    const priorityMeta = {
+      high: { label: "Высокий приоритет", cls: "red" },
+      medium: { label: "Средний приоритет", cls: "amber" },
+      low: { label: "Низкий приоритет", cls: "gray" }
+    };
+
+    const addCustomPlanBtn = $("#addCustomPlanBtn");
+    if (addCustomPlanBtn) {
+      addCustomPlanBtn.addEventListener("click", () => {
+        const title = ($("#customPlanTitle")?.value || "").trim();
+        const description = ($("#customPlanDescription")?.value || "").trim();
+        const priority = ($("#customPlanPriority")?.value || "medium");
+        const showGuest = $("#customPlanShowGuest")?.checked ?? true;
+
+        if (!title || !description) {
+          showToast("Заполните название и описание пункта");
+          return;
+        }
+
+        const meta = priorityMeta[priority] || priorityMeta.medium;
+        const planItem = document.createElement("div");
+        planItem.className = "plan-card";
+        if (!showGuest) planItem.classList.add("seo-only");
+        planItem.innerHTML = `
+          <div class="plan-head">
+            <div>
+              <div class="plan-title">${title}</div>
+              <p class="plan-text">${description}</p>
+              <div style="height:8px"></div>
+              <span class="manual-source">Источник: клиентский приоритет</span>
+            </div>
+            <span class="badge ${meta.cls}">${meta.label}</span>
+          </div>
+        `;
+
+        const list = $("#clientPlanItems");
+        if (list) list.prepend(planItem);
+
+        $("#customPlanTitle").value = "";
+        $("#customPlanDescription").value = "";
+        $("#customPlanPriority").value = "medium";
+        $("#customPlanShowGuest").checked = true;
+
+        showToast("Кастомный пункт добавлен в план");
+      });
+    }
+
 
     $$("#recommendationsList input[type='checkbox']").forEach(input => {
       input.addEventListener("change", () => {
@@ -2158,7 +2744,7 @@ recommendation_output:
     if (moderationBtn) moderationBtn.addEventListener("click", () => showToast("Демо: здесь откроется список задач для исключения"));
     $("#refreshBtn").addEventListener("click", () => showToast("Демо: здесь будет запуск обновления данных"));
     $("#pdfBtn").addEventListener("click", () => showToast("Демо: здесь будет экспорт PDF"));
-    $("#createTasksBtn").addEventListener("click", () => showToast("Демо: сначала подтвердить выбранные задачи"));
+    $("#createTasksBtn").addEventListener("click", () => showToast("Демо: сначала обработать рекомендации и утвердить клиентский план, включая кастомные пункты"));
   </script>
 </body>
 </html>
