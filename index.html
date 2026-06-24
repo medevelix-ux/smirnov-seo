@@ -1700,6 +1700,293 @@
       /* Градиенты задаются inline в SVG с уникальными id для каждого графика. */
     }
 
+
+    /* ===== Settings center for SEO report prototype ===== */
+    body.doc-links-off .doc-links {
+      display: none !important;
+    }
+
+    .settings-modal {
+      max-width: 1040px;
+      max-height: min(86vh, 820px);
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .settings-modal .modal-head {
+      padding: 20px 22px 14px;
+      margin: 0;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(135deg, rgba(37,87,255,.08), rgba(124,58,237,.045)),
+        #fff;
+    }
+
+    .settings-modal .modal-close {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .settings-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 14px 18px;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .settings-tabs::-webkit-scrollbar { display: none; }
+
+    .settings-tab {
+      border: 1px solid var(--line);
+      background: var(--surface-2);
+      color: #475467;
+      border-radius: 999px;
+      padding: 9px 12px;
+      white-space: nowrap;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 850;
+      cursor: pointer;
+      transition: .16s ease;
+    }
+
+    .settings-tab.active {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      box-shadow: 0 12px 22px rgba(37,87,255,.18);
+    }
+
+    .settings-body {
+      overflow: auto;
+      padding: 20px 22px 22px;
+      background: #f8fbff;
+    }
+
+    .settings-panel { display: none; }
+    .settings-panel.active { display: block; }
+
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .settings-grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .settings-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      min-width: 0;
+    }
+
+    .settings-card h4 {
+      margin: 0 0 10px;
+      font-size: 15px;
+      letter-spacing: -.03em;
+    }
+
+    .settings-card p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .settings-field {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .settings-field label,
+    .settings-check-title {
+      color: #475467;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .settings-field input,
+    .settings-field select,
+    .settings-field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 13px;
+      outline: none;
+    }
+
+    .settings-field textarea {
+      min-height: 94px;
+      resize: vertical;
+    }
+
+    .settings-hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .settings-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 16px 0;
+    }
+
+    .settings-check-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .settings-check {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: #475467;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .settings-check input {
+      margin-top: 2px;
+      accent-color: var(--primary);
+      flex: 0 0 auto;
+    }
+
+    .source-card {
+      display: grid;
+      gap: 12px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      min-width: 0;
+    }
+
+    .source-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .source-name {
+      font-weight: 900;
+      letter-spacing: -.025em;
+    }
+
+    .source-desc {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .settings-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .settings-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid #dbe6ff;
+      background: #eef3ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .settings-mini-preview {
+      padding: 14px;
+      border: 1px dashed #cddaff;
+      border-radius: 16px;
+      background: rgba(255,255,255,.74);
+      color: #334155;
+      font-size: 13px;
+    }
+
+    .settings-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .settings-save-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .settings-dirty-note {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .settings-dirty-note strong {
+      color: var(--amber);
+    }
+
+    .settings-json {
+      margin: 12px 0 0;
+      padding: 13px;
+      border-radius: 14px;
+      background: #0b1220;
+      color: #dbeafe;
+      overflow: auto;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre;
+    }
+
+    @media (max-width: 860px) {
+      .settings-modal {
+        max-height: 92vh;
+      }
+      .settings-grid,
+      .settings-grid.cols-3 {
+        grid-template-columns: 1fr;
+      }
+      .settings-footer {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .settings-save-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+
   </style>
 </head>
 
@@ -1715,12 +2002,12 @@
       </div>
 
       <div class="project-strip" aria-label="Параметры отчета">
-        <div class="project-chip">Проект: <strong>magmastones.ru</strong></div>
-        <div class="project-chip">Период: <strong>Июнь 2026</strong></div>
-        <div class="project-chip">Регион: <strong>Москва</strong></div>
-        <div class="project-chip">Тип: <strong>Каталог / услуги</strong></div>
-        <div class="project-chip">Ставка: <strong>3 500 ₽/час</strong></div>
-        <div class="project-chip">ТЗ: <strong><a href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing" target="_blank" rel="noopener">Google Doc</a></strong></div>
+        <div class="project-chip">Проект: <strong id="chipProjectValue">magmastones.ru</strong></div>
+        <div class="project-chip">Период: <strong id="chipPeriodValue">Июнь 2026</strong></div>
+        <div class="project-chip">Регион: <strong id="chipRegionValue">Москва</strong></div>
+        <div class="project-chip">Тип: <strong id="chipTypeValue">Каталог / услуги</strong></div>
+        <div class="project-chip">Ставка: <strong id="chipRateValue">3 500 ₽/час</strong></div>
+        <div class="project-chip">ТЗ: <strong><a id="chipDocLink" href="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing" target="_blank" rel="noopener">Google Doc</a></strong></div>
       </div>
 
       <div class="toolbar">
@@ -1732,6 +2019,7 @@
           <span class="switch" id="guestSwitch" role="switch" aria-checked="false"></span>
           Гостевая ссылка
         </label>
+        <button class="btn ghost" id="settingsBtn">⚙ Настройки</button>
         <button class="btn ghost" id="refreshBtn">↻ Обновить</button>
         <button class="btn" id="pdfBtn">Экспорт PDF</button>
       </div>
@@ -1742,7 +2030,7 @@
         <div class="hero-grid">
           <div>
             <span class="eyebrow">Ежемесячный SEO-отчет</span>
-            <h1>Отчет по SEO-проекту MagmaStones за июнь</h1>
+            <h1 id="heroReportTitle">Отчет по SEO-проекту MagmaStones за июнь</h1>
             <p>
               Интерактивный пример отчета для сайта magmastones.ru: выполненные задачи, видимость, поисковый трафик, конверсии,
               общий вывод и черновик SEO-плана на следующий месяц. Все цифры и URL демонстрационные.
@@ -1762,7 +2050,7 @@
         <div class="grid cols-3">
           <div class="metric-card">
             <div class="label">Приоритетные направления <span class="help" data-tip="Список задается в настройках проекта и используется, чтобы в отчете акцентировать внимание на важных страницах и группах запросов.">?</span></div>
-            <div class="note">Мраморные слэбы · Гранит · Травертин · Столешницы из камня</div>
+            <div class="note" id="priorityDirectionsPreview">Мраморные слэбы · Гранит · Травертин · Столешницы из камня</div>
           </div>
           <div class="metric-card">
             <div class="label">Дата старта SEO <span class="help" data-tip="Дата задается вручную в карточке проекта. Используется для отметки на графике долгосрочной динамики.">?</span></div>
@@ -2667,6 +2955,220 @@ plan_totals:
 
   <button class="mobile-toc-btn" id="mobileTocBtn">Разделы отчета</button>
 
+  <div class="modal-backdrop" id="settingsBackdrop">
+    <div class="modal settings-modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="settingsTitle">Настройки SEO-отчета</h3>
+          <p id="settingsSubtitle" style="margin:6px 0 0; color: var(--muted);">magmastones.ru · Июнь 2026 · параметры проекта, источники данных, цели и гостевой доступ</p>
+        </div>
+        <button class="modal-close" id="settingsClose" aria-label="Закрыть">×</button>
+      </div>
+
+      <div class="settings-tabs" role="tablist" aria-label="Разделы настроек отчета">
+        <button class="settings-tab active" type="button" data-settings-tab="settings-project">Проект</button>
+        <button class="settings-tab" type="button" data-settings-tab="settings-sources">Источники данных</button>
+        <button class="settings-tab" type="button" data-settings-tab="settings-report">Отчет</button>
+        <button class="settings-tab" type="button" data-settings-tab="settings-goals">Цели</button>
+        <button class="settings-tab" type="button" data-settings-tab="settings-plan">План и стоимость</button>
+        <button class="settings-tab" type="button" data-settings-tab="settings-access">Доступ</button>
+        <button class="settings-tab" type="button" data-settings-tab="settings-tech">JSON для разработки</button>
+      </div>
+
+      <div class="settings-body">
+        <section class="settings-panel active" id="settings-project">
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h4>Основные параметры проекта</h4>
+              <div class="settings-grid">
+                <div class="settings-field">
+                  <label for="settingDomain">Домен проекта</label>
+                  <input id="settingDomain" value="magmastones.ru" autocomplete="off">
+                </div>
+                <div class="settings-field">
+                  <label for="settingRegion">Регион продвижения</label>
+                  <input id="settingRegion" value="Москва" autocomplete="off">
+                </div>
+                <div class="settings-field">
+                  <label for="settingPeriod">Период отчета</label>
+                  <input id="settingPeriod" value="Июнь 2026" autocomplete="off">
+                </div>
+                <div class="settings-field">
+                  <label for="settingSiteType">Тип сайта</label>
+                  <select id="settingSiteType">
+                    <option value="Каталог / услуги" selected>Каталог / услуги</option>
+                    <option value="Интернет-магазин">Интернет-магазин</option>
+                    <option value="Услуги">Сайт услуг</option>
+                    <option value="Корпоративный сайт">Корпоративный сайт</option>
+                  </select>
+                </div>
+                <div class="settings-field">
+                  <label for="settingSeoStart">Дата старта SEO</label>
+                  <input id="settingSeoStart" type="month" value="2026-02">
+                </div>
+                <div class="settings-field">
+                  <label for="settingDocUrl">Ссылка на ТЗ / Google Doc</label>
+                  <input id="settingDocUrl" value="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing" autocomplete="off">
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <h4>Приоритетные направления</h4>
+              <div class="settings-field">
+                <label for="settingDirections">Направления через запятую</label>
+                <textarea id="settingDirections">Мраморные слэбы, Гранит, Травертин, Столешницы из камня</textarea>
+              </div>
+              <div class="settings-tags" id="settingsDirectionsTags" aria-label="Превью направлений"></div>
+              <p>Эти направления используются в сводке, выводах ИИ, анализе видимости и рекомендациях к SEO-плану.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel" id="settings-sources">
+          <div class="settings-grid cols-3">
+            <div class="source-card">
+              <div class="source-head">
+                <div><div class="source-name">Яндекс.Метрика</div><div class="source-desc">Трафик, конверсии, устройства, посадочные</div></div>
+                <span class="badge green">Подключено</span>
+              </div>
+              <div class="settings-field"><label for="settingYmCounter">ID счетчика</label><input id="settingYmCounter" value="12345678"></div>
+              <button class="btn" type="button" data-demo-check="Яндекс.Метрика">Проверить доступ</button>
+            </div>
+
+            <div class="source-card">
+              <div class="source-head">
+                <div><div class="source-name">Яндекс.Вебмастер</div><div class="source-desc">Показы, клики, CTR, позиции</div></div>
+                <span class="badge green">Подключено</span>
+              </div>
+              <div class="settings-field"><label for="settingYwmHost">Host ID</label><input id="settingYwmHost" value="https:magmastones.ru:443"></div>
+              <button class="btn" type="button" data-demo-check="Яндекс.Вебмастер">Проверить доступ</button>
+            </div>
+
+            <div class="source-card">
+              <div class="source-head">
+                <div><div class="source-name">Google Search Console</div><div class="source-desc">Данные Google по видимости</div></div>
+                <span class="badge amber">Нужна авторизация</span>
+              </div>
+              <div class="settings-field"><label for="settingGscProperty">Property</label><input id="settingGscProperty" value="sc-domain:magmastones.ru"></div>
+              <button class="btn" type="button" data-demo-check="Google Search Console">Подключить</button>
+            </div>
+          </div>
+
+          <div style="height:14px"></div>
+
+          <div class="settings-card">
+            <h4>Bitrix24</h4>
+            <div class="settings-grid cols-3">
+              <div class="settings-field"><label for="settingBitrixProject">Project ID</label><input id="settingBitrixProject" value="456"></div>
+              <div class="settings-field"><label for="settingBitrixTemplate">Главная задача месяца</label><input id="settingBitrixTemplate" value="{month} {year}. {domain}"></div>
+              <div class="settings-field"><label for="settingResponsible">Ответственный SEO</label><input id="settingResponsible" value="SEO-специалист"></div>
+            </div>
+            <p>Из Битрикса берутся выполненные задачи и будущие задачи плана. Перед показом клиенту задачи проходят предмодерацию.</p>
+          </div>
+        </section>
+
+        <section class="settings-panel" id="settings-report">
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h4>Разделы отчета</h4>
+              <div class="settings-check-list">
+                <label class="settings-check"><input type="checkbox" data-section-toggle="summary" checked><span><span class="settings-check-title">Сводка</span><br><span class="settings-hint">Верхний итоговый блок отчета.</span></span></label>
+                <label class="settings-check"><input type="checkbox" data-section-toggle="tasks" checked><span><span class="settings-check-title">Выполненные задачи</span><br><span class="settings-hint">Данные из Bitrix24 и клиентское пояснение пользы.</span></span></label>
+                <label class="settings-check"><input type="checkbox" data-section-toggle="visibility" checked><span><span class="settings-check-title">Видимость</span><br><span class="settings-hint">Яндекс vs Google, запросы, CTR и зоны роста.</span></span></label>
+                <label class="settings-check"><input type="checkbox" data-section-toggle="traffic" checked><span><span class="settings-check-title">Трафик</span><br><span class="settings-hint">Органический трафик из Яндекс.Метрики.</span></span></label>
+                <label class="settings-check"><input type="checkbox" data-section-toggle="conversions" checked><span><span class="settings-check-title">Конверсии</span><br><span class="settings-hint">Выбранные цели по SEO-трафику.</span></span></label>
+                <label class="settings-check"><input type="checkbox" data-section-toggle="recommendations" checked><span><span class="settings-check-title">План SEO</span><br><span class="settings-hint">Рекомендации ИИ и клиентский план работ.</span></span></label>
+              </div>
+            </div>
+
+            <div class="settings-card">
+              <h4>Режимы отображения</h4>
+              <div class="settings-check-list">
+                <label class="settings-check"><input id="settingShowDevNotes" type="checkbox"><span><span class="settings-check-title">Показывать Dev-инструкции</span><br><span class="settings-hint">Включает технические блоки под разделами отчета.</span></span></label>
+                <label class="settings-check"><input id="settingShowDocLinks" type="checkbox" checked><span><span class="settings-check-title">Показывать ссылки на Google Doc</span><br><span class="settings-hint">Скрываются в гостевой версии и могут быть скрыты вручную.</span></span></label>
+                <label class="settings-check"><input id="settingUseDemoData" type="checkbox" checked><span><span class="settings-check-title">Использовать демоданные, если источник пустой</span><br><span class="settings-hint">Для прототипа и тестовых отчетов.</span></span></label>
+                <label class="settings-check"><input id="settingNeedsRebuild" type="checkbox" checked><span><span class="settings-check-title">После изменения данных предлагать пересборку отчета</span><br><span class="settings-hint">Для периода, региона, источников, целей и структуры отчета.</span></span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel" id="settings-goals">
+          <div class="settings-card">
+            <h4>Цели Яндекс.Метрики для блока конверсий</h4>
+            <div class="settings-check-list">
+              <label class="settings-check"><input class="settings-goal" type="checkbox" data-goal-id="101" data-goal-name="Отправка формы заявки" data-goal-type="primary" checked><span><span class="settings-check-title">Отправка формы заявки · основная</span><br><span class="settings-hint">Включать в CR и показывать клиенту.</span></span></label>
+              <label class="settings-check"><input class="settings-goal" type="checkbox" data-goal-id="102" data-goal-name="Клик по телефону" data-goal-type="primary" checked><span><span class="settings-check-title">Клик по телефону · основная</span><br><span class="settings-hint">Включать в CR и показывать клиенту.</span></span></label>
+              <label class="settings-check"><input class="settings-goal" type="checkbox" data-goal-id="103" data-goal-name="WhatsApp" data-goal-type="primary" checked><span><span class="settings-check-title">WhatsApp · основная</span><br><span class="settings-hint">Клик по мессенджеру как бизнес-конверсия.</span></span></label>
+              <label class="settings-check"><input class="settings-goal" type="checkbox" data-goal-id="104" data-goal-name="Скачать каталог" data-goal-type="secondary" checked><span><span class="settings-check-title">Скачать каталог · вспомогательная</span><br><span class="settings-hint">Можно показывать в отчете, но отдельно от основных заявок.</span></span></label>
+              <label class="settings-check"><input class="settings-goal" type="checkbox" data-goal-id="201" data-goal-name="Scroll 50%" data-goal-type="technical"><span><span class="settings-check-title">Scroll 50% · техническая</span><br><span class="settings-hint">Не включать в клиентский отчет по умолчанию.</span></span></label>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel" id="settings-plan">
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h4>Стоимость и расчет плана</h4>
+              <div class="settings-grid">
+                <div class="settings-field"><label for="settingHourlyRate">Стоимость часа проекта, ₽</label><input id="settingHourlyRate" type="number" min="0" step="500" value="3500"></div>
+                <div class="settings-field"><label for="settingCurrency">Валюта</label><select id="settingCurrency"><option value="RUB" selected>RUB · ₽</option><option value="USD">USD · $</option><option value="EUR">EUR · €</option></select></div>
+              </div>
+              <div class="settings-divider"></div>
+              <div class="settings-mini-preview" id="settingsCostPreview">Пример: 30 часов × 3 500 ₽ = 105 000 ₽</div>
+            </div>
+
+            <div class="settings-card">
+              <h4>План на следующий месяц</h4>
+              <div class="settings-check-list">
+                <label class="settings-check"><input id="settingShowPlanHours" type="checkbox" checked><span><span class="settings-check-title">Показывать количество часов</span><br><span class="settings-hint">Часы видны в карточках клиентского плана.</span></span></label>
+                <label class="settings-check"><input id="settingShowPlanCost" type="checkbox" checked><span><span class="settings-check-title">Показывать стоимость работ</span><br><span class="settings-hint">Итоговая стоимость показывается внизу блока плана.</span></span></label>
+                <label class="settings-check"><input id="settingAllowManualPlan" type="checkbox" checked><span><span class="settings-check-title">Разрешить ручные пункты плана</span><br><span class="settings-hint">Кастомный пункт для клиентских приоритетов.</span></span></label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel" id="settings-access">
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h4>Гостевая ссылка</h4>
+              <div class="settings-check-list">
+                <label class="settings-check"><input id="settingGuestEnabled" type="checkbox"><span><span class="settings-check-title">Включить гостевой режим</span><br><span class="settings-hint">Клиент увидит только согласованные блоки без внутренних рекомендаций.</span></span></label>
+                <label class="settings-check"><input id="settingHideInternal" type="checkbox" checked><span><span class="settings-check-title">Скрывать внутренние рекомендации ИИ</span><br><span class="settings-hint">В гостевой версии остается только клиентский план.</span></span></label>
+                <label class="settings-check"><input id="settingHideDocLinks" type="checkbox" checked><span><span class="settings-check-title">Скрывать ссылки на техническое ТЗ</span><br><span class="settings-hint">Google Doc и dev-ссылки не показываются клиенту.</span></span></label>
+              </div>
+            </div>
+            <div class="settings-card">
+              <h4>Превью гостевой ссылки</h4>
+              <div class="settings-field"><label for="settingGuestUrl">URL гостевого отчета</label><input id="settingGuestUrl" value="https://report.webtronica.io/r/magmastones-june-2026"></div>
+              <p>В прототипе ссылка демонстрационная. В разработке URL должен генерироваться после публикации версии отчета.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-panel" id="settings-tech">
+          <div class="settings-card">
+            <h4>JSON-модель настроек для программиста</h4>
+            <p>Этот блок не обязателен для клиента, но полезен в прототипе: показывает, какие данные должен сохранять backend.</p>
+            <pre class="settings-json" id="settingsJsonPreview"></pre>
+          </div>
+        </section>
+      </div>
+
+      <div class="settings-footer">
+        <div class="settings-dirty-note" id="settingsDirtyNote">Изменения не сохранены только после редактирования полей.</div>
+        <div class="settings-save-actions">
+          <button class="btn" id="settingsCancel" type="button">Отмена</button>
+          <button class="btn ghost" id="settingsSave" type="button">Сохранить</button>
+          <button class="btn primary" id="settingsSaveRebuild" type="button">Сохранить и пересобрать отчет</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <div class="modal-head">
@@ -3156,7 +3658,7 @@ plan_totals:
     });
 
 
-    const PROJECT_HOURLY_RATE = 3500;
+    let PROJECT_HOURLY_RATE = 3500;
 
     function updatePlanTotals() {
       const hours = $$(".hours-badge[data-plan-hours]").reduce((sum, el) => sum + (parseFloat(el.dataset.planHours || "0") || 0), 0);
@@ -3272,6 +3774,210 @@ plan_totals:
 
     on("#mobileTocBtn", "click", () => $("#toc")?.classList.toggle("open"));
     tocLinks.forEach(link => link.addEventListener("click", () => $("#toc").classList.remove("open")));
+
+
+
+    // ===== Settings center: demo implementation for the report prototype =====
+    const typeLabels = {
+      "Каталог / услуги": "Каталог / услуги",
+      "Интернет-магазин": "Интернет-магазин",
+      "Услуги": "Сайт услуг",
+      "Корпоративный сайт": "Корпоративный сайт"
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function parseDirections() {
+      const raw = $("#settingDirections")?.value || "";
+      return raw.split(",").map(item => item.trim()).filter(Boolean);
+    }
+
+    function formatMoney(value, currency = "RUB") {
+      const number = Number(value) || 0;
+      const suffix = currency === "USD" ? "$" : currency === "EUR" ? "€" : "₽";
+      return `${number.toLocaleString("ru-RU")} ${suffix}`;
+    }
+
+    function getTotalPlanHours() {
+      return $$(".hours-badge[data-plan-hours]").reduce((sum, el) => sum + (parseFloat(el.dataset.planHours || "0") || 0), 0);
+    }
+
+    function buildSettingsJson() {
+      const directions = parseDirections();
+      const selectedGoals = $$(".settings-goal:checked").map(goal => ({
+        goal_id: goal.dataset.goalId,
+        name: goal.dataset.goalName,
+        type: goal.dataset.goalType,
+        show_in_guest_report: goal.dataset.goalType !== "technical",
+        include_in_conversion_rate: goal.dataset.goalType === "primary"
+      }));
+
+      const sections = {};
+      $$('[data-section-toggle]').forEach(input => sections[input.dataset.sectionToggle] = input.checked);
+
+      return {
+        project_settings: {
+          domain: $("#settingDomain")?.value.trim(),
+          report_period_label: $("#settingPeriod")?.value.trim(),
+          main_region: $("#settingRegion")?.value.trim(),
+          site_type_label: $("#settingSiteType")?.value,
+          seo_start_month: $("#settingSeoStart")?.value,
+          priority_directions: directions,
+          client_hourly_rate: parseFloat($("#settingHourlyRate")?.value || String(PROJECT_HOURLY_RATE)) || 0,
+          currency: $("#settingCurrency")?.value || "RUB",
+          google_doc_url: $("#settingDocUrl")?.value.trim()
+        },
+        data_sources: {
+          yandex_metrica: { enabled: true, counter_id: $("#settingYmCounter")?.value.trim(), status: "connected" },
+          yandex_webmaster: { enabled: true, host_id: $("#settingYwmHost")?.value.trim(), status: "connected" },
+          google_search_console: { enabled: true, property: $("#settingGscProperty")?.value.trim(), status: "needs_auth" },
+          bitrix24: {
+            enabled: true,
+            project_id: $("#settingBitrixProject")?.value.trim(),
+            main_task_template: $("#settingBitrixTemplate")?.value.trim(),
+            responsible: $("#settingResponsible")?.value.trim(),
+            status: "connected"
+          }
+        },
+        report_settings: {
+          sections,
+          show_dev_notes: $("#settingShowDevNotes")?.checked ?? false,
+          show_doc_links: $("#settingShowDocLinks")?.checked ?? true,
+          use_demo_data_if_empty: $("#settingUseDemoData")?.checked ?? true,
+          ask_rebuild_after_data_changes: $("#settingNeedsRebuild")?.checked ?? true
+        },
+        plan_settings: {
+          show_hours: $("#settingShowPlanHours")?.checked ?? true,
+          show_cost: $("#settingShowPlanCost")?.checked ?? true,
+          allow_manual_plan_items: $("#settingAllowManualPlan")?.checked ?? true,
+          total_hours: getTotalPlanHours(),
+          total_cost: getTotalPlanHours() * (parseFloat($("#settingHourlyRate")?.value || String(PROJECT_HOURLY_RATE)) || 0)
+        },
+        guest_settings: {
+          enabled: $("#settingGuestEnabled")?.checked ?? false,
+          url: $("#settingGuestUrl")?.value.trim(),
+          hide_internal_recommendations: $("#settingHideInternal")?.checked ?? true,
+          hide_doc_links: $("#settingHideDocLinks")?.checked ?? true,
+          show_client_plan: true
+        },
+        conversion_goals: selectedGoals
+      };
+    }
+
+    function updateSettingsPreview() {
+      const directions = parseDirections();
+      const tags = $("#settingsDirectionsTags");
+      if (tags) tags.innerHTML = directions.map(item => `<span class="settings-tag">${escapeHtml(item)}</span>`).join("");
+
+      const hours = getTotalPlanHours();
+      const settingsRate = parseFloat($("#settingHourlyRate")?.value || String(PROJECT_HOURLY_RATE)) || 0;
+      const currency = $("#settingCurrency")?.value || "RUB";
+      const preview = $("#settingsCostPreview");
+      if (preview) preview.textContent = `Пример: ${hours.toLocaleString("ru-RU", { maximumFractionDigits: 1 })} часов × ${formatMoney(settingsRate, currency)} = ${formatMoney(hours * settingsRate, currency)}`;
+
+      const jsonPreview = $("#settingsJsonPreview");
+      if (jsonPreview) jsonPreview.textContent = JSON.stringify(buildSettingsJson(), null, 2);
+    }
+
+    function applySettings({ rebuild = false } = {}) {
+      const domain = $("#settingDomain")?.value.trim() || "magmastones.ru";
+      const period = $("#settingPeriod")?.value.trim() || "Июнь 2026";
+      const region = $("#settingRegion")?.value.trim() || "Москва";
+      const siteType = $("#settingSiteType")?.value || "Каталог / услуги";
+      const docUrl = $("#settingDocUrl")?.value.trim();
+      const rate = parseFloat($("#settingHourlyRate")?.value || "3500") || 0;
+      const directions = parseDirections();
+
+      PROJECT_HOURLY_RATE = rate;
+
+      if ($("#chipProjectValue")) $("#chipProjectValue").textContent = domain;
+      if ($("#chipPeriodValue")) $("#chipPeriodValue").textContent = period;
+      if ($("#chipRegionValue")) $("#chipRegionValue").textContent = region;
+      if ($("#chipTypeValue")) $("#chipTypeValue").textContent = typeLabels[siteType] || siteType;
+      if ($("#chipRateValue")) $("#chipRateValue").textContent = `${rate.toLocaleString("ru-RU")} ₽/час`;
+      if ($("#chipDocLink") && docUrl) $("#chipDocLink").href = docUrl;
+      if ($("#settingsSubtitle")) $("#settingsSubtitle").textContent = `${domain} · ${period} · параметры проекта, источники данных, цели и гостевой доступ`;
+      if ($("#heroReportTitle")) $("#heroReportTitle").textContent = `Отчет по SEO-проекту ${domain} за ${period.toLowerCase()}`;
+      if ($("#priorityDirectionsPreview")) $("#priorityDirectionsPreview").textContent = directions.join(" · ") || "Не заданы";
+
+      document.body.classList.toggle("doc-links-off", !($("#settingShowDocLinks")?.checked ?? true));
+
+      if ($("#settingShowDevNotes")?.checked) setDevMode(true, true);
+      else setDevMode(false, true);
+
+      if ($("#settingGuestEnabled")?.checked) setGuestMode(true, true);
+      else setGuestMode(false, true);
+
+      $$('[data-section-toggle]').forEach(input => {
+        const section = document.getElementById(input.dataset.sectionToggle);
+        if (section) section.style.display = input.checked ? "" : "none";
+      });
+
+      $$(".hours-badge").forEach(el => el.style.display = $("#settingShowPlanHours")?.checked ? "inline-flex" : "none");
+      const costSummary = $(".cost-summary");
+      if (costSummary) costSummary.style.display = $("#settingShowPlanCost")?.checked ? "grid" : "none";
+      const customPlanBox = $(".custom-plan-box");
+      if (customPlanBox) customPlanBox.style.display = $("#settingAllowManualPlan")?.checked ? "" : "none";
+
+      updatePlanTotals();
+      updateSettingsPreview();
+      showToast(rebuild ? "Настройки сохранены, отчет готов к пересборке" : "Настройки сохранены");
+      $("#settingsDirtyNote").innerHTML = rebuild
+        ? "<strong>Требуется пересборка:</strong> измененные настройки могут влиять на данные отчета."
+        : "Настройки применены к текущему прототипу.";
+    }
+
+    function openSettings() {
+      updateSettingsPreview();
+      $("#settingsBackdrop")?.classList.add("show");
+    }
+
+    function closeSettings() {
+      $("#settingsBackdrop")?.classList.remove("show");
+    }
+
+    function initSettingsCenter() {
+      $$(".settings-tab").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.dataset.settingsTab;
+          $$(".settings-tab").forEach(item => item.classList.toggle("active", item === btn));
+          $$(".settings-panel").forEach(panel => panel.classList.toggle("active", panel.id === targetId));
+          updateSettingsPreview();
+        });
+      });
+
+      on("#settingsBtn", "click", openSettings);
+      on("#settingsClose", "click", closeSettings);
+      on("#settingsCancel", "click", closeSettings);
+      on("#settingsSave", "click", () => { applySettings({ rebuild: false }); closeSettings(); });
+      on("#settingsSaveRebuild", "click", () => { applySettings({ rebuild: true }); closeSettings(); });
+      on("#settingsBackdrop", "click", event => { if (event.target.id === "settingsBackdrop") closeSettings(); });
+
+      $$("#settingsBackdrop input, #settingsBackdrop select, #settingsBackdrop textarea").forEach(input => {
+        input.addEventListener("input", () => {
+          updateSettingsPreview();
+          const note = $("#settingsDirtyNote");
+          if (note) note.innerHTML = "<strong>Есть несохраненные изменения.</strong> Нажмите “Сохранить” или “Сохранить и пересобрать отчет”.";
+        });
+        input.addEventListener("change", updateSettingsPreview);
+      });
+
+      $$('[data-demo-check]').forEach(btn => {
+        btn.addEventListener("click", () => showToast(`Демо: проверка источника ${btn.dataset.demoCheck}`));
+      });
+
+      updateSettingsPreview();
+    }
+
+    initSettingsCenter();
+
 
     const moderationBtn = $("#taskModerationBtn");
     if (moderationBtn) moderationBtn.addEventListener("click", () => showToast("Демо: здесь откроется список задач для исключения"));
