@@ -1987,6 +1987,71 @@
       }
     }
 
+
+    /* ===== Webtronica positions tab ===== */
+    .positions-source-note {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      color: #475467;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .positions-source-note span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .positions-table-wrap {
+      overflow-x: auto;
+      border-radius: 16px;
+    }
+
+    .position-change {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .position-change.good {
+      color: #087536;
+      background: var(--green-soft);
+    }
+
+    .position-change.bad {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .position-change.flat {
+      color: #536400;
+      background: var(--amber-soft);
+    }
+
+    .positions-formula {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px dashed #cbd5e1;
+      background: #f8fafc;
+      color: #475467;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
   </style>
 </head>
 
@@ -2249,6 +2314,7 @@ ai_output:
           <button class="tab-btn active" data-target="vis-compare">Яндекс vs Google</button>
           <button class="tab-btn" data-target="vis-yandex">Яндекс</button>
           <button class="tab-btn" data-target="vis-google">Google</button>
+          <button class="tab-btn" data-target="vis-webtronica">Позиции Webtronica</button>
         </div>
 
         <div class="tab-panel active" id="vis-compare">
@@ -2308,12 +2374,158 @@ ai_output:
           <div style="height:16px"></div><div class="summary-box"><p><strong>ИИ-вывод по Google:</strong> Google показывает более слабый рост, чем Яндекс. Основная проблема — ниже CTR и меньше запросов в ТОП-10. Потенциал есть по страницам гранита и столешниц, а травертин требует отдельной диагностики.</p></div>
         </div>
 
-        <details class="dev-note"><summary>Инструкция для программиста: видимость и позиции</summary><div class="dev-content"><p><strong>Что делает блок:</strong> сравнивает Яндекс и Google на обзорной вкладке, а затем показывает подробную аналитику по каждой поисковой системе отдельно.</p><p><strong>Источники:</strong> Яндекс.Вебмастер и Google Search Console. Webtronica.io и трекер позиций в MVP не используются.</p><p><strong>Связь с блоком 7:</strong> в SEO-план передавать не все запросы, а готовые сигналы по URL: 11–20, низкий CTR, просадки, проблемы по приоритетным направлениям.</p><div class="code">visibility_score = top_3*1.0 + positions_4_10*0.7 + positions_11_30*0.3 + positions_31_50*0.1
+
+        <div class="tab-panel" id="vis-webtronica">
+          <div class="summary-box">
+            <p><strong>Позиционный мониторинг Webtronica:</strong> отдельный источник точных позиций по отслеживаемым запросам. Эти данные не смешиваются со средней позицией из Яндекс.Вебмастера и GSC: здесь показывается динамика конкретных запросов по датам сборов.</p>
+            <div class="positions-source-note">
+              <span>Источник: Webtronica Positions</span>
+              <span>Период: июнь 2026</span>
+              <span>Регион: Москва</span>
+              <span>Последний сбор: 25.06.2026 10:00</span>
+            </div>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <div class="grid cols-4">
+            <div class="metric-card"><div class="label">Запросов в мониторинге <span class="help" data-tip="Количество уникальных запросов, по которым Webtronica собирала позиции в отчетном месяце.">?</span></div><div class="value">420</div><div class="note">Яндекс + Google, desktop + mobile</div></div>
+            <div class="metric-card"><div class="label">ТОП-10 <span class="delta up">+18</span></div><div class="value">124</div><div class="note">Запросы с последней позицией 1–10</div></div>
+            <div class="metric-card"><div class="label">Средняя позиция <span class="delta up">лучше</span></div><div class="value">14,8</div><div class="note">Ниже = лучше, по последнему сбору</div></div>
+            <div class="metric-card"><div class="label">Рост / падение</div><div class="value" style="font-size:25px;">86 / 42</div><div class="note">Запросы с изменением 3+ позиции</div></div>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <div class="grid cols-2">
+            <div class="chart-card">
+              <div class="chart-head">
+                <div>
+                  <div class="chart-title">Средняя позиция по датам сборов</div>
+                  <div class="chart-sub">Точные позиции Webtronica. Ниже значение — лучше позиция.</div>
+                </div>
+                <span class="badge blue">6 сборов</span>
+              </div>
+              <div class="viz" id="chartWebtronicaAvgPosition" aria-label="Средняя позиция Webtronica по датам сборов"></div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-head">
+                <div>
+                  <div class="chart-title">Распределение запросов по диапазонам</div>
+                  <div class="chart-sub">По последнему сбору за отчетный месяц</div>
+                </div>
+                <span class="badge green">ТОП-10: 124</span>
+              </div>
+              <div class="viz" id="chartWebtronicaDistribution" aria-label="Распределение запросов по диапазонам позиций"></div>
+            </div>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <div class="grid cols-2">
+            <div class="summary-box">
+              <p><strong>Как читать вкладку:</strong></p>
+              <ul class="list-clean">
+                <li>“Последняя позиция” — позиция из последнего сбора месяца.</li>
+                <li>“Было” — позиция из первого сбора отчетного месяца.</li>
+                <li>Рост считается как улучшение позиции: 18 → 11 = рост на 7 позиций.</li>
+              </ul>
+            </div>
+            <div class="summary-box">
+              <p><strong>Что передать в SEO-план:</strong></p>
+              <ul class="signal-list">
+                <li class="signal-item"><span class="signal-num">1</span><span>/catalog/granit/ — много запросов в зоне 11–20, есть шанс дожать до ТОП-10.</span><span class="badge red">Высокий</span></li>
+                <li class="signal-item"><span class="signal-num">2</span><span>/catalog/travertin/ — массовая просадка по отслеживаемым запросам.</span><span class="badge red">Высокий</span></li>
+                <li class="signal-item"><span class="signal-num">3</span><span>/catalog/slaby-mramora/ — рост в ТОП-10, стоит закрепить результат перелинковкой.</span><span class="badge amber">Средний</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="height:16px"></div>
+
+          <div class="positions-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Запрос</th>
+                  <th>URL</th>
+                  <th>ПС / устройство</th>
+                  <th class="num">Было</th>
+                  <th class="num">Последняя</th>
+                  <th class="num">Лучшая</th>
+                  <th class="num">Худшая</th>
+                  <th>Динамика</th>
+                  <th class="num">Сборов</th>
+                  <th>Сигнал</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="task-title">мраморные слэбы купить</div><div class="task-desc">Группа: Мраморные слэбы</div></td>
+                  <td>/catalog/slaby-mramora/</td>
+                  <td><span class="badge gray">Яндекс · desktop</span></td>
+                  <td class="num">15,2</td><td class="num">8,4</td><td class="num">7,9</td><td class="num">16,1</td>
+                  <td><span class="position-change good">↑ рост 6,8</span></td><td class="num">6</td><td><span class="badge green">Закрепить</span></td>
+                </tr>
+                <tr>
+                  <td><div class="task-title">гранит купить</div><div class="task-desc">Группа: Гранит</div></td>
+                  <td>/catalog/granit/</td>
+                  <td><span class="badge gray">Яндекс · desktop</span></td>
+                  <td class="num">18,5</td><td class="num">11,2</td><td class="num">10,8</td><td class="num">19,0</td>
+                  <td><span class="position-change good">↑ рост 7,3</span></td><td class="num">6</td><td><span class="badge red">Дожать ТОП-10</span></td>
+                </tr>
+                <tr>
+                  <td><div class="task-title">травертин натуральный</div><div class="task-desc">Группа: Травертин</div></td>
+                  <td>/catalog/travertin/</td>
+                  <td><span class="badge gray">Google · mobile</span></td>
+                  <td class="num">17,3</td><td class="num">28,6</td><td class="num">16,9</td><td class="num">29,4</td>
+                  <td><span class="position-change bad">↓ падение 11,3</span></td><td class="num">6</td><td><span class="badge red">Диагностика</span></td>
+                </tr>
+                <tr>
+                  <td><div class="task-title">столешницы из мрамора</div><div class="task-desc">Группа: Столешницы</div></td>
+                  <td>/stoleshnicy/</td>
+                  <td><span class="badge gray">Google · desktop</span></td>
+                  <td class="num">9,1</td><td class="num">7,4</td><td class="num">7,1</td><td class="num">10,2</td>
+                  <td><span class="position-change good">↑ рост 1,7</span></td><td class="num">6</td><td><span class="badge amber">CTR</span></td>
+                </tr>
+                <tr>
+                  <td><div class="task-title">оникс для интерьера</div><div class="task-desc">Группа: Новые направления</div></td>
+                  <td>/catalog/oniks/</td>
+                  <td><span class="badge gray">Яндекс · mobile</span></td>
+                  <td class="num">46,0</td><td class="num">32,1</td><td class="num">31,8</td><td class="num">48,2</td>
+                  <td><span class="position-change good">↑ рост 13,9</span></td><td class="num">5</td><td><span class="badge amber">Развивать</span></td>
+                </tr>
+                <tr>
+                  <td><div class="task-title">мрамор для столешницы</div><div class="task-desc">Группа: Столешницы</div></td>
+                  <td>/stoleshnicy/mramor/</td>
+                  <td><span class="badge gray">Google · mobile</span></td>
+                  <td class="num">5,9</td><td class="num">6,6</td><td class="num">5,4</td><td class="num">7,0</td>
+                  <td><span class="position-change flat">≈ -0,7</span></td><td class="num">6</td><td><span class="badge amber">Сниппет</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="positions-formula">
+            <strong>Правило агрегации для разработки:</strong> если в течение дня несколько сборов, для графика использовать последний сбор дня; для таблицы показывать первый сбор периода, последний сбор периода, лучшую/худшую позицию и количество сборов. В будущем это правило можно вынести в настройки источника Webtronica.
+          </div>
+        </div>
+
+        <details class="dev-note"><summary>Инструкция для программиста: видимость и позиции</summary><div class="dev-content"><p><strong>Что делает блок:</strong> сравнивает Яндекс и Google на обзорной вкладке, а затем показывает подробную аналитику по каждой поисковой системе отдельно.</p><p><strong>Источники:</strong> Яндекс.Вебмастер и Google Search Console. Дополнительно подключается Webtronica Positions: точный мониторинг позиций по отслеживаемым запросам и датам сборов.</p><p><strong>Связь с блоком 7:</strong> в SEO-план передавать не все запросы, а готовые сигналы по URL: 11–20, низкий CTR, просадки, проблемы по приоритетным направлениям.</p><div class="code">visibility_score = top_3*1.0 + positions_4_10*0.7 + positions_11_30*0.3 + positions_31_50*0.1
 
 tabs:
   compare: yandex_vs_google_summary, visibility_score_dynamics, engine_efficiency_table, seo_plan_signals
   yandex: summary, visibility_funnel, priority_directions, quick_growth_11_20, declines, low_ctr, pages_to_improve
-  google: same_as_yandex</div></div></details>
+  google: same_as_yandex
+  webtronica: tracked_keywords_summary, avg_position_by_collection_date, top_distribution, keyword_dynamics_table, seo_plan_position_signals
+
+webtronica_aggregation:
+  day_value = last_collection_of_day
+  period_start = first_collection_of_period
+  period_end = last_collection_of_period
+  position_growth = period_start_position - period_end_position
+  // positive value = position improved</div></div></details>
       </section>
 
       <section class="section section-observe" id="traffic">
@@ -3007,7 +3219,7 @@ plan_totals:
                   <input id="settingSeoStart" type="month" value="2026-02">
                 </div>
                 <div class="settings-field">
-                  <label for="settingDocUrl">Лишнее поле - не выводить</label>
+                  <label for="settingDocUrl">Ссылка на ТЗ / Google Doc</label>
                   <input id="settingDocUrl" value="https://docs.google.com/document/d/1jx8qwyEdpICNGeZIfXVxZ4W5tUCTQrNcPhLM4JxijTc/edit?usp=sharing" autocomplete="off">
                 </div>
               </div>
@@ -3052,6 +3264,15 @@ plan_totals:
               </div>
               <div class="settings-field"><label for="settingGscProperty">Property</label><input id="settingGscProperty" value="sc-domain:magmastones.ru"></div>
               <button class="btn" type="button" data-demo-check="Google Search Console">Подключить</button>
+            </div>
+
+            <div class="source-card">
+              <div class="source-head">
+                <div><div class="source-name">Webtronica Positions</div><div class="source-desc">Точные позиции запросов по датам сборов</div></div>
+                <span class="badge green">Подключено</span>
+              </div>
+              <div class="settings-field"><label for="settingWebtronicaProject">Project / Campaign ID</label><input id="settingWebtronicaProject" value="magmastones-moscow"></div>
+              <button class="btn" type="button" data-demo-check="Webtronica Positions">Проверить доступ</button>
             </div>
           </div>
 
@@ -3432,6 +3653,34 @@ plan_totals:
         min: 150,
         max: 220,
         height: 292,
+        valueFormatter: v => formatNumber(Math.round(v))
+      });
+
+      renderLineChart("chartWebtronicaAvgPosition", [
+        { label: "01.06", value: 18.6 },
+        { label: "05.06", value: 17.9 },
+        { label: "10.06", value: 16.8 },
+        { label: "15.06", value: 15.7 },
+        { label: "20.06", value: 15.1 },
+        { label: "25.06", value: 14.8 }
+      ], {
+        label: "Средняя позиция Webtronica",
+        seriesLabel: "Средняя позиция",
+        min: 10,
+        max: 22,
+        height: 292,
+        valueFormatter: v => String(Number(v).toFixed(1)).replace(".", ",")
+      });
+
+      renderBarChart("chartWebtronicaDistribution", [
+        { label: "1–3", value: 24 },
+        { label: "4–10", value: 100 },
+        { label: "11–20", value: 58 },
+        { label: "21–50", value: 164 },
+        { label: "50+", value: 74, soft: true }
+      ], {
+        label: "Распределение запросов Webtronica по диапазонам",
+        max: 180,
         valueFormatter: v => formatNumber(Math.round(v))
       });
 
@@ -3838,6 +4087,12 @@ plan_totals:
           yandex_metrica: { enabled: true, counter_id: $("#settingYmCounter")?.value.trim(), status: "connected" },
           yandex_webmaster: { enabled: true, host_id: $("#settingYwmHost")?.value.trim(), status: "connected" },
           google_search_console: { enabled: true, property: $("#settingGscProperty")?.value.trim(), status: "needs_auth" },
+          webtronica_positions: {
+            enabled: true,
+            project_id: $("#settingWebtronicaProject")?.value.trim(),
+            aggregation_rule: "last_collection_of_day",
+            status: "connected"
+          },
           bitrix24: {
             enabled: true,
             project_id: $("#settingBitrixProject")?.value.trim(),
