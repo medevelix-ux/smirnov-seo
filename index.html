@@ -2052,6 +2052,585 @@
       line-height: 1.45;
     }
 
+
+
+    /* ===== Extended v2: export menu, editable recommendations, print preview, backlinks, PF positions ===== */
+    .export-menu-wrap { position: relative; display: inline-flex; }
+    .export-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      display: none;
+      min-width: 230px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 18px 45px rgba(16,24,40,.16);
+      z-index: 90;
+    }
+    .export-menu.show { display: grid; gap: 6px; }
+    .export-option {
+      width: 100%;
+      justify-content: flex-start;
+      border-radius: 12px;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+    .export-option span { color: var(--muted); font-size: 11px; font-weight: 700; }
+
+    .soft-tone-note {
+      margin-top: 12px;
+      padding: 14px;
+      border: 1px solid #dbe6ff;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(37,87,255,.06), rgba(124,58,237,.04)), #fff;
+      color: #334155;
+      font-size: 13px;
+    }
+
+    .edit-panel {
+      padding: 16px;
+      border: 1px solid #dbe6ff;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(37,87,255,.055), rgba(124,58,237,.035)), #fff;
+      margin-top: 16px;
+    }
+    .edit-panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .edit-panel-head strong { display: block; letter-spacing: -.02em; }
+    .edit-panel-head span { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+    .editable-textarea {
+      width: 100%;
+      min-height: 110px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+      line-height: 1.5;
+      outline: none;
+    }
+    .editable-textarea:focus { border-color: rgba(37,87,255,.45); box-shadow: 0 0 0 4px rgba(37,87,255,.08); }
+    .editable-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+    .recommendation-edit-list { display: grid; gap: 12px; }
+    .recommendation-edit-card { padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+    .recommendation-edit-card.is-hidden { opacity: .55; }
+    .recommendation-edit-card .settings-check { margin: 8px 0 10px; }
+    body.guest-on .traffic-internal-recommendations,
+    body.guest-on .ai-draft-panel,
+    body.guest-on .internal-only { display: none !important; }
+
+    .mini-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 16px; }
+    .mini-tab-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .mini-tab-btn.active { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--primary), var(--primary-2)); }
+    .mini-tab-panel { display: none; }
+    .mini-tab-panel.active { display: block; }
+
+    .data-spec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .data-spec-card { padding: 14px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+    .data-spec-card strong { display: block; margin-bottom: 6px; }
+    .data-spec-card code { display: inline; padding: 2px 5px; border-radius: 6px; background: #eef3ff; color: #1d4ed8; font-size: 12px; }
+
+    /* ===== Full export report preview ===== */
+    .print-preview-modal {
+      max-width: min(1180px, calc(100vw - 28px));
+      width: 100%;
+      max-height: calc(100vh - 28px);
+      padding: 0;
+      overflow: hidden;
+      background: #f3f6fb;
+    }
+
+    .print-preview-modal .modal-head {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 18px 20px;
+      margin: 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .print-preview-shell {
+      display: block;
+      max-height: calc(100vh - 142px);
+      overflow: auto;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(37,87,255,.10), transparent 28rem),
+        radial-gradient(circle at 90% 4%, rgba(124,58,237,.10), transparent 30rem),
+        #eef3fb;
+    }
+
+    .print-preview-actions {
+      position: sticky;
+      bottom: 0;
+      z-index: 4;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(14px);
+    }
+
+    .print-preview-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      max-width: 560px;
+    }
+
+    .paper-report {
+      display: grid;
+      gap: 24px;
+      max-width: 980px;
+      margin: 0 auto;
+      counter-reset: page;
+    }
+
+    .paper-page {
+      position: relative;
+      min-height: 1180px;
+      padding: 54px 58px 72px;
+      border: 1px solid #dbe3ef;
+      border-radius: 22px;
+      background: #fff;
+      box-shadow: 0 24px 55px rgba(16, 24, 40, .12);
+      overflow: hidden;
+      counter-increment: page;
+    }
+
+    .paper-page::after {
+      content: counter(page);
+      position: absolute;
+      right: 58px;
+      bottom: 30px;
+      color: #98a2b3;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .paper-page.cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 1180px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 18% 10%, rgba(255,255,255,.20), transparent 17rem),
+        radial-gradient(circle at 92% 12%, rgba(255,255,255,.16), transparent 24rem),
+        linear-gradient(135deg, #173bdf 0%, #2557ff 36%, #7c3aed 100%);
+    }
+
+    .paper-page.cover::after { color: rgba(255,255,255,.64); }
+
+    .paper-cover-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .paper-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
+
+    .paper-logo-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.30);
+      box-shadow: 0 20px 36px rgba(0,0,0,.16);
+    }
+
+    .paper-cover-badge {
+      padding: 9px 12px;
+      border: 1px solid rgba(255,255,255,.30);
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .paper-cover-main h1 {
+      margin: 0 0 18px;
+      max-width: 780px;
+      font-size: 62px;
+      line-height: .96;
+      letter-spacing: -.075em;
+    }
+
+    .paper-cover-main p {
+      max-width: 650px;
+      margin: 0;
+      color: rgba(255,255,255,.82);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    .paper-cover-meta {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .paper-cover-card {
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 18px;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .paper-cover-card span,
+    .paper-kpi span,
+    .paper-mini-card span,
+    .paper-signal-card span {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #667085;
+    }
+
+    .paper-cover-card span { color: rgba(255,255,255,.68); }
+    .paper-cover-card strong { display:block; font-size: 18px; line-height: 1.15; }
+
+    .paper-page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 26px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #e6ebf3;
+    }
+
+    .paper-page-kicker {
+      margin-bottom: 6px;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+    }
+
+    .paper-page h2 {
+      margin: 0;
+      display: block;
+      font-size: 34px;
+      line-height: 1.05;
+      letter-spacing: -.065em;
+    }
+
+    .paper-page h3 {
+      margin: 26px 0 12px;
+      font-size: 18px;
+      letter-spacing: -.035em;
+    }
+
+    .paper-page p {
+      margin: 0 0 12px;
+      color: #475467;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .paper-doc-meta {
+      color: #667085;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .paper-grid-4,
+    .paper-grid-3,
+    .paper-grid-2 {
+      display: grid;
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .paper-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .paper-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .paper-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .paper-kpi,
+    .paper-mini-card,
+    .paper-signal-card {
+      padding: 16px;
+      border: 1px solid #e5eaf3;
+      border-radius: 18px;
+      background: #f8fafc;
+    }
+
+    .paper-kpi strong {
+      display: block;
+      color: #101828;
+      font-size: 28px;
+      line-height: 1;
+      letter-spacing: -.055em;
+    }
+
+    .paper-kpi small {
+      display: block;
+      margin-top: 6px;
+      color: #667085;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .paper-summary {
+      padding: 20px;
+      border: 1px solid #dbe6ff;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(37,87,255,.075), rgba(124,58,237,.05)), #fff;
+      color: #334155;
+    }
+
+    .paper-summary strong { color: #101828; }
+
+    .paper-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 14px 0 18px;
+      overflow: hidden;
+      border: 1px solid #e5eaf3;
+      border-radius: 16px;
+      font-size: 12px;
+    }
+
+    .paper-table th,
+    .paper-table td {
+      padding: 11px 12px;
+      border-bottom: 1px solid #e5eaf3;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .paper-table th {
+      background: #f8fafc;
+      color: #667085;
+      font-size: 10px;
+      font-weight: 950;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .paper-table tr:last-child td { border-bottom: 0; }
+    .paper-table .num { text-align: right; white-space: nowrap; }
+
+    .paper-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .paper-badge.green { color: #087536; background: #eaf8ef; }
+    .paper-badge.amber { color: #936400; background: #fff6df; }
+    .paper-badge.red { color: #e11d48; background: #fff1f3; }
+    .paper-badge.blue { color: #1d4ed8; background: #eaf1ff; }
+    .paper-badge.gray { color: #475467; background: #f2f4f7; }
+
+    .paper-chart {
+      margin: 16px 0;
+      padding: 18px;
+      border: 1px solid #e5eaf3;
+      border-radius: 20px;
+      background: #fff;
+    }
+
+    .paper-chart-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+      color: #101828;
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .paper-bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .paper-bar-row {
+      display: grid;
+      grid-template-columns: 118px 1fr 72px;
+      gap: 10px;
+      align-items: center;
+      color: #667085;
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .paper-bar-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #eef2f8;
+    }
+
+    .paper-bar-fill {
+      display: block;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #2557ff, #7c3aed);
+    }
+
+    .paper-line-chart {
+      height: 210px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background:
+        linear-gradient(to bottom, transparent 24%, #edf2f8 24%, #edf2f8 25%, transparent 25%),
+        linear-gradient(to bottom, transparent 49%, #edf2f8 49%, #edf2f8 50%, transparent 50%),
+        linear-gradient(to bottom, transparent 74%, #edf2f8 74%, #edf2f8 75%, transparent 75%),
+        #f8fafc;
+    }
+
+    .paper-line-svg {
+      width: 100%;
+      height: 210px;
+      display: block;
+    }
+
+    .paper-two-col-list {
+      columns: 2;
+      column-gap: 26px;
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: #475467;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .paper-plan-item {
+      margin-bottom: 12px;
+      padding: 16px;
+      border: 1px solid #e5eaf3;
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .paper-plan-item strong { display:block; margin-bottom: 5px; letter-spacing: -.02em; }
+    .paper-plan-item p { margin-bottom: 8px; font-size: 13px; }
+
+    .paper-total {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      padding: 16px;
+      border: 1px solid #cfe8da;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(22,163,74,.075), rgba(255,255,255,.94)), #fff;
+    }
+
+    .paper-export-spec {
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px dashed #b7c6dc;
+      background: #f8fbff;
+    }
+
+    .paper-export-spec code {
+      display: block;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 14px;
+      background: #101828;
+      color: #dbeafe;
+      font-size: 11px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .paper-footnote {
+      position: absolute;
+      left: 58px;
+      right: 110px;
+      bottom: 30px;
+      color: #98a2b3;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .print-only { display: none; }
+
+    .source-note { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; color: var(--muted); font-size: 12px; font-weight: 750; }
+    .source-note span { padding: 6px 9px; border: 1px solid var(--line); border-radius: 999px; background: #fff; }
+    .position-change.good { color: #087536; font-weight: 900; }
+    .position-change.bad { color: var(--red); font-weight: 900; }
+    .position-change.flat { color: #536400; font-weight: 900; }
+    .positions-table-wrap { overflow-x: auto; border-radius: 16px; }
+    .positions-formula { margin-top: 14px; padding: 14px; border: 1px dashed #b5c5dc; border-radius: 16px; background: #f8fbff; color: #334155; font-size: 13px; }
+
+    .settings-section-caption { margin: 12px 0 8px; color: var(--primary); font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .07em; }
+    .settings-hint-text { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.45; }
+
+    @media print {
+      @page { size: A4; margin: 12mm; }
+      body { background: #fff !important; }
+      .topbar, aside, .mobile-toc-btn, .modal-backdrop:not(#printPreviewBackdrop), .settings-modal, .dev-note, .seo-only, .toolbar, .print-preview-modal > .modal-head, .print-preview-actions { display: none !important; }
+      body.export-printing .app-shell { display: none !important; }
+      body.export-printing #printPreviewBackdrop { position: static !important; display: block !important; padding: 0 !important; background: #fff !important; backdrop-filter: none !important; }
+      body.export-printing .print-preview-modal { display: block !important; max-width: none !important; width: 100% !important; max-height: none !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; background: #fff !important; }
+      body.export-printing .print-preview-shell { max-height: none !important; overflow: visible !important; padding: 0 !important; background: #fff !important; }
+      body.export-printing .paper-report { display: block !important; max-width: none !important; margin: 0 !important; }
+      body.export-printing .paper-page { min-height: auto !important; height: auto !important; page-break-after: always; break-after: page; padding: 0 !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; overflow: visible !important; }
+      body.export-printing .paper-page.cover { min-height: 250mm !important; padding: 20mm !important; border-radius: 0 !important; }
+      body.export-printing .paper-page::after { right: 0 !important; bottom: -8mm !important; }
+      body.export-printing .paper-footnote { position: static !important; margin-top: 18px; }
+      .app-shell { display: block; max-width: none; padding: 0; }
+      .section, .hero { break-inside: avoid; box-shadow: none; border-color: #ddd; margin: 0 0 16px; }
+      .tab-panel { display: block !important; }
+      .tabs { display: none !important; }
+    }
+    @media (max-width: 900px) { .data-spec-grid, .paper-grid-4, .paper-grid-3, .paper-grid-2, .paper-cover-meta, .paper-total { grid-template-columns: 1fr; } .paper-page { padding: 28px 22px 54px; min-height: auto; } .paper-cover-main h1 { font-size: 40px; } .paper-two-col-list { columns: 1; } .paper-bar-row { grid-template-columns: 90px 1fr 56px; } }
+
   </style>
 </head>
 
@@ -2086,7 +2665,15 @@
         </label>
         <button class="btn ghost" id="settingsBtn">⚙ Настройки</button>
         <button class="btn ghost" id="refreshBtn">↻ Обновить</button>
-        <button class="btn" id="pdfBtn">Экспорт PDF</button>
+        <div class="export-menu-wrap">
+          <button class="btn" id="exportBtn" type="button">Экспорт ▾</button>
+          <div class="export-menu" id="exportMenu" aria-label="Варианты экспорта отчета">
+            <button class="btn export-option" type="button" data-export-action="pdf">PDF <span>бумажный отчет</span></button>
+            <button class="btn export-option" type="button" data-export-action="google_docs">Google Docs <span>редактируемый документ</span></button>
+            <button class="btn export-option" type="button" data-export-action="docx">DOCX <span>файл для клиента</span></button>
+            <button class="btn export-option" type="button" data-export-action="preview">Предпросмотр отчета <span>PDF / DOCX / Google Docs</span></button>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -2210,6 +2797,9 @@ output:
             <span class="badge amber">Незавершенные, но плановые: 4</span>
             <button class="btn" id="taskModerationBtn">Открыть предмодерацию</button>
           </div>
+          <div class="soft-tone-note seo-only">
+            <strong>Логика даты для программиста:</strong> в клиентской таблице показываем дату выполнения/закрытия задачи. Дату создания задачи сохраняем и показываем во внутреннем режиме, чтобы SEO-специалист видел историю работы. Если задача закрыта в первые дни следующего месяца, но относится к плану текущего месяца, она попадает в отчет по флагу <code>include_in_report_period</code>.
+          </div>
         </div>
 
         <div style="height:16px"></div>
@@ -2219,7 +2809,8 @@ output:
             <tr>
               <th>Задача</th>
               <th>Тип</th>
-              <th>Дата</th>
+              <th>Дата в отчете</th>
+              <th class="seo-only">Дата создания</th>
               <th>Польза для SEO</th>
               <th></th>
             </tr>
@@ -2231,7 +2822,8 @@ output:
                 <div class="task-desc">Title/description для мрамора, гранита и травертина</div>
               </td>
               <td><span class="badge blue">Контент</span></td>
-              <td class="nowrap">14.06.2026</td>
+              <td class="nowrap"><strong>Выполнено</strong><br><span class="task-desc">14.06.2026</span></td>
+              <td class="nowrap seo-only">Создана<br><span class="task-desc">10.06.2026</span></td>
               <td>Усиливает релевантность страниц поисковым запросам и может повлиять на CTR после переобхода.</td>
               <td><button class="btn" data-modal="task1">Подробнее</button></td>
             </tr>
@@ -2241,7 +2833,8 @@ output:
                 <div class="task-desc">Фильтры по типу камня, цвету и назначению</div>
               </td>
               <td><span class="badge green">Техническая</span></td>
-              <td class="nowrap">18.06.2026</td>
+              <td class="nowrap"><strong>Выполнено</strong><br><span class="task-desc">18.06.2026</span></td>
+              <td class="nowrap seo-only">Создана<br><span class="task-desc">11.06.2026</span></td>
               <td>Помогает снизить риск дублей и корректнее распределять релевантность между страницами.</td>
               <td><button class="btn" data-modal="task2">Подробнее</button></td>
             </tr>
@@ -2251,7 +2844,8 @@ output:
                 <div class="task-desc">Коммерческие посадочные страницы</div>
               </td>
               <td><span class="badge amber">Комм. факторы</span></td>
-              <td class="nowrap">22.06.2026</td>
+              <td class="nowrap"><strong>Выполнено</strong><br><span class="task-desc">22.06.2026</span></td>
+              <td class="nowrap seo-only">Создана<br><span class="task-desc">15.06.2026</span></td>
               <td>Повышает доверие и помогает пользователям быстрее принять решение о покупке.</td>
               <td><button class="btn" data-modal="task3">Подробнее</button></td>
             </tr>
@@ -2261,7 +2855,8 @@ output:
                 <div class="task-desc">Формы, телефон, WhatsApp, Telegram</div>
               </td>
               <td><span class="badge gray">Аналитика</span></td>
-              <td class="nowrap">25.06.2026</td>
+              <td class="nowrap"><strong>Выполнено</strong><br><span class="task-desc">25.06.2026</span></td>
+              <td class="nowrap seo-only">Создана<br><span class="task-desc">20.06.2026</span></td>
               <td>Позволяет корректно оценивать влияние SEO-трафика на целевые действия.</td>
               <td><button class="btn" data-modal="task4">Подробнее</button></td>
             </tr>
@@ -2377,142 +2972,124 @@ ai_output:
 
         <div class="tab-panel" id="vis-webtronica">
           <div class="summary-box">
-            <p><strong>Позиционный мониторинг Webtronica:</strong> отдельный источник точных позиций по отслеживаемым запросам. Эти данные не смешиваются со средней позицией из Яндекс.Вебмастера и GSC: здесь показывается динамика конкретных запросов по датам сборов.</p>
-            <div class="positions-source-note">
+            <p><strong>Позиции Webtronica — отдельный источник точного мониторинга.</strong> Здесь показываются не средние позиции из Яндекс.Вебмастера/GSC, а позиции по отслеживаемым запросам на конкретные даты сборов. Эти данные помогают быстро находить запросы, которые можно дожать до ТОП-10, и страницы с заметными просадками.</p>
+            <div class="source-note">
               <span>Источник: Webtronica Positions</span>
               <span>Период: июнь 2026</span>
               <span>Регион: Москва</span>
               <span>Последний сбор: 25.06.2026 10:00</span>
+              <a class="btn ghost" id="webtronicaDetailedReportBtn" href="https://report.webtronica.io/r/magmastones-positions-june-2026" target="_blank" rel="noopener">Открыть подробный отчет по позициям</a>
             </div>
           </div>
 
           <div style="height:16px"></div>
 
-          <div class="grid cols-4">
-            <div class="metric-card"><div class="label">Запросов в мониторинге <span class="help" data-tip="Количество уникальных запросов, по которым Webtronica собирала позиции в отчетном месяце.">?</span></div><div class="value">420</div><div class="note">Яндекс + Google, desktop + mobile</div></div>
-            <div class="metric-card"><div class="label">ТОП-10 <span class="delta up">+18</span></div><div class="value">124</div><div class="note">Запросы с последней позицией 1–10</div></div>
-            <div class="metric-card"><div class="label">Средняя позиция <span class="delta up">лучше</span></div><div class="value">14,8</div><div class="note">Ниже = лучше, по последнему сбору</div></div>
-            <div class="metric-card"><div class="label">Рост / падение</div><div class="value" style="font-size:25px;">86 / 42</div><div class="note">Запросы с изменением 3+ позиции</div></div>
+          <div class="mini-tabs" data-mini-tabs="webtronicaPositionTabs">
+            <button class="mini-tab-btn active" type="button" data-mini-target="webtronica-main-queries">Основные запросы</button>
+            <button class="mini-tab-btn" type="button" data-mini-target="webtronica-pf-queries">Запросы ПФ</button>
           </div>
 
-          <div style="height:16px"></div>
+          <div class="mini-tab-panel active" id="webtronica-main-queries">
+            <div class="grid cols-4">
+              <div class="metric-card"><div class="label">Запросов в мониторинге <span class="help" data-tip="Количество уникальных запросов, по которым Webtronica собирала позиции в отчетном месяце.">?</span></div><div class="value">420</div><div class="note">Яндекс + Google, desktop + mobile</div></div>
+              <div class="metric-card"><div class="label">ТОП-10 <span class="delta up">+18</span></div><div class="value">124</div><div class="note">Запросы с последней позицией 1–10</div></div>
+              <div class="metric-card"><div class="label">Средняя позиция <span class="delta up">лучше</span></div><div class="value">14,8</div><div class="note">Ниже = лучше, по последнему сбору</div></div>
+              <div class="metric-card"><div class="label">Рост / падение</div><div class="value" style="font-size:25px;">86 / 42</div><div class="note">Запросы с изменением 3+ позиции</div></div>
+            </div>
 
-          <div class="grid cols-2">
-            <div class="chart-card">
-              <div class="chart-head">
-                <div>
-                  <div class="chart-title">Средняя позиция по датам сборов</div>
-                  <div class="chart-sub">Точные позиции Webtronica. Ниже значение — лучше позиция.</div>
-                </div>
-                <span class="badge blue">6 сборов</span>
+            <div style="height:16px"></div>
+
+            <div class="grid cols-2">
+              <div class="chart-card">
+                <div class="chart-head"><div><div class="chart-title">Средняя позиция по датам сборов</div><div class="chart-sub">Точные позиции Webtronica. Ниже значение — лучше позиция.</div></div><span class="badge blue">6 сборов</span></div>
+                <div class="viz" id="chartWebtronicaAvgPosition" aria-label="Средняя позиция Webtronica по датам сборов"></div>
               </div>
-              <div class="viz" id="chartWebtronicaAvgPosition" aria-label="Средняя позиция Webtronica по датам сборов"></div>
-            </div>
 
-            <div class="chart-card">
-              <div class="chart-head">
-                <div>
-                  <div class="chart-title">Распределение запросов по диапазонам</div>
-                  <div class="chart-sub">По последнему сбору за отчетный месяц</div>
-                </div>
-                <span class="badge green">ТОП-10: 124</span>
+              <div class="chart-card">
+                <div class="chart-head"><div><div class="chart-title">Распределение запросов по диапазонам</div><div class="chart-sub">По последнему сбору за отчетный месяц</div></div><span class="badge green">ТОП-10: 124</span></div>
+                <div class="viz" id="chartWebtronicaDistribution" aria-label="Распределение запросов по диапазонам позиций"></div>
               </div>
-              <div class="viz" id="chartWebtronicaDistribution" aria-label="Распределение запросов по диапазонам позиций"></div>
+            </div>
+
+            <div style="height:16px"></div>
+
+            <div class="grid cols-2">
+              <div class="summary-box">
+                <p><strong>Как читать вкладку:</strong></p>
+                <ul class="list-clean">
+                  <li>“Последняя позиция” — позиция из последнего сбора месяца.</li>
+                  <li>“Было” — позиция из первого сбора отчетного месяца.</li>
+                  <li>Рост считается как улучшение позиции: 18 → 11 = рост на 7 позиций.</li>
+                </ul>
+              </div>
+              <div class="summary-box">
+                <p><strong>Что передать в SEO-план:</strong></p>
+                <ul class="signal-list">
+                  <li class="signal-item"><span class="signal-num">1</span><span>/catalog/granit/ — много запросов в зоне 11–20, есть шанс дожать до ТОП-10.</span><span class="badge red">Высокий</span></li>
+                  <li class="signal-item"><span class="signal-num">2</span><span>/catalog/travertin/ — массовая просадка по отслеживаемым запросам.</span><span class="badge red">Высокий</span></li>
+                  <li class="signal-item"><span class="signal-num">3</span><span>/catalog/slaby-mramora/ — рост в ТОП-10, стоит закрепить результат перелинковкой.</span><span class="badge amber">Средний</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="height:16px"></div>
+
+            <div class="positions-table-wrap">
+              <table>
+                <thead><tr><th>Запрос</th><th>URL</th><th>ПС / устройство</th><th class="num">Было</th><th class="num">Последняя</th><th class="num">Лучшая</th><th class="num">Худшая</th><th>Динамика</th><th class="num">Сборов</th><th>Сигнал</th></tr></thead>
+                <tbody>
+                  <tr><td><div class="task-title">мраморные слэбы купить</div><div class="task-desc">Группа: Мраморные слэбы</div></td><td>/catalog/slaby-mramora/</td><td><span class="badge gray">Яндекс · desktop</span></td><td class="num">15,2</td><td class="num">8,4</td><td class="num">7,9</td><td class="num">16,1</td><td><span class="position-change good">↑ рост 6,8</span></td><td class="num">6</td><td><span class="badge green">Закрепить</span></td></tr>
+                  <tr><td><div class="task-title">гранит купить</div><div class="task-desc">Группа: Гранит</div></td><td>/catalog/granit/</td><td><span class="badge gray">Яндекс · desktop</span></td><td class="num">18,5</td><td class="num">11,2</td><td class="num">10,8</td><td class="num">19,0</td><td><span class="position-change good">↑ рост 7,3</span></td><td class="num">6</td><td><span class="badge red">Дожать ТОП-10</span></td></tr>
+                  <tr><td><div class="task-title">травертин натуральный</div><div class="task-desc">Группа: Травертин</div></td><td>/catalog/travertin/</td><td><span class="badge gray">Google · mobile</span></td><td class="num">17,3</td><td class="num">28,6</td><td class="num">16,9</td><td class="num">29,4</td><td><span class="position-change bad">↓ падение 11,3</span></td><td class="num">6</td><td><span class="badge red">Диагностика</span></td></tr>
+                  <tr><td><div class="task-title">столешницы из мрамора</div><div class="task-desc">Группа: Столешницы</div></td><td>/stoleshnicy/</td><td><span class="badge gray">Google · desktop</span></td><td class="num">9,1</td><td class="num">7,4</td><td class="num">7,1</td><td class="num">10,2</td><td><span class="position-change good">↑ рост 1,7</span></td><td class="num">6</td><td><span class="badge amber">CTR</span></td></tr>
+                  <tr><td><div class="task-title">оникс для интерьера</div><div class="task-desc">Группа: Новые направления</div></td><td>/catalog/oniks/</td><td><span class="badge gray">Яндекс · mobile</span></td><td class="num">46,0</td><td class="num">32,1</td><td class="num">31,8</td><td class="num">48,2</td><td><span class="position-change good">↑ рост 13,9</span></td><td class="num">5</td><td><span class="badge amber">Развивать</span></td></tr>
+                  <tr><td><div class="task-title">мрамор для столешницы</div><div class="task-desc">Группа: Столешницы</div></td><td>/stoleshnicy/mramor/</td><td><span class="badge gray">Google · mobile</span></td><td class="num">5,9</td><td class="num">6,6</td><td class="num">5,4</td><td class="num">7,0</td><td><span class="position-change flat">≈ -0,7</span></td><td class="num">6</td><td><span class="badge amber">Сниппет</span></td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
 
-          <div style="height:16px"></div>
-
-          <div class="grid cols-2">
+          <div class="mini-tab-panel" id="webtronica-pf-queries">
             <div class="summary-box">
-              <p><strong>Как читать вкладку:</strong></p>
-              <ul class="list-clean">
-                <li>“Последняя позиция” — позиция из последнего сбора месяца.</li>
-                <li>“Было” — позиция из первого сбора отчетного месяца.</li>
-                <li>Рост считается как улучшение позиции: 18 → 11 = рост на 7 позиций.</li>
-              </ul>
+              <p><strong>Запросы ПФ — отдельный проект в Webtronica Positions.</strong> Внутри компании ПФ ведется как отдельная услуга, поэтому в отчете показываем отдельный срез по приоритетным направлениям и динамике позиций. В гостевой версии формулировку можно смягчать как “запросы с дополнительным поведенческим продвижением”.</p>
+              <div class="source-note"><span>Проект: magmastones-pf-moscow</span><span>Приоритеты ПФ: гранит · слэбы · столешницы</span><span>Последний сбор: 25.06.2026 11:00</span></div>
             </div>
-            <div class="summary-box">
-              <p><strong>Что передать в SEO-план:</strong></p>
-              <ul class="signal-list">
-                <li class="signal-item"><span class="signal-num">1</span><span>/catalog/granit/ — много запросов в зоне 11–20, есть шанс дожать до ТОП-10.</span><span class="badge red">Высокий</span></li>
-                <li class="signal-item"><span class="signal-num">2</span><span>/catalog/travertin/ — массовая просадка по отслеживаемым запросам.</span><span class="badge red">Высокий</span></li>
-                <li class="signal-item"><span class="signal-num">3</span><span>/catalog/slaby-mramora/ — рост в ТОП-10, стоит закрепить результат перелинковкой.</span><span class="badge amber">Средний</span></li>
-              </ul>
+
+            <div style="height:16px"></div>
+
+            <div class="grid cols-4">
+              <div class="metric-card"><div class="label">Запросов ПФ</div><div class="value">68</div><div class="note">Отдельный проект Webtronica</div></div>
+              <div class="metric-card"><div class="label">ТОП-10 <span class="delta up">+9</span></div><div class="value">31</div><div class="note">По последнему сбору</div></div>
+              <div class="metric-card"><div class="label">Средняя позиция</div><div class="value">12,6</div><div class="note">Ниже = лучше</div></div>
+              <div class="metric-card"><div class="label">Приоритетных направлений</div><div class="value">3</div><div class="note">Настраивается в проекте</div></div>
             </div>
-          </div>
 
-          <div style="height:16px"></div>
+            <div style="height:16px"></div>
+            <div class="grid cols-2">
+              <div class="chart-card"><div class="chart-head"><div><div class="chart-title">Динамика средней позиции ПФ</div><div class="chart-sub">Отдельный проект Webtronica Positions</div></div><span class="badge blue">6 сборов</span></div><div class="viz" id="chartWebtronicaPfAvgPosition" aria-label="Средняя позиция ПФ"></div></div>
+              <div class="summary-box"><p><strong>Сигналы по ПФ:</strong></p><ul class="signal-list"><li class="signal-item"><span class="signal-num">1</span><span>“гранит купить” — закрепить рост после выхода в зону 8–10.</span><span class="badge red">Высокий</span></li><li class="signal-item"><span class="signal-num">2</span><span>“столешницы из камня” — запросы близко к ТОП-10, стоит синхронизировать с доработкой посадочной.</span><span class="badge amber">Средний</span></li><li class="signal-item"><span class="signal-num">3</span><span>“мраморные слэбы” — удерживать динамику и контролировать просадки.</span><span class="badge amber">Средний</span></li></ul></div>
+            </div>
 
-          <div class="positions-table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Запрос</th>
-                  <th>URL</th>
-                  <th>ПС / устройство</th>
-                  <th class="num">Было</th>
-                  <th class="num">Последняя</th>
-                  <th class="num">Лучшая</th>
-                  <th class="num">Худшая</th>
-                  <th>Динамика</th>
-                  <th class="num">Сборов</th>
-                  <th>Сигнал</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><div class="task-title">мраморные слэбы купить</div><div class="task-desc">Группа: Мраморные слэбы</div></td>
-                  <td>/catalog/slaby-mramora/</td>
-                  <td><span class="badge gray">Яндекс · desktop</span></td>
-                  <td class="num">15,2</td><td class="num">8,4</td><td class="num">7,9</td><td class="num">16,1</td>
-                  <td><span class="position-change good">↑ рост 6,8</span></td><td class="num">6</td><td><span class="badge green">Закрепить</span></td>
-                </tr>
-                <tr>
-                  <td><div class="task-title">гранит купить</div><div class="task-desc">Группа: Гранит</div></td>
-                  <td>/catalog/granit/</td>
-                  <td><span class="badge gray">Яндекс · desktop</span></td>
-                  <td class="num">18,5</td><td class="num">11,2</td><td class="num">10,8</td><td class="num">19,0</td>
-                  <td><span class="position-change good">↑ рост 7,3</span></td><td class="num">6</td><td><span class="badge red">Дожать ТОП-10</span></td>
-                </tr>
-                <tr>
-                  <td><div class="task-title">травертин натуральный</div><div class="task-desc">Группа: Травертин</div></td>
-                  <td>/catalog/travertin/</td>
-                  <td><span class="badge gray">Google · mobile</span></td>
-                  <td class="num">17,3</td><td class="num">28,6</td><td class="num">16,9</td><td class="num">29,4</td>
-                  <td><span class="position-change bad">↓ падение 11,3</span></td><td class="num">6</td><td><span class="badge red">Диагностика</span></td>
-                </tr>
-                <tr>
-                  <td><div class="task-title">столешницы из мрамора</div><div class="task-desc">Группа: Столешницы</div></td>
-                  <td>/stoleshnicy/</td>
-                  <td><span class="badge gray">Google · desktop</span></td>
-                  <td class="num">9,1</td><td class="num">7,4</td><td class="num">7,1</td><td class="num">10,2</td>
-                  <td><span class="position-change good">↑ рост 1,7</span></td><td class="num">6</td><td><span class="badge amber">CTR</span></td>
-                </tr>
-                <tr>
-                  <td><div class="task-title">оникс для интерьера</div><div class="task-desc">Группа: Новые направления</div></td>
-                  <td>/catalog/oniks/</td>
-                  <td><span class="badge gray">Яндекс · mobile</span></td>
-                  <td class="num">46,0</td><td class="num">32,1</td><td class="num">31,8</td><td class="num">48,2</td>
-                  <td><span class="position-change good">↑ рост 13,9</span></td><td class="num">5</td><td><span class="badge amber">Развивать</span></td>
-                </tr>
-                <tr>
-                  <td><div class="task-title">мрамор для столешницы</div><div class="task-desc">Группа: Столешницы</div></td>
-                  <td>/stoleshnicy/mramor/</td>
-                  <td><span class="badge gray">Google · mobile</span></td>
-                  <td class="num">5,9</td><td class="num">6,6</td><td class="num">5,4</td><td class="num">7,0</td>
-                  <td><span class="position-change flat">≈ -0,7</span></td><td class="num">6</td><td><span class="badge amber">Сниппет</span></td>
-                </tr>
-              </tbody>
-            </table>
+            <div style="height:16px"></div>
+            <div class="positions-table-wrap">
+              <table>
+                <thead><tr><th>Запрос ПФ</th><th>Направление</th><th>URL</th><th class="num">Было</th><th class="num">Последняя</th><th>Динамика</th><th>Комментарий</th></tr></thead>
+                <tbody>
+                  <tr><td>гранит купить</td><td>Гранит</td><td>/catalog/granit/</td><td class="num">14,8</td><td class="num">8,9</td><td><span class="position-change good">↑ рост 5,9</span></td><td>Запрос вышел в ТОП-10, важно закрепить результат.</td></tr>
+                  <tr><td>мраморные слэбы купить</td><td>Мраморные слэбы</td><td>/catalog/slaby-mramora/</td><td class="num">11,6</td><td class="num">7,8</td><td><span class="position-change good">↑ рост 3,8</span></td><td>Положительная динамика по приоритетному направлению.</td></tr>
+                  <tr><td>столешницы из камня</td><td>Столешницы</td><td>/stoleshnicy/</td><td class="num">18,2</td><td class="num">12,1</td><td><span class="position-change good">↑ рост 6,1</span></td><td>Есть потенциал дожима до ТОП-10.</td></tr>
+                  <tr><td>травертин купить</td><td>Травертин</td><td>/catalog/travertin/</td><td class="num">21,4</td><td class="num">24,3</td><td><span class="position-change bad">↓ падение 2,9</span></td><td>Проверить посадочную и синхронизировать с общим планом работ.</td></tr>
+                </tbody>
+              </table>
+            </div>
           </div>
 
           <div class="positions-formula">
-            <strong>Правило агрегации для разработки:</strong> если в течение дня несколько сборов, для графика использовать последний сбор дня; для таблицы показывать первый сбор периода, последний сбор периода, лучшую/худшую позицию и количество сборов. В будущем это правило можно вынести в настройки источника Webtronica.
+            <strong>Правило агрегации для разработки:</strong> если в течение дня несколько сборов, для графика использовать последний сбор дня; для таблицы показывать первый сбор периода, последний сбор периода, лучшую/худшую позицию и количество сборов. В настройках проекта нужно хранить отдельный <code>webtronica_positions_project_id</code> и отдельный <code>webtronica_pf_project_id</code>.
           </div>
         </div>
 
-        <details class="dev-note"><summary>Инструкция для программиста: видимость и позиции</summary><div class="dev-content"><p><strong>Что делает блок:</strong> сравнивает Яндекс и Google на обзорной вкладке, а затем показывает подробную аналитику по каждой поисковой системе отдельно.</p><p><strong>Источники:</strong> Яндекс.Вебмастер и Google Search Console. Дополнительно подключается Webtronica Positions: точный мониторинг позиций по отслеживаемым запросам и датам сборов.</p><p><strong>Связь с блоком 7:</strong> в SEO-план передавать не все запросы, а готовые сигналы по URL: 11–20, низкий CTR, просадки, проблемы по приоритетным направлениям.</p><div class="code">visibility_score = top_3*1.0 + positions_4_10*0.7 + positions_11_30*0.3 + positions_31_50*0.1
+        <details class="dev-note"><summary>Инструкция для программиста: видимость и позиции</summary><div class="dev-content"><p><strong>Что делает блок:</strong> сравнивает Яндекс и Google на обзорной вкладке, а затем показывает подробную аналитику по каждой поисковой системе отдельно.</p><p><strong>Источники:</strong> Яндекс.Вебмастер и Google Search Console дают спрос, показы, клики, CTR и среднюю позицию по фактическим показам. Webtronica Positions дает точную позицию по отслеживаемому запросу на дату сбора. Эти показатели нельзя механически смешивать в одну колонку.</p><p><strong>ПФ-проект:</strong> запросы ПФ берутся из отдельного проекта Webtronica. В настройках проекта хранить ID основного проекта позиций и ID ПФ-проекта, а также список приоритетных ПФ-направлений.</p><p><strong>Связь с SEO-планом:</strong> передавать не все запросы, а готовые сигналы по URL: 11–20, низкий CTR, просадки, рост, массовые изменения по странице и запросы ПФ в зоне дожима.</p><div class="code">visibility_score = top_3*1.0 + positions_4_10*0.7 + positions_11_30*0.3 + positions_31_50*0.1
 
 tabs:
   compare: yandex_vs_google_summary, visibility_score_dynamics, engine_efficiency_table, seo_plan_signals
@@ -2528,10 +3105,94 @@ webtronica_aggregation:
   // positive value = position improved</div></div></details>
       </section>
 
-      <section class="section section-observe" id="traffic">
+
+      <section class="section section-observe" id="backlinks">
         <div class="section-header">
           <div>
             <div class="section-kicker">Блок 4</div>
+            <h2>Ссылочная масса из Яндекс.Вебмастера <span class="help" data-tip="Блок показывает количественную динамику внешних ссылок по данным Яндекс.Вебмастера. Качество ссылок оценивается осторожно: если нет метрик качества, не делаем категоричных выводов.">?</span></h2>
+            <p class="section-desc">Показываем клиенту, как развивается ссылочный профиль: новые ссылки, потерянные ссылки, доноры и страницы, на которые чаще всего ссылаются.</p>
+          </div>
+          <div class="section-actions">
+            <span class="badge blue">Источник: Яндекс.Вебмастер</span>
+          </div>
+        </div>
+
+        <div class="grid cols-4">
+          <div class="metric-card"><div class="label">Внешних ссылок <span class="delta up">+84</span></div><div class="value">1 284</div><div class="note">Всего найдено Яндекс.Вебмастером</div></div>
+          <div class="metric-card"><div class="label">Доноров <span class="delta up">+12</span></div><div class="value">186</div><div class="note">Уникальные ссылающиеся домены</div></div>
+          <div class="metric-card"><div class="label">Новые ссылки</div><div class="value">96</div><div class="note">За отчетный месяц</div></div>
+          <div class="metric-card"><div class="label">Потерянные ссылки</div><div class="value">12</div><div class="note">Нужно проверить критичные потери</div></div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="grid cols-2">
+          <div class="chart-card">
+            <div class="chart-head"><div><div class="chart-title">Динамика внешних ссылок</div><div class="chart-sub">По данным Яндекс.Вебмастера за последние 6 месяцев</div></div><span class="badge green">Рост</span></div>
+            <div class="viz" id="chartBacklinksDynamics" aria-label="Динамика внешних ссылок"></div>
+          </div>
+          <div class="summary-box">
+            <p><strong>Вывод для клиента:</strong> в отчетном периоде продолжилось развитие ссылочного профиля. По количественным данным Яндекс.Вебмастера зафиксирован прирост внешних ссылок и доноров. Следующий фокус — удерживать положительную динамику и дополнительно проверять качество новых доноров.</p>
+            <ul class="list-clean">
+              <li>Проверить новые доноры на релевантность и отсутствие явного спама.</li>
+              <li>Отследить потерянные ссылки на важные коммерческие страницы.</li>
+              <li>Синхронизировать ссылочные работы с приоритетными направлениями SEO.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="grid cols-2">
+          <div class="chart-card">
+            <div class="chart-head"><div><div class="chart-title">ТОП-доноры за месяц</div><div class="chart-sub">Демонстрационные данные для прототипа</div></div></div>
+            <table><thead><tr><th>Донор</th><th class="num">Ссылок</th><th>Тип</th><th>Комментарий</th></tr></thead><tbody>
+              <tr><td>stone-catalog.example</td><td class="num">18</td><td><span class="badge green">Каталог</span></td><td>Тематический источник, проверить карточку компании.</td></tr>
+              <tr><td>interior-media.example</td><td class="num">11</td><td><span class="badge blue">СМИ</span></td><td>Упоминание в подборке материалов.</td></tr>
+              <tr><td>design-forum.example</td><td class="num">8</td><td><span class="badge amber">Форум</span></td><td>Проверить качество и анкоры.</td></tr>
+            </tbody></table>
+          </div>
+          <div class="chart-card">
+            <div class="chart-head"><div><div class="chart-title">Страницы-акцепторы</div><div class="chart-sub">Куда ведут внешние ссылки</div></div></div>
+            <table><thead><tr><th>Страница</th><th class="num">Ссылок</th><th>Роль</th></tr></thead><tbody>
+              <tr><td>/catalog/slaby-mramora/</td><td class="num">42</td><td>Приоритетное направление</td></tr>
+              <tr><td>/catalog/granit/</td><td class="num">36</td><td>Коммерческая категория</td></tr>
+              <tr><td>/stoleshnicy/</td><td class="num">28</td><td>Конверсионная страница</td></tr>
+            </tbody></table>
+          </div>
+        </div>
+
+        <details class="dev-note">
+          <summary>Инструкция для программиста: ссылочная масса</summary>
+          <div class="dev-content">
+            <p><strong>Что делает блок:</strong> показывает количественную динамику внешних ссылок из Яндекс.Вебмастера: всего ссылок, доноры, новые/потерянные ссылки, страницы-акцепторы и базовый вывод ИИ.</p>
+            <p><strong>Источник данных:</strong> Яндекс.Вебмастер, раздел внешних ссылок. Если API не возвращает качество доноров, нельзя писать “ссылки качественные” — только “по количественным данным зафиксирован прирост”.</p>
+            <p><strong>Гостевая версия:</strong> показывать сводку, динамику и аккуратный клиентский вывод. Внутренние списки подозрительных доноров, если появятся, скрывать по флагу <code>show_in_guest_report</code>.</p>
+            <div class="code">yandex_webmaster_links:
+  total_external_links
+  total_donor_domains
+  new_links_period
+  lost_links_period
+  top_donors[]
+  top_target_pages[]
+
+aggregation:
+  new_links = links.first_seen within report_period
+  lost_links = links.lost_at within report_period
+  donor_domains = unique(domain_from_link)
+
+ai_tone_rule:
+  avoid: "ссылочная масса слабая", "мы упустили ссылки"
+  prefer: "есть зона для усиления ссылочного профиля", "следующий фокус — качество и релевантность доноров"</div>
+          </div>
+        </details>
+      </section>
+
+      <section class="section section-observe" id="traffic">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Блок 5</div>
             <h2>Поисковый трафик из Яндекс.Метрики <span class="help" data-tip="Анализируется только органический поисковый трафик. Важно не смешивать его с рекламой, прямыми заходами и UTM-кампаниями.">?</span></h2>
             <p class="section-desc">Показываем динамику органического трафика и объясняем, за счет каких срезов произошел рост или снижение.</p>
           </div>
@@ -2542,6 +3203,7 @@ webtronica_aggregation:
           <button class="tab-btn" data-target="traffic-days">Дни</button>
           <button class="tab-btn" data-target="traffic-pages">Посадочные</button>
           <button class="tab-btn" data-target="traffic-devices">Устройства</button>
+          <button class="tab-btn" data-target="traffic-brand">Бренд / Небренд</button>
         </div>
 
         <div class="tab-panel active" id="traffic-year">
@@ -2598,6 +3260,46 @@ webtronica_aggregation:
           </table>
         </div>
 
+
+
+        <div class="tab-panel" id="traffic-brand">
+          <div class="summary-box">
+            <p><strong>Брендовый и небрендовый трафик.</strong> Брендовые запросы задаются в настройках проекта. Небрендовый трафик помогает оценить рост SEO за счет категорий, услуг и коммерческих запросов, а брендовый — динамику узнаваемости и повторного спроса.</p>
+          </div>
+          <div style="height:16px"></div>
+          <div class="grid cols-4">
+            <div class="metric-card"><div class="label">Брендовый трафик <span class="delta up">+8,4%</span></div><div class="value">1 240</div><div class="note">Запросы: magmastones, магмастоун и варианты</div></div>
+            <div class="metric-card"><div class="label">Небрендовый трафик <span class="delta up">+12,3%</span></div><div class="value">3 620</div><div class="note">Категории, услуги, коммерческие фразы</div></div>
+            <div class="metric-card"><div class="label">Доля бренда</div><div class="value">25,5%</div><div class="note">От общего SEO-трафика</div></div>
+            <div class="metric-card"><div class="label">Главный вывод</div><div class="value" style="font-size:22px;">Небренд растет</div><div class="note">Это хороший сигнал по SEO-работам</div></div>
+          </div>
+          <div style="height:16px"></div>
+          <div class="grid cols-2">
+            <div class="chart-card"><div class="chart-head"><div><div class="chart-title">Динамика бренд / небренд</div><div class="chart-sub">Демонстрационный срез по органике</div></div></div><div class="viz" id="chartBrandNonbrandTraffic" aria-label="Брендовый и небрендовый трафик"></div></div>
+            <div class="chart-card"><div class="chart-head"><div><div class="chart-title">Брендовые маркеры из настроек</div><div class="chart-sub">Используются для классификации запросов</div></div></div><table><thead><tr><th>Маркер</th><th>Тип</th><th>Примечание</th></tr></thead><tbody><tr><td>magmastones</td><td><span class="badge green">brand</span></td><td>Основное написание бренда</td></tr><tr><td>magma stones</td><td><span class="badge green">brand</span></td><td>Раздельное написание</td></tr><tr><td>магмастоун</td><td><span class="badge green">brand</span></td><td>Русскоязычный вариант</td></tr><tr><td>магма стоун</td><td><span class="badge green">brand</span></td><td>Русскоязычный вариант с пробелом</td></tr></tbody></table></div>
+          </div>
+        </div>
+
+
+        <div class="edit-panel traffic-internal-recommendations seo-only">
+          <div class="edit-panel-head">
+            <div><strong>Внутренние рекомендации по трафику</strong><span>SEO-специалист может отредактировать формулировку, скрыть рекомендацию из гостевой ссылки или перенести ее в план работ.</span></div>
+            <span class="seo-only-label">Редактируется перед отправкой клиенту</span>
+          </div>
+          <div class="recommendation-edit-list">
+            <article class="recommendation-edit-card" data-traffic-rec="1">
+              <label class="settings-check"><input type="checkbox" class="traffic-rec-show" checked><span><span class="settings-check-title">Показывать клиенту после редактирования</span><br><span class="settings-hint">Если выключено, рекомендация остается только во внутреннем режиме.</span></span></label>
+              <textarea class="editable-textarea">Страница /catalog/travertin/ показала снижение SEO-трафика. В следующем периоде рекомендуем дополнительно проверить позиции, индексацию и соответствие страницы текущему спросу.</textarea>
+              <div class="editable-actions"><button class="btn" type="button" data-soften-rec>Смягчить формулировку</button><button class="btn ghost" type="button" data-hide-rec>Скрыть из гостевой</button><button class="btn primary" type="button" data-copy-plan-rec>Перенести в SEO-план</button></div>
+            </article>
+            <article class="recommendation-edit-card" data-traffic-rec="2">
+              <label class="settings-check"><input type="checkbox" class="traffic-rec-show"><span><span class="settings-check-title">Показывать клиенту после редактирования</span><br><span class="settings-hint">По умолчанию скрыто: формулировка требует ручной обработки.</span></span></label>
+              <textarea class="editable-textarea">На мобильном трафике стоит дополнительно проверить первый экран, форму заявки и скорость загрузки, чтобы использовать потенциал уже привлеченных SEO-визитов.</textarea>
+              <div class="editable-actions"><button class="btn" type="button" data-soften-rec>Смягчить формулировку</button><button class="btn ghost" type="button" data-hide-rec>Скрыть из гостевой</button><button class="btn primary" type="button" data-copy-plan-rec>Перенести в SEO-план</button></div>
+            </article>
+          </div>
+        </div>
+
         <details class="dev-note">
           <summary>Инструкция для программиста: поисковый трафик</summary>
           <div class="dev-content">
@@ -2618,6 +3320,7 @@ dimensions:
   ym:s:deviceCategory
   ym:s:date
   ym:s:month
+  ym:s:searchPhrase // если доступно для бренд/небренд классификации
 
 filters:
   traffic_source == organic_search
@@ -2627,7 +3330,20 @@ filters:
 delta_percent = (current - previous) / previous * 100
 search_engine_share = engine_visits / total_organic_visits * 100
 avg_before_seo = average(monthly_visits before seo_start_date)
-avg_after_seo = average(monthly_visits after seo_start_date)</div>
+avg_after_seo = average(monthly_visits after seo_start_date)
+
+brand_traffic:
+  brand_markers = project_settings.brand_queries[]
+  is_brand = search_phrase contains any brand_markers
+  if search_phrase_unavailable:
+    show_warning = true
+    use_landing_page_approximation = optional
+
+traffic_recommendations:
+  ai_text_raw
+  seo_text_edited
+  show_in_guest_report
+  move_to_seo_plan</div>
             <p><strong>Что должен увидеть программист:</strong> блок состоит из нескольких независимых запросов к Метрике: общая сводка, поисковые системы, дни/недели, устройства, посадочные страницы, 12 месяцев. Каждый запрос нужно кэшировать в рамках report_id.</p>
           </div>
         </details>
@@ -2636,7 +3352,7 @@ avg_after_seo = average(monthly_visits after seo_start_date)</div>
       <section class="section section-observe" id="conversions">
         <div class="section-header">
           <div>
-            <div class="section-kicker">Блок 5</div>
+            <div class="section-kicker">Блок 6</div>
             <h2>Конверсии из Яндекс.Метрики <span class="help" data-tip="Анализируются только выбранные цели из органического поиска. Технические цели не должны смешиваться с бизнес-конверсиями.">?</span></h2>
             <p class="section-desc">Показываем, как SEO-трафик влияет на целевые действия пользователей.</p>
           </div>
@@ -2645,6 +3361,12 @@ avg_after_seo = average(monthly_visits after seo_start_date)</div>
           </div>
         </div>
 
+        <div class="tabs" data-tabs="conversionTabs">
+          <button class="tab-btn active" data-target="conv-summary">Сводка</button>
+          <button class="tab-btn" data-target="conv-top-queries">Самые конверсионные запросы</button>
+        </div>
+
+        <div class="tab-panel active" id="conv-summary">
         <div class="grid cols-4">
           <div class="metric-card"><div class="label">Достижения целей <span class="delta up">+6,0%</span></div><div class="value">53</div><div class="note">По выбранному набору целей</div></div>
           <div class="metric-card"><div class="label">Конверсионные визиты <span class="delta up">+5,2%</span></div><div class="value">9</div><div class="note">Визиты с целевым действием</div></div>
@@ -2699,6 +3421,29 @@ avg_after_seo = average(monthly_visits after seo_start_date)</div>
           </tbody>
         </table>
 
+
+        </div>
+
+        <div class="tab-panel" id="conv-top-queries">
+          <div class="summary-box"><p><strong>ТОП-10 самых конверсионных запросов.</strong> Если прямой связки “запрос → конверсия” нет, используем приближение: запросы из Яндекс.Вебмастера/GSC/Webtronica связываются с посадочной страницей, а конверсии берутся по этой странице из Метрики.</p></div>
+          <div style="height:16px"></div>
+          <table>
+            <thead><tr><th>#</th><th>Запрос</th><th>Посадочная</th><th class="num">Визиты</th><th class="num">Конверсии</th><th class="num">CR</th><th>Цель / вывод</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>мраморные слэбы купить</td><td>/catalog/slaby-mramora/</td><td class="num">84</td><td class="num">6</td><td class="num">7,1%</td><td><span class="badge green">Заявка</span> Хороший запрос для усиления.</td></tr>
+              <tr><td>2</td><td>столешницы из камня на заказ</td><td>/stoleshnicy/</td><td class="num">72</td><td class="num">5</td><td class="num">6,9%</td><td><span class="badge green">Телефон</span> Высокая коммерческая ценность.</td></tr>
+              <tr><td>3</td><td>гранит купить москва</td><td>/catalog/granit/</td><td class="num">96</td><td class="num">5</td><td class="num">5,2%</td><td><span class="badge green">Заявка</span> Дожим в ТОП-10 может дать рост заявок.</td></tr>
+              <tr><td>4</td><td>мрамор для столешницы</td><td>/stoleshnicy/mramor/</td><td class="num">58</td><td class="num">3</td><td class="num">5,1%</td><td><span class="badge blue">WhatsApp</span> Проверить мобильный CTA.</td></tr>
+              <tr><td>5</td><td>натуральный камень для интерьера</td><td>/catalog/</td><td class="num">64</td><td class="num">3</td><td class="num">4,7%</td><td><span class="badge amber">Каталог</span> Подходит для расширения семантики.</td></tr>
+              <tr><td>6</td><td>травертин для отделки</td><td>/catalog/travertin/</td><td class="num">41</td><td class="num">2</td><td class="num">4,9%</td><td><span class="badge amber">Заявка</span> Есть потенциал после диагностики.</td></tr>
+              <tr><td>7</td><td>плиты из гранита</td><td>/catalog/granit/</td><td class="num">52</td><td class="num">2</td><td class="num">3,8%</td><td><span class="badge amber">Телефон</span> Улучшить сниппет.</td></tr>
+              <tr><td>8</td><td>оникс для интерьера</td><td>/catalog/oniks/</td><td class="num">28</td><td class="num">1</td><td class="num">3,6%</td><td><span class="badge gray">Заявка</span> Новый кластер.</td></tr>
+              <tr><td>9</td><td>подоконники из мрамора</td><td>/podokonniki/</td><td class="num">36</td><td class="num">1</td><td class="num">2,8%</td><td><span class="badge gray">Заявка</span> Проверить ассортимент.</td></tr>
+              <tr><td>10</td><td>камень для облицовки</td><td>/oblitsovka/</td><td class="num">33</td><td class="num">1</td><td class="num">3,0%</td><td><span class="badge gray">Каталог</span> Дополнительное направление.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
         <details class="dev-note">
           <summary>Инструкция для программиста: конверсии</summary>
           <div class="dev-content">
@@ -2726,7 +3471,7 @@ warnings:
 high_traffic_low_conversion:
   organic_visits >= threshold
   conversion_rate < avg_seo_conversion_rate * 0.5</div>
-            <p><strong>Что передавать в ИИ:</strong> сводку по выбранным целям, цели с ростом/падением, цели с нулем, страницы с высоким трафиком и низкой конверсией, разбивку по поисковым системам и устройствам. ИИ не должен делать вывод о качестве лидов без CRM.</p>
+            <p><strong>Что передавать в ИИ:</strong> сводку по выбранным целям, цели с ростом/падением, цели с нулем, страницы с высоким трафиком и низкой конверсией, разбивку по поисковым системам и устройствам. ИИ не должен делать вывод о качестве лидов без CRM.</p><p><strong>Самые конверсионные запросы:</strong> если прямой связки запроса и конверсии нет, использовать приближение через посадочную страницу: запрос → URL → SEO-визиты и конверсии URL. В интерфейсе обязательно показывать пометку о способе расчета.</p>
           </div>
         </details>
       </section>
@@ -2734,13 +3479,13 @@ high_traffic_low_conversion:
       <section class="section section-observe" id="conclusion">
         <div class="section-header">
           <div>
-            <div class="section-kicker">Блок 6</div>
+            <div class="section-kicker">Блок 7</div>
             <h2>Общий вывод по отчету <span class="help" data-tip="Общий вывод не анализирует сырые данные заново. Он объединяет готовые краткие выводы предыдущих блоков.">?</span></h2>
             <p class="section-desc">Краткий клиентский итог месяца на основе выводов по задачам, видимости, трафику и конверсиям.</p>
           </div>
         </div>
 
-        <div class="summary-box">
+        <div class="summary-box" id="conclusionClientBox">
           <p>
             <strong>Статус месяца: умеренно положительная динамика.</strong>
             В отчетном месяце были выполнены работы по технической оптимизации, контенту и коммерческим факторам для приоритетных направлений: мрамор, гранит, травертин и изделия из камня.
@@ -2770,6 +3515,19 @@ high_traffic_low_conversion:
               <div class="value" style="font-size:22px; line-height:1.15;">Заявки с посадочных</div>
               <div class="note">Доработать коммерческие страницы, которые уже получают SEO-трафик.</div>
             </div>
+          </div>
+        </div>
+
+
+        <div class="edit-panel ai-draft-panel seo-only">
+          <div class="edit-panel-head">
+            <div><strong>Редактирование общего вывода ИИ</strong><span>Клиенту показывается только обработанная SEO-специалистом версия. Черновик ИИ сохраняется отдельно.</span></div>
+            <span class="seo-only-label">Внутренний режим</span>
+          </div>
+          <textarea class="editable-textarea" id="conclusionEditedText">Статус месяца — умеренно положительная динамика. В отчетном периоде команда выполнила работы по технической оптимизации, контенту и коммерческим факторам. На фоне этих работ виден рост органического трафика и положительные сигналы по видимости. В следующем месяце фокусируемся на усилении посадочных страниц, которые уже получают SEO-трафик и могут дать больше заявок.</textarea>
+          <div class="editable-actions">
+            <button class="btn" type="button" id="saveConclusionBtn">Сохранить клиентскую версию</button>
+            <button class="btn ghost" type="button" id="restoreAiConclusionBtn">Вернуть ИИ-черновик</button>
           </div>
         </div>
 
@@ -2817,7 +3575,7 @@ ai_result:
       <section class="section section-observe" id="recommendations">
         <div class="section-header">
           <div>
-            <div class="section-kicker">Блок 7</div>
+            <div class="section-kicker">Блок 8</div>
             <h2>Рекомендации к SEO-плану <span class="help" data-tip="Это черновик плана для SEO-специалиста. Рекомендации строятся на детальных сигналах: запросы 11–20, низкий CTR, падения, страницы с трафиком и низкой конверсией.">?</span></h2>
             <p class="section-desc">Формируем болванку задач на следующий месяц на основе данных отчета.</p>
           </div>
@@ -3153,14 +3911,15 @@ plan_totals:
         <li><a class="toc-link active" href="#summary"><span class="toc-index">1</span>Сводка<span class="toc-status"></span></a></li>
         <li><a class="toc-link" href="#tasks"><span class="toc-index">2</span>Задачи<span class="toc-status"></span></a></li>
         <li><a class="toc-link" href="#visibility"><span class="toc-index">3</span>Видимость<span class="toc-status warn"></span></a></li>
-        <li><a class="toc-link" href="#traffic"><span class="toc-index">4</span>Трафик<span class="toc-status"></span></a></li>
-        <li><a class="toc-link" href="#conversions"><span class="toc-index">5</span>Конверсии<span class="toc-status warn"></span></a></li>
-        <li><a class="toc-link" href="#conclusion"><span class="toc-index">6</span>Вывод<span class="toc-status"></span></a></li>
-        <li><a class="toc-link" href="#recommendations"><span class="toc-index">7</span>План SEO<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#backlinks"><span class="toc-index">4</span>Ссылки<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#traffic"><span class="toc-index">5</span>Трафик<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#conversions"><span class="toc-index">6</span>Конверсии<span class="toc-status warn"></span></a></li>
+        <li><a class="toc-link" href="#conclusion"><span class="toc-index">7</span>Вывод<span class="toc-status"></span></a></li>
+        <li><a class="toc-link" href="#recommendations"><span class="toc-index">8</span>План SEO<span class="toc-status"></span></a></li>
       </ul>
       <div style="height:16px"></div>
       <div class="summary-box" style="font-size:12px;">
-        <p><strong>Dev-режим:</strong> включите переключатель в шапке, чтобы увидеть инструкции для программиста под каждым блоком.</p>
+        <p><strong>Dev-режим:</strong> включите переключатель в шапке, чтобы увидеть инструкции для программиста под каждым блоком. В этой версии ключевое ТЗ встроено внутрь прототипа; отдельно можно хранить только длинные промты ИИ.</p>
       </div>
     </aside>
   </div>
@@ -3184,6 +3943,7 @@ plan_totals:
         <button class="settings-tab" type="button" data-settings-tab="settings-goals">Цели</button>
         <button class="settings-tab" type="button" data-settings-tab="settings-plan">План и стоимость</button>
         <button class="settings-tab" type="button" data-settings-tab="settings-access">Доступ</button>
+        <button class="settings-tab" type="button" data-settings-tab="settings-export">Экспорт</button>
         <button class="settings-tab" type="button" data-settings-tab="settings-tech">JSON для разработки</button>
       </div>
 
@@ -3233,6 +3993,11 @@ plan_totals:
               </div>
               <div class="settings-tags" id="settingsDirectionsTags" aria-label="Превью направлений"></div>
               <p>Эти направления используются в сводке, выводах ИИ, анализе видимости и рекомендациях к SEO-плану.</p>
+              <div class="settings-divider"></div>
+              <div class="settings-field"><label for="settingBrandQueries">Брендовые запросы / маркеры через запятую</label><textarea id="settingBrandQueries">magmastones, magma stones, магмастоун, магма стоун, магмастоунс</textarea></div>
+              <p class="settings-hint-text">Используются для среза брендового и небрендового SEO-трафика.</p>
+              <div class="settings-field"><label for="settingPfDirections">Приоритетные направления ПФ через запятую</label><textarea id="settingPfDirections">Гранит, Мраморные слэбы, Столешницы из камня</textarea></div>
+              <p class="settings-hint-text">Используются во вкладке “Запросы ПФ” внутри блока позиций Webtronica.</p>
             </div>
           </div>
         </section>
@@ -3250,10 +4015,11 @@ plan_totals:
 
             <div class="source-card">
               <div class="source-head">
-                <div><div class="source-name">Яндекс.Вебмастер</div><div class="source-desc">Показы, клики, CTR, позиции</div></div>
+                <div><div class="source-name">Яндекс.Вебмастер</div><div class="source-desc">Показы, клики, CTR, позиции, внешние ссылки</div></div>
                 <span class="badge green">Подключено</span>
               </div>
               <div class="settings-field"><label for="settingYwmHost">Host ID</label><input id="settingYwmHost" value="https:magmastones.ru:443"></div>
+              <label class="settings-check"><input id="settingYwmLinksEnabled" type="checkbox" checked><span><span class="settings-check-title">Забирать ссылочные данные</span><br><span class="settings-hint">Новые/потерянные ссылки и доноры.</span></span></label>
               <button class="btn" type="button" data-demo-check="Яндекс.Вебмастер">Проверить доступ</button>
             </div>
 
@@ -3271,7 +4037,9 @@ plan_totals:
                 <div><div class="source-name">Webtronica Positions</div><div class="source-desc">Точные позиции запросов по датам сборов</div></div>
                 <span class="badge green">Подключено</span>
               </div>
-              <div class="settings-field"><label for="settingWebtronicaProject">Project / Campaign ID</label><input id="settingWebtronicaProject" value="magmastones-moscow"></div>
+              <div class="settings-field"><label for="settingWebtronicaProject">Основной Project / Campaign ID</label><input id="settingWebtronicaProject" value="magmastones-moscow"></div>
+              <div class="settings-field"><label for="settingWebtronicaPfProject">ПФ Project / Campaign ID</label><input id="settingWebtronicaPfProject" value="magmastones-pf-moscow"></div>
+              <div class="settings-field"><label for="settingWebtronicaDetailUrl">URL подробного отчета</label><input id="settingWebtronicaDetailUrl" value="https://report.webtronica.io/r/magmastones-positions-june-2026"></div>
               <button class="btn" type="button" data-demo-check="Webtronica Positions">Проверить доступ</button>
             </div>
           </div>
@@ -3297,6 +4065,7 @@ plan_totals:
                 <label class="settings-check"><input type="checkbox" data-section-toggle="summary" checked><span><span class="settings-check-title">Сводка</span><br><span class="settings-hint">Верхний итоговый блок отчета.</span></span></label>
                 <label class="settings-check"><input type="checkbox" data-section-toggle="tasks" checked><span><span class="settings-check-title">Выполненные задачи</span><br><span class="settings-hint">Данные из Bitrix24 и клиентское пояснение пользы.</span></span></label>
                 <label class="settings-check"><input type="checkbox" data-section-toggle="visibility" checked><span><span class="settings-check-title">Видимость</span><br><span class="settings-hint">Яндекс vs Google, запросы, CTR и зоны роста.</span></span></label>
+                <label class="settings-check"><input type="checkbox" data-section-toggle="backlinks" checked><span><span class="settings-check-title">Ссылочная масса</span><br><span class="settings-hint">Внешние ссылки из Яндекс.Вебмастера.</span></span></label>
                 <label class="settings-check"><input type="checkbox" data-section-toggle="traffic" checked><span><span class="settings-check-title">Трафик</span><br><span class="settings-hint">Органический трафик из Яндекс.Метрики.</span></span></label>
                 <label class="settings-check"><input type="checkbox" data-section-toggle="conversions" checked><span><span class="settings-check-title">Конверсии</span><br><span class="settings-hint">Выбранные цели по SEO-трафику.</span></span></label>
                 <label class="settings-check"><input type="checkbox" data-section-toggle="recommendations" checked><span><span class="settings-check-title">План SEO</span><br><span class="settings-hint">Рекомендации ИИ и клиентский план работ.</span></span></label>
@@ -3311,6 +4080,7 @@ plan_totals:
                 <label class="settings-check"><input id="settingUseDemoData" type="checkbox" checked><span><span class="settings-check-title">Использовать демоданные, если источник пустой</span><br><span class="settings-hint">Для прототипа и тестовых отчетов.</span></span></label>
                 <label class="settings-check"><input id="settingNeedsRebuild" type="checkbox" checked><span><span class="settings-check-title">После изменения данных предлагать пересборку отчета</span><br><span class="settings-hint">Для периода, региона, источников, целей и структуры отчета.</span></span></label>
               </div>
+              <div class="soft-tone-note"><strong>Тональность ИИ-выводов:</strong> в промтах запрещаем формулировки “упустили”, “плохая динамика”, “срочно исправить”. Используем: “есть зона для усиления”, “следующий фокус”, “можно дополнительно улучшить”, “есть потенциал роста”.</div>
             </div>
           </div>
         </section>
@@ -3359,12 +4129,40 @@ plan_totals:
                 <label class="settings-check"><input id="settingGuestEnabled" type="checkbox"><span><span class="settings-check-title">Включить гостевой режим</span><br><span class="settings-hint">Клиент увидит только согласованные блоки без внутренних рекомендаций.</span></span></label>
                 <label class="settings-check"><input id="settingHideInternal" type="checkbox" checked><span><span class="settings-check-title">Скрывать внутренние рекомендации ИИ</span><br><span class="settings-hint">В гостевой версии остается только клиентский план.</span></span></label>
                 <label class="settings-check"><input id="settingHideDocLinks" type="checkbox" checked><span><span class="settings-check-title">Скрывать ссылки на техническое ТЗ</span><br><span class="settings-hint">Google Doc и dev-ссылки не показываются клиенту.</span></span></label>
+                <label class="settings-check"><input id="settingShowTrafficRecsGuest" type="checkbox"><span><span class="settings-check-title">Показывать рекомендации по трафику</span><br><span class="settings-hint">Только отредактированные SEO-специалистом рекомендации.</span></span></label>
+                <label class="settings-check"><input id="settingShowWebtronicaDetailGuest" type="checkbox" checked><span><span class="settings-check-title">Показывать кнопку подробного отчета Webtronica</span><br><span class="settings-hint">Кнопка ведет на детальный отчет по позициям.</span></span></label>
+                <label class="settings-check"><input id="settingShowPfGuest" type="checkbox" checked><span><span class="settings-check-title">Показывать срез ПФ в гостевой версии</span><br><span class="settings-hint">При необходимости формулировки можно смягчить для клиента.</span></span></label>
               </div>
             </div>
             <div class="settings-card">
               <h4>Превью гостевой ссылки</h4>
               <div class="settings-field"><label for="settingGuestUrl">URL гостевого отчета</label><input id="settingGuestUrl" value="https://report.webtronica.io/r/magmastones-june-2026"></div>
               <p>В прототипе ссылка демонстрационная. В разработке URL должен генерироваться после публикации версии отчета.</p>
+            </div>
+          </div>
+        </section>
+
+
+        <section class="settings-panel" id="settings-export">
+          <div class="settings-grid">
+            <div class="settings-card">
+              <h4>Форматы экспорта</h4>
+              <div class="settings-check-list">
+                <label class="settings-check"><input id="settingExportPdf" type="checkbox" checked><span><span class="settings-check-title">PDF</span><br><span class="settings-hint">Бумажный/презентационный отчет без интерактивных вкладок.</span></span></label>
+                <label class="settings-check"><input id="settingExportGoogleDocs" type="checkbox" checked><span><span class="settings-check-title">Google Docs</span><br><span class="settings-hint">Редактируемый документ для внутренней доработки.</span></span></label>
+                <label class="settings-check"><input id="settingExportDocx" type="checkbox" checked><span><span class="settings-check-title">DOCX</span><br><span class="settings-hint">Файл для отправки или хранения.</span></span></label>
+              </div>
+            </div>
+            <div class="settings-card">
+              <h4>Правила экспортной версии</h4>
+              <p>PDF/DOCX/Google Docs должны разворачивать все вкладки в последовательные разделы. Dev-инструкции, внутренние комментарии, сырые рекомендации ИИ и скрытые гостевой ссылкой блоки не попадают в клиентский экспорт.</p>
+              <div class="code">export_options:
+  export_type = pdf | google_docs | docx
+  export_scope = guest_report | internal_report
+  include_dev_notes = false
+  include_internal_comments = false
+  expand_tabs = true
+  include_only_edited_ai_outputs = true</div>
             </div>
           </div>
         </section>
@@ -3389,6 +4187,199 @@ plan_totals:
     </div>
   </div>
 
+
+  <div class="modal-backdrop" id="printPreviewBackdrop">
+    <div class="modal print-preview-modal" role="dialog" aria-modal="true" aria-labelledby="printPreviewTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="printPreviewTitle">Предпросмотр экспортного SEO-отчета</h3>
+          <p style="margin:6px 0 0; color: var(--muted);">Последовательный HTML-макет документа для PDF, Google Docs и DOCX. Вкладки дашборда разворачиваются в разделы, внутренние комментарии и dev-блоки скрываются из клиентской версии.</p>
+        </div>
+        <button class="modal-close" id="printPreviewClose" aria-label="Закрыть">×</button>
+      </div>
+
+      <div class="print-preview-shell">
+        <article class="paper-report" id="exportReportPreview">
+          <section class="paper-page cover">
+            <div class="paper-cover-top">
+              <div class="paper-logo"><span class="paper-logo-mark">W</span><span>Webtronica<br><small style="font-weight:700; opacity:.72;">SEO monitoring & automation</small></span></div>
+              <div class="paper-cover-badge">Клиентский SEO-отчет</div>
+            </div>
+            <div class="paper-cover-main">
+              <h1>SEO-отчет проекта MagmaStones</h1>
+              <p>Итоги работ за июнь 2026: выполненные задачи, динамика видимости, ссылочная масса, поисковый трафик, конверсии, позиции Webtronica и план работ на следующий месяц.</p>
+            </div>
+            <div class="paper-cover-meta">
+              <div class="paper-cover-card"><span>Проект</span><strong>magmastones.ru</strong></div>
+              <div class="paper-cover-card"><span>Период</span><strong>Июнь 2026</strong></div>
+              <div class="paper-cover-card"><span>Регион</span><strong>Москва</strong></div>
+              <div class="paper-cover-card"><span>Статус</span><strong>Умеренно положительный</strong></div>
+            </div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head">
+              <div><div class="paper-page-kicker">01 · Сводка</div><h2>Краткая сводка месяца</h2></div>
+              <div class="paper-doc-meta">SEO-отчет · magmastones.ru<br>Июнь 2026</div>
+            </div>
+            <div class="paper-summary">
+              <p><strong>Общая динамика месяца положительная.</strong> По проекту выполнены работы по технической оптимизации, контенту и коммерческим факторам. На фоне этих работ видимость и органический трафик показывают рост, а следующий фокус — усиление заявочных элементов на посадочных страницах, которые уже получают SEO-трафик.</p>
+            </div>
+            <div class="paper-grid-4">
+              <div class="paper-kpi"><span>SEO-трафик</span><strong>4 860</strong><small>визитов, +11,2%</small></div>
+              <div class="paper-kpi"><span>ТОП-10</span><strong>124</strong><small>запроса, +18 за месяц</small></div>
+              <div class="paper-kpi"><span>Конверсии</span><strong>53</strong><small>достижения целей, +6,0%</small></div>
+              <div class="paper-kpi"><span>План</span><strong>30 ч</strong><small>105 000 ₽ по ставке проекта</small></div>
+            </div>
+            <h3>Содержание экспортного отчета</h3>
+            <table class="paper-table">
+              <tbody>
+                <tr><td>01</td><td>Краткая сводка</td><td>Статус месяца, ключевые показатели и фокус следующего периода</td></tr>
+                <tr><td>02</td><td>Выполненные задачи</td><td>Работы из Bitrix24 с клиентским пояснением пользы</td></tr>
+                <tr><td>03</td><td>Видимость и спрос</td><td>Яндекс, Google и точечные зоны роста</td></tr>
+                <tr><td>04</td><td>Ссылочная масса</td><td>Внешние ссылки из Яндекс.Вебмастера</td></tr>
+                <tr><td>05</td><td>Трафик и конверсии</td><td>Органика, бренд/небренд, цели и конверсионные запросы</td></tr>
+                <tr><td>06</td><td>Позиции Webtronica</td><td>Основные запросы, запросы ПФ и ссылка на подробный отчет</td></tr>
+                <tr><td>07</td><td>Вывод и план</td><td>Отредактированный вывод SEO-специалиста и план работ</td></tr>
+              </tbody>
+            </table>
+            <div class="paper-footnote">Примечание для экспорта: в клиентскую версию не попадают dev-инструкции, внутренние рекомендации ИИ, черновики и скрытые по гостевой ссылке блоки.</div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">02 · Выполненные задачи</div><h2>Что было сделано за месяц</h2></div><div class="paper-doc-meta">Источник: Bitrix24<br>Дата в отчете = дата закрытия</div></div>
+            <div class="paper-grid-4">
+              <div class="paper-kpi"><span>Выполнено задач</span><strong>24</strong><small>попали в отчет</small></div>
+              <div class="paper-kpi"><span>Техническая SEO</span><strong>8</strong><small>индексация, дубли, sitemap</small></div>
+              <div class="paper-kpi"><span>Контент</span><strong>10</strong><small>мета-теги, тексты, H1</small></div>
+              <div class="paper-kpi"><span>Комм. факторы</span><strong>5</strong><small>доверие и заявки</small></div>
+            </div>
+            <table class="paper-table">
+              <thead><tr><th>Задача</th><th>Тип</th><th>Выполнено</th><th>Польза для проекта</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Оптимизация мета-тегов для разделов камня</strong><br>Title/description для мрамора, гранита и травертина</td><td><span class="paper-badge blue">Контент</span></td><td>14.06.2026</td><td>Усиливает релевантность страниц и может положительно повлиять на CTR после переобхода.</td></tr>
+                <tr><td><strong>Проверка canonical и индексации фильтров</strong><br>Фильтры по типу камня, цвету и назначению</td><td><span class="paper-badge green">Техническая</span></td><td>18.06.2026</td><td>Помогает корректнее распределять релевантность между посадочными страницами.</td></tr>
+                <tr><td><strong>Доработка блоков “замер”, “производство”, “монтаж”</strong><br>Коммерческие посадочные страницы</td><td><span class="paper-badge amber">Комм. факторы</span></td><td>22.06.2026</td><td>Повышает доверие и упрощает путь пользователя к заявке.</td></tr>
+                <tr><td><strong>Проверка целей Метрики по заявкам</strong><br>Формы, телефон, WhatsApp, Telegram</td><td><span class="paper-badge gray">Аналитика</span></td><td>25.06.2026</td><td>Позволяет точнее оценивать влияние SEO-трафика на целевые действия.</td></tr>
+              </tbody>
+            </table>
+            <div class="paper-export-spec"><strong>Правило для программиста:</strong> дата создания задачи хранится и доступна во внутреннем режиме, но в клиентский экспорт по умолчанию выводится дата закрытия или согласованная дата попадания задачи в отчет.</div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">03 · Видимость</div><h2>Видимость, спрос и зоны роста</h2></div><div class="paper-doc-meta">Источники: Яндекс.Вебмастер, GSC<br>Дополнительно: Webtronica Positions</div></div>
+            <div class="paper-grid-4">
+              <div class="paper-kpi"><span>Яндекс ТОП-10</span><strong>82</strong><small>показы +16%, клики +13%</small></div>
+              <div class="paper-kpi"><span>Google ТОП-10</span><strong>42</strong><small>показы +7%, клики +3%</small></div>
+              <div class="paper-kpi"><span>Зона 11–20</span><strong>31</strong><small>потенциал дожима</small></div>
+              <div class="paper-kpi"><span>Низкий CTR</span><strong>32</strong><small>точки для сниппетов</small></div>
+            </div>
+            <div class="paper-chart"><div class="paper-chart-title"><span>Сравнение поисковых систем</span><span class="paper-badge blue">обзор</span></div><div class="paper-bars">
+              <div class="paper-bar-row"><span>Яндекс показы</span><span class="paper-bar-track"><span class="paper-bar-fill" style="width:100%"></span></span><strong>42 800</strong></div>
+              <div class="paper-bar-row"><span>Google показы</span><span class="paper-bar-track"><span class="paper-bar-fill" style="width:60%"></span></span><strong>25 600</strong></div>
+              <div class="paper-bar-row"><span>Яндекс клики</span><span class="paper-bar-track"><span class="paper-bar-fill" style="width:100%"></span></span><strong>1 740</strong></div>
+              <div class="paper-bar-row"><span>Google клики</span><span class="paper-bar-track"><span class="paper-bar-fill" style="width:41%"></span></span><strong>720</strong></div>
+            </div></div>
+            <table class="paper-table"><thead><tr><th>Зона роста</th><th>Страница</th><th>Сигнал</th><th>Рекомендация</th></tr></thead><tbody>
+              <tr><td>11–20</td><td>/catalog/granit/</td><td>Запросы близко к ТОП-10 в обеих ПС</td><td>Усилить релевантность и перелинковку.</td></tr>
+              <tr><td>Низкий CTR</td><td>/stoleshnicy/</td><td>Высокие показы при умеренной кликабельности</td><td>Аккуратно доработать title/description и первый экран.</td></tr>
+              <tr><td>Просадка</td><td>/catalog/travertin/</td><td>Снижение по части запросов</td><td>Проверить индексацию, контент и конкурентов.</td></tr>
+            </tbody></table>
+            <div class="paper-summary"><p><strong>Клиентская формулировка:</strong> по данным видимости есть устойчивые позитивные сигналы, а также несколько направлений, где можно дополнительно усилить страницы и быстрее перевести запросы в ТОП-10.</p></div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">04 · Ссылочная масса</div><h2>Внешние ссылки из Яндекс.Вебмастера</h2></div><div class="paper-doc-meta">Источник: Яндекс.Вебмастер<br>Количественная оценка</div></div>
+            <div class="paper-grid-4">
+              <div class="paper-kpi"><span>Внешние ссылки</span><strong>1 284</strong><small>+76 за месяц</small></div>
+              <div class="paper-kpi"><span>Доноры</span><strong>218</strong><small>+12 новых доменов</small></div>
+              <div class="paper-kpi"><span>Новые ссылки</span><strong>94</strong><small>за отчетный период</small></div>
+              <div class="paper-kpi"><span>Потерянные</span><strong>18</strong><small>нормальная динамика</small></div>
+            </div>
+            <div class="paper-chart"><div class="paper-chart-title"><span>Динамика внешних ссылок</span><span>май → июнь</span></div><div class="paper-line-chart">
+              <svg class="paper-line-svg" viewBox="0 0 820 210" preserveAspectRatio="none"><defs><linearGradient id="paperLinkGrad" x1="0" x2="1"><stop offset="0" stop-color="#2557ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><polyline points="30,160 160,148 290,136 420,116 550,92 680,74 790,54" fill="none" stroke="url(#paperLinkGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="790" cy="54" r="6" fill="#fff" stroke="#2557ff" stroke-width="4"/></svg>
+            </div></div>
+            <div class="paper-grid-2">
+              <div><h3>ТОП-доноры</h3><table class="paper-table"><tbody><tr><td>stone-industry.ru</td><td class="num">42 ссылки</td></tr><tr><td>arch-catalog.ru</td><td class="num">31 ссылка</td></tr><tr><td>interior-media.ru</td><td class="num">18 ссылок</td></tr></tbody></table></div>
+              <div><h3>Страницы-акцепторы</h3><table class="paper-table"><tbody><tr><td>/catalog/slaby-mramora/</td><td class="num">126</td></tr><tr><td>/catalog/granit/</td><td class="num">98</td></tr><tr><td>/stoleshnicy/</td><td class="num">74</td></tr></tbody></table></div>
+            </div>
+            <div class="paper-export-spec"><strong>Важно для программиста:</strong> не делать вывод о качестве ссылок только по количеству. Если нет данных о качестве, использовать мягкую формулировку “по количественным данным Яндекс.Вебмастера”.</div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">05 · Трафик</div><h2>Органический трафик и бренд / небренд</h2></div><div class="paper-doc-meta">Источник: Яндекс.Метрика<br>Фильтр: органика, не роботы</div></div>
+            <div class="paper-grid-4"><div class="paper-kpi"><span>SEO-визиты</span><strong>4 860</strong><small>+11,2%</small></div><div class="paper-kpi"><span>Бренд</span><strong>1 240</strong><small>+8,0%</small></div><div class="paper-kpi"><span>Небренд</span><strong>3 620</strong><small>+12,4%</small></div><div class="paper-kpi"><span>Mobile</span><strong>55%</strong><small>доля SEO-трафика</small></div></div>
+            <div class="paper-chart"><div class="paper-chart-title"><span>SEO-трафик за 12 месяцев</span><span class="paper-badge blue">старт SEO: февраль</span></div><div class="paper-line-chart"><svg class="paper-line-svg" viewBox="0 0 820 210" preserveAspectRatio="none"><defs><linearGradient id="paperTrafficGrad" x1="0" x2="1"><stop offset="0" stop-color="#2557ff"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs><polyline points="30,166 100,160 170,154 240,146 310,136 380,126 450,112 520,100 590,88 660,78 730,82 790,50" fill="none" stroke="url(#paperTrafficGrad)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><line x1="520" y1="18" x2="520" y2="190" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 6"/></svg></div></div>
+            <div class="paper-grid-2"><div class="paper-summary"><p><strong>Брендовый трафик:</strong> показывает стабильный интерес к компании и проекту. Брендовые маркеры задаются в настройках проекта.</p></div><div class="paper-summary"><p><strong>Небрендовый трафик:</strong> основной потенциал SEO-роста. В отчетном месяце динамика небренда выглядит сильнее брендового среза.</p></div></div>
+            <table class="paper-table"><thead><tr><th>Посадочная</th><th class="num">Визиты</th><th class="num">Динамика</th><th>Вывод</th></tr></thead><tbody><tr><td>/catalog/slaby-mramora/</td><td class="num">840</td><td class="num">+22,5%</td><td>Страница растет, можно усиливать коммерческие блоки.</td></tr><tr><td>/catalog/granit/</td><td class="num">760</td><td class="num">+15,8%</td><td>Есть потенциал дожима запросов в зоне 11–20.</td></tr><tr><td>/catalog/travertin/</td><td class="num">410</td><td class="num">-12,7%</td><td>Зона для дополнительной диагностики.</td></tr></tbody></table>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">06 · Конверсии</div><h2>Цели и самые конверсионные запросы</h2></div><div class="paper-doc-meta">Источник: Яндекс.Метрика<br>Выбранные цели проекта</div></div>
+            <div class="paper-grid-4"><div class="paper-kpi"><span>Достижения целей</span><strong>53</strong><small>+6,0%</small></div><div class="paper-kpi"><span>Конверсионные визиты</span><strong>9</strong><small>+5,2%</small></div><div class="paper-kpi"><span>CR</span><strong>0,53%</strong><small>по выбранным целям</small></div><div class="paper-kpi"><span>К проверке</span><strong>1</strong><small>мобильная цель</small></div></div>
+            <table class="paper-table"><thead><tr><th>ТОП-запрос</th><th>Посадочная</th><th class="num">Визиты</th><th class="num">Конверсии</th><th class="num">CR</th></tr></thead><tbody>
+              <tr><td>мраморные слэбы купить</td><td>/catalog/slaby-mramora/</td><td class="num">84</td><td class="num">6</td><td class="num">7,1%</td></tr>
+              <tr><td>гранит купить москва</td><td>/catalog/granit/</td><td class="num">72</td><td class="num">4</td><td class="num">5,6%</td></tr>
+              <tr><td>столешница из камня цена</td><td>/stoleshnicy/</td><td class="num">66</td><td class="num">3</td><td class="num">4,5%</td></tr>
+              <tr><td>травертин натуральный</td><td>/catalog/travertin/</td><td class="num">38</td><td class="num">1</td><td class="num">2,6%</td></tr>
+            </tbody></table>
+            <div class="paper-export-spec"><strong>Fallback:</strong> если прямой связки запрос → конверсия нет, использовать приближение “запрос → посадочная страница → конверсии страницы” и явно помечать метод расчета в dev-режиме.</div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">07 · Позиции Webtronica</div><h2>Точные позиции и запросы ПФ</h2></div><div class="paper-doc-meta">Источник: Webtronica Positions<br>Последний сбор: 25.06.2026</div></div>
+            <div class="paper-grid-4"><div class="paper-kpi"><span>Запросов</span><strong>420</strong><small>в мониторинге</small></div><div class="paper-kpi"><span>ТОП-10</span><strong>124</strong><small>+18 за месяц</small></div><div class="paper-kpi"><span>Средняя позиция</span><strong>14,8</strong><small>меньше = лучше</small></div><div class="paper-kpi"><span>ПФ-запросы</span><strong>46</strong><small>отдельный проект</small></div></div>
+            <table class="paper-table"><thead><tr><th>Запрос</th><th>URL</th><th class="num">Было</th><th class="num">Стало</th><th>Сигнал</th></tr></thead><tbody>
+              <tr><td>мраморные слэбы купить</td><td>/catalog/slaby-mramora/</td><td class="num">15</td><td class="num">8</td><td><span class="paper-badge green">Рост</span></td></tr>
+              <tr><td>гранит купить</td><td>/catalog/granit/</td><td class="num">14</td><td class="num">11</td><td><span class="paper-badge amber">Дожать</span></td></tr>
+              <tr><td>травертин натуральный</td><td>/catalog/travertin/</td><td class="num">18</td><td class="num">29</td><td><span class="paper-badge red">Диагностика</span></td></tr>
+            </tbody></table>
+            <h3>Запросы ПФ</h3>
+            <table class="paper-table"><thead><tr><th>Направление</th><th>Запросы</th><th class="num">ТОП-10</th><th>Комментарий</th></tr></thead><tbody><tr><td>Гранит</td><td>14</td><td class="num">5</td><td>Приоритет для дополнительного продвижения.</td></tr><tr><td>Слэбы</td><td>18</td><td class="num">8</td><td>Положительная динамика, стоит закрепить рост.</td></tr><tr><td>Столешницы</td><td>14</td><td class="num">4</td><td>Есть потенциал по запросам 11–20.</td></tr></tbody></table>
+            <div class="paper-summary"><p><strong>Для клиента:</strong> в кратком отчете показывается сводка по позициям, а для детального изучения доступна отдельная гостевая ссылка на полный отчет Webtronica.</p><p><span class="paper-badge blue">Кнопка в дашборде</span> Открыть подробный отчет по позициям</p></div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">08 · Вывод и план</div><h2>Итог месяца и план работ</h2></div><div class="paper-doc-meta">Клиентская версия<br>После редактирования SEO-специалистом</div></div>
+            <div class="paper-summary"><p><strong>Статус месяца: умеренно положительная динамика.</strong> В отчетном месяце были выполнены работы по технической оптимизации, контенту и коммерческим факторам. Видимость и органический трафик показывают рост, а следующий фокус — усиление коммерческих посадочных страниц и точек конверсии.</p></div>
+            <h3>План SEO на июль 2026</h3>
+            <div class="paper-plan-item"><strong>Доработка коммерческих посадочных страниц по граниту и мраморным слэбам</strong><p>Усилим релевантность страниц, обновим мета-теги, добавим уточнения по производству, замеру, монтажу и примерам работ.</p><span class="paper-badge red">14 часов · высокий приоритет</span></div>
+            <div class="paper-plan-item"><strong>Проверка и корректировка целей Яндекс.Метрики</strong><p>Проверим отслеживание заявок, телефона и мессенджеров, чтобы отчет по SEO-конверсиям был точным.</p><span class="paper-badge red">3 часа · высокий приоритет</span></div>
+            <div class="paper-plan-item"><strong>Диагностика страницы травертина</strong><p>Проверим позиции, индексацию, наличие материалов, внутренние ссылки и выдачу конкурентов.</p><span class="paper-badge amber">5 часов · средний приоритет</span></div>
+            <div class="paper-total"><div class="paper-kpi"><span>Всего часов</span><strong>30</strong></div><div class="paper-kpi"><span>Ставка проекта</span><strong>3 500 ₽</strong></div><div class="paper-kpi"><span>Стоимость плана</span><strong>105 000 ₽</strong></div></div>
+          </section>
+
+          <section class="paper-page">
+            <div class="paper-page-head"><div><div class="paper-page-kicker">09 · Спецификация экспорта</div><h2>Как программисту генерировать PDF / DOCX / Google Docs</h2></div><div class="paper-doc-meta">Dev-spec<br>Не показывать клиенту</div></div>
+            <div class="paper-export-spec"><strong>Принцип:</strong> экспортный отчет не повторяет интерактивный дашборд. Все вкладки разворачиваются в последовательные разделы, скрытые блоки гостевой версии не попадают в клиентский документ, а редактируемые ИИ-выводы берутся в версии SEO-специалиста.<code>export_settings:
+  export_type: pdf | google_docs | docx
+  export_scope: guest_report | internal_report
+  include_dev_notes: false
+  include_internal_recommendations: false
+  include_ai_raw_drafts: false
+  expand_tabs_to_sections: true
+  page_size: A4
+  page_break_mode: section
+
+content_rules:
+  tasks.date = closed_at || report_date
+  conclusion = seo_conclusion_edited || ai_conclusion_raw
+  traffic_recommendations = only show_in_guest_report
+  webtronica_positions = summary + link_to_detailed_report
+  backlinks = yandex_webmaster_external_links</code></div>
+            <h3>Правила для форматов</h3>
+            <div class="paper-grid-3"><div class="paper-mini-card"><span>PDF</span><p>Фиксированный печатный вид A4, номера страниц, разрывы по секциям, без интерактивных элементов.</p></div><div class="paper-mini-card"><span>Google Docs</span><p>Редактируемая структура: заголовки H1/H2/H3, таблицы, изображения графиков, клиентские выводы.</p></div><div class="paper-mini-card"><span>DOCX</span><p>Файл для отправки клиенту: те же разделы, что PDF, но с возможностью редактирования текста.</p></div></div>
+            <h3>Edge cases</h3><ul class="paper-two-col-list"><li>Если источник не подключен — показывать нейтральный блок “данные не подключены”.</li><li>Если рекомендация скрыта из гостевой ссылки — не экспортировать ее клиенту.</li><li>Если нет точной связки запрос-конверсия — указывать метод приближения.</li><li>Если в день несколько сборов позиций — использовать последний сбор дня или настройку проекта.</li><li>Если ссылочных данных нет — не генерировать оценочные выводы о качестве ссылок.</li><li>Если общий вывод не отредактирован SEO-специалистом — показать предупреждение перед экспортом.</li></ul>
+          </section>
+        </article>
+      </div>
+
+      <div class="print-preview-actions">
+        <div class="print-preview-note">Этот HTML-предпросмотр служит эталоном верстки для экспорта. Реальный backend должен генерировать PDF / Google Docs / DOCX из тех же данных отчета и учитывать настройки гостевой версии.</div>
+        <div class="editable-actions" style="margin-top:0; justify-content:flex-end;"><button class="btn" type="button" id="printReportBtn">Печать предпросмотра</button><button class="btn primary" type="button" data-export-action="pdf">Сгенерировать PDF</button><button class="btn" type="button" data-export-action="google_docs">Создать Google Docs</button><button class="btn" type="button" data-export-action="docx">Скачать DOCX</button></div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -3684,6 +4675,55 @@ plan_totals:
         valueFormatter: v => formatNumber(Math.round(v))
       });
 
+      renderLineChart("chartWebtronicaPfAvgPosition", [
+        { label: "01.06", value: 16.8 },
+        { label: "05.06", value: 15.9 },
+        { label: "10.06", value: 14.7 },
+        { label: "15.06", value: 13.9 },
+        { label: "20.06", value: 13.1 },
+        { label: "25.06", value: 12.6 }
+      ], {
+        label: "Средняя позиция ПФ",
+        seriesLabel: "ПФ",
+        min: 9,
+        max: 19,
+        height: 292,
+        valueFormatter: v => String(Number(v).toFixed(1)).replace(".", ",")
+      });
+
+      renderMultiLineChart("chartBrandNonbrandTraffic", [
+        { label: "янв", brand: 980, nonbrand: 2940 },
+        { label: "фев", brand: 1010, nonbrand: 3080 },
+        { label: "мар", brand: 1080, nonbrand: 3150 },
+        { label: "апр", brand: 1110, nonbrand: 3270 },
+        { label: "май", brand: 1140, nonbrand: 3230 },
+        { label: "июн", brand: 1240, nonbrand: 3620 }
+      ], [
+        { key: "brand", label: "Бренд" },
+        { key: "nonbrand", label: "Небренд" }
+      ], {
+        label: "Брендовый и небрендовый трафик",
+        height: 292,
+        area: false,
+        valueFormatter: v => formatNumber(Math.round(v))
+      });
+
+      renderLineChart("chartBacklinksDynamics", [
+        { label: "янв", value: 980 },
+        { label: "фев", value: 1040 },
+        { label: "мар", value: 1115 },
+        { label: "апр", value: 1168 },
+        { label: "май", value: 1200 },
+        { label: "июн", value: 1284 }
+      ], {
+        label: "Динамика внешних ссылок",
+        seriesLabel: "Ссылки",
+        height: 292,
+        min: 900,
+        max: 1350,
+        valueFormatter: v => formatNumber(Math.round(v))
+      });
+
       renderLineChart("chartTrafficYear", trafficYearData, {
         label: "SEO-трафик за 12 месяцев",
         seriesLabel: "SEO-трафик",
@@ -3738,7 +4778,7 @@ plan_totals:
         html: `<p><strong>Тип:</strong> Контентная оптимизация</p>
                <p><strong>Польза:</strong> усиливает релевантность страниц категории поисковым запросам и может улучшить CTR после переобхода страниц.</p>
                <p><strong>Потенциальное влияние:</strong> релевантность, CTR, позиции.</p>
-               <p><strong>Эффект:</strong> накопительный.</p>`
+               <p><strong>Эффект:</strong> накопительный.</p><p><strong>Дата создания в Bitrix24:</strong> 10.06.2026. <strong>Дата выполнения в отчете:</strong> 14.06.2026.</p>`
       },
       task2: {
         title: "Проверка canonical и индексации фильтров",
@@ -4026,6 +5066,95 @@ plan_totals:
 
 
 
+    function initMiniTabs() {
+      $$(".mini-tabs").forEach(group => {
+        const buttons = $$(".mini-tab-btn", group);
+        const wrapper = group.parentElement;
+        function activate(btn) {
+          if (!btn || !wrapper) return;
+          const targetId = btn.dataset.miniTarget;
+          buttons.forEach(item => item.classList.toggle("active", item === btn));
+          $$(".mini-tab-panel", wrapper).forEach(panel => panel.classList.toggle("active", panel.id === targetId));
+          requestAnimationFrame(renderAllCharts);
+        }
+        buttons.forEach(btn => btn.addEventListener("click", () => activate(btn)));
+        activate(buttons.find(btn => btn.classList.contains("active")) || buttons[0]);
+      });
+    }
+
+    function initExportMenu() {
+      const exportBtn = $("#exportBtn");
+      const exportMenu = $("#exportMenu");
+      if (exportBtn && exportMenu) {
+        exportBtn.addEventListener("click", event => {
+          event.stopPropagation();
+          exportMenu.classList.toggle("show");
+        });
+        document.addEventListener("click", event => {
+          if (!event.target.closest(".export-menu-wrap")) exportMenu.classList.remove("show");
+        });
+      }
+      $$('[data-export-action]').forEach(btn => {
+        btn.addEventListener("click", event => {
+          const action = btn.dataset.exportAction;
+          if (action === "preview") {
+            $("#printPreviewBackdrop")?.classList.add("show");
+          } else if (action === "pdf") {
+            showToast("Демо: запуск экспорта в PDF");
+          } else if (action === "google_docs") {
+            showToast("Демо: создание Google Docs");
+          } else if (action === "docx") {
+            showToast("Демо: экспорт .DOCX");
+          }
+          $("#exportMenu")?.classList.remove("show");
+        });
+      });
+      on("#printReportBtn", "click", () => {
+        document.body.classList.add("export-printing");
+        window.print();
+        setTimeout(() => document.body.classList.remove("export-printing"), 500);
+      });
+      on("#printPreviewClose", "click", () => $("#printPreviewBackdrop")?.classList.remove("show"));
+      on("#printPreviewBackdrop", "click", event => { if (event.target.id === "printPreviewBackdrop") $("#printPreviewBackdrop")?.classList.remove("show"); });
+    }
+
+    function initEditableReportBlocks() {
+      $$('[data-soften-rec]').forEach(btn => {
+        btn.addEventListener("click", () => {
+          const textarea = btn.closest(".recommendation-edit-card")?.querySelector("textarea");
+          if (!textarea) return;
+          textarea.value = textarea.value
+            .replace(/снижение SEO-трафика/gi, "зону для дополнительного анализа SEO-трафика")
+            .replace(/требует/gi, "может быть полезно")
+            .replace(/проблема/gi, "зона роста");
+          showToast("Формулировка смягчена");
+        });
+      });
+      $$('[data-hide-rec]').forEach(btn => btn.addEventListener("click", () => {
+        const card = btn.closest(".recommendation-edit-card");
+        const checkbox = card?.querySelector(".traffic-rec-show");
+        if (checkbox) checkbox.checked = false;
+        card?.classList.add("is-hidden");
+        showToast("Рекомендация скрыта из гостевой версии");
+      }));
+      $$('[data-copy-plan-rec]').forEach(btn => btn.addEventListener("click", () => showToast("Демо: рекомендация перенесена в SEO-план")));
+      on("#saveConclusionBtn", "click", () => {
+        const textValue = $("#conclusionEditedText")?.value.trim();
+        const box = $("#conclusionClientBox");
+        if (textValue && box) {
+          const p = box.querySelector("p");
+          if (p) p.innerHTML = `<strong>Отредактированный вывод SEO-специалиста:</strong> ${escapeHtml(textValue)}`;
+          showToast("Клиентская версия вывода сохранена");
+        }
+      });
+      on("#restoreAiConclusionBtn", "click", () => showToast("Демо: восстановлен ИИ-черновик"));
+    }
+
+    initMiniTabs();
+    initExportMenu();
+    initEditableReportBlocks();
+
+
     // ===== Settings center: demo implementation for the report prototype =====
     const typeLabels = {
       "Каталог / услуги": "Каталог / услуги",
@@ -4043,9 +5172,13 @@ plan_totals:
         .replace(/'/g, "&#039;");
     }
 
-    function parseDirections() {
-      const raw = $("#settingDirections")?.value || "";
+    function parseCommaList(selector) {
+      const raw = $(selector)?.value || "";
       return raw.split(",").map(item => item.trim()).filter(Boolean);
+    }
+
+    function parseDirections() {
+      return parseCommaList("#settingDirections");
     }
 
     function formatMoney(value, currency = "RUB") {
@@ -4079,17 +5212,21 @@ plan_totals:
           site_type_label: $("#settingSiteType")?.value,
           seo_start_month: $("#settingSeoStart")?.value,
           priority_directions: directions,
+          brand_queries: parseCommaList("#settingBrandQueries"),
+          pf_priority_directions: parseCommaList("#settingPfDirections"),
           client_hourly_rate: parseFloat($("#settingHourlyRate")?.value || String(PROJECT_HOURLY_RATE)) || 0,
           currency: $("#settingCurrency")?.value || "RUB",
           google_doc_url: $("#settingDocUrl")?.value.trim()
         },
         data_sources: {
           yandex_metrica: { enabled: true, counter_id: $("#settingYmCounter")?.value.trim(), status: "connected" },
-          yandex_webmaster: { enabled: true, host_id: $("#settingYwmHost")?.value.trim(), status: "connected" },
+          yandex_webmaster: { enabled: true, host_id: $("#settingYwmHost")?.value.trim(), links_enabled: $("#settingYwmLinksEnabled")?.checked ?? true, status: "connected" },
           google_search_console: { enabled: true, property: $("#settingGscProperty")?.value.trim(), status: "needs_auth" },
           webtronica_positions: {
             enabled: true,
             project_id: $("#settingWebtronicaProject")?.value.trim(),
+            pf_project_id: $("#settingWebtronicaPfProject")?.value.trim(),
+            detailed_report_url: $("#settingWebtronicaDetailUrl")?.value.trim(),
             aggregation_rule: "last_collection_of_day",
             status: "connected"
           },
@@ -4120,7 +5257,17 @@ plan_totals:
           url: $("#settingGuestUrl")?.value.trim(),
           hide_internal_recommendations: $("#settingHideInternal")?.checked ?? true,
           hide_doc_links: $("#settingHideDocLinks")?.checked ?? true,
-          show_client_plan: true
+          show_client_plan: true,
+          show_traffic_recommendations: $("#settingShowTrafficRecsGuest")?.checked ?? false,
+          show_webtronica_detailed_report_link: $("#settingShowWebtronicaDetailGuest")?.checked ?? true,
+          show_pf_section: $("#settingShowPfGuest")?.checked ?? true
+        },
+        export_settings: {
+          pdf: $("#settingExportPdf")?.checked ?? true,
+          google_docs: $("#settingExportGoogleDocs")?.checked ?? true,
+          docx: $("#settingExportDocx")?.checked ?? true,
+          expand_tabs: true,
+          include_dev_notes: false
         },
         conversion_goals: selectedGoals
       };
@@ -4163,6 +5310,9 @@ plan_totals:
       if ($("#priorityDirectionsPreview")) $("#priorityDirectionsPreview").textContent = directions.join(" · ") || "Не заданы";
 
       document.body.classList.toggle("doc-links-off", !($("#settingShowDocLinks")?.checked ?? true));
+      const detailedUrl = $("#settingWebtronicaDetailUrl")?.value.trim();
+      if ($("#webtronicaDetailedReportBtn") && detailedUrl) $("#webtronicaDetailedReportBtn").href = detailedUrl;
+      if ($("#webtronicaDetailedReportBtn")) $("#webtronicaDetailedReportBtn").style.display = $("#settingShowWebtronicaDetailGuest")?.checked ? "inline-flex" : "none";
 
       if ($("#settingShowDevNotes")?.checked) setDevMode(true, true);
       else setDevMode(false, true);
@@ -4237,7 +5387,7 @@ plan_totals:
     const moderationBtn = $("#taskModerationBtn");
     if (moderationBtn) moderationBtn.addEventListener("click", () => showToast("Демо: здесь откроется список задач для исключения"));
     on("#refreshBtn", "click", () => showToast("Демо: здесь будет запуск обновления данных"));
-    on("#pdfBtn", "click", () => showToast("Демо: здесь будет экспорт PDF"));
+
   </script>
 </body>
 </html>
