@@ -2987,6 +2987,7 @@ ai_output:
           <div class="mini-tabs" data-mini-tabs="webtronicaPositionTabs">
             <button class="mini-tab-btn active" type="button" data-mini-target="webtronica-main-queries">Основные запросы</button>
             <button class="mini-tab-btn" type="button" data-mini-target="webtronica-pf-queries">Запросы ПФ</button>
+            <button class="mini-tab-btn" type="button" data-mini-target="webtronica-ywm-matches">Я.Вебмастер по запросам</button>
           </div>
 
           <div class="mini-tab-panel active" id="webtronica-main-queries">
@@ -3084,25 +3085,108 @@ ai_output:
             </div>
           </div>
 
+          <div class="mini-tab-panel" id="webtronica-ywm-matches">
+            <div class="summary-box">
+              <p><strong>Яндекс.Вебмастер по запросам Webtronica — связка точных позиций и фактического спроса.</strong> Код берет запросы из основного проекта Webtronica и из проекта “Запросы ПФ”, нормализует фразы и ищет точные совпадения в выгрузке Яндекс.Вебмастера за отчетный период. В эту вкладку выводятся только совпавшие запросы с показами, кликами, CTR и средней позицией из Яндекс.Вебмастера.</p>
+              <div class="source-note"><span>Источник спроса: Яндекс.Вебмастер</span><span>Источник списков запросов: Webtronica Positions</span><span>Матчинг: exact normalized query</span><span>Период: июнь 2026</span></div>
+            </div>
+
+            <div style="height:16px"></div>
+
+            <div class="grid cols-4">
+              <div class="metric-card"><div class="label">Основных запросов найдено</div><div class="value">612</div><div class="note">из 1 000 запросов Webtronica</div></div>
+              <div class="metric-card"><div class="label">ПФ-запросов найдено</div><div class="value">286</div><div class="note">из 500 запросов ПФ-проекта</div></div>
+              <div class="metric-card"><div class="label">Показы по совпадениям</div><div class="value">61 700</div><div class="note">Суммарно по двум пулам</div></div>
+              <div class="metric-card"><div class="label">CTR по совпадениям</div><div class="value">4,1%</div><div class="note">Клики / показы</div></div>
+            </div>
+
+            <div style="height:16px"></div>
+
+            <div class="grid cols-2">
+              <div class="summary-box">
+                <p><strong>Как использовать этот срез:</strong></p>
+                <ul class="list-clean">
+                  <li>Webtronica показывает точную позицию отслеживаемого запроса на дату сбора.</li>
+                  <li>Яндекс.Вебмастер показывает фактический спрос: показы, клики, CTR и среднюю позицию по этому же запросу.</li>
+                  <li>Самые ценные сигналы: высокий спрос + позиция 11–20, хороший ТОП + низкий CTR, ПФ-запрос с ростом и подтвержденными показами.</li>
+                </ul>
+              </div>
+              <div class="summary-box">
+                <p><strong>Что передать в SEO-план:</strong></p>
+                <ul class="signal-list">
+                  <li class="signal-item"><span class="signal-num">1</span><span>“гранит купить” — позиция близко к ТОП-10 и есть подтвержденный спрос в Я.Вебмастере.</span><span class="badge red">Высокий</span></li>
+                  <li class="signal-item"><span class="signal-num">2</span><span>“столешницы из камня” — ПФ-запрос растет, но CTR можно усилить сниппетом.</span><span class="badge amber">Средний</span></li>
+                  <li class="signal-item"><span class="signal-num">3</span><span>“мраморные слэбы купить” — рост позиций подтверждается показами и кликами.</span><span class="badge green">Закрепить</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div style="height:16px"></div>
+
+            <div class="chart-card">
+              <div class="chart-head"><div><div class="chart-title">Основной проект Webtronica → Яндекс.Вебмастер</div><div class="chart-sub">Совпавшие запросы из основного проекта позиций. Спрос и CTR берутся из Яндекс.Вебмастера, последняя точная позиция — из Webtronica.</div></div><span class="badge blue">612 совпадений</span></div>
+              <div class="positions-table-wrap">
+                <table>
+                  <thead><tr><th>Запрос</th><th>URL Webtronica</th><th class="num">Показы</th><th class="num">Клики</th><th class="num">CTR</th><th class="num">Ср. поз. ЯВ</th><th class="num">Поз. Webtronica</th><th>Сигнал</th></tr></thead>
+                  <tbody>
+                    <tr><td><div class="task-title">мраморные слэбы купить</div><div class="task-desc">Совпадение: exact</div></td><td>/catalog/slaby-mramora/</td><td class="num">2 420</td><td class="num">138</td><td class="num">5,7%</td><td class="num">10,9</td><td class="num">8,4</td><td><span class="badge green">Закрепить рост</span></td></tr>
+                    <tr><td><div class="task-title">гранит купить</div><div class="task-desc">Совпадение: exact</div></td><td>/catalog/granit/</td><td class="num">3 100</td><td class="num">112</td><td class="num">3,6%</td><td class="num">12,6</td><td class="num">11,2</td><td><span class="badge red">Дожать ТОП-10</span></td></tr>
+                    <tr><td><div class="task-title">травертин натуральный</div><div class="task-desc">Совпадение: exact</div></td><td>/catalog/travertin/</td><td class="num">1 650</td><td class="num">42</td><td class="num">2,5%</td><td class="num">24,1</td><td class="num">28,6</td><td><span class="badge red">Диагностика</span></td></tr>
+                    <tr><td><div class="task-title">столешницы из мрамора</div><div class="task-desc">Совпадение: exact</div></td><td>/stoleshnicy/</td><td class="num">2 180</td><td class="num">76</td><td class="num">3,5%</td><td class="num">8,2</td><td class="num">7,4</td><td><span class="badge amber">CTR</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="height:16px"></div>
+
+            <div class="chart-card">
+              <div class="chart-head"><div><div class="chart-title">ПФ-проект Webtronica → Яндекс.Вебмастер</div><div class="chart-sub">Совпавшие запросы из отдельного проекта “Запросы ПФ”. В клиентской версии можно называть этот блок “приоритетные запросы дополнительного продвижения”.</div></div><span class="badge amber">286 совпадений</span></div>
+              <div class="positions-table-wrap">
+                <table>
+                  <thead><tr><th>ПФ-запрос</th><th>Направление</th><th class="num">Показы</th><th class="num">Клики</th><th class="num">CTR</th><th class="num">Ср. поз. ЯВ</th><th class="num">Поз. Webtronica</th><th>Комментарий</th></tr></thead>
+                  <tbody>
+                    <tr><td>гранит купить</td><td>Гранит</td><td class="num">3 100</td><td class="num">112</td><td class="num">3,6%</td><td class="num">12,6</td><td class="num">8,9</td><td>Есть спрос и положительная динамика, важно закрепить результат.</td></tr>
+                    <tr><td>мраморные слэбы купить</td><td>Мраморные слэбы</td><td class="num">2 420</td><td class="num">138</td><td class="num">5,7%</td><td class="num">10,9</td><td class="num">7,8</td><td>Хорошая связка спроса, кликов и позиции.</td></tr>
+                    <tr><td>столешницы из камня</td><td>Столешницы</td><td class="num">1 960</td><td class="num">54</td><td class="num">2,8%</td><td class="num">13,4</td><td class="num">12,1</td><td>Есть потенциал по CTR и дожиму до ТОП-10.</td></tr>
+                    <tr><td>травертин купить</td><td>Травертин</td><td class="num">820</td><td class="num">19</td><td class="num">2,3%</td><td class="num">22,8</td><td class="num">24,3</td><td>Нужна дополнительная диагностика посадочной.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div style="height:16px"></div>
+            <div class="positions-formula">
+              <strong>Логика матчинга для разработки:</strong> нормализовать запросы из Webtronica и Яндекс.Вебмастера: lowercase, trim, замена “ё” → “е”, схлопывание пробелов, удаление повторных пробелов. В MVP использовать точное совпадение нормализованной фразы. Нечеткое совпадение не смешивать с exact-match: если понадобится fuzzy, выводить отдельным статусом <code>match_type = fuzzy</code> и не включать в клиентские итоги без проверки SEO-специалиста.
+            </div>
+          </div>
+
           <div class="positions-formula">
-            <strong>Правило агрегации для разработки:</strong> если в течение дня несколько сборов, для графика использовать последний сбор дня; для таблицы показывать первый сбор периода, последний сбор периода, лучшую/худшую позицию и количество сборов. В настройках проекта нужно хранить отдельный <code>webtronica_positions_project_id</code> и отдельный <code>webtronica_pf_project_id</code>.
+            <strong>Правило агрегации для разработки:</strong> если в течение дня несколько сборов, для графика использовать последний сбор дня; для таблицы показывать первый сбор периода, последний сбор периода, лучшую/худшую позицию и количество сборов. В настройках проекта нужно хранить отдельный <code>webtronica_positions_project_id</code>, отдельный <code>webtronica_pf_project_id</code> и настройки <code>ywm_query_matching</code> для сопоставления запросов с Яндекс.Вебмастером.
           </div>
         </div>
 
-        <details class="dev-note"><summary>Инструкция для программиста: видимость и позиции</summary><div class="dev-content"><p><strong>Что делает блок:</strong> сравнивает Яндекс и Google на обзорной вкладке, а затем показывает подробную аналитику по каждой поисковой системе отдельно.</p><p><strong>Источники:</strong> Яндекс.Вебмастер и Google Search Console дают спрос, показы, клики, CTR и среднюю позицию по фактическим показам. Webtronica Positions дает точную позицию по отслеживаемому запросу на дату сбора. Эти показатели нельзя механически смешивать в одну колонку.</p><p><strong>ПФ-проект:</strong> запросы ПФ берутся из отдельного проекта Webtronica. В настройках проекта хранить ID основного проекта позиций и ID ПФ-проекта, а также список приоритетных ПФ-направлений.</p><p><strong>Связь с SEO-планом:</strong> передавать не все запросы, а готовые сигналы по URL: 11–20, низкий CTR, просадки, рост, массовые изменения по странице и запросы ПФ в зоне дожима.</p><div class="code">visibility_score = top_3*1.0 + positions_4_10*0.7 + positions_11_30*0.3 + positions_31_50*0.1
+        <details class="dev-note"><summary>Инструкция для программиста: видимость и позиции</summary><div class="dev-content"><p><strong>Что делает блок:</strong> сравнивает Яндекс и Google на обзорной вкладке, а затем показывает подробную аналитику по каждой поисковой системе отдельно.</p><p><strong>Источники:</strong> Яндекс.Вебмастер и Google Search Console дают спрос, показы, клики, CTR и среднюю позицию по фактическим показам. Webtronica Positions дает точную позицию по отслеживаемому запросу на дату сбора. Эти показатели нельзя механически смешивать в одну колонку.</p><p><strong>ПФ-проект:</strong> запросы ПФ берутся из отдельного проекта Webtronica. В настройках проекта хранить ID основного проекта позиций и ID ПФ-проекта, а также список приоритетных ПФ-направлений.</p><p><strong>Связка с Яндекс.Вебмастером:</strong> для основного проекта Webtronica и для ПФ-проекта нужно брать списки запросов, нормализовать их и искать точные совпадения в выгрузке Яндекс.Вебмастера. На совпавшие запросы выводить показы, клики, CTR, среднюю позицию Я.Вебмастера и рядом последнюю точную позицию Webtronica.</p><p><strong>Связь с SEO-планом:</strong> передавать не все запросы, а готовые сигналы по URL: 11–20, низкий CTR, просадки, рост, массовые изменения по странице, запросы ПФ в зоне дожима и совпавшие запросы с высоким спросом в Яндекс.Вебмастере.</p><div class="code">visibility_score = top_3*1.0 + positions_4_10*0.7 + positions_11_30*0.3 + positions_31_50*0.1
 
 tabs:
   compare: yandex_vs_google_summary, visibility_score_dynamics, engine_efficiency_table, seo_plan_signals
   yandex: summary, visibility_funnel, priority_directions, quick_growth_11_20, declines, low_ctr, pages_to_improve
   google: same_as_yandex
   webtronica: tracked_keywords_summary, avg_position_by_collection_date, top_distribution, keyword_dynamics_table, seo_plan_position_signals
+  webtronica_ywm_matches: main_project_keywords_matched_to_ywm, pf_project_keywords_matched_to_ywm, impressions, clicks, ctr, ywm_avg_position, webtronica_last_position
 
 webtronica_aggregation:
   day_value = last_collection_of_day
   period_start = first_collection_of_period
   period_end = last_collection_of_period
   position_growth = period_start_position - period_end_position
-  // positive value = position improved</div></div></details>
+  // positive value = position improved
+
+ywm_query_matching:
+  source_keywords = webtronica_positions.keywords + webtronica_pf_positions.keywords
+  normalize = lower + trim + replace_yo + collapse_spaces
+  match_type = exact_normalized_query
+  output_metrics = impressions, clicks, ctr, avg_position</div></div></details>
       </section>
 
 
@@ -4040,6 +4124,7 @@ plan_totals:
               <div class="settings-field"><label for="settingWebtronicaProject">Основной Project / Campaign ID</label><input id="settingWebtronicaProject" value="magmastones-moscow"></div>
               <div class="settings-field"><label for="settingWebtronicaPfProject">ПФ Project / Campaign ID</label><input id="settingWebtronicaPfProject" value="magmastones-pf-moscow"></div>
               <div class="settings-field"><label for="settingWebtronicaDetailUrl">URL подробного отчета</label><input id="settingWebtronicaDetailUrl" value="https://report.webtronica.io/r/magmastones-positions-june-2026"></div>
+              <label class="settings-check"><input id="settingYwmQueryMatching" type="checkbox" checked><span><span class="settings-check-title">Сопоставлять запросы с Яндекс.Вебмастером</span><br><span class="settings-hint">Основной проект и ПФ-проект: показы, клики, CTR, средняя позиция по совпавшим запросам.</span></span></label>
               <button class="btn" type="button" data-demo-check="Webtronica Positions">Проверить доступ</button>
             </div>
           </div>
@@ -4239,7 +4324,7 @@ plan_totals:
                 <tr><td>03</td><td>Видимость и спрос</td><td>Яндекс, Google и точечные зоны роста</td></tr>
                 <tr><td>04</td><td>Ссылочная масса</td><td>Внешние ссылки из Яндекс.Вебмастера</td></tr>
                 <tr><td>05</td><td>Трафик и конверсии</td><td>Органика, бренд/небренд, цели и конверсионные запросы</td></tr>
-                <tr><td>06</td><td>Позиции Webtronica</td><td>Основные запросы, запросы ПФ и ссылка на подробный отчет</td></tr>
+                <tr><td>06</td><td>Позиции Webtronica</td><td>Основные запросы, запросы ПФ, совпадения с Яндекс.Вебмастером и ссылка на подробный отчет</td></tr>
                 <tr><td>07</td><td>Вывод и план</td><td>Отредактированный вывод SEO-специалиста и план работ</td></tr>
               </tbody>
             </table>
@@ -4336,7 +4421,10 @@ plan_totals:
             </tbody></table>
             <h3>Запросы ПФ</h3>
             <table class="paper-table"><thead><tr><th>Направление</th><th>Запросы</th><th class="num">ТОП-10</th><th>Комментарий</th></tr></thead><tbody><tr><td>Гранит</td><td>14</td><td class="num">5</td><td>Приоритет для дополнительного продвижения.</td></tr><tr><td>Слэбы</td><td>18</td><td class="num">8</td><td>Положительная динамика, стоит закрепить рост.</td></tr><tr><td>Столешницы</td><td>14</td><td class="num">4</td><td>Есть потенциал по запросам 11–20.</td></tr></tbody></table>
-            <div class="paper-summary"><p><strong>Для клиента:</strong> в кратком отчете показывается сводка по позициям, а для детального изучения доступна отдельная гостевая ссылка на полный отчет Webtronica.</p><p><span class="paper-badge blue">Кнопка в дашборде</span> Открыть подробный отчет по позициям</p></div>
+            <h3>Яндекс.Вебмастер по запросам Webtronica</h3>
+            <div class="paper-grid-4"><div class="paper-kpi"><span>Основные совпадения</span><strong>612</strong><small>из 1 000</small></div><div class="paper-kpi"><span>ПФ совпадения</span><strong>286</strong><small>из 500</small></div><div class="paper-kpi"><span>Показы</span><strong>61,7К</strong><small>по совпавшим запросам</small></div><div class="paper-kpi"><span>CTR</span><strong>4,1%</strong><small>по совпадениям</small></div></div>
+            <table class="paper-table"><thead><tr><th>Пул</th><th>Запрос</th><th class="num">Показы</th><th class="num">Клики</th><th class="num">CTR</th><th class="num">Ср. поз. ЯВ</th><th>Сигнал</th></tr></thead><tbody><tr><td>Основной</td><td>гранит купить</td><td class="num">3 100</td><td class="num">112</td><td class="num">3,6%</td><td class="num">12,6</td><td><span class="paper-badge red">Дожать</span></td></tr><tr><td>ПФ</td><td>столешницы из камня</td><td class="num">1 960</td><td class="num">54</td><td class="num">2,8%</td><td class="num">13,4</td><td><span class="paper-badge amber">CTR</span></td></tr></tbody></table>
+            <div class="paper-summary"><p><strong>Для клиента:</strong> в кратком отчете показывается сводка по позициям, а для детального изучения доступна отдельная гостевая ссылка на полный отчет Webtronica. Совпадения с Яндекс.Вебмастером помогают понять, какие отслеживаемые запросы имеют подтвержденный спрос, клики и потенциал усиления CTR.</p><p><span class="paper-badge blue">Кнопка в дашборде</span> Открыть подробный отчет по позициям</p></div>
           </section>
 
           <section class="paper-page">
@@ -4366,6 +4454,7 @@ content_rules:
   conclusion = seo_conclusion_edited || ai_conclusion_raw
   traffic_recommendations = only show_in_guest_report
   webtronica_positions = summary + link_to_detailed_report
+  webtronica_ywm_matches = matched_main_queries + matched_pf_queries + yandex_webmaster_metrics
   backlinks = yandex_webmaster_external_links</code></div>
             <h3>Правила для форматов</h3>
             <div class="paper-grid-3"><div class="paper-mini-card"><span>PDF</span><p>Фиксированный печатный вид A4, номера страниц, разрывы по секциям, без интерактивных элементов.</p></div><div class="paper-mini-card"><span>Google Docs</span><p>Редактируемая структура: заголовки H1/H2/H3, таблицы, изображения графиков, клиентские выводы.</p></div><div class="paper-mini-card"><span>DOCX</span><p>Файл для отправки клиенту: те же разделы, что PDF, но с возможностью редактирования текста.</p></div></div>
@@ -5228,6 +5317,15 @@ content_rules:
             pf_project_id: $("#settingWebtronicaPfProject")?.value.trim(),
             detailed_report_url: $("#settingWebtronicaDetailUrl")?.value.trim(),
             aggregation_rule: "last_collection_of_day",
+            yandex_webmaster_query_matching: {
+              enabled: $("#settingYwmQueryMatching")?.checked ?? true,
+              match_type: "exact_normalized_query",
+              normalize_rules: ["lowercase", "trim", "replace_yo", "collapse_spaces"],
+              output_metrics: ["impressions", "clicks", "ctr", "avg_position"],
+              compare_with_webtronica_last_position: true,
+              include_main_project: true,
+              include_pf_project: true
+            },
             status: "connected"
           },
           bitrix24: {
