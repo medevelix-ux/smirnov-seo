@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Webtronica.io — Анализ структуры конкурентов v8</title>
+  <title>Webtronica.io — Анализ структуры конкурентов v9</title>
   <style>
     :root{
       --purple:#6b5688; --purple-dark:#574370; --purple-soft:#f3eef8; --purple-soft-2:#faf7fc;
@@ -64,7 +64,7 @@
     <aside class="summary-panel"><div class="summary-tile"><div><b>156</b><span>сырых URL и пунктов меню</span></div><div class="tile-ico">URL</div></div><div class="summary-tile"><div><b>64</b><span>структурные сущности</span></div><div class="tile-ico green">SE</div></div><div class="summary-tile"><div><b>31</b><span>после дедупликации</span></div><div class="tile-ico yellow">D</div></div><div class="summary-tile"><div><b>14</b><span>рекомендовано создать</span></div><div class="tile-ico red">+</div></div></aside>
   </div>
 
-  <div class="tabs-shell"><div class="tabs-card"><nav class="tabs" id="tabs"><button class="tab active" data-section="site"><span class="ico">▣</span>Сводка</button><button class="tab" data-section="settings"><span class="ico">⚙</span>Настройки</button><button class="tab" data-section="sources"><span class="ico">↔</span>Источники</button><button class="tab" data-section="processing"><span class="ico">✣</span>Обработка</button><button class="tab" data-section="structure"><span class="ico">▤</span>Структура</button><button class="tab" data-section="prompts"><span class="ico">?</span>ИИ-промты</button><button class="tab" data-section="dev"><span class="ico">⌘</span>DEV</button></nav><div class="tabs-actions"><button class="btn green" onclick="toast('Экспорт структуры подготовлен')">Экспортировать</button><button class="btn primary" onclick="generateUrlMeta()">Сгенерировать URL и мета</button><button class="btn light" onclick="setGuestMode(true)">Гостевая ссылка</button></div></div></div>
+  <div class="tabs-shell"><div class="tabs-card"><nav class="tabs" id="tabs"><button class="tab active" data-section="site"><span class="ico">▣</span>Сводка</button><button class="tab" data-section="settings"><span class="ico">⚙</span>Настройки</button><button class="tab" data-section="sources"><span class="ico">↔</span>Источники</button><button class="tab" data-section="processing"><span class="ico">✣</span>Обработка</button><button class="tab" data-section="structure"><span class="ico">▤</span>Структура</button><button class="tab" data-section="prompts"><span class="ico">?</span>ИИ-промты</button><button class="tab" data-section="dev"><span class="ico">⌘</span>DEV</button></nav><div class="tabs-actions"><button class="btn green" onclick="exportStructure()">Экспортировать</button><button class="btn primary" onclick="generateUrlMeta()">Сгенерировать URL и мета</button><button class="btn light" onclick="setGuestMode(true)">Гостевая ссылка</button></div></div></div>
 
   <main>
     <section id="site" class="section active">
@@ -86,7 +86,23 @@ charmestone.ru
 cosmostone.ru
 demetra-stone.ru
 globalgranit.ru
-veneziastone.com</textarea></div></div><div class="toggles mt"><label class="toggle-card"><input type="checkbox"><span class="switch-ui"></span><div><b>Инфораздел <span class="help" data-help="toggle_info">?</span></b><span>по умолчанию выключен</span></div></label><label class="toggle-card"><input type="checkbox" checked><span class="switch-ui"></span><div><b>Бренды <span class="help" data-help="toggle_brands">?</span></b><span>по умолчанию включены</span></div></label><label class="toggle-card"><input type="checkbox"><span class="switch-ui"></span><div><b>Мультирегион <span class="help" data-help="toggle_regions">?</span></b><span>учитывать регионы</span></div></label></div><button class="btn green mt" onclick="toast('Настройки сохранены')">Сохранить настройки</button></div><div class="card"><h3>Черный список URL-паттернов <span class="help" data-help="blacklist">?</span></h3><p>URL, попавшие под эти правила, не удаляются бесследно — они сохраняются в разделе “Исключенные”.</p><div class="field mt"><textarea style="min-height:330px">/cart/
+veneziastone.com</textarea></div></div><div class="toggles mt"><label class="toggle-card"><input type="checkbox"><span class="switch-ui"></span><div><b>Инфораздел <span class="help" data-help="toggle_info">?</span></b><span>по умолчанию выключен</span></div></label><label class="toggle-card"><input type="checkbox" checked><span class="switch-ui"></span><div><b>Бренды <span class="help" data-help="toggle_brands">?</span></b><span>по умолчанию включены</span></div></label></div><div class="schema-box"><b>Типовые директории инфораздела</b><p class="small muted">Если инфораздел включен, система выделяет информационные URL по типовым паттернам и обрабатывает их отдельно от коммерческой структуры.</p><code>/blog/
+/articles/
+/stati/
+/news/
+/guide/
+/guides/
+/help/
+/faq/
+/wiki/
+/knowledge-base/
+/poleznoe/
+/info/
+/reviews/
+/obzory/
+/sovety/
+/kak-vybrat/
+/instrukcii/</code></div><button class="btn green mt" onclick="toast('Настройки сохранены')">Сохранить настройки</button></div><div class="card"><h3>Черный список URL-паттернов <span class="help" data-help="blacklist">?</span></h3><p>URL, попавшие под эти правила, не удаляются бесследно — они сохраняются в разделе “Исключенные”.</p><div class="field mt"><textarea style="min-height:330px">/cart/
 /basket/
 /compare/
 /search/
@@ -111,9 +127,9 @@ veneziastone.com</textarea></div></div><div class="toggles mt"><label class="tog
 
     <section id="processing" class="section"><div class="section-head"><div><h2 class="section-title">Обработка и дедупликация</h2><p class="section-desc">Модуль сравнивает не URL, а смысловые сущности, затем сохраняет сомнительные и исключенные элементы.</p></div></div><div class="card mb"><h3>Финальные статусы <span class="help" data-help="final_statuses">?</span></h3><p>Каждый элемент сначала получает статус “Кандидат”, затем переводится в один из финальных статусов.</p><div class="status-grid mt"><div class="status-card"><b><span class="tag green">создать</span></b><p>Новая страница нужна для расширения структуры.</p></div><div class="status-card"><b><span class="tag purple">объединить</span></b><p>Дубль или синоним уже существующей сущности.</p></div><div class="status-card"><b><span class="tag blue">сделать дочерней</span></b><p>Элемент должен быть вложен в родительскую группу.</p></div><div class="status-card"><b><span class="tag teal">сделать тегом</span></b><p>Коммерческая посадочная на базе фильтра/подборки.</p></div><div class="status-card"><b><span class="tag gray">сделать фильтром</span></b><p>Нужен как пользовательский фильтр, но не как SEO-страница.</p></div><div class="status-card"><b><span class="tag yellow">оставить фильтром</span></b><p>Фильтр полезен, но не участвует в структуре SEO-страниц.</p></div><div class="status-card"><b><span class="tag yellow">не создавать сейчас</span></b><p>Недостаточно доказательств или ассортимента.</p></div><div class="status-card"><b><span class="tag red">исключить</span></b><p>Мусор, служебная страница, товар или нерелевантный URL.</p></div><div class="status-card"><b><span class="tag purple">ручная проверка</span></b><p>ИИ не уверен, требуется решение SEO-специалиста.</p></div></div></div><div class="table-card mb"><div class="table-top"><div><h3>URL → сущность → нормализованная страница</h3><p>Сырые URL сохраняются как доказательства, а дедупликация выполняется по смыслу.</p></div></div><div class="table-wrap"><table><thead><tr><th>Сырой URL <span class="help th-help" data-help="proc_raw_url">?</span></th><th>Источник <span class="help th-help" data-help="proc_source">?</span></th><th>Извлеченная сущность <span class="help th-help" data-help="proc_entity">?</span></th><th>Нормализованная страница <span class="help th-help" data-help="proc_normalized">?</span></th><th>Решение ИИ <span class="help th-help" data-help="proc_ai_decision">?</span></th></tr></thead><tbody><tr><td class="mono">/catalog/granit/slaby/</td><td><span class="tag green">Keyso</span></td><td>слэбы из гранита</td><td><b>Гранитные слэбы</b></td><td><span class="tag green">создать</span></td></tr><tr><td class="mono">/katalog/mramor/plity/</td><td><span class="tag gray">Sitemap</span></td><td>плиты из мрамора</td><td><b>Мраморные плиты</b></td><td><span class="tag green">создать</span></td></tr><tr><td class="mono">/stone-for-facade/</td><td><span class="tag purple">Мега-меню</span></td><td>камень для фасада</td><td><b>Фасадный камень</b></td><td><span class="tag teal">сделать тегом</span></td></tr></tbody></table></div></div><div class="table-card"><div class="table-top"><div><h3>Сомнительные и исключенные элементы</h3><p>Ничего не удаляется бесследно — SEO-специалист может изменить решение.</p></div></div><div class="table-wrap"><table><thead><tr><th>Элемент <span class="help th-help" data-help="doubt_col_element">?</span></th><th>Причина <span class="help th-help" data-help="doubt_col_reason">?</span></th><th>Уверенность <span class="help th-help" data-help="doubt_col_confidence">?</span></th><th>Источник <span class="help th-help" data-help="doubt_col_source">?</span></th><th>Действия <span class="help th-help" data-help="doubt_col_actions">?</span></th></tr></thead><tbody><tr><td><b>Камень для хамама</b></td><td>Неочевидно: услуга, тег или инфо-страница</td><td class="center">58%</td><td class="center"><span class="tag gray">sitemap</span></td><td><button class="btn small primary">сделать тегом</button> <button class="btn small gray">оставить фильтром</button></td></tr><tr><td><b>Камень по акции</b></td><td>Промо-страница, не часть постоянной структуры</td><td class="center">91%</td><td class="center"><span class="tag purple">меню</span></td><td><button class="btn small gray">исключить</button></td></tr></tbody></table></div></div></section>
 
-    <section id="structure" class="section"><div class="section-head"><div><h2 class="section-title">Итоговая структура сайта</h2><p class="section-desc">Таблица итоговых сущностей, встроенное сравнение с сайтом, фильтр по статусам и дерево для согласования.</p></div><div class="top-actions"><button class="btn green" onclick="toast('Структура экспортирована')">Экспортировать</button><button class="btn primary" onclick="generateUrlMeta()">Сгенерировать URL и мета</button><button class="btn light" onclick="setGuestMode(true)">Предпросмотр гостевой ссылки</button></div></div><div class="meta-action-card mb"><div><h3>Финальный шаг после согласования</h3><p>После ручной проверки и клиентского согласования можно сгенерировать рекомендуемые URL, Title, Description и H1 для страниц со статусом “создать”.</p></div><button class="btn green" onclick="generateUrlMeta()">Сгенерировать URL и мета</button><div class="meta-demo" id="metaDemo"><b>Пример результата:</b> <code>/catalog/granit/slaby/</code> · Title: <code>Гранитные слэбы купить в Москве — MagmaStones</code></div></div><div class="card mb"><div class="structure-subtitle"><b>Фильтр структуры по статусам:</b><button class="filter-btn active" onclick="filterStructureStatus('create',this)">создать</button><button class="filter-btn" onclick="filterStructureStatus('exists',this)">есть на сайте</button><button class="filter-btn" onclick="filterStructureStatus('review',this)">ручная проверка</button><span class="help" data-help="structure_status_filter">?</span></div></div><div class="table-card mb"><div class="table-top"><div><h3>Итоговые сущности</h3><p>Таблица стоит первой: это основной рабочий формат перед внедрением. В ней видно, что уже создано на сайте, а что нужно добавить.</p></div></div><div class="table-wrap"><table id="finalEntitiesTable"><thead><tr><th>Страница <span class="help th-help" data-help="final_col_page">?</span></th><th>Тип сущности <span class="help th-help" data-help="final_col_type">?</span></th><th>Уровень <span class="help th-help" data-help="final_col_level">?</span></th><th>Группа <span class="help th-help" data-help="final_col_group">?</span></th><th>Конкурентов <span class="help th-help" data-help="final_col_competitors">?</span></th><th>Источники <span class="help th-help" data-help="final_col_sources">?</span></th><th>Уверенность <span class="help th-help" data-help="final_col_confidence">?</span></th><th>Статус <span class="help th-help" data-help="final_col_status">?</span></th></tr></thead><tbody><tr data-status="exists"><td><b>Натуральный камень</b></td><td><span class="entity-type category">категория</span></td><td class="center">1</td><td>верхний уровень</td><td class="center">6 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span></td><td class="center">96%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="exists"><td><b>Гранит</b></td><td><span class="entity-type category">категория</span></td><td class="center">2</td><td>по материалу</td><td class="center">6 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span><span class="tag purple">Меню</span></td><td class="center">95%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="exists"><td><b>Мрамор</b></td><td><span class="entity-type category">категория</span></td><td class="center">2</td><td>по материалу</td><td class="center">5 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span></td><td class="center">91%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="create"><td><b>Гранитные слэбы</b></td><td><span class="entity-type tagtype">тег</span></td><td class="center">3</td><td>по материалу / формату</td><td class="center">5 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span><span class="tag purple">Меню</span></td><td class="center">92%</td><td><span class="tag green">создать</span></td></tr><tr data-status="create"><td><b>Мраморные плиты</b></td><td><span class="entity-type tagtype">тег</span></td><td class="center">3</td><td>по материалу / формату</td><td class="center">4 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span></td><td class="center">88%</td><td><span class="tag green">создать</span></td></tr><tr data-status="create"><td><b>Столешницы из кварцита</b></td><td><span class="entity-type tagtype">тег</span></td><td class="center">3</td><td>по изделию</td><td class="center">4 из 6</td><td><span class="tag green">Keyso</span><span class="tag purple">Меню</span></td><td class="center">84%</td><td><span class="tag green">создать</span></td></tr><tr data-status="review"><td><b>Камень для хамама</b></td><td><span class="entity-type filtertype">фильтр</span></td><td class="center">3</td><td>по применению</td><td class="center">2 из 6</td><td><span class="tag gray">Sitemap</span></td><td class="center">58%</td><td><span class="tag purple">ручная проверка</span></td></tr></tbody></table></div></div><div class="table-card mb"><div class="table-top"><div><h3>Сравнение с продвигаемым сайтом</h3><p>Сравнение встроено в структуру: здесь можно менять статус спорных элементов перед финальной генерацией URL и мета.</p></div></div><div class="table-wrap"><table id="comparisonTable"><thead><tr><th>Группа <span class="help th-help" data-help="compare_col_group">?</span></th><th>Страница <span class="help th-help" data-help="compare_col_page">?</span></th><th>Рекомендуемый URL <span class="help th-help" data-help="compare_col_url">?</span></th><th>Доказательства <span class="help th-help" data-help="compare_col_evidence">?</span></th><th>Статус <span class="help th-help" data-help="compare_col_status">?</span></th></tr></thead><tbody><tr data-status="create"><td><span class="tag green">Есть у конкурентов, нет у нас</span></td><td><b>Гранитные слэбы</b></td><td class="mono">/catalog/granit/slaby/</td><td>5 конкурентов, 3 источника, уверенность 92%</td><td><span class="tag green">создать</span></td></tr><tr data-status="create"><td><span class="tag green">Есть у конкурентов, нет у нас</span></td><td><b>Столешницы из кварцита</b></td><td class="mono">/izdeliya/stoleshnitsy-iz-kvarcita/</td><td>4 конкурента, Keyso + меню, уверенность 84%</td><td><span class="tag green">создать</span></td></tr><tr data-status="exists"><td><span class="tag blue">Есть на сайте</span></td><td><b>Гранит</b></td><td class="mono">/catalog/granit/</td><td>есть у нас, 6 конкурентов, 3 источника, уверенность 95%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="review"><td><span class="tag purple">Ручная проверка</span></td><td><b>Atlant Granit</b></td><td class="mono">/brands/atlant-granit/</td><td>3 конкурента, sitemap + меню, уверенность 71%</td><td><select class="status-select" onchange="changeComparisonStatus(this)"><option selected>ручная проверка</option><option>создать</option><option>сделать тегом</option><option>не создавать сейчас</option><option>объединить</option><option>сделать фильтром</option><option>исключить</option><option>сделать дочерней</option><option>оставить фильтром</option></select></td></tr><tr data-status="review"><td><span class="tag yellow">Сомнительно</span></td><td><b>Камень для хамама</b></td><td class="mono">/primenenie/kamen-dlya-hamama/</td><td>2 конкурента, один слабый источник, уверенность 58%</td><td><select class="status-select" onchange="changeComparisonStatus(this)"><option selected>ручная проверка</option><option>создать</option><option>сделать тегом</option><option>не создавать сейчас</option><option>объединить</option><option>сделать фильтром</option><option>исключить</option><option>сделать дочерней</option><option>оставить фильтром</option></select></td></tr></tbody></table></div></div><div class="tree-card"><div class="table-top" style="padding:0 0 14px;border-bottom:0"><div><h3>XMind-структура для согласования</h3><p>Узлы можно сворачивать/разворачивать. В гостевом режиме клиент может отклонять элементы.</p></div><div class="guest-stats"><div class="guest-stat"><b id="totalNodes">12</b><span>всего</span></div><div class="guest-stat"><b id="approvedNodes">12</b><span>активно</span></div><div class="guest-stat"><b id="rejectedNodes">0</b><span>отклонено</span></div></div></div><div class="mindmap" id="mindmapMain"><div class="mind-root">magmastones.ru<br><span class="small">рекомендуемая структура</span></div><div class="mind-branches"><div class="mind-group"><div class="mind-parent">Материалы <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="exists"><div class="node-title">Натуральный камень</div><div class="node-actions"><span class="tag blue">есть на сайте</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="exists"><div class="node-title">Гранит</div><div class="node-actions"><span class="tag blue">есть на сайте</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="exists"><div class="node-title">Мрамор</div><div class="node-actions"><span class="tag blue">есть на сайте</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Гранитные слэбы</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Мраморные плиты</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div><div class="mind-group"><div class="mind-parent">Изделия <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="create"><div class="node-title">Столешницы из кварцита</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Подоконники из мрамора</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Лестницы из гранита</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div><div class="mind-group"><div class="mind-parent">Применение <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="create"><div class="node-title">Фасадный камень</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Камень для пола</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="review"><div class="node-title">Камень для хамама</div><div class="node-actions"><span class="tag purple">ручная проверка</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div><div class="mind-group"><div class="mind-parent">Бренды / поставщики <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="review"><div class="node-title">Atlant Granit</div><div class="node-actions"><span class="tag purple">ручная проверка</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div></div></div></div></section>
+    <section id="structure" class="section"><div class="section-head"><div><h2 class="section-title">Итоговая структура сайта</h2><p class="section-desc">Таблица итоговых сущностей, встроенное сравнение с сайтом, фильтр по статусам и дерево для согласования.</p></div><div class="top-actions"><button class="btn green" onclick="exportStructure()">Экспортировать</button><button class="btn primary" onclick="generateUrlMeta()">Сгенерировать URL и мета</button><button class="btn light" onclick="setGuestMode(true)">Предпросмотр гостевой ссылки</button></div></div><div class="meta-action-card mb"><div><h3>Финальный шаг после согласования</h3><p>После ручной проверки и клиентского согласования можно сгенерировать рекомендуемые URL, Title, Description и H1 для страниц со статусом “создать”.</p></div><button class="btn green" onclick="generateUrlMeta()">Сгенерировать URL и мета</button><div class="meta-demo" id="metaDemo"><b>Пример результата:</b> <code>/catalog/granit/slaby/</code> · Title: <code>Гранитные слэбы купить в Москве — MagmaStones</code></div></div><div class="card mb"><div class="structure-subtitle"><b>Фильтр структуры по статусам:</b><button class="filter-btn active" onclick="filterStructureStatus('create',this)">создать</button><button class="filter-btn" onclick="filterStructureStatus('exists',this)">есть на сайте</button><button class="filter-btn" onclick="filterStructureStatus('review',this)">ручная проверка</button><span class="help" data-help="structure_status_filter">?</span></div></div><div class="table-card mb"><div class="table-top"><div><h3>Итоговые сущности</h3><p>Таблица стоит первой: это основной рабочий формат перед внедрением. В ней видно, что уже создано на сайте, а что нужно добавить.</p></div></div><div class="table-wrap"><table id="finalEntitiesTable"><thead><tr><th>Страница <span class="help th-help" data-help="final_col_page">?</span></th><th>Тип сущности <span class="help th-help" data-help="final_col_type">?</span></th><th>Уровень <span class="help th-help" data-help="final_col_level">?</span></th><th>Группа <span class="help th-help" data-help="final_col_group">?</span></th><th>Конкурентов <span class="help th-help" data-help="final_col_competitors">?</span></th><th>Источники <span class="help th-help" data-help="final_col_sources">?</span></th><th>Уверенность <span class="help th-help" data-help="final_col_confidence">?</span></th><th>Статус <span class="help th-help" data-help="final_col_status">?</span></th></tr></thead><tbody><tr data-status="exists"><td><b>Натуральный камень</b></td><td><span class="entity-type category">категория</span></td><td class="center">1</td><td>верхний уровень</td><td class="center">6 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span></td><td class="center">96%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="exists"><td><b>Гранит</b></td><td><span class="entity-type category">категория</span></td><td class="center">2</td><td>по материалу</td><td class="center">6 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span><span class="tag purple">Меню</span></td><td class="center">95%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="exists"><td><b>Мрамор</b></td><td><span class="entity-type category">категория</span></td><td class="center">2</td><td>по материалу</td><td class="center">5 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span></td><td class="center">91%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="create"><td><b>Гранитные слэбы</b></td><td><span class="entity-type tagtype">тег</span></td><td class="center">3</td><td>по материалу / формату</td><td class="center">5 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span><span class="tag purple">Меню</span></td><td class="center">92%</td><td><span class="tag green">создать</span></td></tr><tr data-status="create"><td><b>Мраморные плиты</b></td><td><span class="entity-type tagtype">тег</span></td><td class="center">3</td><td>по материалу / формату</td><td class="center">4 из 6</td><td><span class="tag green">Keyso</span><span class="tag gray">Sitemap</span></td><td class="center">88%</td><td><span class="tag green">создать</span></td></tr><tr data-status="create"><td><b>Столешницы из кварцита</b></td><td><span class="entity-type tagtype">тег</span></td><td class="center">3</td><td>по изделию</td><td class="center">4 из 6</td><td><span class="tag green">Keyso</span><span class="tag purple">Меню</span></td><td class="center">84%</td><td><span class="tag green">создать</span></td></tr><tr data-status="review"><td><b>Камень для хамама</b></td><td><span class="entity-type filtertype">фильтр</span></td><td class="center">3</td><td>по применению</td><td class="center">2 из 6</td><td><span class="tag gray">Sitemap</span></td><td class="center">58%</td><td><span class="tag purple">ручная проверка</span></td></tr></tbody></table></div></div><div class="table-card mb"><div class="table-top"><div><h3>Сравнение с продвигаемым сайтом</h3><p>Сравнение встроено в структуру: здесь можно менять статус спорных элементов перед финальной генерацией URL и мета.</p></div></div><div class="table-wrap"><table id="comparisonTable"><thead><tr><th>Группа <span class="help th-help" data-help="compare_col_group">?</span></th><th>Страница <span class="help th-help" data-help="compare_col_page">?</span></th><th>Рекомендуемый URL <span class="help th-help" data-help="compare_col_url">?</span></th><th>Доказательства <span class="help th-help" data-help="compare_col_evidence">?</span></th><th>Статус <span class="help th-help" data-help="compare_col_status">?</span></th></tr></thead><tbody><tr data-status="create"><td><span class="tag green">Есть у конкурентов, нет у нас</span></td><td><b>Гранитные слэбы</b></td><td class="mono">/catalog/granit/slaby/</td><td>5 конкурентов, 3 источника, уверенность 92%</td><td><span class="tag green">создать</span></td></tr><tr data-status="create"><td><span class="tag green">Есть у конкурентов, нет у нас</span></td><td><b>Столешницы из кварцита</b></td><td class="mono">/izdeliya/stoleshnitsy-iz-kvarcita/</td><td>4 конкурента, Keyso + меню, уверенность 84%</td><td><span class="tag green">создать</span></td></tr><tr data-status="exists"><td><span class="tag blue">Есть на сайте</span></td><td><b>Гранит</b></td><td class="mono">/catalog/granit/</td><td>есть у нас, 6 конкурентов, 3 источника, уверенность 95%</td><td><span class="tag blue">есть на сайте</span></td></tr><tr data-status="review"><td><span class="tag purple">Ручная проверка</span></td><td><b>Atlant Granit</b></td><td class="mono">/brands/atlant-granit/</td><td>3 конкурента, sitemap + меню, уверенность 71%</td><td><select class="status-select" onchange="changeComparisonStatus(this)"><option selected>ручная проверка</option><option>создать</option><option>сделать тегом</option><option>не создавать сейчас</option><option>объединить</option><option>сделать фильтром</option><option>исключить</option><option>сделать дочерней</option><option>оставить фильтром</option></select></td></tr><tr data-status="review"><td><span class="tag yellow">Сомнительно</span></td><td><b>Камень для хамама</b></td><td class="mono">/primenenie/kamen-dlya-hamama/</td><td>2 конкурента, один слабый источник, уверенность 58%</td><td><select class="status-select" onchange="changeComparisonStatus(this)"><option selected>ручная проверка</option><option>создать</option><option>сделать тегом</option><option>не создавать сейчас</option><option>объединить</option><option>сделать фильтром</option><option>исключить</option><option>сделать дочерней</option><option>оставить фильтром</option></select></td></tr></tbody></table></div></div><div class="tree-card"><div class="table-top" style="padding:0 0 14px;border-bottom:0"><div><h3>XMind-структура для согласования</h3><p>Узлы можно сворачивать/разворачивать. В гостевом режиме клиент может отклонять элементы.</p></div><div class="guest-stats"><div class="guest-stat"><b id="totalNodes">12</b><span>всего</span></div><div class="guest-stat"><b id="approvedNodes">12</b><span>активно</span></div><div class="guest-stat"><b id="rejectedNodes">0</b><span>отклонено</span></div></div></div><div class="mindmap" id="mindmapMain"><div class="mind-root">magmastones.ru<br><span class="small">рекомендуемая структура</span></div><div class="mind-branches"><div class="mind-group"><div class="mind-parent">Материалы <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="exists"><div class="node-title">Натуральный камень</div><div class="node-actions"><span class="tag blue">есть на сайте</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="exists"><div class="node-title">Гранит</div><div class="node-actions"><span class="tag blue">есть на сайте</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="exists"><div class="node-title">Мрамор</div><div class="node-actions"><span class="tag blue">есть на сайте</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Гранитные слэбы</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Мраморные плиты</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div><div class="mind-group"><div class="mind-parent">Изделия <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="create"><div class="node-title">Столешницы из кварцита</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Подоконники из мрамора</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Лестницы из гранита</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div><div class="mind-group"><div class="mind-parent">Применение <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="create"><div class="node-title">Фасадный камень</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="create"><div class="node-title">Камень для пола</div><div class="node-actions"><span class="tag green">создать</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div><div class="mind-node" data-node data-status="review"><div class="node-title">Камень для хамама</div><div class="node-actions"><span class="tag purple">ручная проверка</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div><div class="mind-group"><div class="mind-parent">Бренды / поставщики <button class="mind-toggle" onclick="toggleBranch(this)">−</button></div><div class="mind-children"><div class="mind-node" data-node data-status="review"><div class="node-title">Atlant Granit</div><div class="node-actions"><span class="tag purple">ручная проверка</span><button class="reject-btn" onclick="rejectNode(this)">Отклонить</button></div></div></div></div></div></div></div></section>
 
-    <section id="prompts" class="section"><div class="section-head"><div><h2 class="section-title">Промты для ИИ</h2><p class="section-desc">Промты редактируются в рамках проекта для тестирования новых методов обработки.</p></div><button class="btn light" onclick="resetPrompts()">Сбросить на исходные промты</button></div><div class="accordion" id="promptsList"><details open><summary>Промт 1. Классификация URL и извлечение сущностей <span class="prompt-actions"><button class="copy-btn" onclick="editPrompt('prompt1',event)">Редактировать</button><button class="copy-btn" onclick="savePrompt('prompt1',event)">Сохранить</button><button class="copy-btn" onclick="copyText('prompt1',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="prompt1" disabled>Ты SEO-аналитик. На вход тебе передан список URL конкурента, title страниц при наличии, источник данных и настройки проекта.
+    <section id="prompts" class="section"><div class="section-head"><div><h2 class="section-title">Промты для ИИ</h2><p class="section-desc">Промты редактируются в рамках проекта для тестирования новых методов обработки.</p></div><button class="btn light" onclick="resetPrompts()">Сбросить на исходные промты</button></div><div class="accordion" id="promptsList"><details open><summary>Промт 1. Классификация URL и извлечение сущностей <span class="prompt-actions"><button class="copy-btn" onclick="editPrompt('prompt1',event)">Редактировать</button><button class="copy-btn" onclick="savePrompt('prompt1',event)">Сохранить</button><button class="copy-btn" onclick="copyText('prompt1',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="prompt1" disabled>Ты SEO-аналитик. На вход тебе передан список URL конкурента, поисковые запросы из Keyso, title страниц при наличии, источник данных и настройки проекта.
 
 Задача:
 1. Определи тип каждой страницы.
@@ -128,51 +144,396 @@ veneziastone.com</textarea></div></div><div class="toggles mt"><label class="tog
 3. Определи родительско-дочерние связи.
 4. Если уверенность низкая, пометь элемент как ручную проверку.</textarea></details><details><summary>Промт 3. Группировка и построение вложенности <span class="prompt-actions"><button class="copy-btn" onclick="editPrompt('prompt3',event)">Редактировать</button><button class="copy-btn" onclick="savePrompt('prompt3',event)">Сохранить</button><button class="copy-btn" onclick="copyText('prompt3',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="prompt3" disabled>Ты SEO-архитектор. Построй логическую структуру сайта в виде дерева. Для каждой сущности определи уровень, родителя и тип группировки.</textarea></details></div></section>
 
-    <section id="dev" class="section"><div class="section-head"><div><h2 class="section-title">DEV-инструкции для программиста</h2><p class="section-desc">Полное описание общей логики и деталей реализации модуля анализа структуры конкурентов. В боевом интерфейсе этот раздел скрывается.</p></div></div><div class="accordion"><details open><summary>1. Общая логика работы модуля</summary><div class="acc-body"><p>Модуль предназначен для восстановления структуры сайта на основе конкурентных данных. Он не краулит сайты полностью, а собирает структурные сигналы из ограниченного набора источников, нормализует их и превращает в список страниц для создания, согласования и дальнейшей генерации URL/мета.</p><ol class="logic-list"><li>Пользователь задает проект, регион, тип сайта, конкурентов и настройки учета инфораздела/брендов/регионов.</li><li>Система собирает URL и элементы структуры из Keyso, sitemap.xml и мега-меню.</li><li>Пользователь может дополнительно загрузить свою структуру в CSV/XLSX со столбцами URL и Страница.</li><li>Все источники объединяются в единый пул raw items.</li><li>Пул очищается по черному списку и правилам исключения товаров/техстраниц.</li><li>Из каждого URL или пункта меню извлекается смысловая сущность.</li><li>ИИ объединяет дубли, синонимы и разные URL-форматы в нормализованные страницы.</li><li>Система сравнивает итоговые сущности с продвигаемым сайтом.</li><li>Каждая сущность получает финальный статус.</li><li>SEO-специалист и клиент согласуют дерево структуры.</li><li>После согласования запускается генерация URL, Title, Description и H1.</li></ol><p>Статус “оптимизировать” не используется, потому что модуль не оценивает качество существующих страниц. Он определяет, какие новые страницы стоит создать и какие уже есть на сайте.</p></div></details><details><summary>2. Модель данных</summary><div class="acc-body"><p>Рекомендуемая базовая модель должна позволять хранить путь от сырого источника до итоговой страницы.</p><div class="schema-box"><code>raw_item:
-  id
-  project_id
-  competitor_domain
-  source_type: keyso | sitemap | mega_menu_dom | mega_menu_screenshot | manual_import
-  raw_url
-  raw_title
-  raw_anchor
-  query_list
-  imported_page_name
-  detected_page_type
-  is_excluded
-  exclude_reason
 
-entity_candidate:
-  id
-  raw_item_id
-  extracted_entity
-  entity_type: material | product | service | tag | category | filter | brand | region | info | unknown
-  parent_hint
-  confidence
+    <section id="dev" class="section">
+      <div class="section-head"><div><h2 class="section-title">DEV-инструкции для программиста</h2><p class="section-desc">Полное описание общей логики и деталей реализации модуля анализа структуры конкурентов. В боевом интерфейсе этот раздел скрывается.</p></div></div>
+      <div class="accordion dev-grid">
+        <details open><summary>1. Общая логика работы модуля</summary><div class="acc-body">
+          <p>Модуль предназначен для сбора, очистки, нормализации и сравнения структуры сайтов конкурентов с продвигаемым сайтом. Главная цель — получить список новых структурных страниц, которые можно создать на продвигаемом сайте для расширения охвата семантики.</p>
+          <p>Модуль не должен слепо копировать структуру конкурентов. Он собирает структурные сигналы из нескольких источников, объединяет их, удаляет дубли, группирует по смыслу, сравнивает с текущей структурой продвигаемого сайта и формирует итоговое дерево категорий, подкатегорий, тегов, брендов, фильтров и информационных страниц.</p>
+          <p><b>Важно:</b> модуль не оценивает качество оптимизации уже существующих страниц. Статуса “оптимизировать” в модуле быть не должно.</p>
+          <p><b>Основной результат:</b> итоговая структура сайта в виде дерева, таблица итоговых сущностей, список страниц “создать”, список страниц “есть на сайте”, список элементов на ручную проверку, список исключенных элементов, гостевое согласование, финальная генерация URL/H1/Title/Description.</p>
+        </div></details>
 
-normalized_entity:
-  id
-  canonical_name
-  merged_variants[]
-  entity_type
-  group_type
-  parent_id
-  level
-  exists_on_target
-  target_url
-  competitors_count
-  sources[]
-  evidence[]
-  ai_confidence
-  final_status
-  client_status
-  recommended_url
-  title
-  description
-  h1</code></div></div></details><details><summary>3. Источники данных</summary><div class="acc-body"><p>В MVP используются только четыре входных канала: Keyso, sitemap.xml, мега-меню и ручной импорт структуры.</p><ul class="logic-list"><li><b>Keyso</b> — источник SEO-видимых URL и запросов. Самый сильный сигнал, потому что показывает страницы, которые уже участвуют в поисковом спросе.</li><li><b>Sitemap</b> — источник опубликованной структуры сайта. Нужен для полноты, но может содержать товары и технический мусор.</li><li><b>Мега-меню</b> — источник навигационной структуры. Запускается вручную для конкурентов с низкой полнотой.</li><li><b>Ручной импорт</b> — пользовательская структура в CSV/XLSX. Используется, если у SEO-специалиста уже есть выгрузка структуры или черновой список страниц.</li></ul><p>Каждая итоговая сущность должна хранить evidence: список конкурентов, исходные URL, источник, уверенность и комментарии ИИ.</p></div></details><details><summary>4. Ручной импорт CSV/XLSX</summary><div class="acc-body"><p>Импорт нужен для объединения внешней структуры с автоматически собранной. Файл должен иметь обязательные колонки <b>URL</b> и <b>Страница</b>.</p><ol class="logic-list"><li>Пользователь выбирает CSV или XLSX.</li><li>Система валидирует наличие колонок URL и Страница.</li><li>Каждая строка превращается в raw_item с source_type = manual_import.</li><li>Если URL пустой, но есть название страницы, сущность все равно создается как кандидат.</li><li>После импорта строки проходят тот же pipeline: фильтрация → извлечение сущности → дедупликация → группировка → сравнение с сайтом.</li><li>Если импортированная сущность совпала с уже найденной, она не дублируется, а добавляется как дополнительный источник подтверждения.</li></ol><p>XLSX можно обрабатывать на backend или через библиотеку на клиенте. В прототипе показана только UI-логика.</p></div></details><details><summary>5. Обработка Keyso</summary><div class="acc-body"><p>Из Keyso берутся URL конкурентов, запросы и при наличии частотность/видимость. URL нормализуются технически: http/https, www/non-www, слеши, UTM и параметры.</p><p>Keyso получает высокий вес, потому что показывает не просто существующие страницы, а SEO-активные страницы. Поэтому в расчете полноты источник Keyso может дать до 40 баллов.</p></div></details><details><summary>6. Обработка sitemap.xml</summary><div class="acc-body"><p>Алгоритм поиска: сначала robots.txt, затем резервные адреса /sitemap.xml, /sitemap_index.xml, /sitemap-index.xml, /sitemap1.xml, /sitemap-catalog.xml, /sitemap_categories.xml, /sitemap-tags.xml, /sitemap.xml.gz. Если найден sitemap index, обрабатываются вложенные карты.</p><p>Товарные sitemap не используются как основа структуры, но могут помогать в определении брендов. Если sitemap содержит только товары, источник получает частичный балл.</p></div></details><details><summary>7. Обработка мега-меню</summary><div class="acc-body"><p>Мега-меню запускается вручную массово или по отдельному конкуренту. Основной способ — извлечение DOM-ссылок из header/nav/menu. Fallback — скриншоты раскрытых меню и ИИ-анализ изображения.</p><p>Результат мега-меню не заменяет Keyso/sitemap, а добавляется в общий пул. Если элемент меню совпадает с уже найденной сущностью, он усиливает evidence.</p></div></details><details><summary>8. Фильтрация и черный список</summary><div class="acc-body"><p>Перед классификацией URL проходят техническую фильтрацию. Исключаются товары, корзина, сравнение, поиск, пагинация, сортировки, UTM, служебные страницы, PDF, изображения и URL по черному списку.</p><p>Исключенные элементы нельзя удалять физически: они сохраняются в excluded_items с причиной, чтобы SEO-специалист мог проверить решения системы.</p></div></details><details><summary>9. Классификация URL и сущностей</summary><div class="acc-body"><p>Каждый raw item получает page_type и entity_type. Для структуры важны: категория, подкатегория, тег, фильтр, бренд, бренд+категория, услуга, статья, региональная страница.</p><p>Для magmastones.ru используются типы: материал, изделие, применение, бренд/поставщик, инфораздел, фильтр.</p></div></details><details><summary>10. Дедупликация и нормализация</summary><div class="acc-body"><p>Дедупликация выполняется по смыслу, а не по URL. ИИ объединяет синонимы, разные падежи, транслитерации, близкие URL и перестановки слов.</p><p>Пример: “слэбы гранита”, “гранитные слэбы”, “granit slabs” → одна нормализованная сущность “Гранитные слэбы”.</p></div></details><details><summary>11. Сравнение с продвигаемым сайтом</summary><div class="acc-body"><p>Сравнение теперь является частью вкладки “Структура”. Система определяет, есть ли аналог нормализованной сущности на magmastones.ru.</p><p>Сравнение идет по нормализованной сущности и возможным URL/названиям, а не только по точному URL. Если аналог найден, сущность получает статус “Есть на сайте”.</p></div></details><details><summary>12. Статусы и ручная смена статусов</summary><div class="acc-body"><p>Допустимые статусы: создать, есть на сайте, объединить, сделать дочерней, сделать тегом, сделать фильтром, оставить фильтром, не создавать сейчас, исключить, ручная проверка.</p><p>Для элементов со статусом “ручная проверка” в таблице сравнения должен быть доступен select для изменения статуса. После изменения статус должен сохраняться в normalized_entity.final_status и использоваться в дереве и генерации URL/мета.</p></div></details><details><summary>13. Фильтр структуры по статусам</summary><div class="acc-body"><p>Во вкладке “Структура” должен быть фильтр отображения: создать, есть на сайте, ручная проверка. Фильтр применяется к таблице итоговых сущностей, встроенной таблице сравнения и дереву.</p><p>В MVP фильтр может скрывать элементы на клиенте. В боевой версии желательно фильтровать данные на уровне состояния приложения.</p></div></details><details><summary>14. Генерация URL и мета</summary><div class="acc-body"><p>Кнопка “Сгенерировать URL и мета” запускает финальный этап после согласования структуры. Генерировать нужно только для сущностей со статусом “создать” или утвержденных вручную статусов, если SEO-специалист разрешил генерацию.</p><p>Результат: recommended_url, Title, Description, H1, parent_url, комментарий по внедрению. Для статуса “есть на сайте” мета не генерируются как новые, но могут использоваться как справка.</p></div></details><details><summary>15. Гостевая ссылка и согласование клиентом</summary><div class="acc-body"><p>По гостевой ссылке клиент видит только дерево структуры и кнопку экспорта. Он может отклонять узлы. Отклонение сохраняется как client_status = rejected.</p><p>Если клиент отклонил родительскую ветку, дочерние элементы должны либо автоматически получать inherited_rejected, либо требовать отдельного подтверждения — это нужно определить в настройках проекта.</p></div></details><details><summary>16. Экспорт структуры</summary><div class="acc-body"><p>Экспорт должен включать: страницу, тип, уровень, родителя, группу, источники, конкурентов, уверенность, финальный статус, клиентский статус, recommended_url, Title, Description, H1.</p></div></details><details><summary>17. Ограничения MVP</summary><div class="acc-body"><p>В MVP нет полного краулинга сайта, нет оценки качества оптимизации существующих страниц, нет автоматического создания задач и нет реального backend-парсинга XLSX в прототипе. Но интерфейс и модель данных должны быть подготовлены под эти сценарии.</p></div></details></div></section></main>
+        <details><summary>2. Ввод проекта</summary><div class="acc-body">
+          <p>Пользователь задает: домен продвигаемого сайта, регион, тип сайта, список конкурентов, учитывать ли инфораздел и учитывать ли бренды.</p>
+          <ul class="logic-list"><li><b>Домен:</b> используется для сравнения структуры конкурентов с текущей структурой сайта, определения страниц “есть на сайте” и формирования рекомендуемых URL.</li><li><b>Регион:</b> сохраняется как параметр проекта и может использоваться в шаблонах мета-тегов, но отдельный модуль мультирегиональности в MVP не реализуется.</li><li><b>Тип сайта:</b> интернет-магазин, сайт услуг, агрегатор или портал. Влияет на классификацию страниц.</li><li><b>Конкуренты:</b> по умолчанию берутся из модуля анализа конкурентов. Если анализа нет — система должна создать и запустить его, а затем взять сайты, автоматически отобранные для анализа КФ.</li><li><b>Инфораздел:</b> по умолчанию выключен.</li><li><b>Бренды:</b> по умолчанию включены.</li></ul>
+          <p><b>Мультирегиональность в MVP убрана:</b> не должно быть переключателя, отдельного слоя региональных URL, типа сущности region и логики поддоменов/городов в URL/Title/H1.</p>
+        </div></details>
+
+        <details><summary>3. Настройка “Учитывать инфораздел”</summary><div class="acc-body">
+          <p>Если переключатель выключен, статьи, блог, новости, гайды, FAQ и справочные страницы не попадают в итоговую коммерческую структуру. Они сохраняются в исключенных элементах с причиной “Инфораздел отключен в настройках проекта”.</p>
+          <p>Если переключатель включен, инфо-страницы анализируются отдельно от коммерческих страниц и попадают в группу “Информационные страницы”.</p>
+          <p><b>Типовые директории инфораздела:</b></p>
+          <div class="schema-box"><code>/blog/
+/articles/
+/article/
+/stati/
+/statyi/
+/news/
+/novosti/
+/guide/
+/guides/
+/help/
+/faq/
+/wiki/
+/academy/
+/knowledge/
+/knowledge-base/
+/poleznoe/
+/info/
+/information/
+/reviews/
+/obzory/
+/sovety/
+/kak-vybrat/
+/how-to/
+/instrukcii/
+/manuals/</code></div>
+          <p>Инфораздел нельзя смешивать с категориями, тегами, брендами, услугами и фильтрами при дедупликации и сравнении.</p>
+        </div></details>
+
+        <details><summary>4. Источники данных</summary><div class="acc-body">
+          <p>В MVP используются четыре входных канала: Keyso, sitemap.xml, мега-меню и ручной импорт CSV/XLSX. Цель — собрать достаточно полную структуру без полного парсинга сайтов.</p>
+          <ul class="logic-list"><li><b>Keyso:</b> URL конкурента + запрос. Самый сильный SEO-сигнал.</li><li><b>Sitemap:</b> опубликованные URL сайта. Нужен для полноты, но требует фильтрации.</li><li><b>Мега-меню:</b> ручной добор навигационной структуры через DOM и/или скриншоты.</li><li><b>Manual import:</b> структура, загруженная SEO-специалистом в CSV/XLSX.</li></ul>
+        </div></details>
+
+        <details><summary>5. Источник №1 — Keyso</summary><div class="acc-body">
+          <p><b>Назначение источника:</b> Keyso используется как основной источник SEO-видимых страниц конкурентов. Для MVP модулю нужны только два смысловых поля: <b>URL конкурента</b> и <b>Запрос</b>. Запрос нужен, чтобы точнее определить смысловую сущность страницы, когда сам URL неоднозначен.</p>
+
+          <p><b>Авторизация:</b> все запросы к API Keys.so должны выполняться с заголовком <code>X-Keyso-TOKEN</code>. Токен не хранить во фронтенде прототипа и не передавать в браузер. В рабочей реализации запросы к Keyso должны идти только через backend.</p>
+
+          <h4>5.1. Основной метод MVP — страницы сайта с запросами</h4>
+          <p>Для задачи анализа структуры основной метод — отчет <b>«Органическая выдача — Запросы сайта»</b>, потому что он сразу возвращает связку <code>word</code> + <code>url</code>. Это как раз то, что нужно модулю: запрос помогает понять смысл страницы, а URL показывает посадочную конкурента.</p>
+
+          <pre><code>GET https://api.keys.so/report/simple/organic/sitepages/withkeys
+Headers:
+  X-Keyso-TOKEN: {KEYSO_TOKEN}
+
+Query params:
+  base={base}
+  domain={competitor_domain}
+  sort=url|asc
+  page={page}
+  per_page={per_page}</code></pre>
+
+          <p><b>Пример запроса:</b></p>
+          <pre><code>GET https://api.keys.so/report/simple/organic/sitepages/withkeys?base=msk&amp;domain=magmastones.ru&amp;sort=url%7Casc&amp;page=1&amp;per_page=25</code></pre>
+
+          <p><b>Какие поля использовать в MVP:</b></p>
+          <ul>
+            <li><code>url</code> — URL страницы конкурента;</li>
+            <li><code>word</code> — поисковый запрос, связанный с URL;</li>
+            <li><code>current_page</code>, <code>last_page</code>, <code>per_page</code>, <code>total</code> — для пагинации.</li>
+          </ul>
+
+          <p><b>Какие поля можно получить в ответе, но в MVP не использовать как метрики:</b> <code>ws</code>, <code>wsk</code>, <code>pos</code>, <code>it1</code>, <code>it3</code>, <code>it5</code>, <code>it10</code>, <code>it50</code>, <code>vis</code>, <code>superwsk</code>. Их можно сохранить как raw-данные, но не использовать в логике MVP и не выводить в интерфейс как обязательные показатели.</p>
+
+          <p><b>Пример обработки строки ответа:</b></p>
+          <pre><code>{
+  "word": "мраморные слэбы купить",
+  "url": "/catalog/mramor/slaby/"
+}
+
+Результат для модуля:
+{
+  "competitor": "example.ru",
+  "source": "keyso",
+  "raw_url": "/catalog/mramor/slaby/",
+  "query": "мраморные слэбы купить",
+  "extracted_entity": "Мраморные слэбы",
+  "page_type": "теговая страница",
+  "group_type": "материал + изделие"
+}</code></pre>
+
+          <h4>5.2. Дополнительный метод MVP — органические страницы сайта</h4>
+          <p>Метод <b>«Органическая выдача — страницы»</b> можно использовать как дополнительный способ получить список URL конкурента, если нужно сначала собрать страницы, а затем отдельно получить запросы по каждой странице.</p>
+
+          <pre><code>GET https://api.keys.so/report/simple/organic/sitepages
+Headers:
+  X-Keyso-TOKEN: {KEYSO_TOKEN}
+
+Query params:
+  base={base}
+  domain={competitor_domain}
+  sort=it50|desc
+  page={page}
+  per_page={per_page}</code></pre>
+
+          <p><b>Пример запроса:</b></p>
+          <pre><code>GET https://api.keys.so/report/simple/organic/sitepages?base=msk&amp;domain=magmastones.ru&amp;sort=it50%7Cdesc&amp;page=1&amp;per_page=25</code></pre>
+
+          <p><b>Какие поля использовать в MVP:</b></p>
+          <ul>
+            <li><code>url</code> — URL страницы конкурента;</li>
+            <li><code>current_page</code>, <code>last_page</code>, <code>per_page</code>, <code>total</code> — для пагинации.</li>
+          </ul>
+
+          <p><b>Когда использовать:</b> если метод <code>/sitepages/withkeys</code> временно недоступен, возвращает мало данных или нужно быстро получить список страниц, а запросы подтянуть вторым шагом через метод <code>/keywords/bypage</code>.</p>
+
+          <h4>5.3. Дополнительный метод MVP — запросы по конкретной странице</h4>
+          <p>Метод <b>«Органическая выдача — ключевые слова по странице»</b> используется для уточнения смысловой сущности конкретного URL. Особенно полезен, если из URL неясно, какую страницу он представляет.</p>
+
+          <pre><code>GET https://api.keys.so/report/simple/organic/keywords/bypage
+Headers:
+  X-Keyso-TOKEN: {KEYSO_TOKEN}
+
+Query params:
+  base={base}
+  domain={competitor_domain}
+  page_url={encoded_page_url}
+  sort=pos|asc
+  page={page}
+  per_page={per_page}</code></pre>
+
+          <p><b>Пример запроса:</b></p>
+          <pre><code>GET https://api.keys.so/report/simple/organic/keywords/bypage?base=msk&amp;domain=magmastones.ru&amp;page_url=%2Fcatalog%2Fmramor%2Fslaby%2F&amp;sort=pos%7Casc&amp;page=1&amp;per_page=25</code></pre>
+
+          <p><b>Какие поля использовать в MVP:</b></p>
+          <ul>
+            <li><code>word</code> — запрос, по которому можно уточнить смысл страницы;</li>
+            <li><code>current_page</code>, <code>last_page</code>, <code>per_page</code>, <code>total</code> — для пагинации.</li>
+          </ul>
+
+          <h4>5.4. Рекомендуемый алгоритм обращения к Keyso в MVP</h4>
+          <ol class="logic-list">
+            <li>Для каждого конкурента взять домен и региональную базу <code>base</code>.</li>
+            <li>Сначала запросить <code>GET /report/simple/organic/sitepages/withkeys</code>.</li>
+            <li>Пройти все страницы пагинации до <code>last_page</code> или до внутреннего лимита проекта.</li>
+            <li>Из каждой строки взять только <code>url</code> и <code>word</code>.</li>
+            <li>Сохранить исходную строку в raw-лог, но в MVP использовать только URL и запрос.</li>
+            <li>Нормализовать URL: убрать протокол, www, UTM, сортировки, пагинацию, привести slash к единому виду.</li>
+            <li>Передать пару <code>url + word</code> в блок извлечения смысловой сущности.</li>
+            <li>Если <code>/sitepages/withkeys</code> не вернул пригодные данные, запросить <code>GET /report/simple/organic/sitepages</code> и затем для важных URL получить запросы через <code>GET /report/simple/organic/keywords/bypage</code>.</li>
+            <li>Если API вернул <code>202</code>, повторить запрос позже по backoff-логике.</li>
+            <li>Если API вернул <code>429</code>, прочитать заголовок <code>Retry-After</code> и повторить запрос после указанной паузы.</li>
+            <li>Если API вернул <code>401</code>, зафиксировать ошибку авторизации и остановить сбор Keyso по проекту.</li>
+            <li>Если API вернул <code>404</code>, зафиксировать, что домен/ресурс не найден.</li>
+          </ol>
+
+          <h4>5.5. Пример backend-функции</h4>
+          <pre><code>async function fetchKeysoSitePagesWithKeys({
+  token,
+  domain,
+  base = 'msk',
+  page = 1,
+  perPage = 100
+}) {
+  const url = new URL('https://api.keys.so/report/simple/organic/sitepages/withkeys');
+  url.searchParams.set('base', base);
+  url.searchParams.set('domain', domain);
+  url.searchParams.set('sort', 'url|asc');
+  url.searchParams.set('page', String(page));
+  url.searchParams.set('per_page', String(perPage));
+
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'X-Keyso-TOKEN': token,
+      'Accept': 'application/json'
+    }
+  });
+
+  if (response.status === 202) {
+    return { status: 'pending', retry: true };
+  }
+
+  if (response.status === 429) {
+    return {
+      status: 'rate_limited',
+      retryAfter: response.headers.get('Retry-After')
+    };
+  }
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Keyso API error ${response.status}: ${errorBody}`);
+  }
+
+  const data = await response.json();
+
+  return {
+    currentPage: data.current_page,
+    lastPage: data.last_page,
+    total: data.total,
+    items: (data.data || []).map(row => ({
+      source: 'keyso',
+      domain,
+      rawUrl: row.url,
+      query: row.word
+    }))
+  };
+}</code></pre>
+
+          <h4>5.6. Пример функции получения всех страниц пагинации</h4>
+          <pre><code>async function fetchAllKeysoUrlQueryPairs({ token, domain, base = 'msk' }) {
+  const result = [];
+  let page = 1;
+  let lastPage = 1;
+
+  do {
+    const batch = await fetchKeysoSitePagesWithKeys({
+      token,
+      domain,
+      base,
+      page,
+      perPage: 100
+    });
+
+    if (batch.status === 'pending') {
+      await wait(10000);
+      continue;
+    }
+
+    if (batch.status === 'rate_limited') {
+      await wait(Number(batch.retryAfter || 60) * 1000);
+      continue;
+    }
+
+    result.push(...batch.items);
+    lastPage = batch.lastPage || page;
+    page += 1;
+  } while (page <= lastPage);
+
+  return result;
+}</code></pre>
+
+          <h4>5.7. Что сохранять в базу</h4>
+          <pre><code>{
+  "project_id": 123,
+  "competitor_id": 456,
+  "source": "keyso",
+  "raw_url": "/catalog/mramor/slaby/",
+  "normalized_url": "example.ru/catalog/mramor/slaby/",
+  "query": "мраморные слэбы купить",
+  "raw_payload": "{...}",
+  "created_at": "2026-07-20T12:00:00"
+}</code></pre>
+
+          <h4>5.8. Что не делать в MVP</h4>
+          <p>В MVP не использовать как обязательные метрики позиции, частотность, видимость, трафик, историю изменений и расширенные SEO-поля. Их можно сохранить в <code>raw_payload</code> для будущего расширения, но текущая логика модуля анализа структуры должна опираться только на пару <b>URL конкурента + Запрос</b>.</p>
+        </div></details>
+
+        <details><summary>6. Источник №2 — sitemap.xml</summary><div class="acc-body">
+          <p>Sitemap используется как источник опубликованной структуры сайта. Для каждого конкурента система должна сначала проверить robots.txt, затем стандартные варианты: <code>/sitemap.xml</code>, <code>/sitemap_index.xml</code>, <code>/sitemap-index.xml</code>, <code>/sitemap1.xml</code>, <code>/sitemap-catalog.xml</code>, <code>/sitemap_categories.xml</code>, <code>/sitemap-tags.xml</code>, <code>/sitemap.xml.gz</code>.</p>
+          <p>Если найден sitemap index, нужно обработать вложенные карты. Система должна различать sitemap категорий, товаров, тегов, брендов, статей, изображений и новостей.</p>
+          <p>Если sitemap содержит в основном товары, он не считается полноценным источником структуры и получает частичный балл. Товары не включаются в основную структуру, но могут использоваться как дополнительный сигнал для брендов.</p>
+        </div></details>
+
+        <details><summary>7. Источник №3 — мега-меню</summary><div class="acc-body">
+          <p>Мега-меню запускается вручную массово или по конкретному конкуренту, если Keyso/sitemap дали недостаточно данных. Основной способ — извлечение DOM-ссылок из header/nav/menu. Резервный способ — скриншоты раскрытых меню и ИИ-анализ изображения.</p>
+          <ol class="logic-list"><li>Открыть сайт в эмулируемом браузере.</li><li>Определить блоки навигации и каталога.</li><li>Раскрыть меню через hover/click/focus.</li><li>Извлечь DOM-ссылки.</li><li>Сделать скриншоты раскрытых состояний, если DOM недостаточен.</li><li>Передать скриншоты ИИ.</li><li>Получить список пунктов, URL, родителей, уровней и типов сущностей.</li><li>Сохранить source = mega_menu_dom или mega_menu_screenshot.</li></ol>
+        </div></details>
+
+        <details><summary>8. Источник №4 — ручной импорт CSV/XLSX</summary><div class="acc-body">
+          <p>SEO-специалист может импортировать структуру в формате CSV или XLSX. Обязательные столбцы: <b>URL</b> и <b>Страница</b>.</p>
+          <p>После загрузки система читает файл, проверяет обязательные столбцы, нормализует URL, извлекает сущности из названий страниц, присваивает source = manual_import, добавляет строки в общий пул и запускает тот же pipeline: фильтрация → классификация → дедупликация → группировка → сравнение.</p>
+          <p>Импорт не должен перезаписывать существующую структуру. Если сущность совпала с уже найденной, manual_import добавляется как дополнительный источник подтверждения.</p>
+        </div></details>
+
+        <details><summary>9. Нормализация URL и черный список</summary><div class="acc-body">
+          <p>Все URL проходят техническую нормализацию: убрать http/https, www, якоря, UTM, сортировки, параметры пагинации, привести trailing slash и регистр домена к единому виду.</p>
+          <p>Черный список исключает технические URL: <code>/cart/</code>, <code>/basket/</code>, <code>/compare/</code>, <code>/search/</code>, <code>/personal/</code>, <code>/order/</code>, <code>/checkout/</code>, <code>/delivery/</code>, <code>/payment/</code>, <code>/contacts/</code>, <code>/vacancy/</code>, <code>?sort=</code>, <code>?utm_</code>, <code>?PAGEN_</code> и т.д.</p>
+          <p>Исключенные элементы не удаляются физически, а сохраняются в excluded_items с raw_url, normalized_url, source, competitor, detected_type, exclude_reason и created_at.</p>
+        </div></details>
+
+        <details><summary>10. Разделение URL и смысловой сущности</summary><div class="acc-body">
+          <p>Система должна хранить четыре уровня данных: сырой URL, извлеченная сущность, нормализованная страница и рекомендованная страница для продвигаемого сайта.</p>
+          <p>Пример: raw URL <code>/catalog/granit/slaby/</code> → извлеченная сущность “Слэбы из гранита” → нормализованная страница “Гранитные слэбы” → рекомендованная страница с типом, родителем, URL и статусом.</p>
+          <p>Дедупликация выполняется по смыслу, а не по URL.</p>
+        </div></details>
+
+        <details><summary>11. Классификация страниц</summary><div class="acc-body">
+          <p>Каждый URL или элемент меню должен получить тип: главная категория, подкатегория, теговая страница, фильтр, брендовая страница, бренд+категория, услуга, статья, товар, служебная страница, мусор.</p>
+          <p>Для структуры особенно важны категории, подкатегории, коммерческие теги, бренды, бренд+категория, сценарии применения, характеристики и статьи, если включен инфораздел.</p>
+        </div></details>
+
+        <details><summary>12. Нормализация и удаление дублей</summary><div class="acc-body">
+          <p>Конкуренты могут называть одно и то же по-разному. Например: “Гранитные слэбы”, “Слэбы из гранита”, “Плиты из гранита”, “Гранит в слэбах”. Система должна привести такие элементы к одному каноническому названию.</p>
+          <p>Уровни дедупликации: техническая дедупликация URL, текстовая нормализация, семантическая дедупликация ИИ, ручная премодерация.</p>
+          <p>ИИ должен определять полный дубль, частичный дубль, родительскую/дочернюю сущность, разные сущности, фильтр без посадочной, мусор и ручную проверку.</p>
+        </div></details>
+
+        <details><summary>13. Модель статусов</summary><div class="acc-body">
+          <p>Все найденные элементы по умолчанию получают статус “Кандидат”. Финальные статусы: создать, есть на сайте, объединить, сделать дочерней страницей, сделать тегом, сделать фильтром, оставить фильтром, не создавать сейчас, исключить, ручная проверка, отклонено клиентом.</p>
+          <p><b>Есть на сайте</b> означает только факт найденного аналога на продвигаемом сайте, а не качество оптимизации страницы.</p>
+          <p>Для элементов со статусом “ручная проверка” должен быть доступен select для изменения статуса. После изменения обновляются таблица, дерево, счетчики и история изменений.</p>
+        </div></details>
+
+        <details><summary>14. Расчет полноты и уверенности ИИ</summary><div class="acc-body">
+          <p><b>Полнота конкурента:</b> <code>(keyso_score + sitemap_score + menu_score) × coverage_factor</code>. Keyso дает до 40 баллов, sitemap до 35, мега-меню до 25. Веса выбраны по силе источников: Keyso показывает SEO-видимые URL+запросы, sitemap показывает опубликованную структуру, меню дает навигационный добор.</p>
+          <p>Качество источника считается коэффициентом 0–1. Например: полноценный Keyso = 1.0, частичный = 0.3–0.6, нет данных = 0.</p>
+          <p><b>coverage_factor:</b> 60+ элементов после фильтрации — 1.0; 30–59 — 0.85; 10–29 — 0.65; меньше 10 — 0.4.</p>
+          <p><b>Статусы полноты:</b> 75–100 ОК, 50–74 средне, 20–49 недостаточно, 0–19 нет данных.</p>
+          <p><b>Уверенность ИИ:</b> competitors_factor × 0.35 + source_factor × 0.25 + entity_clarity × 0.20 + hierarchy_clarity × 0.10 + conflict_score × 0.10.</p>
+        </div></details>
+
+        <details><summary>15. Итоговая структура, фильтры и сравнение</summary><div class="acc-body">
+          <p>Итоговая структура отображается таблицей и XMind-подобным деревом. Таблица содержит: страница, тип, уровень, группа, конкурентов, источники, уверенность, статус, рекомендуемый URL и действие.</p>
+          <p>Фильтр структуры по статусам должен показывать как минимум: создать, есть на сайте, ручная проверка. Фильтр применяется к таблице и дереву.</p>
+          <p>Вкладка “Сравнение” интегрирована в “Структуру”. Основная зона роста — “есть у конкурентов, но нет у нас”.</p>
+        </div></details>
+
+        <details><summary>16. Гостевая ссылка и согласование клиентом</summary><div class="acc-body">
+          <p>По гостевой ссылке клиент видит только дерево структуры и кнопку экспорта. Технические таблицы, промты и DEV скрыты.</p>
+          <p>Клиент может отклонять раздел, категорию, подкатегорию, тег или бренд. Отклоненный элемент получает client_status = rejected, визуально деактивируется, действие сохраняется с датой/временем.</p>
+          <p>После клиентского согласования SEO-специалист получает утвержденный вариант и может отправить структуру на внедрение или запустить генерацию URL/мета.</p>
+        </div></details>
+
+        <details><summary>17. Кнопка “Экспортировать”</summary><div class="acc-body">
+          <p>Кнопка экспортирует итоговую таблицу структуры, чтобы было понятно, какая категория в каком разделе лежит, какие элементы являются тегами, фильтрами, брендами и т.д.</p>
+          <p><b>Минимальные колонки экспорта:</b> ID, Parent ID, Level, раздел/родитель, страница, тип сущности, группа, рекомендуемый URL, H1, Title, Description, статус, источники, конкурентов, примеры URL конкурентов, уверенность ИИ, комментарий, статус клиента, комментарий клиента.</p>
+          <p>Приоритетный формат — XLSX; дополнительно можно поддержать CSV. Исключенные элементы по умолчанию не экспортировать, если нет отдельной настройки.</p>
+        </div></details>
+
+        <details><summary>18. Кнопка “Сгенерировать URL и мета-теги”</summary><div class="acc-body">
+          <p>Кнопка запускает финальный этап после обработки и согласования структуры. Источник генерации — согласованное дерево из раздела “Структура” с учетом решений SEO-специалиста и клиента.</p>
+          <p>Генерировать нужно URL, H1, Title и Description для активных элементов со статусами: создать, сделать тегом, сделать дочерней страницей. Для статуса “есть на сайте” по умолчанию не генерировать, чтобы не перезаписывать существующие страницы.</p>
+          <p>Перед генерацией должно открываться модальное окно с шаблонами URL, H1, Title, Description, переключателем “перегенерировать для существующих” и спойлерами с редактируемыми промтами.</p>
+          <p>У каждого промта в модальном окне должны быть кнопки: редактировать, сохранить, сохранить и запустить генерацию, скопировать, сбросить.</p>
+        </div></details>
+
+        <details><summary>19. Результат генерации URL и мета</summary><div class="acc-body">
+          <p>После генерации система выводит таблицу: страница, тип, родитель, уровень, URL, H1, Title, Description, статус генерации, комментарий, действие.</p>
+          <p>Конфликтные строки должны получать статус manual_review. Примеры конфликтов: exact_duplicate, existing_url_conflict, too_similar, wrong_parent, invalid_slug, too_long.</p>
+        </div></details>
+
+        <details><summary>20. Таблицы данных и ограничения MVP</summary><div class="acc-body">
+          <p>Рекомендуемые сущности хранения: raw_urls, extracted_entities, normalized_entities, entity_sources, excluded_items, manual_decisions, guest_decisions.</p>
+          <p><b>Ограничения MVP:</b> нет полного краулинга, нет оценки качества оптимизации существующих страниц, нет автоматического создания страниц на сайте, нет автоматической публикации мета-данных, нет расширенных Keyso-полей кроме URL+Запрос.</p>
+          <p><b>Главная цепочка:</b> ввод проекта → получение конкурентов → сбор Keyso → сбор sitemap → оценка полноты → мега-меню при необходимости → ручной импорт → фильтрация → классификация → извлечение сущностей → дедупликация → группировка → сравнение с сайтом → статусы → гостевое согласование → генерация URL и мета.</p>
+        </div></details>
+      </div>
+    </section></main>
 </div>
 
-<div class="guest-screen"><div class="guest-header"><div><span class="guest-badge">Гостевой просмотр</span><h2 class="section-title" style="margin-top:10px">Согласование структуры magmastones.ru</h2><p class="section-desc">Можно отклонить раздел, категорию, тег или бренд. SEO-специалист получит утвержденный вариант.</p></div><div class="top-actions"><button class="btn green" onclick="toast('Гостевой экспорт подготовлен')">Экспортировать</button><button class="btn light" onclick="setGuestMode(false)">Вернуться в сервис</button></div></div><div class="tree-card"><div class="table-top" style="padding:0 0 14px;border-bottom:0"><div><h3>Рекомендуемая древовидная структура</h3><p>Нажмите “Отклонить”, если элемент не нужен на сайте.</p></div><div class="guest-stats"><div class="guest-stat"><b id="gTotalNodes">10</b><span>всего</span></div><div class="guest-stat"><b id="gApprovedNodes">10</b><span>согласовано</span></div><div class="guest-stat"><b id="gRejectedNodes">0</b><span>отклонено</span></div></div></div><div id="guestMindmap"></div></div></div>
+<div class="guest-screen"><div class="guest-header"><div><span class="guest-badge">Гостевой просмотр</span><h2 class="section-title" style="margin-top:10px">Согласование структуры magmastones.ru</h2><p class="section-desc">Можно отклонить раздел, категорию, тег или бренд. SEO-специалист получит утвержденный вариант.</p></div><div class="top-actions"><button class="btn green" onclick="exportStructure()">Экспортировать</button><button class="btn light" onclick="setGuestMode(false)">Вернуться в сервис</button></div></div><div class="tree-card"><div class="table-top" style="padding:0 0 14px;border-bottom:0"><div><h3>Рекомендуемая древовидная структура</h3><p>Нажмите “Отклонить”, если элемент не нужен на сайте.</p></div><div class="guest-stats"><div class="guest-stat"><b id="gTotalNodes">10</b><span>всего</span></div><div class="guest-stat"><b id="gApprovedNodes">10</b><span>согласовано</span></div><div class="guest-stat"><b id="gRejectedNodes">0</b><span>отклонено</span></div></div></div><div id="guestMindmap"></div></div></div>
+
+
+<div class="modal" id="genModal">
+  <div class="modal-box" style="width:min(1040px,100%)">
+    <div class="modal-head"><h3>Генерация URL и мета-тегов</h3><button class="modal-close" onclick="closeGenModal()">×</button></div>
+    <div class="modal-body">
+      <p><b>Источник генерации:</b> согласованная структура из раздела “Структура” в формате дерева/XMind. Генерация запускается только для активных элементов со статусами “создать”, “сделать тегом”, “сделать дочерней страницей”.</p>
+      <div class="grid cols-2 mt">
+        <div class="field"><label>Шаблон URL <span class="help" data-help="gen_url_template">?</span></label><input id="urlTemplate" value="/catalog/{parent_slug}/{page_slug}/"></div>
+        <div class="field"><label>Шаблон H1 <span class="help" data-help="gen_h1_template">?</span></label><input id="h1Template" value="{page_name}"></div>
+        <div class="field"><label>Шаблон Title <span class="help" data-help="gen_title_template">?</span></label><input id="titleTemplate" value="{page_name} купить в Москве — MagmaStones"></div>
+        <div class="field"><label>Шаблон Description <span class="help" data-help="gen_desc_template">?</span></label><input id="descriptionTemplate" value="{page_name}: подбор натурального камня, консультация, изготовление и доставка."></div>
+      </div>
+      <label class="toggle-card mt" style="max-width:520px"><input type="checkbox" id="regenExisting"><span class="switch-ui"></span><div><b>Перегенерировать для статуса “Есть на сайте”</b><span>по умолчанию выключено, чтобы не перезаписывать текущую структуру</span></div></label>
+      <div class="accordion mt" id="generationPrompts">
+        <details><summary>Промт генерации URL <span class="prompt-actions"><button class="copy-btn" onclick="editGenPrompt('genPromptUrl',event)">Редактировать</button><button class="copy-btn" onclick="saveGenPrompt('genPromptUrl',event)">Сохранить</button><button class="copy-btn" onclick="saveAndRunMeta('genPromptUrl',event)">Сохранить и запустить</button><button class="copy-btn" onclick="copyGenPrompt('genPromptUrl',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="genPromptUrl" disabled>Ты SEO-специалист и проектировщик структуры сайта. На вход передана согласованная структурная сущность: page_name, parent_name, page_type, entity_type, group_type, site_type, url_template, existing_urls. Сгенерируй короткий человекочитаемый URL на латинице, используй дефисы, учитывай родительскую структуру, не создавай дубль существующего URL. Если найден конфликт, верни status=manual_review.</textarea></details>
+        <details><summary>Промт генерации H1 <span class="prompt-actions"><button class="copy-btn" onclick="editGenPrompt('genPromptH1',event)">Редактировать</button><button class="copy-btn" onclick="saveGenPrompt('genPromptH1',event)">Сохранить</button><button class="copy-btn" onclick="saveAndRunMeta('genPromptH1',event)">Сохранить и запустить</button><button class="copy-btn" onclick="copyGenPrompt('genPromptH1',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="genPromptH1" disabled>Ты SEO-специалист. На вход передана согласованная структурная сущность и h1_template. Сгенерируй короткий естественный H1, соответствующий странице. Не делай H1 длиннее 80 символов. Если шаблон звучит неестественно, адаптируй формулировку.</textarea></details>
+        <details><summary>Промт генерации Title <span class="prompt-actions"><button class="copy-btn" onclick="editGenPrompt('genPromptTitle',event)">Редактировать</button><button class="copy-btn" onclick="saveGenPrompt('genPromptTitle',event)">Сохранить</button><button class="copy-btn" onclick="saveAndRunMeta('genPromptTitle',event)">Сохранить и запустить</button><button class="copy-btn" onclick="copyGenPrompt('genPromptTitle',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="genPromptTitle" disabled>Ты SEO-специалист. На вход передана согласованная структурная сущность и title_template. Сгенерируй Title по шаблону, сохрани коммерческий интент, избегай переспама и повторов. Для категорий, тегов, брендов и инфо-страниц используй разную логику формулировок.</textarea></details>
+        <details><summary>Промт генерации Description <span class="prompt-actions"><button class="copy-btn" onclick="editGenPrompt('genPromptDesc',event)">Редактировать</button><button class="copy-btn" onclick="saveGenPrompt('genPromptDesc',event)">Сохранить</button><button class="copy-btn" onclick="saveAndRunMeta('genPromptDesc',event)">Сохранить и запустить</button><button class="copy-btn" onclick="copyGenPrompt('genPromptDesc',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="genPromptDesc" disabled>Ты SEO-специалист. На вход передана согласованная структурная сущность и description_template. Сгенерируй уникальный Description естественным языком, кратко раскрывающий содержание страницы, без переспама и одинаковых формулировок для всех страниц.</textarea></details>
+        <details><summary>Промт проверки дублей и конфликтов <span class="prompt-actions"><button class="copy-btn" onclick="editGenPrompt('genPromptValidate',event)">Редактировать</button><button class="copy-btn" onclick="saveGenPrompt('genPromptValidate',event)">Сохранить</button><button class="copy-btn" onclick="saveAndRunMeta('genPromptValidate',event)">Сохранить и запустить</button><button class="copy-btn" onclick="copyGenPrompt('genPromptValidate',event)">Скопировать</button></span></summary><textarea class="prompt-area" id="genPromptValidate" disabled>Проверь сгенерированные URL, H1, Title и Description. Найди exact_duplicate, existing_url_conflict, too_similar, wrong_parent, invalid_slug, too_long, переспам Title и одинаковые Description. Конфликтные строки пометь status=manual_review.</textarea></details>
+      </div>
+      <div class="meta-demo active" id="genResultPreview"><b>После генерации появится таблица:</b> страница · тип · родитель · уровень · URL · H1 · Title · Description · статус генерации · комментарий.</div>
+      <div class="top-actions mt" style="justify-content:flex-end"><button class="btn light" onclick="resetGenPrompts()">Сбросить промты</button><button class="btn green" onclick="runMetaGeneration()">Запустить генерацию</button></div>
+    </div>
+  </div>
+</div>
 
 <div class="float-help" onclick="openHelp('global')">?</div><div class="modal" id="modal"><div class="modal-box"><div class="modal-head"><h3 id="modalTitle">Справка</h3><button class="modal-close" onclick="closeModal()">×</button></div><div class="modal-body" id="modalBody"></div></div></div><div class="toast" id="toast"></div>
 <script>
@@ -182,7 +543,7 @@ const help={
 
  kpi_completeness:{title:'Полнота источников',body:'<p><b>Что показывает:</b> среднюю полноту сбора структуры по всем конкурентам. Значение нужно для быстрой оценки, насколько надежна текущая черновая структура ниши без дополнительного добора.</p><p><b>Почему веса 40 / 35 / 25:</b></p><ul><li><b>Keyso = до 40 баллов</b> — самый сильный источник для SEO-задачи, потому что он показывает URL, реально участвующие в поисковом спросе. Поэтому ему дается наибольший вес.</li><li><b>Sitemap = до 35 баллов</b> — очень полезен, потому что отражает реальную опубликованную структуру сайта, но может содержать мусор, товары, служебные URL и не всегда показывает все скрытые посадочные, поэтому вес чуть ниже.</li><li><b>Мега-меню = до 25 баллов</b> — дополнительный добор структуры. Источник полезный, но обычно неполный: показывает только то, что вынесено в навигацию, поэтому используется как усилитель, а не как основной каркас структуры.</li></ul><p><b>Формула полноты по конкуренту:</b></p><p><code>fullness_competitor = keyso_score + sitemap_score + menu_score</code></p><p>Где:</p><ul><li><code>keyso_score = 40 × keyso_quality</code></li><li><code>sitemap_score = 35 × sitemap_quality</code></li><li><code>menu_score = 25 × menu_quality</code></li></ul><p><b>Коэффициент качества источника</b> (<code>source_quality</code>) задается в диапазоне от 0 до 1 и отражает, насколько источник реально пригоден для построения структуры. Он не равен просто факту наличия источника.</p><p><b>Как считать quality:</b></p><ul><li><b>Keyso quality</b>: зависит от количества найденных посадочных URL, доли коммерческих/структурных страниц и пригодности данных после фильтрации. Пример: если Keyso отдал много URL, среди которых выделено достаточно категорий, тегов, брендов и подкатегорий, quality близок к 1. Если Keyso дал мало URL или почти все они нерелевантны, quality понижается до 0.25–0.6.</li><li><b>Sitemap quality</b>: зависит от того, найден ли sitemap, удалось ли его распарсить, сколько в нем структурных страниц после фильтрации и не состоит ли он в основном из товаров. Если найден полноценный sitemap index с категориями/тегами/услугами — quality 0.8–1. Если sitemap состоит почти только из товарных страниц — quality 0.1–0.3.</li><li><b>Menu quality</b>: зависит от того, был ли реально извлечен DOM или проанализированы скриншоты, сколько уникальных структурных сущностей получено и были ли они добавлены в структуру. Полное раскрытое меню с несколькими уровнями дает 0.8–1, бедное меню с 5–10 пунктами — 0.2–0.5.</li></ul><p><b>Понижающий коэффициент после фильтрации:</b></p><p>Если у конкурента после фильтрации осталось слишком мало пригодных структурных URL, итоговую полноту нужно понизить, даже если формально источники были найдены.</p><p><code>fullness_competitor = (keyso_score + sitemap_score + menu_score) × coverage_factor</code></p><ul><li><code>coverage_factor = 1.0</code>, если после фильтрации осталось достаточно URL.</li><li><code>coverage_factor = 0.85</code>, если данных умеренно мало.</li><li><code>coverage_factor = 0.65</code>, если структурных URL явно мало и картина ниши неполная.</li><li><code>coverage_factor = 0.4</code>, если после фильтрации данных почти нет.</li></ul><p><b>Как определить coverage_factor в MVP:</b></p><ul><li>60+ структурных элементов после фильтрации — 1.0</li><li>30–59 — 0.85</li><li>10–29 — 0.65</li><li>&lt;10 — 0.4</li></ul><p><b>Средняя полнота в KPI:</b> это среднее арифметическое полноты всех конкурентов: <code>avg_fullness = sum(fullness_competitor) / competitors_count</code>.</p><p><b>Зачем это нужно:</b> показатель помогает понять, достаточно ли уже собранных данных для формирования структуры или надо обязательно запускать анализ мега-меню и/или вручную проверять нишу.</p>'},
  kpi_ai:{title:'Уверенность ИИ',body:'<p><b>Что показывает:</b> среднюю уверенность по всем итоговым структурным сущностям после классификации, дедупликации и группировки.</p><p><b>Факторы уверенности:</b></p><ul><li>сколько конкурентов подтверждают сущность;</li><li>сколько независимых источников подтвердили сущность;</li><li>насколько однозначно извлекается смысл сущности;</li><li>нет ли конфликта между типами страницы (тег/фильтр/бренд/услуга);</li><li>понятно ли место сущности в дереве структуры.</li></ul><p><b>Упрощенная логика расчета:</b></p><p><code>ai_confidence = competitors_factor × 0.35 + source_factor × 0.25 + entity_clarity × 0.2 + hierarchy_clarity × 0.1 + conflict_penalty_adjusted × 0.1</code></p><p>Все факторы предварительно приводятся к шкале 0–100. Затем берется среднее по всем сущностям. Чем выше показатель, тем меньше неоднозначности в структуре.</p>'},
- kpi_dedup:{title:'Сущности после дедупликации',body:'<p><b>Что показывает:</b> итоговое число уникальных смысловых сущностей после объединения дублей, синонимов, перестановок слов и разных URL-форматов.</p><p><b>Как считается:</b></p><ol><li>Система получает первичный список raw URL и элементов меню.</li><li>Извлекает из них сущности: материал, изделие, применение, бренд, характеристика, регион и т.д.</li><li>ИИ сравнивает сущности и объединяет одинаковые по смыслу элементы.</li><li>После объединения остается список канонических сущностей.</li></ol><p>Именно количество канонических сущностей и показывается в KPI.</p>'},
+ kpi_dedup:{title:'Сущности после дедупликации',body:'<p><b>Что показывает:</b> итоговое число уникальных смысловых сущностей после объединения дублей, синонимов, перестановок слов и разных URL-форматов.</p><p><b>Как считается:</b></p><ol><li>Система получает первичный список raw URL и элементов меню.</li><li>Извлекает из них сущности: материал, изделие, применение, бренд, характеристика, и т.д.</li><li>ИИ сравнивает сущности и объединяет одинаковые по смыслу элементы.</li><li>После объединения остается список канонических сущностей.</li></ol><p>Именно количество канонических сущностей и показывается в KPI.</p>'},
  kpi_new_pages:{title:'Новые страницы',body:'<p><b>Что показывает:</b> число итоговых сущностей, для которых принято решение <b>“создать”</b> и для которых не найден аналог на продвигаемом сайте.</p><p><b>Как считается:</b> фильтруем итоговую таблицу сущностей по статусу <code>create</code> и условию <code>exists_on_target = false</code>, затем считаем количество строк.</p>'},
  kpi_doubtful:{title:'Сомнительные элементы',body:'<p><b>Что показывает:</b> количество сущностей, которые нельзя автоматически уверенно включить в структуру.</p><p><b>Когда сущность попадает в сомнительные:</b></p><ul><li>уверенность ИИ ниже порога, например ниже 60;</li><li>неясно, тег это или фильтр;</li><li>сущность подтверждена только слабым источником;</li><li>неочевидно, коммерческая это страница или инфо-материал;</li><li>есть конфликт по родительской группе.</li></ul><p>Такие элементы не удаляются, а сохраняются для ручной проверки.</p>'},
  kpi_excluded:{title:'Исключено',body:'<p><b>Что показывает:</b> количество элементов, исключенных из рабочей структуры как мусор или служебные страницы.</p><p><b>Что обычно исключается:</b> товары, пагинация, сортировки, фильтрационные URL без самостоятельной ценности, корзина, личный кабинет, UTM-параметры, страницы доставки/оплаты/контактов, изображения, PDF, технические страницы.</p><p>Элементы не удаляются бесследно, а сохраняются в отдельном журнале исключений с причиной исключения.</p>'},
@@ -203,9 +564,8 @@ const help={
  site_type:{title:'Тип сайта',body:'<p><b>Что это:</b> сценарий анализа структуры. Он влияет на то, какие типы страниц считать приоритетными.</p><p><b>Для demo magmastones.ru</b> используется сценарий “каталог/сайт услуг”: анализируются материалы, изделия, решения для интерьера/экстерьера, бренды, инфораздел.</p>'},
  competitors_source:{title:'Источник конкурентов',body:'<p><b>Что это:</b> способ получения конкурентов для анализа.</p><p><b>Логика:</b> по умолчанию список берется из модуля анализа конкурентов. Если проекта нет или анализ не запускался, система инициирует создание анализа и получает оттуда выбранных конкурентов.</p>'},
  blacklist:{title:'Черный список URL-паттернов',body:'<p><b>Что это:</b> набор правил для первичного отсечения мусорных URL.</p><p><b>Как работает:</b> если raw URL совпадает с одним из паттернов черного списка, он исключается из основной структуры, но сохраняется в журнале исключений с указанием причины.</p><p><b>Примеры паттернов:</b> <code>/cart/</code>, <code>/compare/</code>, <code>?sort=</code>, <code>?utm_</code>, <code>/page/</code> и т.д.</p>'},
- toggle_info:{title:'Инфораздел',body:'<p><b>Что делает:</b> включает или выключает обработку статей, блога, гайдов и справочных материалов.</p><p><b>Если выключено:</b> такие страницы не участвуют в итоговой структуре ниши.</p><p><b>Если включено:</b> они анализируются отдельно и попадают в отдельную группу “Информационные страницы”, чтобы не смешивать инфо и коммерцию.</p>'},
+ toggle_info:{title:'Инфораздел',body:'<p><b>Что делает:</b> включает или выключает обработку статей, блога, гайдов и справочных материалов.</p><p><b>Типовые директории:</b> <code>/blog/</code>, <code>/articles/</code>, <code>/stati/</code>, <code>/news/</code>, <code>/guide/</code>, <code>/faq/</code>, <code>/wiki/</code>, <code>/knowledge-base/</code>, <code>/poleznoe/</code>, <code>/info/</code>, <code>/reviews/</code>, <code>/obzory/</code>, <code>/sovety/</code>, <code>/kak-vybrat/</code>, <code>/instrukcii/</code>.</p><p><b>Если выключено:</b> URL с такими директориями исключаются из коммерческой структуры и сохраняются с причиной “Инфораздел отключен”.</p><p><b>Если включено:</b> они анализируются отдельно и попадают в группу “Информационные страницы”.</p>'},
  toggle_brands:{title:'Бренды',body:'<p><b>Что делает:</b> включает сбор брендовых сущностей.</p><p><b>Что анализируется:</b> отдельные брендовые страницы, бренд внутри категории, категория внутри бренда, брендовые подборки, брендовые теги.</p><p><b>Важно:</b> найденный бренд не равен автоматической рекомендации “создать”. Он сначала проходит дедупликацию, проверку подтверждения источниками и только потом получает статус.</p>'},
- toggle_regions:{title:'Мультирегион',body:'<p><b>Что делает:</b> включает анализ региональных страниц как отдельного слоя структуры.</p><p><b>Если выключено:</b> региональные дубли либо исключаются, либо помечаются отдельно.</p><p><b>Если включено:</b> система пытается распознавать региональные URL, поддомены, вхождения города в title/H1 и строить отдельный слой сущностей.</p>'},
 
  src_avg_fullness:{title:'Средняя полнота',body:'<p>Это тот же показатель, что и KPI “Полнота источников”, но в разрезе экрана источников. Он нужен, чтобы оценить качество сбора до перехода к дедупликации и построению структуры.</p><p>Используется формула: <code>avg_fullness = sum(fullness_competitor) / competitors_count</code>.</p>'},
  src_keyso_found:{title:'Keyso найден',body:'<p><b>Что показывает:</b> у скольких конкурентов удалось получить пригодную выгрузку Keyso.</p><p><b>Формула:</b> <code>count(status_keyso in [found, partial]) / total_competitors</code>, а в карточке дополнительно выводится абсолютное число, например 3/5.</p>'},
@@ -215,7 +575,7 @@ const help={
  src_ready:{title:'Готово к анализу',body:'<p><b>Что показывает:</b> долю конкурентов, данные по которым уже можно использовать для дальнейшей дедупликации и построения структуры.</p><p><b>Формула:</b> <code>ready_ratio = competitors_with_status_ok_or_medium / total_competitors</code>.</p>'},
 
  src_col_competitor:{title:'Конкурент',body:'<p>Домен сайта-конкурента, по которому выполняется сбор структуры.</p>'},
- src_col_keyso:{title:'Keyso',body:'<p><b>Что показывает:</b> статус получения данных Keyso по конкуренту.</p><ul><li><b>найдено</b> — выгрузка получена и пригодна;</li><li><b>частично</b> — источник найден, но данных мало или качество ограничено;</li><li><b>нет данных</b> — данных не удалось получить.</li></ul></p>'},
+ src_col_keyso:{title:'Keyso',body:'<p><b>Что показывает:</b> статус получения MVP-данных Keyso по конкуренту.</p><p><b>В MVP выгружаются только:</b> URL конкурента и запрос. Запрос нужен, чтобы определить смысловую сущность страницы, когда URL сам по себе неоднозначен.</p><ul><li><b>найдено</b> — получены URL + запросы и данные пригодны;</li><li><b>частично</b> — данные есть, но URL/запросов мало;</li><li><b>нет данных</b> — данные не удалось получить.</li></ul>'},
  src_col_sitemap:{title:'Sitemap',body:'<p><b>Что показывает:</b> статус sitemap по конкуренту.</p><ul><li><b>найдено</b> — sitemap распарсен и дал пригодные URL;</li><li><b>только товары</b> — sitemap есть, но почти весь состоит из товарных страниц;</li><li><b>не найден</b> — не удалось найти;</li><li><b>ошибка</b> — файл найден, но обработать не удалось.</li></ul>'},
  src_col_menu:{title:'Мега-меню',body:'<p><b>Что показывает:</b> статус ручного добора структуры через навигацию сайта.</p><p>Сценарии: не запускалось / требуется / запущено / завершено / ошибка.</p>'},
  src_col_found_url:{title:'Найдено URL',body:'<p><b>Что показывает:</b> общее число raw URL и пунктов меню, собранных из всех источников до очистки.</p><p>Сюда входят как потенциально полезные структурные URL, так и мусор, который потом будет отсечен.</p>'},
@@ -237,7 +597,7 @@ const help={
  doubt_col_actions:{title:'Действия',body:'<p>Ручные команды SEO-специалиста для переопределения автоматического решения по элементу.</p>'},
 
  final_col_page:{title:'Страница',body:'<p>Нормализованное имя итоговой страницы, которая войдет в рекомендованную структуру.</p>'},
- final_col_type:{title:'Тип',body:'<p>Тип страницы в итоговой структуре: категория, подкатегория, тег, фильтр, бренд+категория, услуга, статья, региональная.</p>'},
+ final_col_type:{title:'Тип',body:'<p>Тип страницы в итоговой структуре: категория, подкатегория, тег, фильтр, бренд+категория, услуга, статья.</p>'},
  final_col_level:{title:'Уровень',body:'<p>Глубина вложенности в дереве. 1 — верхний раздел, 2 — дочерняя страница, 3 и далее — нижележащие элементы.</p>'},
  final_col_group:{title:'Группа',body:'<p>Смысловая ось группировки: материал, изделие, применение, бренд, цвет, фактура, регион, инфораздел.</p>'},
  final_col_competitors:{title:'Конкурентов',body:'<p>Число конкурентов, у которых после дедупликации найдена аналогичная сущность.</p>'},
@@ -257,7 +617,7 @@ Object.assign(help,{
  structure_status_filter:{title:'Фильтр структуры по статусам',body:'<p>Фильтр показывает элементы только с выбранным финальным статусом. В MVP используются три рабочих режима: <b>создать</b>, <b>есть на сайте</b>, <b>ручная проверка</b>.</p><p>Фильтр должен применяться одновременно к таблице итоговых сущностей, таблице сравнения и дереву структуры.</p>'},
  final_col_type:{title:'Тип сущности',body:'<p>Тип сущности показывает, что именно найдено и как это должно быть реализовано: <b>категория</b>, <b>тег</b>, <b>фильтр</b>, бренд, услуга, статья или региональная страница.</p><p>Категории обычно являются разделами верхнего или среднего уровня. Теги — посадочные страницы под подборки/сегменты. Фильтры могут быть полезны пользователю, но не всегда должны индексироваться.</p>'},
  status_exists:{title:'Есть на сайте',body:'<p>Статус назначается, если на продвигаемом сайте уже найден аналог нормализованной сущности. Это не оценка качества оптимизации страницы, а только факт наличия структурной страницы.</p>'},
- generate_meta:{title:'Сгенерировать URL и мета',body:'<p><b>Когда запускать:</b> после дедупликации, ручной проверки и согласования структуры с клиентом.</p><p><b>Что генерируется:</b> recommended_url, Title, Description, H1 и при необходимости комментарий по внедрению.</p><p><b>Для каких элементов:</b> по умолчанию только для статуса “создать”. Элементы “есть на сайте” не считаются новыми страницами.</p>'},
+ generate_meta:{title:'Сгенерировать URL и мета-теги',body:'<p><b>Когда запускать:</b> после дедупликации, ручной проверки и согласования структуры с клиентом.</p><p><b>Что происходит:</b> открывается модальное окно с шаблонами URL, H1, Title, Description и редактируемыми промтами генерации.</p><p><b>Источник генерации:</b> согласованная XMind-структура. Генерировать по умолчанию только для статусов “создать”, “сделать тегом”, “сделать дочерней страницей”. Для “есть на сайте” — только если пользователь включил отдельный переключатель.</p>'},
  compare_col_status:{title:'Статус',body:'<p>В сравнении статус можно изменить вручную, если элемент находится на ручной проверке. Доступные решения: создать, сделать тегом, не создавать сейчас, объединить, сделать фильтром, исключить, сделать дочерней, оставить фильтром.</p><p>После изменения статус должен записываться в normalized_entity.final_status и использоваться в дереве, экспорте и генерации URL/мета.</p>'}
 });
 function openHelp(key){const item=help[key]||help.global;document.getElementById('modalTitle').innerText=item.title;document.getElementById('modalBody').innerHTML=item.body;document.getElementById('modal').classList.add('active')}
@@ -279,9 +639,19 @@ function handleManualImport(input){const file=input.files&&input.files[0];if(!fi
 function mergeManualImport(){document.getElementById('importPreview').innerHTML='<b>Импорт выполнен:</b> добавлено 12 строк, 8 новых сущностей, 4 объединены с уже найденными. Запущена дедупликация и группировка.';toast('Импортированная структура объединена с текущей')}
 function filterStructureStatus(status,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');document.querySelectorAll('#finalEntitiesTable tbody tr,#comparisonTable tbody tr,.mind-node[data-node]').forEach(el=>{el.classList.toggle('is-hidden-by-filter',el.dataset.status!==status)});toast('Показан статус: '+(status==='create'?'создать':status==='exists'?'есть на сайте':'ручная проверка'))}
 function changeComparisonStatus(select){const row=select.closest('tr');const value=select.value;row.dataset.status=value==='создать'?'create':value==='ручная проверка'?'review':value==='есть на сайте'?'exists':'review';toast('Статус изменен: '+value)}
-function generateUrlMeta(){const box=document.getElementById('metaDemo');if(box)box.classList.add('active');toast('Демо: URL и мета сгенерированы для согласованных страниц')}
+function generateUrlMeta(){document.getElementById('genModal')?.classList.add('active')}
 updateNodeCounters();
 if(document.getElementById('finalEntitiesTable')){filterStructureStatus('create',document.querySelector('.filter-btn'))}
+
+function closeGenModal(){document.getElementById('genModal')?.classList.remove('active')}
+function editGenPrompt(id,event){event.preventDefault();event.stopPropagation();const el=document.getElementById(id);if(el){el.disabled=false;el.focus();toast('Промт открыт для редактирования')}}
+function saveGenPrompt(id,event){event.preventDefault();event.stopPropagation();const el=document.getElementById(id);if(el){el.disabled=true;toast('Промт сохранен в настройках проекта')}}
+function saveAndRunMeta(id,event){saveGenPrompt(id,event);runMetaGeneration()}
+function copyGenPrompt(id,event){event.preventDefault();event.stopPropagation();const el=document.getElementById(id);if(el){navigator.clipboard.writeText(el.value).then(()=>toast('Промт скопирован'))}}
+function resetGenPrompts(){document.querySelectorAll('#generationPrompts textarea').forEach(t=>{t.disabled=true});toast('Промты генерации сброшены на исходные')}
+function runMetaGeneration(){const box=document.getElementById('genResultPreview');if(box){box.innerHTML='<b>Демо генерации:</b> <code>/catalog/granit/slaby/</code> · H1: <code>Гранитные слэбы</code> · Title: <code>Гранитные слэбы купить в Москве — MagmaStones</code> · Description: <code>Гранитные слэбы для интерьера, столешниц и облицовки. Подбор натурального камня, консультация и доставка.</code>';}toast('URL и мета-теги сгенерированы для согласованной структуры')}
+function exportStructure(){toast('Экспортирует таблицу структуры: ID, Parent ID, уровень, родитель, страница, тип, группа, URL, H1, Title, Description, статус, источники и комментарии')}
+
 </script>
 </body>
 </html>
