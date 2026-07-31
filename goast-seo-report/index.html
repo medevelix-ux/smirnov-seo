@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SEO-отчет — alexdoors.ru</title>
+  <style>
+    :root{
+      --bg:#f7f9fc;
+      --surface:#ffffff;
+      --surface-2:#f3f6fa;
+      --surface-3:#eef3f8;
+      --text:#16233a;
+      --muted:#66758d;
+      --muted-2:#94a0b3;
+      --line:#dfe6ef;
+      --line-2:#edf1f6;
+      --violet:#725a91;
+      --violet-soft:#f0eafa;
+      --blue:#2d6cdf;
+      --blue-2:#1d74e8;
+      --blue-soft:#eaf2ff;
+      --green:#16a34a;
+      --green-soft:#dcfce7;
+      --amber:#a84d0b;
+      --amber-soft:#fff1bf;
+      --red:#c62845;
+      --red-soft:#ffe2e6;
+      --orange:#f59e0b;
+      --shadow:0 18px 45px rgba(15,23,42,.06);
+      --radius:18px;
+      --font:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.55}
+    a{color:inherit;text-decoration:none}
+    .page{max-width:1440px;margin:0 auto;padding:22px 16px 48px}
+    .topbar{position:sticky;top:0;z-index:50;margin:0 0 22px;background:rgba(247,249,252,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+    .topbar-inner{max-width:1440px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand-mark{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--violet),#29315b);display:grid;place-items:center;color:#fff;font-weight:900;letter-spacing:.04em}
+    .brand-title{font-weight:900;white-space:nowrap}.brand-sub{font-size:13px;color:var(--muted);white-space:nowrap}
+    .top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;color:#4d5b70;border-radius:12px;padding:7px 11px;font-size:13px;font-weight:800;white-space:nowrap}.chip.soft{background:var(--surface-2)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;font-weight:900;color:#344054;cursor:pointer;transition:.16s ease}.btn:hover{border-color:#cbd5e1;box-shadow:0 10px 20px rgba(15,23,42,.06);transform:translateY(-1px)}.btn.primary{background:var(--violet);border-color:var(--violet);color:#fff}.btn.small{font-size:13px;padding:8px 11px;border-radius:10px}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) 276px;gap:22px}.main{min-width:0}.side{position:sticky;top:82px;height:calc(100vh - 100px);overflow:auto}.toc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}.toc-title{font-size:13px;font-weight:900;color:#4d5b70;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}.toc a{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;color:#56647a;font-size:14px;font-weight:750}.toc a:hover,.toc a.active{background:var(--violet-soft);color:var(--violet)}
+    .hero{background:linear-gradient(135deg,#fff 0%,#f3f6fa 55%,#eef4ff 100%);border:1px solid var(--line);border-radius:26px;padding:28px;box-shadow:var(--shadow);margin-bottom:20px}.kicker{display:inline-flex;align-items:center;gap:8px;background:var(--violet-soft);color:var(--violet);font-size:13px;font-weight:900;border-radius:999px;padding:7px 11px;margin-bottom:13px}.hero h1{font-size:38px;line-height:1.08;margin:0 0 12px;letter-spacing:-.03em}.hero p{color:var(--muted);max-width:960px;margin:0}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:end}.client-note{margin-top:18px;padding:16px 18px;border-radius:18px;background:#fff;border:1px solid var(--line);color:#46566e}.client-note strong{color:var(--text)}
+    .section{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;margin-bottom:20px;box-shadow:0 10px 30px rgba(15,23,42,.035)}.section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px}.section-label{display:inline-flex;align-items:center;gap:8px;background:var(--surface-2);color:var(--violet);font-size:12px;font-weight:900;border-radius:10px;padding:6px 10px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}.section h2{margin:0;font-size:27px;letter-spacing:-.02em}.section-desc{color:var(--muted);margin:5px 0 0}.grid{display:grid;gap:14px}.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+    .card{border:1px solid var(--line);background:#fff;border-radius:16px;padding:18px;min-width:0}.card.soft{background:var(--surface-2)}.metric-title{color:#667085;font-size:14px;font-weight:750;margin-bottom:8px}.metric-value{font-size:26px;font-weight:950;color:#030712;letter-spacing:-.03em;line-height:1}.metric-sub{font-size:14px;color:#8a94a6;margin-top:10px}.delta{display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;border:1px solid currentColor;border-radius:9px;padding:2px 7px;margin-left:8px;vertical-align:middle}.delta.green{color:var(--green);background:#f0fff5}.delta.red{color:var(--red);background:#fff5f7}.delta.neutral{color:#6b7280;background:#f8fafc}
+    .summary-box{background:#eef3f8;border-radius:14px;padding:18px 20px;color:#53627a;margin-bottom:18px}.summary-box p{margin:0}.ai-box{border:1px solid #d6e1ef;background:linear-gradient(180deg,#f8fbff,#fff);border-radius:18px;padding:18px}.ai-box h3{margin:0 0 8px;font-size:17px}.ai-box p{margin:0;color:#53627a}.list-clean{margin:0;padding:0;list-style:none}.list-clean li{padding:9px 0;border-bottom:1px solid var(--line-2)}.list-clean li:last-child{border-bottom:0}
+    .tabs{display:flex;gap:2px;border-bottom:1px solid var(--line);margin:0 -22px 20px;padding:0 20px;overflow:auto}.tab-btn{appearance:none;background:transparent;border:0;border-bottom:2px solid transparent;padding:14px 18px 12px;display:flex;align-items:center;gap:8px;color:#2b303a;font-weight:850;font-size:15px;white-space:nowrap;cursor:pointer}.tab-btn.active{color:var(--violet);border-color:var(--violet)}.tab-panel{display:none}.tab-panel.active{display:block}
+    table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:14px;overflow:hidden}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}th,td{padding:13px 15px;border-bottom:1px solid var(--line-2);text-align:left;vertical-align:top}th{font-size:13px;color:#4f5d72;text-transform:uppercase;letter-spacing:.02em;background:#fbfcfe;font-weight:900}tr:last-child td{border-bottom:0}.num{text-align:right;white-space:nowrap}.nowrap{white-space:nowrap}.task-title{font-weight:900;color:#0f1b33;margin-bottom:5px}.task-desc{color:#63728a;font-size:14px}.badge{display:inline-flex;align-items:center;gap:6px;border-radius:10px;padding:5px 9px;font-size:13px;font-weight:900;white-space:nowrap}.badge.green{background:var(--green-soft);color:#166534}.badge.amber{background:var(--amber-soft);color:var(--amber)}.badge.red{background:var(--red-soft);color:var(--red)}.badge.blue{background:var(--blue-soft);color:#0b5fc7}.badge.gray{background:#eef2f7;color:#344054}.badge.violet{background:var(--violet-soft);color:var(--violet)}
+    .file-actions{display:flex;flex-wrap:wrap;gap:7px;justify-content:flex-end}.file-btn{display:inline-flex;align-items:center;gap:7px;border-radius:10px;border:1px solid transparent;padding:7px 10px;font-size:12px;font-weight:950}.file-btn.doc{background:#e9f1ff;border-color:#c8dcff;color:#1347b8}.file-btn.xls{background:#eaf8ef;border-color:#cdebd4;color:#166534}.file-btn::before{font-size:11px;font-weight:950}.file-btn.doc::before{content:".doc"}.file-btn.xls::before{content:".xls"}
+    .chart-card{border:1px solid var(--line);border-radius:18px;background:#f8fbff;padding:18px;min-width:0}.chart-title{font-weight:950;font-size:18px;margin:0 0 6px}.chart-sub{color:#6f7b91;margin:0 0 12px}.chart svg{width:100%;height:auto;display:block;overflow:visible}.axis{stroke:#d7e0ec;stroke-width:1}.gridline{stroke:#e9eef5;stroke-width:1}.line-blue{fill:none;stroke:var(--blue);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.line-purple{fill:none;stroke:var(--violet);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.area-blue{fill:rgba(45,108,223,.12)}.dot{fill:#fff;stroke:var(--blue);stroke-width:3}.dot-purple{fill:#fff;stroke:var(--violet);stroke-width:3}.chart-label{fill:#65748b;font-size:13px}.legend{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;color:#53627a;font-size:14px;margin-top:12px}.legend-dot{width:13px;height:13px;border-radius:50%;display:inline-block;margin-right:6px;background:var(--blue)}
+    .engine-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.engine-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:16px}.engine-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.engine-name{font-size:20px;font-weight:950}.engine-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.engine-kpi{background:#f6f9fd;border:1px solid #e9eef5;border-radius:12px;padding:12px}.engine-kpi span{display:block;color:#64748b;font-size:13px;font-weight:850}.engine-kpi strong{display:block;color:#16233a;font-size:24px;font-weight:950;margin-top:4px}.bars{display:grid;gap:11px}.bar-row{display:grid;grid-template-columns:55px minmax(120px,1fr) 80px;gap:12px;align-items:center;font-weight:850;color:#58667d}.bar-track{height:12px;border-radius:99px;background:#e8eef6;overflow:hidden}.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),#0f766e)}.bar-value{text-align:right}.status-legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.status-note{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 12px;display:flex;gap:8px;align-items:flex-start;color:#526078;font-size:13px}.status-note .badge{margin-top:-2px}
+    .donut-wrap{display:flex;align-items:center;justify-content:center;padding:10px}.donut{width:310px;height:310px;border-radius:50%;background:conic-gradient(#2d6cdf 0 8%, #0f766e 8% 13%, #f59e0b 13% 22%, #f97316 22% 31%, #d6336c 31% 42%, #64748b 42% 54%, #adb5bd 54% 100%);position:relative}.donut:after{content:"";position:absolute;inset:78px;background:#f8fbff;border-radius:50%}
+    .plan-item{display:grid;grid-template-columns:1fr auto;gap:12px;border:1px solid var(--line);border-radius:16px;background:#fff;padding:16px}.plan-title{font-weight:950;margin:0 0 5px}.plan-desc{color:#607087;margin:0}.hours{font-size:18px;font-weight:950;color:var(--violet);background:var(--violet-soft);border-radius:12px;padding:8px 10px;height:max-content;white-space:nowrap}.cost-card{border:1px solid var(--line);border-radius:18px;background:#f8fbff;padding:18px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.cost-card .metric-value{font-size:22px}.footer-note{text-align:center;color:#778399;font-size:13px;margin-top:18px}
+    @media(max-width:1180px){.layout{grid-template-columns:1fr}.side{display:none}.hero-grid{grid-template-columns:1fr}.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}.engine-grid{grid-template-columns:1fr}}
+    @media(max-width:760px){.page{padding:14px 10px 32px}.hero,.section{padding:18px;border-radius:18px}.hero h1{font-size:30px}.cols-2,.cols-3,.cols-4,.cost-card{grid-template-columns:1fr}.topbar-inner{align-items:flex-start;flex-direction:column}.tabs{margin-left:-18px;margin-right:-18px}.bar-row{grid-template-columns:48px minmax(100px,1fr) 60px}.file-actions{justify-content:flex-start}}
+    @media print{body{background:#fff}.topbar,.side{display:none}.layout{display:block}.section,.hero{break-inside:avoid;box-shadow:none}.btn{display:none}}
+  
+    /* Layout QA fixes */
+    html, body { max-width: 100%; overflow-x: hidden; }
+    .topbar { width: 100%; }
+    .main, .section, .hero, .card, .chart-card, .ai-box { min-width: 0; }
+    .table-wrap { max-width: 100%; }
+    .table-wrap table { min-width: 680px; }
+    .table-wrap table.compact-table { min-width: 520px; }
+    .tab-panel.active { min-width: 0; }
+
+    @media (max-width: 760px) {
+      body { font-size: 15px; }
+      .topbar { margin-bottom: 14px; }
+      .topbar-inner { padding: 10px 12px; gap: 10px; }
+      .brand { width: 100%; }
+      .brand-title, .brand-sub { white-space: normal; }
+      .top-actions { width: 100%; justify-content: flex-start; gap: 6px; }
+      .chip { white-space: normal; font-size: 12px; padding: 6px 9px; }
+      .btn.small { padding: 7px 10px; }
+      .section-head { display: block; }
+      .metric-value { font-size: 24px; }
+      .engine-head { align-items:flex-start; flex-direction: column; }
+      .engine-kpi strong { font-size: 22px; }
+      .summary-box { padding: 14px 15px; }
+    }
+
+    @media (max-width: 640px) {
+      .table-wrap { overflow: visible; border: 0; border-radius: 0; background: transparent; }
+      .table-wrap table.responsive-table { min-width: 0; width: 100%; border-collapse: separate; border-spacing: 0 10px; background: transparent; border-radius: 0; }
+      .table-wrap table.responsive-table thead { display: none; }
+      .table-wrap table.responsive-table tbody { display: block; width: 100%; }
+      .table-wrap table.responsive-table tr { display: block; width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+      .table-wrap table.responsive-table td { display: grid; grid-template-columns: minmax(88px, 34%) minmax(0, 1fr); gap: 10px; align-items: start; width: 100%; padding: 10px 12px; border-bottom: 1px solid var(--line-2); text-align: left; white-space: normal; }
+      .table-wrap table.responsive-table td:last-child { border-bottom: 0; }
+      .table-wrap table.responsive-table td::before { content: attr(data-label); color: #66758d; font-size: 11px; line-height: 1.3; text-transform: uppercase; letter-spacing: .03em; font-weight: 900; }
+      .table-wrap table.responsive-table td.num { text-align: left; }
+      .table-wrap table.responsive-table .file-actions { justify-content: flex-start; }
+      .table-wrap table.responsive-table .task-title { margin-bottom: 4px; }
+      .table-wrap table.responsive-table .task-desc { font-size: 13px; }
+      .tabs { padding-bottom: 1px; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">W</div>
+        <div><div class="brand-title">Webtronica</div><div class="brand-sub">Гостевой SEO-отчет для клиента</div></div>
+      </div>
+      <div class="top-actions">
+        <span class="chip soft">Период: 01.06.2026 — 30.06.2026</span>
+        <span class="chip soft">Регион: Екатеринбург</span>
+        <span class="chip soft">Последний сбор: 27.06.2026, 04:00</span>
+        <button class="btn small" onclick="window.print()">Экспорт / печать</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="layout">
+      <main class="main">
+        <section class="hero" id="summary">
+          <div class="hero-grid">
+            <div>
+              <div class="kicker">SEO-отчет · alexdoors.ru</div>
+              <h1>Отчет по органическому продвижению за июнь 2026</h1>
+              <p>В этом месяце проект показал сильную положительную динамику в Яндексе и заметно расширил поисковую видимость. Основной фокус следующего периода — закрепить рост, доработать направления с высоким спросом и усилить кликабельность сниппетов.</p>
+            </div>
+            <div class="client-note"><strong>Главный фокус:</strong> приоритет — категории межкомнатных дверей, страницы с высоким спросом и запросы на позициях 11–20, которые уже близки к первой странице выдачи.</div>
+          </div>
+          <div style="height:18px"></div>
+          <div class="grid cols-4">
+            <div class="card"><div class="metric-title">Общая видимость</div><div class="metric-value">1 549 <span class="delta green">+88</span></div><div class="metric-sub">запросов в ТОП-10 по двум ПС</div></div>
+            <div class="card"><div class="metric-title">Органический трафик</div><div class="metric-value">4 860 <span class="delta green">+11,2%</span></div><div class="metric-sub">визитов из поиска</div></div>
+            <div class="card"><div class="metric-title">Целевые действия</div><div class="metric-value">53 <span class="delta green">+8</span></div><div class="metric-sub">достижений целей из SEO</div></div>
+            <div class="card"><div class="metric-title">План на следующий месяц</div><div class="metric-value">30 ч</div><div class="metric-sub">105 000 ₽ по ставке проекта</div></div>
+          </div>
+        </section>
+
+        <section class="section" id="tasks">
+          <div class="section-head">
+            <div><div class="section-label">Блок 2</div><h2>Выполненные задачи из Битрикс24</h2><p class="section-desc">Основные работы, которые были выполнены в отчетном периоде и влияют на SEO-показатели.</p></div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Задача</th><th>Тип</th><th>Дата в отчете</th><th>Польза для SEO</th><th class="num">Материалы</th></tr></thead>
+              <tbody>
+                <tr><td><div class="task-title">Рост органического продвижения сайта в Google</div><div class="task-desc">Общая задача по увеличению видимости сайта в органическом поиске Google.</div></td><td><span class="badge gray">Другое</span></td><td class="nowrap">26.06.2026</td><td>Формулирует общий приоритет по развитию органического канала и фокусирует работы на поисковой видимости сайта.</td><td><div class="file-actions"><a class="file-btn doc" href="#" target="_blank">Отчет</a><a class="file-btn xls" href="#" target="_blank">Данные</a></div></td></tr>
+                <tr><td><div class="task-title">Закупка ссылок на сайт alexdoors.ru</div><div class="task-desc">Наращивание ссылочного профиля для поддержки позиций и авторитетности сайта.</div></td><td><span class="badge blue">Внешнее SEO</span></td><td class="nowrap">17.06.2026</td><td>Помогает усилить внешнюю поддержку сайта за счет размещения ссылок на сторонних площадках.</td><td><div class="file-actions"><a class="file-btn xls" href="#" target="_blank">Ссылки</a></div></td></tr>
+                <tr><td><div class="task-title">Исправление дублирующихся мета-тегов</div><div class="task-desc">Дубли и ошибки в мета-тегах ухудшают релевантность страниц и могут снижать CTR в выдаче.</div></td><td><span class="badge green">Контент</span></td><td class="nowrap">10.06.2026</td><td>Позволяет сделать заголовки и описания страниц уникальными и более точными для поиска.</td><td><div class="file-actions"><a class="file-btn doc" href="#" target="_blank">ТЗ</a></div></td></tr>
+                <tr><td><div class="task-title">Проверка ошибок в Google Search Console и отправка страниц на переиндексацию</div><div class="task-desc">Выявлены ошибки в GSC и ускорено повторное попадание страниц в индекс после исправлений.</div></td><td><span class="badge blue">Индексация</span></td><td class="nowrap">26.06.2026</td><td>Помогает контролировать состояние сайта в поиске и быстрее возвращать или обновлять страницы в индексе Google.</td><td><div class="file-actions"><a class="file-btn doc" href="#" target="_blank">GSC</a><a class="file-btn xls" href="#" target="_blank">URL</a></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="visibility">
+          <div class="section-head"><div><div class="section-label">Блок 3</div><h2>Видимость, спрос и зоны роста</h2><p class="section-desc">Данные Яндекс.Вебмастера, Google Search Console и мониторинга позиций Webtronica.</p></div></div>
+          <div class="tabs" data-tabs>
+            <button class="tab-btn active" data-target="vis-compare">↔ Яндекс vs Google</button>
+            <button class="tab-btn" data-target="vis-yandex">☷ Яндекс</button>
+            <button class="tab-btn" data-target="vis-google">◉ Google</button>
+            <button class="tab-btn" data-target="vis-webtronica">⌁ Позиции Webtronica</button>
+          </div>
+
+          <div class="tab-panel active" id="vis-compare">
+            <div class="summary-box"><p>Общая динамика положительная, но требует детализации по поисковым системам. Основные зоны роста — запросы 11–20 и страницы с высоким спросом при низком CTR.</p></div>
+            <div class="grid cols-4">
+              <div class="card"><div class="metric-title">Общая видимость</div><div class="metric-value">1 549 <span class="delta green">+88</span></div><div class="metric-sub">запросов в ТОП-10 по двум ПС</div></div>
+              <div class="card"><div class="metric-title">Яндекс</div><div class="metric-value">1 527</div><div class="metric-sub">29 538 показов, 14 653 кликов</div></div>
+              <div class="card"><div class="metric-title">Google</div><div class="metric-value">22</div><div class="metric-sub">347 показов, 86 кликов</div></div>
+              <div class="card"><div class="metric-title">Главная зона роста</div><div class="metric-value">403 запроса</div><div class="metric-sub">низкий CTR: 3</div></div>
+            </div>
+            <div style="height:20px"></div>
+            <div class="grid cols-2">
+              <div class="chart-card"><h3 class="chart-title">Динамика visibility score</h3><p class="chart-sub">Условный индекс видимости: чем выше, тем лучше</p>
+                <div class="chart"><svg viewBox="0 0 640 310" role="img" aria-label="График видимости"><line class="axis" x1="58" y1="24" x2="58" y2="258"/><line class="axis" x1="58" y1="258" x2="610" y2="258"/><g><line class="gridline" x1="58" y1="42" x2="610" y2="42"/><line class="gridline" x1="58" y1="83" x2="610" y2="83"/><line class="gridline" x1="58" y1="124" x2="610" y2="124"/><line class="gridline" x1="58" y1="165" x2="610" y2="165"/><line class="gridline" x1="58" y1="206" x2="610" y2="206"/></g><path class="area-blue" d="M58 246 L108 246 L158 250 L208 244 L258 248 L308 248 L358 255 L408 258 L458 257 L508 226 L558 92 L610 44 L610 258 L58 258 Z"/><path class="line-blue" d="M58 246 C100 246,125 245,158 250 S198 244,208 244 S244 248,258 248 S298 248,308 248 S348 255,358 255 S402 258,408 258 S450 257,458 257 S495 238,508 226 S545 107,558 92 S590 62,610 44"/><circle class="dot" cx="58" cy="246" r="4"/><circle class="dot" cx="508" cy="226" r="4"/><circle class="dot" cx="558" cy="92" r="4"/><circle class="dot" cx="610" cy="44" r="4"/><text class="chart-label" x="45" y="270">июль</text><text class="chart-label" x="105" y="270">авг</text><text class="chart-label" x="155" y="270">сент</text><text class="chart-label" x="205" y="270">окт</text><text class="chart-label" x="255" y="270">нояб</text><text class="chart-label" x="306" y="270">дек</text><text class="chart-label" x="357" y="270">янв</text><text class="chart-label" x="407" y="270">февр</text><text class="chart-label" x="458" y="270">март</text><text class="chart-label" x="507" y="270">апр</text><text class="chart-label" x="556" y="270">май</text><text class="chart-label" x="604" y="270">июнь</text></svg></div>
+                <div class="legend"><span><span class="legend-dot"></span>Visibility score</span></div>
+              </div>
+              <div class="chart-card"><h3 class="chart-title">Эффективность по поисковым системам</h3><p class="chart-sub">Видимость, спрос, клики и потенциал</p>
+                <div class="engine-grid"><div class="engine-card"><div class="engine-head"><div class="engine-name">Яндекс</div><span class="badge green">Высокая эффективность</span></div><div class="engine-kpis"><div class="engine-kpi"><span>Показы</span><strong>29 538</strong></div><div class="engine-kpi"><span>Клики</span><strong>14 653</strong></div><div class="engine-kpi"><span>CTR</span><strong>49,6%</strong></div><div class="engine-kpi"><span>11–20</span><strong>400</strong></div></div></div><div class="engine-card"><div class="engine-head"><div class="engine-name">Google</div><span class="badge green">Высокая эффективность</span></div><div class="engine-kpis"><div class="engine-kpi"><span>Показы</span><strong>347</strong></div><div class="engine-kpi"><span>Клики</span><strong>86</strong></div><div class="engine-kpi"><span>CTR</span><strong>24,8%</strong></div><div class="engine-kpi"><span>11–20</span><strong>3</strong></div></div></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="vis-yandex">
+            <div class="grid cols-4"><div class="card"><div class="metric-title">Показы</div><div class="metric-value">29 538 <span class="delta green">+16%</span></div><div class="metric-sub">Яндекс.Вебмастер</div></div><div class="card"><div class="metric-title">Клики</div><div class="metric-value">14 653 <span class="delta green">+13%</span></div><div class="metric-sub">Переходы из Яндекса</div></div><div class="card"><div class="metric-title">CTR</div><div class="metric-value">49,6%</div><div class="metric-sub">Кликабельность сниппетов</div></div><div class="card"><div class="metric-title">Средняя позиция</div><div class="metric-value">5,2 <span class="delta neutral">0</span></div><div class="metric-sub">Меньше = лучше</div></div></div>
+            <div style="height:20px"></div><div class="grid cols-2"><div class="chart-card"><h3 class="chart-title">Воронка видимости Яндекс</h3><p class="chart-sub">Раздельные диапазоны позиций</p><div class="bars"><div class="bar-row"><span>1–3</span><div class="bar-track"><div class="bar-fill" style="width:44%"></div></div><span class="bar-value">467</span></div><div class="bar-row"><span>4–10</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">1 060</span></div><div class="bar-row"><span>11–20</span><div class="bar-track"><div class="bar-fill" style="width:38%"></div></div><span class="bar-value">400</span></div><div class="bar-row"><span>21–30</span><div class="bar-track"><div class="bar-fill" style="width:7%"></div></div><span class="bar-value">75</span></div><div class="bar-row"><span>31–50</span><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><span class="bar-value">33</span></div><div class="bar-row"><span>50+</span><div class="bar-track"><div class="bar-fill" style="width:1%"></div></div><span class="bar-value">0</span></div></div></div>
+              <div class="chart-card"><h3 class="chart-title">Приоритетные направления в Яндекс</h3><p class="chart-sub">Срез по направлениям проекта</p><div class="table-wrap"><table><thead><tr><th>Направление</th><th class="num">ТОП-10</th><th class="num">Показы</th><th>Статус</th></tr></thead><tbody><tr><td>https://alexdoors.ru/</td><td class="num">12</td><td class="num">286</td><td><span class="badge amber">Потенциал</span></td></tr><tr><td>https://alexdoors.ru/catalog/mezhkomnatnye-dveri/alum</td><td class="num">4</td><td class="num">28</td><td><span class="badge green">Рост</span></td></tr><tr><td>https://alexdoors.ru/for-buyers/garantiya</td><td class="num">3</td><td class="num">19</td><td><span class="badge green">Рост</span></td></tr><tr><td>https://alexdoors.ru/catalog/mezhkomnatnye-dveri/glukhie</td><td class="num">0</td><td class="num">5</td><td><span class="badge amber">Потенциал</span></td></tr><tr><td>https://alexdoors.ru/contacts</td><td class="num">1</td><td class="num">4</td><td><span class="badge green">Рост</span></td></tr></tbody></table></div><div class="status-legend"><div class="status-note"><span class="badge green">Рост</span><span>позиции или видимость улучшились.</span></div><div class="status-note"><span class="badge amber">Потенциал</span><span>запросы близки к ТОП-10.</span></div><div class="status-note"><span class="badge red">Низкий CTR</span><span>есть показы, но кликов меньше ожидаемого.</span></div></div></div></div>
+            <div style="height:20px"></div><div class="table-wrap"><table><thead><tr><th>Тип сигнала</th><th>Запрос / страница</th><th class="num">Позиция</th><th class="num">Показы</th><th>Что сделать</th></tr></thead><tbody><tr><td><span class="badge amber">11–20</span></td><td>модные межкомнатные двери</td><td class="num">12,2</td><td class="num">242</td><td>Усилить релевантность, контент и внутреннюю перелинковку.</td></tr><tr><td><span class="badge amber">11–20</span></td><td>межкомнатные двери венге со стеклом</td><td class="num">17,7</td><td class="num">206</td><td>Доработать title/description и связать с релевантной категорией.</td></tr><tr><td><span class="badge red">Низкий CTR</span></td><td>межкомнатные современные двери</td><td class="num">8,4</td><td class="num">180</td><td>Уточнить оффер в сниппете: цена, наличие, сроки, гарантия.</td></tr></tbody></table></div>
+          </div>
+
+          <div class="tab-panel" id="vis-google">
+            <div class="grid cols-4"><div class="card"><div class="metric-title">Показы</div><div class="metric-value">347 <span class="delta green">+7%</span></div><div class="metric-sub">Google Search Console</div></div><div class="card"><div class="metric-title">Клики</div><div class="metric-value">86 <span class="delta green">+3%</span></div><div class="metric-sub">Переходы из Google</div></div><div class="card"><div class="metric-title">CTR</div><div class="metric-value">24,8%</div><div class="metric-sub">По запросам с показами</div></div><div class="card"><div class="metric-title">ТОП-10</div><div class="metric-value">22</div><div class="metric-sub">запроса в первой десятке</div></div></div>
+            <div style="height:20px"></div><div class="ai-box"><h3>Вывод по Google</h3><p>Google сейчас дает меньший объем данных, но динамика остается положительной. Основная точка роста — расширение количества запросов в ТОП-10 и повышение кликабельности по страницам, которые уже получают показы.</p></div>
+            <div style="height:20px"></div><div class="table-wrap"><table><thead><tr><th>Направление</th><th class="num">ТОП-10</th><th class="num">Показы</th><th>Статус</th></tr></thead><tbody><tr><td>https://alexdoors.ru/catalog/mezhkomnatnye-dveri/alum</td><td class="num">6</td><td class="num">118</td><td><span class="badge green">Рост</span></td></tr><tr><td>https://alexdoors.ru/catalog/mezhkomnatnye-dveri/glukhie</td><td class="num">2</td><td class="num">72</td><td><span class="badge amber">Потенциал</span></td></tr><tr><td>https://alexdoors.ru/for-buyers/garantiya</td><td class="num">3</td><td class="num">41</td><td><span class="badge green">Рост</span></td></tr><tr><td>https://alexdoors.ru/contacts</td><td class="num">1</td><td class="num">22</td><td><span class="badge red">Низкий CTR</span></td></tr></tbody></table></div>
+          </div>
+
+          <div class="tab-panel" id="vis-webtronica">
+            <div class="grid cols-4"><div class="card"><div class="metric-title">Запросов в мониторинге</div><div class="metric-value">2 603</div><div class="metric-sub">основные запросы</div></div><div class="card"><div class="metric-title">ТОП-10</div><div class="metric-value">328 <span class="delta green">+88</span></div><div class="metric-sub">по последнему сбору</div></div><div class="card"><div class="metric-title">Средняя позиция</div><div class="metric-value">64,9</div><div class="metric-sub">ниже = лучше</div></div><div class="card"><div class="metric-title">Рост / падение</div><div class="metric-value">487 / 232</div><div class="metric-sub">изменение 3+ позиции</div></div></div>
+            <div style="height:20px"></div><a class="btn primary" href="#" target="_blank">Открыть подробный отчет Webtronica</a>
+            <div style="height:20px"></div><div class="grid cols-2"><div class="chart-card"><h3 class="chart-title">Динамика средней позиции</h3><p class="chart-sub">Точные позиции Webtronica. Ниже значение — лучше позиция.</p><div class="chart"><svg viewBox="0 0 640 310"><line class="axis" x1="58" y1="24" x2="58" y2="258"/><line class="axis" x1="58" y1="258" x2="610" y2="258"/><g><line class="gridline" x1="58" y1="58" x2="610" y2="58"/><line class="gridline" x1="58" y1="92" x2="610" y2="92"/><line class="gridline" x1="58" y1="126" x2="610" y2="126"/><line class="gridline" x1="58" y1="160" x2="610" y2="160"/><line class="gridline" x1="58" y1="194" x2="610" y2="194"/><line class="gridline" x1="58" y1="228" x2="610" y2="228"/></g><path class="line-purple" d="M58 86 C92 63,124 65,158 62 S220 66,248 58 S310 52,328 70 S360 248,384 244 S420 58,448 62 S492 72,518 60 S560 252,584 248 S606 244,610 244"/><circle class="dot-purple" cx="58" cy="86" r="4"/><circle class="dot-purple" cx="384" cy="244" r="4"/><circle class="dot-purple" cx="584" cy="248" r="4"/><text class="chart-label" x="48" y="276">01.06</text><text class="chart-label" x="108" y="276">05.06</text><text class="chart-label" x="168" y="276">09.06</text><text class="chart-label" x="228" y="276">12.06</text><text class="chart-label" x="288" y="276">14.06</text><text class="chart-label" x="348" y="276">15.06</text><text class="chart-label" x="408" y="276">16.06</text><text class="chart-label" x="468" y="276">18.06</text><text class="chart-label" x="528" y="276">23.06</text><text class="chart-label" x="590" y="276">27.06</text></svg></div></div><div class="chart-card"><h3 class="chart-title">Распределение запросов по диапазонам</h3><p class="chart-sub">По последнему сбору за отчетный месяц</p><div class="donut-wrap"><div class="donut"></div></div><div class="legend"><span><span class="legend-dot" style="background:#2d6cdf"></span>1–3</span><span><span class="legend-dot" style="background:#0f766e"></span>4–10</span><span><span class="legend-dot" style="background:#f59e0b"></span>11–20</span><span><span class="legend-dot" style="background:#f97316"></span>21–30</span><span><span class="legend-dot" style="background:#d6336c"></span>31–50</span><span><span class="legend-dot" style="background:#64748b"></span>50+</span><span><span class="legend-dot" style="background:#adb5bd"></span>Не найдено</span></div></div></div>
+            <div style="height:20px"></div><div class="table-wrap"><table><thead><tr><th>Запрос</th><th>URL</th><th>Группа / кластер</th><th class="num">Было</th><th class="num">Последняя</th><th>Сигнал</th></tr></thead><tbody><tr><td>межкомнатные двери алюминиевые</td><td>/catalog/mezhkomnatnye-dveri/alum</td><td>Межкомнатные двери · алюминий</td><td class="num">12</td><td class="num">8</td><td><span class="badge green">Рост</span></td></tr><tr><td>глухие межкомнатные двери</td><td>/catalog/mezhkomnatnye-dveri/glukhie</td><td>Межкомнатные двери · глухие</td><td class="num">18</td><td class="num">14</td><td><span class="badge amber">Потенциал</span></td></tr><tr><td>двери межкомнатные венге</td><td>/catalog/mezhkomnatnye-dveri/venge</td><td>Межкомнатные двери · цвет</td><td class="num">10</td><td class="num">17</td><td><span class="badge red">Просадка</span></td></tr></tbody></table></div>
+          </div>
+        </section>
+
+        <section class="section" id="links">
+          <div class="section-head"><div><div class="section-label">Блок 4</div><h2>Ссылочная масса из Яндекс.Вебмастера</h2><p class="section-desc">Новые и потерянные ссылки, доноры и страницы, на которые чаще всего ссылаются.</p></div></div>
+          <div class="grid cols-4"><div class="card"><div class="metric-title">Внешних ссылок</div><div class="metric-value">953 <span class="delta green">+727</span></div><div class="metric-sub">всего найдено Яндекс.Вебмастером</div></div><div class="card"><div class="metric-title">Доноров</div><div class="metric-value">852 <span class="delta green">+598</span></div><div class="metric-sub">уникальные ссылающиеся домены</div></div><div class="card"><div class="metric-title">Новые ссылки</div><div class="metric-value">681</div><div class="metric-sub">за отчетный месяц</div></div><div class="card"><div class="metric-title">Потерянные ссылки</div><div class="metric-value">0</div><div class="metric-sub">по расчетной динамике</div></div></div>
+          <div style="height:20px"></div><div class="chart-card"><h3 class="chart-title">Динамика внешних ссылок</h3><p class="chart-sub">По данным Яндекс.Вебмастера за последние 6 месяцев</p><div class="chart"><svg viewBox="0 0 1120 300"><line class="axis" x1="54" y1="24" x2="54" y2="250"/><line class="axis" x1="54" y1="250" x2="1080" y2="250"/><g><line class="gridline" x1="54" y1="48" x2="1080" y2="48"/><line class="gridline" x1="54" y1="82" x2="1080" y2="82"/><line class="gridline" x1="54" y1="116" x2="1080" y2="116"/><line class="gridline" x1="54" y1="150" x2="1080" y2="150"/><line class="gridline" x1="54" y1="184" x2="1080" y2="184"/><line class="gridline" x1="54" y1="218" x2="1080" y2="218"/></g><path class="area-blue" d="M54 96 C180 95,245 88,325 102 S445 190,535 210 S700 204,760 208 S915 200,975 150 S1040 70,1080 40 L1080 250 L54 250 Z"/><path class="line-blue" d="M54 96 C180 95,245 88,325 102 S445 190,535 210 S700 204,760 208 S915 200,975 150 S1040 70,1080 40"/><circle class="dot" cx="54" cy="96" r="4"/><circle class="dot" cx="325" cy="102" r="4"/><circle class="dot" cx="535" cy="210" r="4"/><circle class="dot" cx="760" cy="208" r="4"/><circle class="dot" cx="975" cy="150" r="4"/><circle class="dot" cx="1080" cy="40" r="4"/><text class="chart-label" x="42" y="274">янв</text><text class="chart-label" x="310" y="274">февр</text><text class="chart-label" x="520" y="274">март</text><text class="chart-label" x="748" y="274">апр</text><text class="chart-label" x="963" y="274">май</text><text class="chart-label" x="1060" y="274">июнь</text></svg></div></div>
+        </section>
+
+        <section class="section" id="traffic">
+          <div class="section-head"><div><div class="section-label">Блок 5</div><h2>Поисковый трафик из Яндекс.Метрики</h2><p class="section-desc">Органический поисковый трафик без рекламы, прямых переходов и технических визитов.</p></div></div>
+          <div class="grid cols-4"><div class="card"><div class="metric-title">SEO-визиты</div><div class="metric-value">4 860 <span class="delta green">+11,2%</span></div><div class="metric-sub">к предыдущему периоду</div></div><div class="card"><div class="metric-title">Яндекс</div><div class="metric-value">3 940</div><div class="metric-sub">основной поисковый источник</div></div><div class="card"><div class="metric-title">Google</div><div class="metric-value">720</div><div class="metric-sub">переходы из Google</div></div><div class="card"><div class="metric-title">Брендовый трафик</div><div class="metric-value">5,8%</div><div class="metric-sub">17 из 291 визита в срезе</div></div></div>
+          <div style="height:20px"></div><div class="grid cols-2"><div class="chart-card"><h3 class="chart-title">Динамика SEO-трафика за 12 месяцев</h3><p class="chart-sub">После начала работ наблюдается последовательное усиление органического канала.</p><div class="chart"><svg viewBox="0 0 640 300"><line class="axis" x1="58" y1="32" x2="58" y2="250"/><line class="axis" x1="58" y1="250" x2="610" y2="250"/><g><line class="gridline" x1="58" y1="70" x2="610" y2="70"/><line class="gridline" x1="58" y1="110" x2="610" y2="110"/><line class="gridline" x1="58" y1="150" x2="610" y2="150"/><line class="gridline" x1="58" y1="190" x2="610" y2="190"/></g><path class="area-blue" d="M58 220 C110 215,150 218,198 206 S290 196,340 184 S424 160,470 136 S552 88,610 54 L610 250 L58 250 Z"/><path class="line-blue" d="M58 220 C110 215,150 218,198 206 S290 196,340 184 S424 160,470 136 S552 88,610 54"/><circle class="dot" cx="58" cy="220" r="4"/><circle class="dot" cx="340" cy="184" r="4"/><circle class="dot" cx="610" cy="54" r="4"/></svg></div></div><div class="chart-card"><h3 class="chart-title">Бренд / небренд</h3><p class="chart-sub">Контроль корректности доли брендового трафика</p><div class="grid cols-2"><div class="card soft"><div class="metric-title">Небрендовый трафик</div><div class="metric-value">274</div><div class="metric-sub">94,2%</div></div><div class="card soft"><div class="metric-title">Брендовый трафик</div><div class="metric-value">17</div><div class="metric-sub">5,8%</div></div></div><div style="height:14px"></div><div class="ai-box"><h3>Вывод по трафику</h3><p>Органический трафик развивается положительно. Небрендовый сегмент остается основным, что говорит о ценности продвижения по коммерческим и категорийным запросам.</p></div></div></div>
+        </section>
+
+        <section class="section" id="conversions">
+          <div class="section-head"><div><div class="section-label">Блок 6</div><h2>Конверсии из органического поиска</h2><p class="section-desc">Целевые действия из SEO-трафика по данным Яндекс.Метрики.</p></div></div>
+          <div class="grid cols-4"><div class="card"><div class="metric-title">Достижения целей</div><div class="metric-value">53 <span class="delta green">+8</span></div><div class="metric-sub">все выбранные SEO-цели</div></div><div class="card"><div class="metric-title">Конверсионные визиты</div><div class="metric-value">45</div><div class="metric-sub">без дублей по визитам</div></div><div class="card"><div class="metric-title">CR</div><div class="metric-value">0,93%</div><div class="metric-sub">поисковый трафик</div></div><div class="card"><div class="metric-title">Что проверить</div><div class="metric-value">1 цель</div><div class="metric-sub">заявки на mobile</div></div></div>
+          <div style="height:20px"></div><div class="table-wrap"><table><thead><tr><th>Цель</th><th class="num">Достижения</th><th class="num">Динамика</th><th>Комментарий</th></tr></thead><tbody><tr><td>Отправка формы заявки</td><td class="num">24</td><td class="num"><span class="badge green">Рост</span></td><td>Основной вклад дают коммерческие посадочные страницы.</td></tr><tr><td>Клик по телефону</td><td class="num">17</td><td class="num"><span class="badge green">Рост</span></td><td>Контактные действия сохраняют положительную динамику.</td></tr><tr><td>WhatsApp / мессенджер</td><td class="num">12</td><td class="num"><span class="badge amber">Проверить</span></td><td>Нужно проверить корректность фиксации на мобильных устройствах.</td></tr></tbody></table></div>
+        </section>
+
+        <section class="section" id="conclusion">
+          <div class="section-head"><div><div class="section-label">Блок 7</div><h2>Общий вывод</h2><p class="section-desc">Краткая интерпретация результата месяца и фокус следующего периода.</p></div></div>
+          <div class="grid cols-3"><div class="ai-box"><h3>Статус месяца</h3><p>Месяц можно оценить положительно: видимость и поисковый спрос выросли, а основные коммерческие направления получили дополнительные точки роста.</p></div><div class="ai-box"><h3>Положительные сигналы</h3><p>Рост в Яндексе, увеличение числа запросов в ТОП-10, активное расширение ссылочной массы и наличие большого блока запросов 11–20.</p></div><div class="ai-box"><h3>Риски</h3><p>Часть направлений требует доработки CTR и закрепления результата, чтобы рост видимости устойчиво переходил в клики и заявки.</p></div></div>
+        </section>
+
+        <section class="section" id="plan">
+          <div class="section-head"><div><div class="section-label">Блок 8</div><h2>План SEO на следующий месяц</h2><p class="section-desc">Рекомендованные работы на следующий отчетный период.</p></div></div>
+          <div class="grid"><div class="plan-item"><div><p class="plan-title">Доработка коммерческих посадочных по межкомнатным дверям</p><p class="plan-desc">Усилить релевантность, коммерческие блоки, мета-теги и внутренние ссылки по направлениям с потенциалом.</p></div><div class="hours">14 ч</div></div><div class="plan-item"><div><p class="plan-title">Проверка и корректировка целей Яндекс.Метрики</p><p class="plan-desc">Проверить фиксацию заявок и контактных действий, особенно на мобильных устройствах.</p></div><div class="hours">3 ч</div></div><div class="plan-item"><div><p class="plan-title">Диагностика направлений с низким CTR</p><p class="plan-desc">Перепроверить title, description, сниппеты и соответствие страниц интенту запросов.</p></div><div class="hours">5 ч</div></div><div class="plan-item"><div><p class="plan-title">Расширение семантики и кластеров Webtronica</p><p class="plan-desc">Уточнить группы запросов и названия кластеров, чтобы отчетность была понятнее клиенту.</p></div><div class="hours">8 ч</div></div></div>
+          <div style="height:18px"></div><div class="cost-card"><div><div class="metric-title">Всего часов</div><div class="metric-value">30 ч</div></div><div><div class="metric-title">Ставка проекта</div><div class="metric-value">3 500 ₽/ч</div></div><div><div class="metric-title">Итого</div><div class="metric-value">105 000 ₽</div></div></div>
+        </section>
+        <div class="footer-note">Отчет сформирован автоматически на основе подключенных источников данных и проверен перед отправкой клиенту.</div>
+      </main>
+      <aside class="side">
+        <nav class="toc" id="toc"><div class="toc-title">Оглавление</div><a href="#summary" class="active">Краткая сводка</a><a href="#tasks">Выполненные задачи</a><a href="#visibility">Видимость и позиции</a><a href="#links">Ссылочная масса</a><a href="#traffic">Трафик</a><a href="#conversions">Конверсии</a><a href="#conclusion">Общий вывод</a><a href="#plan">План SEO</a></nav>
+      </aside>
+    </div>
+  </div>
+  <script>
+
+    // Responsive table labels for clean guest view on narrow screens.
+    document.querySelectorAll('.table-wrap table').forEach(table => {
+      table.classList.add('responsive-table');
+      const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent.trim());
+      table.querySelectorAll('tbody tr').forEach(row => {
+        Array.from(row.children).forEach((cell, index) => {
+          if (!cell.hasAttribute('data-label')) cell.setAttribute('data-label', headers[index] || '');
+        });
+      });
+      if (headers.length <= 4) table.classList.add('compact-table');
+    });
+
+    document.querySelectorAll('[data-tabs]').forEach(group=>{
+      const buttons=[...group.querySelectorAll('.tab-btn')];
+      buttons.forEach(btn=>btn.addEventListener('click',()=>{
+        buttons.forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const section=group.closest('.section');
+        section.querySelectorAll('.tab-panel').forEach(panel=>panel.classList.remove('active'));
+        section.querySelector('#'+btn.dataset.target)?.classList.add('active');
+      }));
+    });
+    const links=[...document.querySelectorAll('#toc a')];
+    const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const onScroll=()=>{let current=sections[0]?.id;for(const s of sections){if(s.getBoundingClientRect().top<130)current=s.id;}links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));};
+    document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+    document.querySelectorAll('.file-btn').forEach(a=>a.addEventListener('click',e=>{e.preventDefault(); const w=window.open('','_blank','noopener'); if(w){w.document.write('<title>Материал отчета</title><body style="font-family:Arial;padding:32px;background:#f8fafc"><div style="max-width:720px;margin:auto;background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:28px"><h1 style="margin-top:0">Материал отчета</h1><p>В рабочей версии здесь откроется прикрепленный документ или таблица.</p></div></body>');w.document.close();}}));
+  </script>
+</body>
+</html>
