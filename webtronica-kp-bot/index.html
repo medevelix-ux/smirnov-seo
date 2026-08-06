@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Webtronica КП Bot — интерактивный прототип</title>
+  <style>
+    :root {
+      --tg-blue: #3390ec;
+      --tg-blue-dark: #2481cc;
+      --tg-bg: #dfe7ec;
+      --tg-chat: #e6ebee;
+      --tg-bot-bubble: #ffffff;
+      --tg-user-bubble: #e5f2ff;
+      --tg-text: #1f2d3d;
+      --tg-muted: #758593;
+      --tg-border: #d5dee5;
+      --tg-success: #2ea66f;
+      --tg-warning: #e89a2f;
+      --tg-error: #d9534f;
+      --webtronica: #71588d;
+      --webtronica-dark: #5f477b;
+      --shadow: 0 10px 30px rgba(31, 45, 61, 0.12);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      color: var(--tg-text);
+      background: #cfd9df;
+    }
+
+    button, input, textarea { font: inherit; }
+
+    button {
+      border: 0;
+      cursor: pointer;
+    }
+
+    .app-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 410px;
+      background: var(--tg-bg);
+    }
+
+    .telegram-app {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 12px 12px, rgba(113, 88, 141, 0.06) 2px, transparent 2.4px) 0 0 / 32px 32px,
+        radial-gradient(circle at 28px 26px, rgba(51, 144, 236, 0.055) 2px, transparent 2.4px) 0 0 / 38px 38px,
+        var(--tg-chat);
+    }
+
+    .chat-header {
+      min-height: 68px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--tg-border);
+      box-shadow: 0 1px 6px rgba(31, 45, 61, 0.06);
+      z-index: 10;
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--webtronica), var(--tg-blue));
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      flex: 0 0 auto;
+      box-shadow: 0 4px 10px rgba(113, 88, 141, 0.25);
+    }
+
+    .header-copy {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .header-title {
+      font-weight: 750;
+      font-size: 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-status {
+      font-size: 13px;
+      color: var(--tg-blue);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-button {
+      min-width: 38px;
+      height: 38px;
+      padding: 0 10px;
+      border-radius: 10px;
+      background: #f1f5f8;
+      color: #4b6070;
+      transition: 0.18s ease;
+    }
+
+    .icon-button:hover { background: #e5edf3; }
+    .icon-button.is-active { background: #e6f2ff; color: var(--tg-blue); }
+
+    .chat-scroll {
+      overflow-y: auto;
+      padding: 22px clamp(14px, 5vw, 66px) 26px;
+      scroll-behavior: smooth;
+    }
+
+    .day-divider {
+      width: max-content;
+      margin: 0 auto 18px;
+      padding: 5px 10px;
+      border-radius: 12px;
+      background: rgba(101, 118, 132, 0.58);
+      color: #fff;
+      font-size: 12px;
+      box-shadow: 0 2px 8px rgba(31, 45, 61, 0.14);
+    }
+
+    .message-row {
+      display: flex;
+      margin: 9px 0;
+      animation: messageIn 0.22s ease-out;
+    }
+
+    .message-row.user { justify-content: flex-end; }
+    .message-row.bot { justify-content: flex-start; }
+
+    .message-block {
+      max-width: min(720px, 86%);
+    }
+
+    .bubble {
+      position: relative;
+      padding: 10px 12px 7px;
+      border-radius: 13px;
+      box-shadow: 0 1px 2px rgba(31, 45, 61, 0.12);
+      line-height: 1.42;
+      font-size: 14px;
+      word-break: break-word;
+    }
+
+    .bot .bubble {
+      background: var(--tg-bot-bubble);
+      border-bottom-left-radius: 5px;
+    }
+
+    .user .bubble {
+      background: var(--tg-user-bubble);
+      border-bottom-right-radius: 5px;
+    }
+
+    .bubble p { margin: 0 0 8px; }
+    .bubble p:last-child { margin-bottom: 0; }
+    .bubble strong { font-weight: 750; }
+
+    .message-meta {
+      display: inline-flex;
+      float: right;
+      align-items: center;
+      gap: 4px;
+      margin: 4px 0 0 10px;
+      color: #8d9aa5;
+      font-size: 10.5px;
+      line-height: 1;
+    }
+
+    .user .message-meta { color: #6992b4; }
+
+    .checkmarks {
+      color: var(--tg-blue);
+      letter-spacing: -3px;
+      margin-right: 2px;
+    }
+
+    .inline-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 7px;
+      margin-top: 7px;
+    }
+
+    .inline-actions.one-column { grid-template-columns: 1fr; }
+    .inline-actions.three-column { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .inline-button {
+      min-height: 39px;
+      padding: 9px 11px;
+      border-radius: 9px;
+      background: #fff;
+      color: var(--tg-blue-dark);
+      border: 1px solid #cfe2f5;
+      font-size: 13px;
+      font-weight: 650;
+      box-shadow: 0 1px 2px rgba(31, 45, 61, 0.07);
+      transition: 0.16s ease;
+    }
+
+    .inline-button:hover {
+      background: #f4faff;
+      transform: translateY(-1px);
+    }
+
+    .inline-button.primary {
+      background: var(--tg-blue);
+      border-color: var(--tg-blue);
+      color: #fff;
+    }
+
+    .inline-button.brand {
+      background: var(--webtronica);
+      border-color: var(--webtronica);
+      color: #fff;
+    }
+
+    .inline-button.danger {
+      color: var(--tg-error);
+      border-color: #f0cccc;
+    }
+
+    .inline-button.muted {
+      color: #657787;
+      border-color: var(--tg-border);
+    }
+
+    .inline-button:disabled {
+      cursor: default;
+      opacity: 0.48;
+      transform: none;
+    }
+
+    .info-note,
+    .warning-note,
+    .error-note,
+    .success-note {
+      margin-top: 9px;
+      padding: 9px 11px;
+      border-radius: 9px;
+      font-size: 13px;
+    }
+
+    .info-note { background: #eef7ff; border-left: 3px solid var(--tg-blue); }
+    .warning-note { background: #fff6e8; border-left: 3px solid var(--tg-warning); }
+    .error-note { background: #fff0f0; border-left: 3px solid var(--tg-error); }
+    .success-note { background: #edf9f3; border-left: 3px solid var(--tg-success); }
+
+    .compact-list {
+      margin: 7px 0 0;
+      padding-left: 18px;
+    }
+
+    .compact-list li { margin: 3px 0; }
+
+    .summary-card,
+    .status-card,
+    .result-card {
+      margin-top: 2px;
+      border: 1px solid #d8e2ea;
+      border-radius: 11px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .summary-head,
+    .status-head,
+    .result-head {
+      padding: 11px 12px;
+      background: linear-gradient(135deg, var(--webtronica), #876ca3);
+      color: #fff;
+      font-weight: 750;
+    }
+
+    .status-head { background: linear-gradient(135deg, var(--tg-blue), #4fa4f1); }
+    .result-head { background: linear-gradient(135deg, var(--tg-success), #48b988); }
+
+    .summary-body,
+    .status-body,
+    .result-body { padding: 11px 12px; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: minmax(145px, 0.62fr) minmax(0, 1.38fr);
+      gap: 7px 12px;
+      font-size: 13px;
+    }
+
+    .summary-label { color: var(--tg-muted); }
+    .summary-value { font-weight: 650; overflow-wrap: anywhere; }
+
+    .status-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+      font-size: 13px;
+    }
+
+    .status-stage { font-weight: 700; }
+    .status-percent { color: var(--tg-blue); font-weight: 750; }
+
+    .progress-track {
+      height: 8px;
+      border-radius: 999px;
+      background: #e9f0f5;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--tg-blue), #65b4f7);
+      transition: width 0.55s ease;
+    }
+
+    .typing-row {
+      display: flex;
+      margin: 8px 0;
+    }
+
+    .typing-bubble {
+      background: #fff;
+      padding: 10px 14px;
+      border-radius: 13px 13px 13px 5px;
+      box-shadow: 0 1px 2px rgba(31, 45, 61, 0.12);
+      display: flex;
+      gap: 4px;
+    }
+
+    .typing-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #8aa1b2;
+      animation: typing 1.15s infinite ease-in-out;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.16s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.32s; }
+
+    .composer {
+      background: rgba(255, 255, 255, 0.98);
+      border-top: 1px solid var(--tg-border);
+      padding: 10px clamp(12px, 4vw, 54px) 12px;
+      z-index: 9;
+    }
+
+    .composer-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 9px;
+    }
+
+    .composer-field {
+      min-height: 44px;
+      max-height: 150px;
+      width: 100%;
+      resize: none;
+      border: 1px solid var(--tg-border);
+      border-radius: 15px;
+      padding: 11px 13px;
+      outline: none;
+      color: var(--tg-text);
+      background: #fff;
+      line-height: 1.35;
+      transition: border-color 0.16s, box-shadow 0.16s;
+    }
+
+    .composer-field:focus {
+      border-color: #96c7f0;
+      box-shadow: 0 0 0 3px rgba(51, 144, 236, 0.1);
+    }
+
+    .composer-field:disabled {
+      background: #f4f6f8;
+      color: #98a4ad;
+    }
+
+    .send-button {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--tg-blue);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      box-shadow: 0 5px 12px rgba(51, 144, 236, 0.25);
+      transition: 0.16s ease;
+    }
+
+    .send-button:hover { background: var(--tg-blue-dark); transform: translateY(-1px); }
+    .send-button:disabled { background: #b9c7d1; box-shadow: none; transform: none; cursor: default; }
+
+    .composer-hint {
+      max-width: 1000px;
+      margin: 7px auto 0;
+      color: #83919c;
+      font-size: 11.5px;
+      padding-left: 53px;
+    }
+
+    .dev-panel {
+      height: 100vh;
+      overflow-y: auto;
+      background: #f8fafb;
+      border-left: 1px solid #ccd7df;
+      box-shadow: -8px 0 30px rgba(31, 45, 61, 0.08);
+      position: relative;
+      z-index: 20;
+    }
+
+    .dev-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      padding: 18px 18px 14px;
+      background: rgba(248, 250, 251, 0.96);
+      backdrop-filter: blur(9px);
+      border-bottom: 1px solid #dbe4ea;
+    }
+
+    .dev-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .dev-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--webtronica-dark);
+    }
+
+    .dev-subtitle {
+      margin-top: 4px;
+      color: var(--tg-muted);
+      font-size: 12.5px;
+      line-height: 1.4;
+    }
+
+    .dev-content { padding: 12px 14px 28px; }
+
+    .dev-controls {
+      background: #fff;
+      border: 1px solid #dce5eb;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 14px rgba(31, 45, 61, 0.05);
+    }
+
+    .dev-controls-title {
+      font-weight: 750;
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 12.5px;
+      margin: 8px 0;
+    }
+
+    .switch {
+      position: relative;
+      width: 42px;
+      height: 23px;
+      flex: 0 0 auto;
+    }
+
+    .switch input { display: none; }
+
+    .switch-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: #c6d2da;
+      transition: 0.18s;
+    }
+
+    .switch-track::after {
+      content: "";
+      position: absolute;
+      width: 19px;
+      height: 19px;
+      top: 2px;
+      left: 2px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 0 1px 4px rgba(31,45,61,.28);
+      transition: 0.18s;
+    }
+
+    .switch input:checked + .switch-track { background: var(--webtronica); }
+    .switch input:checked + .switch-track::after { transform: translateX(19px); }
+
+    details.dev-section {
+      background: #fff;
+      border: 1px solid #dce5eb;
+      border-radius: 11px;
+      margin: 8px 0;
+      overflow: hidden;
+      box-shadow: 0 3px 11px rgba(31, 45, 61, 0.04);
+    }
+
+    details.dev-section > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 12px 38px 12px 12px;
+      position: relative;
+      font-size: 13px;
+      font-weight: 750;
+      color: #3a4d5c;
+      user-select: none;
+    }
+
+    details.dev-section > summary::-webkit-details-marker { display: none; }
+
+    details.dev-section > summary::after {
+      content: "+";
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 21px;
+      height: 21px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #eef3f6;
+      color: var(--webtronica);
+      font-size: 15px;
+    }
+
+    details.dev-section[open] > summary::after { content: "−"; }
+    details.dev-section[open] > summary { border-bottom: 1px solid #e4ebef; }
+
+    .dev-section-body {
+      padding: 11px 12px 13px;
+      font-size: 12.5px;
+      color: #506372;
+      line-height: 1.48;
+    }
+
+    .dev-section-body p { margin: 0 0 8px; }
+    .dev-section-body p:last-child { margin-bottom: 0; }
+    .dev-section-body ul, .dev-section-body ol { padding-left: 18px; margin: 7px 0; }
+    .dev-section-body li { margin: 4px 0; }
+    .dev-section-body code {
+      background: #eef3f7;
+      padding: 1px 4px;
+      border-radius: 4px;
+      color: #334b5b;
+      font-size: 11.5px;
+    }
+
+    .dev-close-mobile { display: none; }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(24, 35, 44, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 100;
+    }
+
+    .modal-backdrop.show { display: flex; }
+
+    .modal {
+      width: min(760px, 100%);
+      max-height: min(720px, 90vh);
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 24px 80px rgba(14, 25, 35, 0.3);
+    }
+
+    .modal-head {
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #e0e7ec;
+    }
+
+    .modal-title { font-size: 17px; font-weight: 800; }
+    .modal-body { padding: 20px; }
+
+    .proposal-preview {
+      border: 1px solid #e0e6eb;
+      border-radius: 13px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .proposal-cover {
+      min-height: 260px;
+      padding: 34px;
+      background: linear-gradient(145deg, #5f477b, #8268a0 58%, #3390ec);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .proposal-logo { font-weight: 850; letter-spacing: 0.5px; }
+    .proposal-title { font-size: clamp(24px, 4vw, 42px); line-height: 1.05; font-weight: 850; max-width: 550px; }
+    .proposal-domain { font-size: 17px; opacity: 0.9; }
+    .proposal-details { padding: 18px 22px; background: #fff; }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 86px;
+      transform: translate(-50%, 18px);
+      background: rgba(30, 42, 52, 0.95);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.2s ease;
+      z-index: 150;
+      box-shadow: 0 7px 24px rgba(0,0,0,.2);
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.45; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    @keyframes messageIn {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1100px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .dev-panel {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: min(430px, 92vw);
+        transform: translateX(103%);
+        transition: transform 0.24s ease;
+      }
+      .dev-panel.open { transform: translateX(0); }
+      .dev-close-mobile { display: inline-grid; }
+      .telegram-app { height: 100vh; }
+    }
+
+    @media (max-width: 720px) {
+      .chat-header { padding: 8px 10px; min-height: 62px; }
+      .avatar { width: 42px; height: 42px; }
+      .chat-scroll { padding: 17px 9px 20px; }
+      .message-block { max-width: 92%; }
+      .inline-actions.three-column { grid-template-columns: 1fr; }
+      .summary-grid { grid-template-columns: 1fr; gap: 2px; }
+      .summary-value { margin-bottom: 6px; }
+      .composer { padding: 8px; }
+      .composer-inner { gap: 6px; }
+      .composer-hint { padding-left: 47px; }
+      .icon-button.label-reset span { display: none; }
+      .inline-actions { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 430px) {
+      .header-title { font-size: 14px; }
+      .header-status { font-size: 11.5px; }
+      .header-actions { gap: 4px; }
+      .icon-button { min-width: 34px; height: 34px; padding: 0 8px; }
+      .message-block { max-width: 96%; }
+      .bubble { font-size: 13.5px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <main class="telegram-app" aria-label="Интерактивный прототип Telegram-бота">
+      <header class="chat-header">
+        <div class="avatar" aria-hidden="true">W</div>
+        <div class="header-copy">
+          <div class="header-title">Webtronica КП Bot</div>
+          <div class="header-status" id="botStatus">бот онлайн</div>
+        </div>
+        <div class="header-actions">
+          <button class="icon-button label-reset" id="resetBtn" title="Сбросить диалог" aria-label="Сбросить диалог">↻ <span>Сброс</span></button>
+          <button class="icon-button" id="devToggleBtn" title="Открыть DEV-описание" aria-label="Открыть DEV-описание">DEV</button>
+        </div>
+      </header>
+
+      <section class="chat-scroll" id="chat" aria-live="polite">
+        <div class="day-divider">Сегодня</div>
+      </section>
+
+      <footer class="composer">
+        <div class="composer-inner">
+          <button class="icon-button" type="button" aria-label="Прикрепить файл" title="Демонстрационная кнопка">＋</button>
+          <textarea class="composer-field" id="composerInput" rows="1" placeholder="Сообщение" disabled></textarea>
+          <button class="send-button" id="sendBtn" type="button" aria-label="Отправить" disabled>➤</button>
+        </div>
+        <div class="composer-hint" id="composerHint">Используйте кнопки под сообщением бота</div>
+      </footer>
+    </main>
+
+    <aside class="dev-panel" id="devPanel" aria-label="Описание логики для программиста">
+      <div class="dev-header">
+        <div class="dev-title-row">
+          <div class="dev-title">DEV · логика бота</div>
+          <button class="icon-button dev-close-mobile" id="devCloseBtn" aria-label="Закрыть DEV-панель">✕</button>
+        </div>
+        <div class="dev-subtitle">Полное описание работы прототипа и будущей интеграции. Каждый раздел раскрывается по клику.</div>
+      </div>
+      <div class="dev-content">
+        <div class="dev-controls">
+          <div class="dev-controls-title">Демонстрационные настройки</div>
+          <div class="toggle-row">
+            <span>Следующий запуск завершить ошибкой</span>
+            <label class="switch">
+              <input type="checkbox" id="forceErrorToggle" />
+              <span class="switch-track"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <span>Показывать условный процент прогресса</span>
+            <label class="switch">
+              <input type="checkbox" id="showPercentToggle" checked />
+              <span class="switch-track"></span>
+            </label>
+          </div>
+        </div>
+
+        <details class="dev-section" open>
+          <summary>1. Назначение прототипа</summary>
+          <div class="dev-section-body">
+            <p>Прототип демонстрирует Telegram-сценарий запуска создания коммерческого предложения внутри Вебтроники.</p>
+            <ol>
+              <li>Бот по шагам собирает настройки.</li>
+              <li>Передаёт задачу в Вебтронику.</li>
+              <li>Сообщает о принятии задачи и показывает её статус.</li>
+              <li>После готовности присылает ссылку и файл КП.</li>
+            </ol>
+            <p>В этой HTML-версии интеграция имитируется JavaScript без реальных API-запросов.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>2. Общий дизайн и UX</summary>
+          <div class="dev-section-body">
+            <ul>
+              <li>Интерфейс имитирует Telegram Desktop и адаптируется под мобильный экран.</li>
+              <li>Сообщения бота расположены слева, пользователя — справа.</li>
+              <li>Используются inline-кнопки, время сообщений, состояние «печатает…» и автоматическая прокрутка.</li>
+              <li>DEV-панель постоянно видна на широком экране и открывается поверх чата на узком.</li>
+              <li>Все действия выполняются без перезагрузки страницы.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>3. Последовательность диалога</summary>
+          <div class="dev-section-body">
+            <ol>
+              <li>Команда «Создать КП».</li>
+              <li>Ввод URL продвигаемого сайта.</li>
+              <li>Выбор поисковой системы.</li>
+              <li>Выбор региона с учётом поисковой системы.</li>
+              <li>Настройка сводного отчёта Яндекс + Google.</li>
+              <li>Ввод обязательных доменов одним сообщением.</li>
+              <li>Выбор режима обязательных доменов.</li>
+              <li>Ввод исключаемых доменов.</li>
+              <li>Итоговая проверка параметров.</li>
+              <li>Запуск задачи внутри Вебтроники.</li>
+              <li>Сообщение о принятии задачи.</li>
+              <li>Автоматическое обновление статуса.</li>
+              <li>Получение готового КП в Telegram.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>4. Команда «Создать КП»</summary>
+          <div class="dev-section-body">
+            <p>Начальное сообщение содержит короткое объяснение и кнопку <code>Создать КП</code>. После клика бот запускает пошаговый сценарий и запрашивает URL сайта.</p>
+            <p>Кнопка полного сброса в шапке очищает состояние прототипа и возвращает пользователя к начальному экрану.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>5. URL продвигаемого сайта</summary>
+          <div class="dev-section-body">
+            <p>Поле обязательное. Допускаются адреса с протоколом, <code>www</code> и путём: <code>example.ru</code>, <code>https://www.example.ru/catalog/</code>.</p>
+            <ul>
+              <li>Проверяется наличие корректного домена и доменной зоны.</li>
+              <li>Запрещаются пробелы и недопустимые символы.</li>
+              <li>Для дальнейшей логики значение нормализуется до домена без <code>www</code>.</li>
+              <li>При ошибке бот предлагает повторный ввод или отмену сценария.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>6. Выбор поисковой системы</summary>
+          <div class="dev-section-body">
+            <p>Пользователь выбирает одну из двух inline-кнопок: <code>Яндекс</code> или <code>Google</code>.</p>
+            <p>От выбора зависит следующий набор регионов. При последующем изменении поисковой системы ранее выбранный регион должен быть проверен заново.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>7. Регионы Google</summary>
+          <div class="dev-section-body">
+            <p>Для Google доступны только три кнопки:</p>
+            <ul>
+              <li>Москва;</li>
+              <li>Киев;</li>
+              <li>Нью-Йорк.</li>
+            </ul>
+            <p>Ручной ввод другого города для Google не предусмотрен.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>8. Регионы Яндекса и ручной ввод</summary>
+          <div class="dev-section-body">
+            <p>Быстрые кнопки: Москва, Санкт-Петербург, Екатеринбург, Н. Новгород, Краснодар и «Другой…».</p>
+            <p>После выбора «Другой…» пользователь вводит город вручную. Нормализация игнорирует регистр, пробелы, точки, дефисы и иные разделители. Например, <code>ростов на дону</code> преобразуется в <code>Ростов-на-Дону</code>.</p>
+            <p><strong>Два разных сообщения об ошибке:</strong></p>
+            <ul>
+              <li>Если город не распознан: «Город указан неверно. Проверьте написание и попробуйте ещё раз».</li>
+              <li>Если город существует, но отсутствует в ограниченном справочнике Вебтроники: «Город отсутствует в списке доступных регионов. В таком случае рекомендуем указать Москва».</li>
+            </ul>
+            <p>В рабочей версии справочник поддерживаемых регионов должен приходить из Вебтроники, а не храниться в коде бота.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>9. Сводный отчёт Яндекс + Google</summary>
+          <div class="dev-section-body">
+            <p>Бот обязательно поясняет: «Данная функция запускает анализ в обеих ПС по региону Москва».</p>
+            <ul>
+              <li>При включении поисковая система становится «Яндекс + Google».</li>
+              <li>Регион автоматически устанавливается «Москва».</li>
+              <li>Если был выбран другой регион, бот сначала запрашивает подтверждение изменения.</li>
+              <li>Если пользователь отказывается, сохраняются текущие поисковая система и регион.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>10. Обязательные домены</summary>
+          <div class="dev-section-body">
+            <p>Пользователь отправляет один или несколько доменов одним сообщением, каждый домен — с новой строки. Шаг можно пропустить.</p>
+            <ul>
+              <li>Каждая строка валидируется отдельно.</li>
+              <li>Допускаются URL с протоколом, <code>www</code> и путём.</li>
+              <li>Значения нормализуются до домена.</li>
+              <li>Удаляются дубликаты.</li>
+              <li>Запрещено добавлять продвигаемый домен.</li>
+              <li>Корректные строки сохраняются, даже если часть списка содержит ошибки.</li>
+            </ul>
+            <p>Для ошибочных строк бот показывает причину и предлагает исправить только их либо продолжить.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>11. Режим обязательных доменов</summary>
+          <div class="dev-section-body">
+            <p>После ввода доменов пользователь выбирает один из трёх вариантов:</p>
+            <ol>
+              <li><strong>Всегда добавлять в анализ</strong> — независимо от наличия в выдаче.</li>
+              <li><strong>Учитывать только при наличии в выдаче</strong> — включать только найденные в поиске домены.</li>
+              <li><strong>Анализировать только указанные домены</strong> — автоматический поиск конкурентов не выполняется.</li>
+            </ol>
+            <p>Если список доменов пуст, бот предлагает вернуться к их добавлению либо пропустить настройку режима.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>12. Исключаемые домены</summary>
+          <div class="dev-section-body">
+            <p>Вводятся одним сообщением, каждый домен — с новой строки. Применяется та же валидация и нормализация.</p>
+            <ul>
+              <li>Нельзя исключить продвигаемый домен.</li>
+              <li>Один домен не может одновременно находиться в обязательном и исключаемом списке.</li>
+              <li>При конфликте бот сообщает причину и не добавляет спорное значение.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>13. Итоговая проверка и редактирование</summary>
+          <div class="dev-section-body">
+            <p>Бот показывает карточку со всеми собранными параметрами и кнопками запуска, изменения и отмены.</p>
+            <p>Раздел «Изменить параметры» открывает отдельные кнопки для URL, поисковой системы, региона, сводного отчёта, обязательных доменов, режима и исключений.</p>
+            <p>После изменения одного поля пользователь возвращается к итоговой карточке. Связанные поля перепроверяются автоматически.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>14. Создание задачи в Вебтронике</summary>
+          <div class="dev-section-body">
+            <p>После подтверждения интерфейс показывает «Передаю параметры в Вебтронику…», затем карточку принятой задачи:</p>
+            <ul>
+              <li>номер задачи;</li>
+              <li>домен;</li>
+              <li>время запуска;</li>
+              <li>начальный статус;</li>
+              <li>ссылку на задачу внутри Вебтроники.</li>
+            </ul>
+            <p>В рабочей версии backend должен отправить настройки в API Вебтроники и сохранить полученный ID задачи вместе с Telegram user ID.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>15. Автоматическое обновление статуса</summary>
+          <div class="dev-section-body">
+            <p>Рекомендуется редактировать одно статусное сообщение, чтобы не засорять чат.</p>
+            <p>Пример последовательности: подготовка данных → анализ выдачи → формирование КП → финальная проверка.</p>
+            <p>Процент разрешено показывать только при наличии реального прогресса от API. Переключатель выше демонстрирует оба варианта.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>16. Готовое КП</summary>
+          <div class="dev-section-body">
+            <p>После завершения бот отправляет карточку результата с доменом, поисковой системой, регионом и номером задачи.</p>
+            <p>Кнопки: «Открыть КП», «Скачать PDF», «Открыть в Вебтронике», «Создать ещё одно КП».</p>
+            <p>В прототипе «Открыть КП» показывает демонстрационный предпросмотр, а «Скачать PDF» генерирует простой тестовый PDF.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>17. Ошибка формирования КП</summary>
+          <div class="dev-section-body">
+            <p>Предусмотрен отдельный сценарий ошибки. Его можно включить переключателем в начале DEV-панели.</p>
+            <p>Кнопки после ошибки: повторить запуск, изменить параметры или открыть задачу в Вебтронике. При повторе используются уже собранные параметры.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>18. Техническая структура прототипа</summary>
+          <div class="dev-section-body">
+            <ul>
+              <li>Один автономный HTML-файл.</li>
+              <li>Внутри находятся разметка, стили, JavaScript, демонстрационные справочники и комментарии.</li>
+              <li>Внешние библиотеки и сетевые запросы не используются.</li>
+              <li>Состояние хранится в объекте JavaScript до перезагрузки страницы.</li>
+              <li>Поддерживаются desktop, tablet и mobile.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>19. Будущая интеграция</summary>
+          <div class="dev-section-body">
+            <p><strong>Рекомендуемый поток:</strong></p>
+            <p><code>Telegram → backend бота → API Вебтроники → ID задачи → webhook или polling → готовое КП → Telegram</code></p>
+            <p>Необходимо реализовать:</p>
+            <ol>
+              <li>авторизацию и Telegram user ID;</li>
+              <li>создание задачи через API;</li>
+              <li>сохранение связи пользователь ↔ задача ↔ проект;</li>
+              <li>webhook от Вебтроники либо периодическую проверку статуса;</li>
+              <li>получение ссылки или файла;</li>
+              <li>повторные попытки и обработку ошибок;</li>
+              <li>защиту от дублирующего запуска;</li>
+              <li>проверку прав доступа к задаче и документу.</li>
+            </ol>
+          </div>
+        </details>
+      </div>
+    </aside>
+  </div>
+
+  <div class="modal-backdrop" id="proposalModal" role="dialog" aria-modal="true" aria-labelledby="proposalModalTitle">
+    <div class="modal">
+      <div class="modal-head">
+        <div class="modal-title" id="proposalModalTitle">Предпросмотр коммерческого предложения</div>
+        <button class="icon-button" id="closeModalBtn" aria-label="Закрыть">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="proposal-preview">
+          <div class="proposal-cover">
+            <div class="proposal-logo">WEBTRONICA</div>
+            <div>
+              <div class="proposal-title">Коммерческое предложение по SEO-продвижению</div>
+              <div class="proposal-domain" id="previewDomain">example.ru</div>
+            </div>
+          </div>
+          <div class="proposal-details">
+            <div class="summary-grid" id="previewDetails"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    'use strict';
+
+    // DEV: В рабочей версии справочники регионов должны поступать из Вебтроники.
+    const REGION_DATA = {
+      google: ['Москва', 'Киев', 'Нью-Йорк'],
+      yandexQuick: ['Москва', 'Санкт-Петербург', 'Екатеринбург', 'Н. Новгород', 'Краснодар'],
+      yandexSupported: {
+        'москва': 'Москва',
+        'санктпетербург': 'Санкт-Петербург',
+        'петербург': 'Санкт-Петербург',
+        'спб': 'Санкт-Петербург',
+        'екатеринбург': 'Екатеринбург',
+        'нижнийновгород': 'Н. Новгород',
+        'нновгород': 'Н. Новгород',
+        'краснодар': 'Краснодар',
+        'ростовнадону': 'Ростов-на-Дону',
+        'самара': 'Самара',
+        'казань': 'Казань',
+        'воронеж': 'Воронеж',
+        'челябинск': 'Челябинск'
+      },
+      knownUnsupported: {
+        'новосибирск': 'Новосибирск',
+        'пермь': 'Пермь',
+        'уфа': 'Уфа',
+        'омск': 'Омск',
+        'тюмень': 'Тюмень',
+        'сочи': 'Сочи',
+        'иркутск': 'Иркутск',
+        'владивосток': 'Владивосток',
+        'хабаровск': 'Хабаровск',
+        'волгоград': 'Волгоград'
+      }
+    };
+
+    const state = {
+      step: 'idle',
+      returnToSummary: false,
+      siteUrl: '',
+      siteDomain: '',
+      searchEngine: '',
+      region: '',
+      combinedReport: false,
+      requiredDomains: [],
+      requiredMode: '',
+      excludedDomains: [],
+      pendingInvalidRequired: [],
+      pendingInvalidExcluded: [],
+      taskId: '',
+      statusMessageEl: null,
+      progressTimers: []
+    };
+
+    const els = {
+      chat: document.getElementById('chat'),
+      input: document.getElementById('composerInput'),
+      send: document.getElementById('sendBtn'),
+      hint: document.getElementById('composerHint'),
+      botStatus: document.getElementById('botStatus'),
+      reset: document.getElementById('resetBtn'),
+      devToggle: document.getElementById('devToggleBtn'),
+      devPanel: document.getElementById('devPanel'),
+      devClose: document.getElementById('devCloseBtn'),
+      forceError: document.getElementById('forceErrorToggle'),
+      showPercent: document.getElementById('showPercentToggle'),
+      proposalModal: document.getElementById('proposalModal'),
+      closeModal: document.getElementById('closeModalBtn'),
+      previewDomain: document.getElementById('previewDomain'),
+      previewDetails: document.getElementById('previewDetails'),
+      toast: document.getElementById('toast')
+    };
+
+    const INPUT_STEPS = new Set([
+      'site_url',
+      'custom_yandex_region',
+      'required_domains',
+      'required_domains_fix',
+      'excluded_domains',
+      'excluded_domains_fix'
+    ]);
+
+    function nowTime() {
+      return new Intl.DateTimeFormat('ru-RU', { hour: '2-digit', minute: '2-digit' }).format(new Date());
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    }
+
+    function scrollToBottom() {
+      requestAnimationFrame(() => {
+        els.chat.scrollTop = els.chat.scrollHeight;
+      });
+    }
+
+    function setBotStatus(text, active = true) {
+      els.botStatus.textContent = text;
+      els.botStatus.style.color = active ? 'var(--tg-blue)' : 'var(--tg-muted)';
+    }
+
+    function addMessage(role, html, actions = [], options = {}) {
+      const row = document.createElement('div');
+      row.className = `message-row ${role}`;
+
+      const block = document.createElement('div');
+      block.className = 'message-block';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.innerHTML = `${html}<span class="message-meta">${role === 'user' ? '<span class="checkmarks">✓✓</span>' : ''}${nowTime()}</span><div style="clear:both"></div>`;
+      block.appendChild(bubble);
+
+      if (actions.length) {
+        const actionWrap = document.createElement('div');
+        const columnClass = options.columns === 1 ? ' one-column' : options.columns === 3 ? ' three-column' : '';
+        actionWrap.className = `inline-actions${columnClass}`;
+
+        actions.forEach(action => {
+          const button = document.createElement('button');
+          button.className = `inline-button ${action.className || ''}`.trim();
+          button.textContent = action.label;
+          button.disabled = Boolean(action.disabled);
+          button.addEventListener('click', () => {
+            if (options.disableAfterClick !== false) {
+              actionWrap.querySelectorAll('button').forEach(btn => btn.disabled = true);
+            }
+            action.onClick?.();
+          });
+          actionWrap.appendChild(button);
+        });
+
+        block.appendChild(actionWrap);
+      }
+
+      row.appendChild(block);
+      els.chat.appendChild(row);
+      scrollToBottom();
+      return { row, block, bubble };
+    }
+
+    function addBotMessage(html, actions = [], options = {}) {
+      return addMessage('bot', html, actions, options);
+    }
+
+    function addUserMessage(text) {
+      return addMessage('user', `<p>${escapeHtml(text).replaceAll('\n', '<br>')}</p>`);
+    }
+
+    function showTyping(delay = 550) {
+      setBotStatus('печатает…');
+      const row = document.createElement('div');
+      row.className = 'typing-row';
+      row.innerHTML = '<div class="typing-bubble"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
+      els.chat.appendChild(row);
+      scrollToBottom();
+
+      return new Promise(resolve => {
+        setTimeout(() => {
+          row.remove();
+          setBotStatus('бот онлайн');
+          resolve();
+        }, delay);
+      });
+    }
+
+    function configureComposer(step, placeholder, hint) {
+      state.step = step;
+      const enabled = INPUT_STEPS.has(step);
+      els.input.disabled = !enabled;
+      els.send.disabled = !enabled;
+      els.input.placeholder = enabled ? placeholder : 'Сообщение';
+      els.hint.textContent = hint || (enabled ? 'Введите ответ и нажмите Enter' : 'Используйте кнопки под сообщением бота');
+      els.input.value = '';
+      autoResizeComposer();
+      if (enabled) setTimeout(() => els.input.focus(), 60);
+    }
+
+    function autoResizeComposer() {
+      els.input.style.height = 'auto';
+      els.input.style.height = `${Math.min(els.input.scrollHeight, 150)}px`;
+    }
+
+    function normalizeLookupKey(value) {
+      return String(value)
+        .toLocaleLowerCase('ru-RU')
+        .replace(/ё/g, 'е')
+        .replace(/[^a-zа-я0-9]/gi, '');
+    }
+
+    function normalizeDomain(value) {
+      const raw = String(value).trim();
+      if (!raw) return { ok: false, reason: 'пустая строка' };
+      if (/\s/.test(raw)) return { ok: false, reason: 'адрес содержит пробел' };
+
+      let candidate = raw;
+      if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(candidate)) candidate = `https://${candidate}`;
+
+      try {
+        const url = new URL(candidate);
+        const protocolAllowed = ['http:', 'https:'].includes(url.protocol);
+        if (!protocolAllowed) return { ok: false, reason: 'допустимы только http и https' };
+
+        let hostname = url.hostname.toLocaleLowerCase('en-US').replace(/^www\./, '').replace(/\.$/, '');
+        if (!hostname || hostname.length > 253) return { ok: false, reason: 'некорректное доменное имя' };
+        if (!hostname.includes('.')) return { ok: false, reason: 'не указана доменная зона' };
+        if (!/^[a-z0-9а-яё.-]+$/i.test(hostname)) return { ok: false, reason: 'недопустимые символы' };
+        if (hostname.split('.').some(part => !part || part.startsWith('-') || part.endsWith('-'))) {
+          return { ok: false, reason: 'некорректная структура домена' };
+        }
+        const tld = hostname.split('.').at(-1);
+        if (!tld || tld.length < 2) return { ok: false, reason: 'некорректная доменная зона' };
+
+        return { ok: true, domain: hostname, url: `${url.protocol}//${url.host}${url.pathname === '/' ? '' : url.pathname}` };
+      } catch (error) {
+        return { ok: false, reason: 'адрес не распознан как URL' };
+      }
+    }
+
+    function validateDomainLines(text, kind) {
+      const values = String(text).split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+      const valid = [];
+      const invalid = [];
+      const seen = new Set();
+
+      values.forEach(original => {
+        const parsed = normalizeDomain(original);
+        if (!parsed.ok) {
+          invalid.push({ original, reason: parsed.reason });
+          return;
+        }
+
+        const domain = parsed.domain;
+        if (seen.has(domain)) {
+          invalid.push({ original, reason: 'дубликат в текущем сообщении' });
+          return;
+        }
+        seen.add(domain);
+
+        if (domain === state.siteDomain) {
+          invalid.push({ original, reason: 'совпадает с продвигаемым сайтом' });
+          return;
+        }
+
+        if (kind === 'required' && state.excludedDomains.includes(domain)) {
+          invalid.push({ original, reason: 'уже находится в списке исключений' });
+          return;
+        }
+
+        if (kind === 'excluded' && state.requiredDomains.includes(domain)) {
+          invalid.push({ original, reason: 'уже находится в обязательных доменах' });
+          return;
+        }
+
+        valid.push(domain);
+      });
+
+      return { valid: [...new Set(valid)], invalid };
+    }
+
+    function uniqueMerge(base, incoming) {
+      return [...new Set([...base, ...incoming])];
+    }
+
+    function listHtml(items) {
+      if (!items.length) return 'не указаны';
+      return items.map(escapeHtml).join(', ');
+    }
+
+    function resetState() {
+      state.progressTimers.forEach(timer => clearTimeout(timer));
+      Object.assign(state, {
+        step: 'idle',
+        returnToSummary: false,
+        siteUrl: '',
+        siteDomain: '',
+        searchEngine: '',
+        region: '',
+        combinedReport: false,
+        requiredDomains: [],
+        requiredMode: '',
+        excludedDomains: [],
+        pendingInvalidRequired: [],
+        pendingInvalidExcluded: [],
+        taskId: '',
+        statusMessageEl: null,
+        progressTimers: []
+      });
+      els.chat.innerHTML = '<div class="day-divider">Сегодня</div>';
+      configureComposer('idle');
+      setBotStatus('бот онлайн');
+      showWelcome();
+    }
+
+    async function showWelcome() {
+      await showTyping(350);
+      addBotMessage(
+        '<p><strong>Здравствуйте! Я помогу создать коммерческое предложение в Вебтронике.</strong></p>' +
+        '<p>Соберу настройки анализа, передам задачу в систему и пришлю готовое КП в этот чат.</p>',
+        [{ label: 'Создать КП', className: 'primary', onClick: beginFlow }],
+        { columns: 1 }
+      );
+    }
+
+    async function beginFlow() {
+      addUserMessage('Создать КП');
+      await showTyping();
+      askSiteUrl();
+    }
+
+    function askSiteUrl(editMode = false) {
+      state.returnToSummary = editMode;
+      addBotMessage(
+        '<p><strong>Укажите URL продвигаемого сайта.</strong></p>' +
+        '<p>Например: <code>https://example.com</code></p>',
+        editMode ? [{ label: 'Вернуться к проверке', className: 'muted', onClick: showSummary }] : [{ label: 'Отменить создание КП', className: 'danger', onClick: resetState }],
+        { columns: 1 }
+      );
+      configureComposer('site_url', 'https://example.com', 'Введите URL сайта и нажмите Enter');
+    }
+
+    async function handleSiteUrl(text) {
+      const parsed = normalizeDomain(text);
+      if (!parsed.ok) {
+        addBotMessage(
+          `<p><strong>URL указан неверно.</strong></p><p>Проверьте адрес сайта и попробуйте ещё раз.</p><div class="error-note">Причина: ${escapeHtml(parsed.reason)}</div>`,
+          [
+            { label: 'Ввести повторно', onClick: () => configureComposer('site_url', 'https://example.com', 'Исправьте URL и отправьте его повторно') },
+            { label: 'Отменить создание КП', className: 'danger', onClick: resetState }
+          ]
+        );
+        configureComposer('site_url', 'https://example.com', 'Исправьте URL и отправьте его повторно');
+        return;
+      }
+
+      state.siteUrl = parsed.url;
+      state.siteDomain = parsed.domain;
+      addUserMessage(text);
+      configureComposer('waiting');
+      await showTyping();
+
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askSearchEngine();
+      }
+    }
+
+    function askSearchEngine(editMode = false) {
+      state.returnToSummary = editMode;
+      addBotMessage(
+        '<p><strong>Выберите поисковую систему для анализа.</strong></p>',
+        [
+          { label: 'Яндекс', onClick: () => selectSearchEngine('Яндекс') },
+          { label: 'Google', onClick: () => selectSearchEngine('Google') }
+        ]
+      );
+      configureComposer('waiting');
+    }
+
+    async function selectSearchEngine(engine) {
+      addUserMessage(engine);
+      state.searchEngine = engine;
+      state.combinedReport = false;
+      state.region = '';
+      await showTyping();
+      askRegion(state.returnToSummary);
+    }
+
+    function askRegion(editMode = false) {
+      state.returnToSummary = editMode;
+      if (state.searchEngine === 'Google') {
+        addBotMessage(
+          '<p><strong>Выберите регион анализа для Google.</strong></p>',
+          REGION_DATA.google.map(region => ({ label: region, onClick: () => selectRegion(region) })),
+          { columns: 3 }
+        );
+      } else {
+        const actions = REGION_DATA.yandexQuick.map(region => ({ label: region, onClick: () => selectRegion(region) }));
+        actions.push({ label: 'Другой…', onClick: askCustomYandexRegion });
+        addBotMessage('<p><strong>Выберите регион анализа для Яндекса.</strong></p>', actions);
+      }
+      configureComposer('waiting');
+    }
+
+    async function selectRegion(region) {
+      addUserMessage(region);
+      state.region = region;
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askCombinedReport();
+      }
+    }
+
+    function askCustomYandexRegion() {
+      addUserMessage('Другой регион');
+      addBotMessage(
+        '<p><strong>Введите название города вручную.</strong></p>' +
+        '<p>Например: Ростов-на-Дону.</p>' +
+        '<div class="info-note">Регистр, пробелы, точки и дефисы при проверке не учитываются.</div>',
+        [{ label: 'Вернуться к регионам', className: 'muted', onClick: () => askRegion(state.returnToSummary) }],
+        { columns: 1 }
+      );
+      configureComposer('custom_yandex_region', 'Название города', 'Введите город и нажмите Enter');
+    }
+
+    async function handleCustomRegion(text) {
+      addUserMessage(text);
+      configureComposer('waiting');
+      const key = normalizeLookupKey(text);
+      const supported = REGION_DATA.yandexSupported[key];
+      const unsupported = REGION_DATA.knownUnsupported[key];
+      await showTyping();
+
+      if (supported) {
+        state.region = supported;
+        addBotMessage(`<p>Город определён как <strong>${escapeHtml(supported)}</strong>.</p><div class="success-note">Регион доступен для анализа.</div>`);
+        if (state.returnToSummary) {
+          state.returnToSummary = false;
+          showSummary();
+        } else {
+          askCombinedReport();
+        }
+        return;
+      }
+
+      if (unsupported) {
+        addBotMessage(
+          `<p><strong>Город ${escapeHtml(unsupported)} отсутствует в списке доступных регионов.</strong></p>` +
+          '<p>В таком случае рекомендуем указать Москва.</p>',
+          [
+            { label: 'Выбрать Москву', className: 'primary', onClick: () => selectRegion('Москва') },
+            { label: 'Ввести другой город', onClick: askCustomYandexRegion },
+            { label: 'Вернуться к регионам', className: 'muted', onClick: () => askRegion(state.returnToSummary) }
+          ],
+          { columns: 1 }
+        );
+        return;
+      }
+
+      addBotMessage(
+        '<p><strong>Город указан неверно.</strong></p>' +
+        '<p>Проверьте написание и попробуйте ещё раз.</p>',
+        [
+          { label: 'Ввести город повторно', onClick: askCustomYandexRegion },
+          { label: 'Вернуться к выбору региона', className: 'muted', onClick: () => askRegion(state.returnToSummary) }
+        ],
+        { columns: 1 }
+      );
+    }
+
+    function askCombinedReport(editMode = false) {
+      state.returnToSummary = editMode;
+      addBotMessage(
+        '<p><strong>Сводный отчёт по Яндексу и Google</strong></p>' +
+        '<p>Данная функция запускает анализ в обеих ПС по региону Москва.</p>',
+        [
+          { label: 'Включить', className: 'primary', onClick: enableCombinedReport },
+          { label: 'Не включать', onClick: disableCombinedReport }
+        ]
+      );
+      configureComposer('waiting');
+    }
+
+    function enableCombinedReport() {
+      addUserMessage('Включить сводный отчёт');
+      if (state.region && state.region !== 'Москва') {
+        addBotMessage(
+          '<p>Для сводного отчёта анализ выполняется только по региону <strong>Москва</strong>.</p>' +
+          `<div class="warning-note">Текущие настройки «${escapeHtml(state.searchEngine)} · ${escapeHtml(state.region)}» будут заменены.</div>`,
+          [
+            { label: 'Включить сводный отчёт', className: 'primary', onClick: confirmCombinedReport },
+            { label: 'Оставить текущие настройки', onClick: declineCombinedReport }
+          ],
+          { columns: 1 }
+        );
+      } else {
+        confirmCombinedReport();
+      }
+    }
+
+    async function confirmCombinedReport() {
+      state.combinedReport = true;
+      state.searchEngine = 'Яндекс + Google';
+      state.region = 'Москва';
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askRequiredDomains();
+      }
+    }
+
+    async function declineCombinedReport() {
+      state.combinedReport = false;
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askRequiredDomains();
+      }
+    }
+
+    async function disableCombinedReport() {
+      addUserMessage('Не включать');
+      state.combinedReport = false;
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askRequiredDomains();
+      }
+    }
+
+    function askRequiredDomains(editMode = false, fixOnly = false) {
+      state.returnToSummary = editMode;
+      const text = fixOnly
+        ? '<p><strong>Отправьте исправленные обязательные домены.</strong></p><p>Каждый домен укажите с новой строки.</p>'
+        : '<p><strong>Введите обязательные домены.</strong></p><p>Один или несколько доменов, каждый с новой строки.</p><p>Например:<br><code>competitor.ru</code><br><code>https://site.ru</code></p>';
+      const actions = [];
+      if (!fixOnly) actions.push({ label: 'Пропустить', onClick: skipRequiredDomains });
+      if (editMode) actions.push({ label: 'Очистить список', className: 'danger', onClick: clearRequiredDomains });
+      addBotMessage(text, actions, { columns: 1 });
+      configureComposer(fixOnly ? 'required_domains_fix' : 'required_domains', 'Каждый домен с новой строки', 'Можно вставить несколько доменов одним сообщением');
+    }
+
+    async function skipRequiredDomains() {
+      addUserMessage('Пропустить');
+      state.requiredDomains = [];
+      state.requiredMode = '';
+      configureComposer('waiting');
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askRequiredMode();
+      }
+    }
+
+    async function clearRequiredDomains() {
+      addUserMessage('Очистить обязательные домены');
+      state.requiredDomains = [];
+      state.requiredMode = '';
+      configureComposer('waiting');
+      await showTyping();
+      showSummary();
+    }
+
+    async function handleRequiredDomains(text, fixOnly = false) {
+      addUserMessage(text);
+      configureComposer('waiting');
+      const result = validateDomainLines(text, 'required');
+      state.requiredDomains = uniqueMerge(fixOnly ? state.requiredDomains : [], result.valid);
+      state.pendingInvalidRequired = result.invalid;
+      await showTyping();
+
+      let html = '';
+      if (result.valid.length) {
+        html += `<p><strong>Добавлены домены:</strong><br>${result.valid.map(escapeHtml).join('<br>')}</p>`;
+      }
+      if (result.invalid.length) {
+        html += '<p><strong>Не удалось добавить:</strong></p><ul class="compact-list">' +
+          result.invalid.map(item => `<li>${escapeHtml(item.original)} — ${escapeHtml(item.reason)}</li>`).join('') +
+          '</ul>';
+      }
+      if (!result.valid.length && !result.invalid.length) {
+        html = '<p>В сообщении не найдено ни одного домена.</p>';
+      }
+
+      if (result.invalid.length) {
+        addBotMessage(html, [
+          { label: 'Исправить ошибочные', onClick: () => askRequiredDomains(state.returnToSummary, true) },
+          { label: 'Продолжить', className: 'primary', onClick: continueAfterRequiredDomains }
+        ]);
+      } else {
+        addBotMessage(html || '<p>Домены сохранены.</p>', [
+          { label: state.returnToSummary ? 'Вернуться к проверке' : 'Продолжить', className: 'primary', onClick: continueAfterRequiredDomains }
+        ], { columns: 1 });
+      }
+    }
+
+    async function continueAfterRequiredDomains() {
+      await showTyping(350);
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askRequiredMode();
+      }
+    }
+
+    function askRequiredMode(editMode = false) {
+      state.returnToSummary = editMode;
+      if (!state.requiredDomains.length) {
+        addBotMessage(
+          '<p><strong>Обязательные домены не указаны.</strong></p>' +
+          '<p>Для выбора режима сначала добавьте хотя бы один домен либо пропустите эту настройку.</p>',
+          [
+            { label: 'Добавить домены', onClick: () => askRequiredDomains(editMode) },
+            { label: 'Пропустить настройку', className: 'muted', onClick: skipRequiredMode }
+          ],
+          { columns: 1 }
+        );
+        return;
+      }
+
+      addBotMessage(
+        '<p><strong>Выберите, как использовать обязательные домены.</strong></p>',
+        [
+          { label: 'Всегда добавлять в анализ', onClick: () => selectRequiredMode('Всегда добавлять в анализ') },
+          { label: 'Учитывать только при наличии в выдаче', onClick: () => selectRequiredMode('Учитывать только при наличии в выдаче') },
+          { label: 'Анализировать только указанные домены', onClick: () => selectRequiredMode('Анализировать только указанные домены') }
+        ],
+        { columns: 1 }
+      );
+      configureComposer('waiting');
+    }
+
+    async function skipRequiredMode() {
+      addUserMessage('Пропустить настройку');
+      state.requiredMode = 'Не используется';
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askExcludedDomains();
+      }
+    }
+
+    async function selectRequiredMode(mode) {
+      addUserMessage(mode);
+      state.requiredMode = mode;
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        askExcludedDomains();
+      }
+    }
+
+    function askExcludedDomains(editMode = false, fixOnly = false) {
+      state.returnToSummary = editMode;
+      const text = fixOnly
+        ? '<p><strong>Отправьте исправленные исключаемые домены.</strong></p><p>Каждый домен укажите с новой строки.</p>'
+        : '<p><strong>Укажите домены, которые необходимо исключить из анализа.</strong></p><p>Каждый домен отправьте с новой строки.</p>';
+      const actions = [];
+      if (!fixOnly) actions.push({ label: 'Пропустить', onClick: skipExcludedDomains });
+      if (editMode) actions.push({ label: 'Очистить список', className: 'danger', onClick: clearExcludedDomains });
+      addBotMessage(text, actions, { columns: 1 });
+      configureComposer(fixOnly ? 'excluded_domains_fix' : 'excluded_domains', 'Каждый домен с новой строки', 'Можно вставить несколько доменов одним сообщением');
+    }
+
+    async function skipExcludedDomains() {
+      addUserMessage('Пропустить');
+      state.excludedDomains = [];
+      configureComposer('waiting');
+      await showTyping();
+      if (state.returnToSummary) {
+        state.returnToSummary = false;
+        showSummary();
+      } else {
+        showSummary();
+      }
+    }
+
+    async function clearExcludedDomains() {
+      addUserMessage('Очистить исключаемые домены');
+      state.excludedDomains = [];
+      configureComposer('waiting');
+      await showTyping();
+      showSummary();
+    }
+
+    async function handleExcludedDomains(text, fixOnly = false) {
+      addUserMessage(text);
+      configureComposer('waiting');
+      const result = validateDomainLines(text, 'excluded');
+      state.excludedDomains = uniqueMerge(fixOnly ? state.excludedDomains : [], result.valid);
+      state.pendingInvalidExcluded = result.invalid;
+      await showTyping();
+
+      let html = '';
+      if (result.valid.length) {
+        html += `<p><strong>Добавлены в исключения:</strong><br>${result.valid.map(escapeHtml).join('<br>')}</p>`;
+      }
+      if (result.invalid.length) {
+        html += '<p><strong>Не удалось добавить:</strong></p><ul class="compact-list">' +
+          result.invalid.map(item => `<li>${escapeHtml(item.original)} — ${escapeHtml(item.reason)}</li>`).join('') +
+          '</ul>';
+      }
+      if (!result.valid.length && !result.invalid.length) {
+        html = '<p>В сообщении не найдено ни одного домена.</p>';
+      }
+
+      if (result.invalid.length) {
+        addBotMessage(html, [
+          { label: 'Исправить ошибочные', onClick: () => askExcludedDomains(state.returnToSummary, true) },
+          { label: 'Продолжить', className: 'primary', onClick: continueAfterExcludedDomains }
+        ]);
+      } else {
+        addBotMessage(html || '<p>Исключения сохранены.</p>', [
+          { label: 'Продолжить', className: 'primary', onClick: continueAfterExcludedDomains }
+        ], { columns: 1 });
+      }
+    }
+
+    async function continueAfterExcludedDomains() {
+      await showTyping(350);
+      state.returnToSummary = false;
+      showSummary();
+    }
+
+    function summaryHtml() {
+      return `
+        <div class="summary-card">
+          <div class="summary-head">Проверьте параметры создания КП</div>
+          <div class="summary-body">
+            <div class="summary-grid">
+              <div class="summary-label">Сайт</div><div class="summary-value">${escapeHtml(state.siteDomain)}</div>
+              <div class="summary-label">Поисковая система</div><div class="summary-value">${escapeHtml(state.searchEngine)}</div>
+              <div class="summary-label">Регион</div><div class="summary-value">${escapeHtml(state.region)}</div>
+              <div class="summary-label">Сводный отчёт</div><div class="summary-value">${state.combinedReport ? 'включён' : 'выключен'}</div>
+              <div class="summary-label">Обязательные домены</div><div class="summary-value">${listHtml(state.requiredDomains)}</div>
+              <div class="summary-label">Режим доменов</div><div class="summary-value">${escapeHtml(state.requiredMode || 'не используется')}</div>
+              <div class="summary-label">Исключаемые домены</div><div class="summary-value">${listHtml(state.excludedDomains)}</div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function showSummary() {
+      configureComposer('waiting');
+      addBotMessage(summaryHtml(), [
+        { label: 'Запустить создание КП', className: 'brand', onClick: launchTask },
+        { label: 'Изменить параметры', onClick: showEditMenu },
+        { label: 'Отменить', className: 'danger', onClick: resetState }
+      ], { columns: 1 });
+    }
+
+    function showEditMenu() {
+      addUserMessage('Изменить параметры');
+      addBotMessage(
+        '<p><strong>Что нужно изменить?</strong></p>',
+        [
+          { label: 'URL сайта', onClick: () => askSiteUrl(true) },
+          { label: 'Поисковую систему', onClick: () => askSearchEngine(true) },
+          { label: 'Регион', onClick: () => askRegion(true) },
+          { label: 'Сводный отчёт', onClick: () => askCombinedReport(true) },
+          { label: 'Обязательные домены', onClick: () => askRequiredDomains(true) },
+          { label: 'Режим доменов', onClick: () => askRequiredMode(true) },
+          { label: 'Исключаемые домены', onClick: () => askExcludedDomains(true) },
+          { label: 'Вернуться к проверке', className: 'muted', onClick: showSummary }
+        ],
+        { columns: 1 }
+      );
+    }
+
+    function generateTaskId() {
+      const stamp = new Date();
+      const date = `${stamp.getFullYear()}${String(stamp.getMonth() + 1).padStart(2, '0')}${String(stamp.getDate()).padStart(2, '0')}`;
+      const random = Math.floor(100 + Math.random() * 900);
+      return `КП-${date}-${random}`;
+    }
+
+    async function launchTask() {
+      addUserMessage('Запустить создание КП');
+      configureComposer('waiting');
+      setBotStatus('передаёт данные…');
+      await showTyping(900);
+      state.taskId = generateTaskId();
+
+      addBotMessage(
+        `<div class="status-card">
+          <div class="status-head">Задача принята в работу</div>
+          <div class="status-body">
+            <div class="summary-grid">
+              <div class="summary-label">Номер задачи</div><div class="summary-value">${escapeHtml(state.taskId)}</div>
+              <div class="summary-label">Сайт</div><div class="summary-value">${escapeHtml(state.siteDomain)}</div>
+              <div class="summary-label">Время запуска</div><div class="summary-value">${nowTime()}</div>
+              <div class="summary-label">Статус</div><div class="summary-value">подготовка данных</div>
+            </div>
+          </div>
+        </div>`,
+        [{ label: 'Открыть задачу в Вебтронике', onClick: openWebtronicaDemo }],
+        { columns: 1, disableAfterClick: false }
+      );
+
+      startProgress();
+    }
+
+    function createStatusMessage() {
+      const message = addBotMessage(
+        `<div class="status-card">
+          <div class="status-head">Создание КП запущено</div>
+          <div class="status-body">
+            <div class="status-line"><span class="status-stage" data-status-stage>Подготавливаем исходные данные…</span><span class="status-percent" data-status-percent>25%</span></div>
+            <div class="progress-track"><div class="progress-bar" data-progress-bar></div></div>
+          </div>
+        </div>`
+      );
+      state.statusMessageEl = message.bubble;
+      return message.bubble;
+    }
+
+    function updateStatus(stage, percent) {
+      const bubble = state.statusMessageEl;
+      if (!bubble) return;
+      const stageEl = bubble.querySelector('[data-status-stage]');
+      const percentEl = bubble.querySelector('[data-status-percent]');
+      const barEl = bubble.querySelector('[data-progress-bar]');
+      stageEl.textContent = stage;
+      if (els.showPercent.checked) {
+        percentEl.style.display = '';
+        percentEl.textContent = `${percent}%`;
+        barEl.parentElement.style.display = '';
+        barEl.style.width = `${percent}%`;
+      } else {
+        percentEl.style.display = 'none';
+        barEl.parentElement.style.display = 'none';
+      }
+      scrollToBottom();
+    }
+
+    function startProgress() {
+      const bubble = createStatusMessage();
+      const bar = bubble.querySelector('[data-progress-bar]');
+      requestAnimationFrame(() => bar.style.width = '25%');
+
+      const stages = [
+        { delay: 1200, stage: 'Анализируем поисковую выдачу…', percent: 50 },
+        { delay: 2600, stage: 'Формируем коммерческое предложение…', percent: 80 },
+        { delay: 4100, stage: 'Выполняем финальную проверку документа…', percent: 95 },
+        { delay: 5600, stage: 'Готово', percent: 100 }
+      ];
+
+      state.progressTimers = stages.map(item => setTimeout(() => {
+        updateStatus(item.stage, item.percent);
+        if (item.percent === 100) {
+          setTimeout(() => els.forceError.checked ? showTaskError() : showTaskResult(), 450);
+        }
+      }, item.delay));
+    }
+
+    async function showTaskResult() {
+      setBotStatus('бот онлайн');
+      await showTyping(500);
+      addBotMessage(
+        `<div class="result-card">
+          <div class="result-head">Коммерческое предложение готово</div>
+          <div class="result-body">
+            <div class="summary-grid">
+              <div class="summary-label">Сайт</div><div class="summary-value">${escapeHtml(state.siteDomain)}</div>
+              <div class="summary-label">Поисковая система</div><div class="summary-value">${escapeHtml(state.searchEngine)}</div>
+              <div class="summary-label">Регион</div><div class="summary-value">${escapeHtml(state.region)}</div>
+              <div class="summary-label">Номер задачи</div><div class="summary-value">${escapeHtml(state.taskId)}</div>
+            </div>
+          </div>
+        </div>`,
+        [
+          { label: 'Открыть КП', className: 'primary', onClick: openProposalPreview },
+          { label: 'Скачать PDF', onClick: downloadDemoPdf },
+          { label: 'Открыть в Вебтронике', onClick: openWebtronicaDemo },
+          { label: 'Создать ещё одно КП', className: 'brand', onClick: resetState }
+        ],
+        { columns: 1, disableAfterClick: false }
+      );
+    }
+
+    async function showTaskError() {
+      setBotStatus('бот онлайн');
+      await showTyping(500);
+      addBotMessage(
+        '<p><strong>Не удалось создать коммерческое предложение.</strong></p>' +
+        '<p>При обработке задачи произошла ошибка. Проверьте параметры или повторите запуск.</p>' +
+        `<div class="error-note">Задача: ${escapeHtml(state.taskId)}</div>`,
+        [
+          { label: 'Повторить запуск', className: 'primary', onClick: launchTask },
+          { label: 'Изменить параметры', onClick: showEditMenu },
+          { label: 'Открыть задачу в Вебтронике', onClick: openWebtronicaDemo }
+        ],
+        { columns: 1, disableAfterClick: false }
+      );
+    }
+
+    function openProposalPreview() {
+      els.previewDomain.textContent = state.siteDomain;
+      els.previewDetails.innerHTML = `
+        <div class="summary-label">Поисковая система</div><div class="summary-value">${escapeHtml(state.searchEngine)}</div>
+        <div class="summary-label">Регион</div><div class="summary-value">${escapeHtml(state.region)}</div>
+        <div class="summary-label">Обязательные домены</div><div class="summary-value">${listHtml(state.requiredDomains)}</div>
+        <div class="summary-label">Исключения</div><div class="summary-value">${listHtml(state.excludedDomains)}</div>`;
+      els.proposalModal.classList.add('show');
+    }
+
+    function closeProposalPreview() {
+      els.proposalModal.classList.remove('show');
+    }
+
+    function openWebtronicaDemo() {
+      showToast('Демонстрация: в рабочей версии откроется задача в Вебтронике');
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add('show');
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => els.toast.classList.remove('show'), 2600);
+    }
+
+    function downloadDemoPdf() {
+      // Минимальный валидный PDF для демонстрации кнопки скачивания.
+      const safeDomain = state.siteDomain.replace(/[^a-z0-9.-]/gi, '_');
+      const text = `Commercial proposal for ${safeDomain}`;
+      const stream = `BT /F1 20 Tf 72 730 Td (${text.replace(/[()\\]/g, '\\$&')}) Tj ET`;
+      const objects = [
+        '1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj',
+        '2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj',
+        '3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 5 0 R >> >> /Contents 4 0 R >> endobj',
+        `4 0 obj << /Length ${stream.length} >> stream\n${stream}\nendstream endobj`,
+        '5 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj'
+      ];
+      let pdf = '%PDF-1.4\n';
+      const offsets = [0];
+      objects.forEach(obj => {
+        offsets.push(pdf.length);
+        pdf += `${obj}\n`;
+      });
+      const xrefOffset = pdf.length;
+      pdf += `xref\n0 ${objects.length + 1}\n0000000000 65535 f \n`;
+      for (let i = 1; i <= objects.length; i += 1) {
+        pdf += `${String(offsets[i]).padStart(10, '0')} 00000 n \n`;
+      }
+      pdf += `trailer << /Size ${objects.length + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+
+      const blob = new Blob([pdf], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `KP_${safeDomain}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showToast('Демонстрационный PDF сформирован');
+    }
+
+    function disableLatestInlineActions() {
+      const groups = [...els.chat.querySelectorAll('.inline-actions')];
+      const latest = groups.at(-1);
+      if (latest) latest.querySelectorAll('button').forEach(button => button.disabled = true);
+    }
+
+    async function submitComposer() {
+      const text = els.input.value.trim();
+      if (!text) return;
+
+      disableLatestInlineActions();
+      const step = state.step;
+      els.input.value = '';
+      autoResizeComposer();
+
+      if (step === 'site_url') await handleSiteUrl(text);
+      else if (step === 'custom_yandex_region') await handleCustomRegion(text);
+      else if (step === 'required_domains') await handleRequiredDomains(text, false);
+      else if (step === 'required_domains_fix') await handleRequiredDomains(text, true);
+      else if (step === 'excluded_domains') await handleExcludedDomains(text, false);
+      else if (step === 'excluded_domains_fix') await handleExcludedDomains(text, true);
+    }
+
+    els.input.addEventListener('input', autoResizeComposer);
+    els.input.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        submitComposer();
+      }
+    });
+    els.send.addEventListener('click', submitComposer);
+    els.reset.addEventListener('click', resetState);
+
+    els.devToggle.addEventListener('click', () => {
+      els.devPanel.classList.toggle('open');
+      els.devToggle.classList.toggle('is-active', els.devPanel.classList.contains('open'));
+    });
+    els.devClose.addEventListener('click', () => {
+      els.devPanel.classList.remove('open');
+      els.devToggle.classList.remove('is-active');
+    });
+
+    els.closeModal.addEventListener('click', closeProposalPreview);
+    els.proposalModal.addEventListener('click', event => {
+      if (event.target === els.proposalModal) closeProposalPreview();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        closeProposalPreview();
+        els.devPanel.classList.remove('open');
+        els.devToggle.classList.remove('is-active');
+      }
+    });
+
+    resetState();
+  </script>
+</body>
+</html>
