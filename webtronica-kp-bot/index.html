@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Webtronica КП Bot -- интерактивный прототип</title>
+  <title>Webtronica КП Bot — интерактивный прототип v2</title>
   <style>
     :root {
       --tg-blue: #3390ec;
@@ -748,7 +748,7 @@
           <div class="dev-title">DEV · логика бота</div>
           <button class="icon-button dev-close-mobile" id="devCloseBtn" aria-label="Закрыть DEV-панель">✕</button>
         </div>
-        <div class="dev-subtitle">Полное описание работы прототипа и будущей интеграции. Каждый раздел раскрывается по клику.</div>
+        <div class="dev-subtitle">Актуальная логика v2: регион → автоматический выбор ПС → КП + пакет внутренних документов. Каждый раздел раскрывается по клику.</div>
       </div>
       <div class="dev-content">
         <div class="dev-controls">
@@ -774,12 +774,13 @@
           <div class="dev-section-body">
             <p>Прототип демонстрирует Telegram-сценарий запуска создания коммерческого предложения внутри Вебтроники.</p>
             <ol>
-              <li>Бот по шагам собирает настройки.</li>
+              <li>Бот по шагам собирает входные настройки.</li>
+              <li>По выбранному региону автоматически определяет поисковую систему или обе поисковые системы.</li>
               <li>Передаёт задачу в Вебтронику.</li>
-              <li>Сообщает о принятии задачи и показывает её статус.</li>
-              <li>После готовности присылает ссылку и файл КП.</li>
+              <li>Показывает статус обработки.</li>
+              <li>После готовности присылает КП и ссылки на внутренние документы, на основе которых оно было сформировано.</li>
             </ol>
-            <p>В этой HTML-версии интеграция имитируется JavaScript без реальных API-запросов.</p>
+            <p>В HTML-версии все интеграции имитируются JavaScript без реальных API-запросов.</p>
           </div>
         </details>
 
@@ -797,14 +798,13 @@
         </details>
 
         <details class="dev-section">
-          <summary>3. Последовательность диалога</summary>
+          <summary>3. Актуальная последовательность диалога</summary>
           <div class="dev-section-body">
             <ol>
               <li>Команда «Создать КП».</li>
               <li>Ввод URL продвигаемого сайта.</li>
-              <li>Выбор поисковой системы.</li>
-              <li>Выбор региона с учётом поисковой системы.</li>
-              <li>Настройка сводного отчёта Яндекс + Google.</li>
+              <li>Выбор региона анализа.</li>
+              <li>Автоматическое определение ПС по региону.</li>
               <li>Ввод обязательных доменов одним сообщением.</li>
               <li>Выбор режима обязательных доменов.</li>
               <li>Ввод исключаемых доменов.</li>
@@ -812,8 +812,9 @@
               <li>Запуск задачи внутри Вебтроники.</li>
               <li>Сообщение о принятии задачи.</li>
               <li>Автоматическое обновление статуса.</li>
-              <li>Получение готового КП в Telegram.</li>
+              <li>Получение КП и внутренних документов Вебтроники.</li>
             </ol>
+            <p><strong>Удалено из сценария:</strong> отдельный шаг выбора поисковой системы и отдельный шаг «Сводный отчёт по Яндексу и Google».</p>
           </div>
         </details>
 
@@ -839,30 +840,42 @@
         </details>
 
         <details class="dev-section">
-          <summary>6. Выбор поисковой системы</summary>
+          <summary>6. Единый выбор региона</summary>
           <div class="dev-section-body">
-            <p>Пользователь выбирает одну из двух inline-кнопок: <code>Яндекс</code> или <code>Google</code>.</p>
-            <p>От выбора зависит следующий набор регионов. При последующем изменении поисковой системы ранее выбранный регион должен быть проверен заново.</p>
-          </div>
-        </details>
-
-        <details class="dev-section">
-          <summary>7. Регионы Google</summary>
-          <div class="dev-section-body">
-            <p>Для Google доступны только три кнопки:</p>
+            <p>После URL бот сразу предлагает единый список регионов. Поисковая система пользователем больше не выбирается.</p>
+            <p>Быстрые кнопки прототипа:</p>
             <ul>
               <li>Москва;</li>
+              <li>Санкт-Петербург;</li>
+              <li>Екатеринбург;</li>
+              <li>Н. Новгород;</li>
+              <li>Краснодар;</li>
               <li>Киев;</li>
-              <li>Нью-Йорк.</li>
+              <li>Нью-Йорк;</li>
+              <li>Другой…</li>
             </ul>
-            <p>Ручной ввод другого города для Google не предусмотрен.</p>
+            <p>Кнопка «Другой…» используется для ручного ввода дополнительных регионов Яндекса.</p>
           </div>
         </details>
 
         <details class="dev-section">
-          <summary>8. Регионы Яндекса и ручной ввод</summary>
+          <summary>7. Автоматическое определение поисковых систем</summary>
           <div class="dev-section-body">
-            <p>Быстрые кнопки: Москва, Санкт-Петербург, Екатеринбург, Н. Новгород, Краснодар и «Другой…».</p>
+            <p><strong>ПС — вычисляемое поле, а не пользовательская настройка.</strong></p>
+            <ul>
+              <li><strong>Москва</strong> → Яндекс + Google.</li>
+              <li><strong>Киев, Нью-Йорк</strong> → только Google.</li>
+              <li><strong>Санкт-Петербург, Екатеринбург, Н. Новгород, Краснодар</strong> → только Яндекс.</li>
+              <li><strong>Другой поддерживаемый регион из справочника Яндекса</strong> → только Яндекс.</li>
+            </ul>
+            <p>После выбора региона бот показывает информационное подтверждение: какой регион выбран и в каких ПС будет выполняться анализ.</p>
+            <p>В backend рекомендуется хранить поле <code>search_engines</code> как массив, например <code>["yandex", "google"]</code>, <code>["google"]</code> или <code>["yandex"]</code>.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>8. Ручной ввод региона и проверка</summary>
+          <div class="dev-section-body">
             <p>После выбора «Другой…» пользователь вводит город вручную. Нормализация игнорирует регистр, пробелы, точки, дефисы и иные разделители. Например, <code>ростов на дону</code> преобразуется в <code>Ростов-на-Дону</code>.</p>
             <p><strong>Два разных сообщения об ошибке:</strong></p>
             <ul>
@@ -874,15 +887,11 @@
         </details>
 
         <details class="dev-section">
-          <summary>9. Сводный отчёт Яндекс + Google</summary>
+          <summary>9. Москва заменяет старую настройку сводного отчёта</summary>
           <div class="dev-section-body">
-            <p>Бот обязательно поясняет: «Данная функция запускает анализ в обеих ПС по региону Москва».</p>
-            <ul>
-              <li>При включении поисковая система становится «Яндекс + Google».</li>
-              <li>Регион автоматически устанавливается «Москва».</li>
-              <li>Если был выбран другой регион, бот сначала запрашивает подтверждение изменения.</li>
-              <li>Если пользователь отказывается, сохраняются текущие поисковая система и регион.</li>
-            </ul>
+            <p>Отдельная настройка «Сводный отчёт по Яндексу и Google» удалена.</p>
+            <p>Если выбран регион <strong>Москва</strong>, бот автоматически запускает сбор данных сразу по двум поисковым системам — Яндексу и Google. Это полностью заменяет старую логику включённого сводного отчёта.</p>
+            <p>Отдельное пользовательское поле <code>combinedReport</code> в новой реализации не требуется.</p>
           </div>
         </details>
 
@@ -911,18 +920,18 @@
               <li><strong>Учитывать только при наличии в выдаче</strong> — включать только найденные в поиске домены.</li>
               <li><strong>Анализировать только указанные домены</strong> — автоматический поиск конкурентов не выполняется.</li>
             </ol>
-            <p>Если список доменов пуст, бот предлагает вернуться к их добавлению либо пропустить настройку режима.</p>
+            <p>Если обязательные домены не введены, бот предлагает сначала добавить их либо пропустить настройку режима.</p>
           </div>
         </details>
 
         <details class="dev-section">
           <summary>12. Исключаемые домены</summary>
           <div class="dev-section-body">
-            <p>Вводятся одним сообщением, каждый домен — с новой строки. Применяется та же валидация и нормализация.</p>
+            <p>Пользователь может отправить несколько доменов одним сообщением, каждый с новой строки. Шаг можно пропустить.</p>
             <ul>
-              <li>Нельзя исключить продвигаемый домен.</li>
-              <li>Один домен не может одновременно находиться в обязательном и исключаемом списке.</li>
-              <li>При конфликте бот сообщает причину и не добавляет спорное значение.</li>
+              <li>Используется та же валидация URL/домена.</li>
+              <li>Исключаемый домен не может совпадать с продвигаемым сайтом.</li>
+              <li>Один домен не может одновременно находиться в обязательном и исключаемом списках.</li>
             </ul>
           </div>
         </details>
@@ -931,8 +940,9 @@
           <summary>13. Итоговая проверка и редактирование</summary>
           <div class="dev-section-body">
             <p>Бот показывает карточку со всеми собранными параметрами и кнопками запуска, изменения и отмены.</p>
-            <p>Раздел «Изменить параметры» открывает отдельные кнопки для URL, поисковой системы, региона, сводного отчёта, обязательных доменов, режима и исключений.</p>
-            <p>После изменения одного поля пользователь возвращается к итоговой карточке. Связанные поля перепроверяются автоматически.</p>
+            <p>В карточке <strong>поисковые системы отображаются информационно</strong> и вычисляются из региона. Пользователь не может редактировать их отдельно.</p>
+            <p>Раздел «Изменить параметры» содержит: URL, регион, обязательные домены, режим доменов и исключаемые домены.</p>
+            <p>При изменении региона набор ПС пересчитывается автоматически.</p>
           </div>
         </details>
 
@@ -943,6 +953,8 @@
             <ul>
               <li>номер задачи;</li>
               <li>домен;</li>
+              <li>регион;</li>
+              <li>автоматически определённые ПС;</li>
               <li>время запуска;</li>
               <li>начальный статус;</li>
               <li>ссылку на задачу внутри Вебтроники.</li>
@@ -955,22 +967,39 @@
           <summary>15. Автоматическое обновление статуса</summary>
           <div class="dev-section-body">
             <p>Рекомендуется редактировать одно статусное сообщение, чтобы не засорять чат.</p>
-            <p>Пример последовательности: подготовка данных → анализ выдачи → формирование КП → финальная проверка.</p>
+            <p>Пример последовательности: подготовка данных → сбор поисковой выдачи → формирование внутренних анализов → формирование КП → финальная проверка.</p>
             <p>Процент разрешено показывать только при наличии реального прогресса от API. Переключатель выше демонстрирует оба варианта.</p>
           </div>
         </details>
 
         <details class="dev-section">
-          <summary>16. Готовое КП</summary>
+          <summary>16. Готовое КП и пакет внутренних документов</summary>
           <div class="dev-section-body">
-            <p>После завершения бот отправляет карточку результата с доменом, поисковой системой, регионом и номером задачи.</p>
-            <p>Кнопки: «Открыть КП», «Скачать PDF», «Открыть в Вебтронике», «Создать ещё одно КП».</p>
-            <p>В прототипе «Открыть КП» показывает демонстрационный предпросмотр, а «Скачать PDF» генерирует простой тестовый PDF.</p>
+            <p>После завершения бот отправляет карточку результата с доменом, регионом, вычисленными ПС и номером задачи.</p>
+            <p><strong>Основной результат:</strong> кнопки «Открыть КП» и «Скачать PDF».</p>
+            <p><strong>Дополнительно бот возвращает ссылки на внутренние документы Вебтроники, использованные при формировании КП:</strong></p>
+            <ul>
+              <li>Анализ конкурентов;</li>
+              <li>Анализ КФ;</li>
+              <li>Технический SEO-аудит;</li>
+              <li>Ошибки на сайте.</li>
+            </ul>
+            <p>Эти кнопки должны открывать соответствующие внутренние результаты в Вебтронике, а не скачивать фиктивные локальные файлы.</p>
+            <p>Если отдельный документ не сформирован или завершился ошибкой, backend должен вернуть его статус. Кнопку нельзя вести на пустой URL: её нужно скрыть либо показать как недоступную с понятным статусом.</p>
           </div>
         </details>
 
         <details class="dev-section">
-          <summary>17. Ошибка формирования КП</summary>
+          <summary>17. Формат результата API</summary>
+          <div class="dev-section-body">
+            <p>Рекомендуется возвращать не одну ссылку, а объект результатов задачи. Пример смысловой структуры:</p>
+            <p><code>proposal_url</code><br><code>competitors_analysis_url</code><br><code>commercial_factors_analysis_url</code><br><code>technical_audit_url</code><br><code>site_errors_url</code></p>
+            <p>Дополнительно желательно возвращать статус каждого документа: <code>ready</code>, <code>processing</code>, <code>failed</code> или <code>not_created</code>.</p>
+          </div>
+        </details>
+
+        <details class="dev-section">
+          <summary>18. Ошибка формирования КП</summary>
           <div class="dev-section-body">
             <p>Предусмотрен отдельный сценарий ошибки. Его можно включить переключателем в начале DEV-панели.</p>
             <p>Кнопки после ошибки: повторить запуск, изменить параметры или открыть задачу в Вебтронике. При повторе используются уже собранные параметры.</p>
@@ -978,7 +1007,7 @@
         </details>
 
         <details class="dev-section">
-          <summary>18. Техническая структура прототипа</summary>
+          <summary>19. Техническая структура прототипа</summary>
           <div class="dev-section-body">
             <ul>
               <li>Один автономный HTML-файл.</li>
@@ -991,20 +1020,23 @@
         </details>
 
         <details class="dev-section">
-          <summary>19. Будущая интеграция</summary>
+          <summary>20. Будущая интеграция</summary>
           <div class="dev-section-body">
             <p><strong>Рекомендуемый поток:</strong></p>
-            <p><code>Telegram → backend бота → API Вебтроники → ID задачи → webhook или polling → готовое КП → Telegram</code></p>
+            <p><code>Telegram → backend бота → API Вебтроники → ID задачи → webhook или polling → пакет результатов → Telegram</code></p>
             <p>Необходимо реализовать:</p>
             <ol>
               <li>авторизацию и Telegram user ID;</li>
+              <li>получение актуального справочника регионов;</li>
+              <li>автоматическое определение ПС по региону на backend, а не только в интерфейсе;</li>
               <li>создание задачи через API;</li>
               <li>сохранение связи пользователь ↔ задача ↔ проект;</li>
               <li>webhook от Вебтроники либо периодическую проверку статуса;</li>
-              <li>получение ссылки или файла;</li>
+              <li>получение КП и ссылок на все внутренние документы;</li>
+              <li>обработку частично готового пакета документов;</li>
               <li>повторные попытки и обработку ошибок;</li>
               <li>защиту от дублирующего запуска;</li>
-              <li>проверку прав доступа к задаче и документу.</li>
+              <li>проверку прав доступа к задаче и внутренним документам.</li>
             </ol>
           </div>
         </details>
@@ -1040,10 +1072,10 @@
   <script>
     'use strict';
 
-    // DEV: В рабочей версии справочники регионов должны поступать из Вебтроники.
+    // DEV: В рабочей версии справочник регионов и соответствие регион → ПС должны приходить из Вебтроники.
+    // UI также вычисляет ПС локально для демонстрации, но backend обязан повторно валидировать эту логику.
     const REGION_DATA = {
-      google: ['Москва', 'Киев', 'Нью-Йорк'],
-      yandexQuick: ['Москва', 'Санкт-Петербург', 'Екатеринбург', 'Н. Новгород', 'Краснодар'],
+      quick: ['Москва', 'Санкт-Петербург', 'Екатеринбург', 'Н. Новгород', 'Краснодар', 'Киев', 'Нью-Йорк'],
       yandexSupported: {
         'москва': 'Москва',
         'санктпетербург': 'Санкт-Петербург',
@@ -1078,9 +1110,8 @@
       returnToSummary: false,
       siteUrl: '',
       siteDomain: '',
-      searchEngine: '',
       region: '',
-      combinedReport: false,
+      searchEngines: [],
       requiredDomains: [],
       requiredMode: '',
       excludedDomains: [],
@@ -1311,6 +1342,21 @@
       return items.map(escapeHtml).join(', ');
     }
 
+    function determineSearchEngines(region) {
+      if (region === 'Москва') return ['Яндекс', 'Google'];
+      if (region === 'Киев' || region === 'Нью-Йорк') return ['Google'];
+      return ['Яндекс'];
+    }
+
+    function searchEnginesLabel() {
+      return state.searchEngines.length ? state.searchEngines.join(' + ') : 'не определены';
+    }
+
+    function setRegion(region) {
+      state.region = region;
+      state.searchEngines = determineSearchEngines(region);
+    }
+
     function resetState() {
       state.progressTimers.forEach(timer => clearTimeout(timer));
       Object.assign(state, {
@@ -1318,9 +1364,8 @@
         returnToSummary: false,
         siteUrl: '',
         siteDomain: '',
-        searchEngine: '',
         region: '',
-        combinedReport: false,
+        searchEngines: [],
         requiredDomains: [],
         requiredMode: '',
         excludedDomains: [],
@@ -1340,7 +1385,7 @@
       await showTyping(350);
       addBotMessage(
         '<p><strong>Здравствуйте! Я помогу создать коммерческое предложение в Вебтронике.</strong></p>' +
-        '<p>Соберу настройки анализа, передам задачу в систему и пришлю готовое КП в этот чат.</p>',
+        '<p>Соберу настройки анализа, автоматически определю поисковые системы по региону и пришлю готовое КП вместе с материалами анализа.</p>',
         [{ label: 'Создать КП', className: 'primary', onClick: beginFlow }],
         { columns: 1 }
       );
@@ -1387,56 +1432,36 @@
         state.returnToSummary = false;
         showSummary();
       } else {
-        askSearchEngine();
+        askRegion();
       }
-    }
-
-    function askSearchEngine(editMode = false) {
-      state.returnToSummary = editMode;
-      addBotMessage(
-        '<p><strong>Выберите поисковую систему для анализа.</strong></p>',
-        [
-          { label: 'Яндекс', onClick: () => selectSearchEngine('Яндекс') },
-          { label: 'Google', onClick: () => selectSearchEngine('Google') }
-        ]
-      );
-      configureComposer('waiting');
-    }
-
-    async function selectSearchEngine(engine) {
-      addUserMessage(engine);
-      state.searchEngine = engine;
-      state.combinedReport = false;
-      state.region = '';
-      await showTyping();
-      askRegion(state.returnToSummary);
     }
 
     function askRegion(editMode = false) {
       state.returnToSummary = editMode;
-      if (state.searchEngine === 'Google') {
-        addBotMessage(
-          '<p><strong>Выберите регион анализа для Google.</strong></p>',
-          REGION_DATA.google.map(region => ({ label: region, onClick: () => selectRegion(region) })),
-          { columns: 3 }
-        );
-      } else {
-        const actions = REGION_DATA.yandexQuick.map(region => ({ label: region, onClick: () => selectRegion(region) }));
-        actions.push({ label: 'Другой…', onClick: askCustomYandexRegion });
-        addBotMessage('<p><strong>Выберите регион анализа для Яндекса.</strong></p>', actions);
-      }
+      const actions = REGION_DATA.quick.map(region => ({ label: region, onClick: () => selectRegion(region) }));
+      actions.push({ label: 'Другой…', onClick: askCustomYandexRegion });
+      addBotMessage(
+        '<p><strong>Выберите регион анализа.</strong></p>' +
+        '<div class="info-note">Поисковая система определяется автоматически по доступности выбранного региона.</div>',
+        actions
+      );
       configureComposer('waiting');
     }
 
     async function selectRegion(region) {
       addUserMessage(region);
-      state.region = region;
+      setRegion(region);
       await showTyping();
+      addBotMessage(
+        `<p>Выбран регион: <strong>${escapeHtml(state.region)}</strong>.</p>` +
+        `<div class="success-note">Анализ будет выполнен в: <strong>${escapeHtml(searchEnginesLabel())}</strong>.</div>`
+      );
+      await showTyping(280);
       if (state.returnToSummary) {
         state.returnToSummary = false;
         showSummary();
       } else {
-        askCombinedReport();
+        askRequiredDomains();
       }
     }
 
@@ -1445,7 +1470,7 @@
       addBotMessage(
         '<p><strong>Введите название города вручную.</strong></p>' +
         '<p>Например: Ростов-на-Дону.</p>' +
-        '<div class="info-note">Регистр, пробелы, точки и дефисы при проверке не учитываются.</div>',
+        '<div class="info-note">Дополнительные регионы из этого шага относятся к Яндексу. Регистр, пробелы, точки и дефисы при проверке не учитываются.</div>',
         [{ label: 'Вернуться к регионам', className: 'muted', onClick: () => askRegion(state.returnToSummary) }],
         { columns: 1 }
       );
@@ -1461,13 +1486,17 @@
       await showTyping();
 
       if (supported) {
-        state.region = supported;
-        addBotMessage(`<p>Город определён как <strong>${escapeHtml(supported)}</strong>.</p><div class="success-note">Регион доступен для анализа.</div>`);
+        setRegion(supported);
+        addBotMessage(
+          `<p>Город определён как <strong>${escapeHtml(supported)}</strong>.</p>` +
+          `<div class="success-note">Регион доступен для анализа. Поисковая система: <strong>${escapeHtml(searchEnginesLabel())}</strong>.</div>`
+        );
+        await showTyping(280);
         if (state.returnToSummary) {
           state.returnToSummary = false;
           showSummary();
         } else {
-          askCombinedReport();
+          askRequiredDomains();
         }
         return;
       }
@@ -1495,72 +1524,6 @@
         ],
         { columns: 1 }
       );
-    }
-
-    function askCombinedReport(editMode = false) {
-      state.returnToSummary = editMode;
-      addBotMessage(
-        '<p><strong>Сводный отчёт по Яндексу и Google</strong></p>' +
-        '<p>Данная функция запускает анализ в обеих ПС по региону Москва.</p>',
-        [
-          { label: 'Включить', className: 'primary', onClick: enableCombinedReport },
-          { label: 'Не включать', onClick: disableCombinedReport }
-        ]
-      );
-      configureComposer('waiting');
-    }
-
-    function enableCombinedReport() {
-      addUserMessage('Включить сводный отчёт');
-      if (state.region && state.region !== 'Москва') {
-        addBotMessage(
-          '<p>Для сводного отчёта анализ выполняется только по региону <strong>Москва</strong>.</p>' +
-          `<div class="warning-note">Текущие настройки «${escapeHtml(state.searchEngine)} · ${escapeHtml(state.region)}» будут заменены.</div>`,
-          [
-            { label: 'Включить сводный отчёт', className: 'primary', onClick: confirmCombinedReport },
-            { label: 'Оставить текущие настройки', onClick: declineCombinedReport }
-          ],
-          { columns: 1 }
-        );
-      } else {
-        confirmCombinedReport();
-      }
-    }
-
-    async function confirmCombinedReport() {
-      state.combinedReport = true;
-      state.searchEngine = 'Яндекс + Google';
-      state.region = 'Москва';
-      await showTyping();
-      if (state.returnToSummary) {
-        state.returnToSummary = false;
-        showSummary();
-      } else {
-        askRequiredDomains();
-      }
-    }
-
-    async function declineCombinedReport() {
-      state.combinedReport = false;
-      await showTyping();
-      if (state.returnToSummary) {
-        state.returnToSummary = false;
-        showSummary();
-      } else {
-        askRequiredDomains();
-      }
-    }
-
-    async function disableCombinedReport() {
-      addUserMessage('Не включать');
-      state.combinedReport = false;
-      await showTyping();
-      if (state.returnToSummary) {
-        state.returnToSummary = false;
-        showSummary();
-      } else {
-        askRequiredDomains();
-      }
     }
 
     function askRequiredDomains(editMode = false, fixOnly = false) {
@@ -1709,12 +1672,7 @@
       state.excludedDomains = [];
       configureComposer('waiting');
       await showTyping();
-      if (state.returnToSummary) {
-        state.returnToSummary = false;
-        showSummary();
-      } else {
-        showSummary();
-      }
+      showSummary();
     }
 
     async function clearExcludedDomains() {
@@ -1771,9 +1729,8 @@
           <div class="summary-body">
             <div class="summary-grid">
               <div class="summary-label">Сайт</div><div class="summary-value">${escapeHtml(state.siteDomain)}</div>
-              <div class="summary-label">Поисковая система</div><div class="summary-value">${escapeHtml(state.searchEngine)}</div>
               <div class="summary-label">Регион</div><div class="summary-value">${escapeHtml(state.region)}</div>
-              <div class="summary-label">Сводный отчёт</div><div class="summary-value">${state.combinedReport ? 'включён' : 'выключен'}</div>
+              <div class="summary-label">Поисковые системы</div><div class="summary-value">${escapeHtml(searchEnginesLabel())} <span style="color:var(--tg-muted);font-size:11px">(автоматически)</span></div>
               <div class="summary-label">Обязательные домены</div><div class="summary-value">${listHtml(state.requiredDomains)}</div>
               <div class="summary-label">Режим доменов</div><div class="summary-value">${escapeHtml(state.requiredMode || 'не используется')}</div>
               <div class="summary-label">Исключаемые домены</div><div class="summary-value">${listHtml(state.excludedDomains)}</div>
@@ -1794,12 +1751,11 @@
     function showEditMenu() {
       addUserMessage('Изменить параметры');
       addBotMessage(
-        '<p><strong>Что нужно изменить?</strong></p>',
+        '<p><strong>Что нужно изменить?</strong></p>' +
+        '<div class="info-note">Поисковые системы отдельно не редактируются — они пересчитываются автоматически после изменения региона.</div>',
         [
           { label: 'URL сайта', onClick: () => askSiteUrl(true) },
-          { label: 'Поисковую систему', onClick: () => askSearchEngine(true) },
           { label: 'Регион', onClick: () => askRegion(true) },
-          { label: 'Сводный отчёт', onClick: () => askCombinedReport(true) },
           { label: 'Обязательные домены', onClick: () => askRequiredDomains(true) },
           { label: 'Режим доменов', onClick: () => askRequiredMode(true) },
           { label: 'Исключаемые домены', onClick: () => askExcludedDomains(true) },
@@ -1830,6 +1786,8 @@
             <div class="summary-grid">
               <div class="summary-label">Номер задачи</div><div class="summary-value">${escapeHtml(state.taskId)}</div>
               <div class="summary-label">Сайт</div><div class="summary-value">${escapeHtml(state.siteDomain)}</div>
+              <div class="summary-label">Регион</div><div class="summary-value">${escapeHtml(state.region)}</div>
+              <div class="summary-label">Поисковые системы</div><div class="summary-value">${escapeHtml(searchEnginesLabel())}</div>
               <div class="summary-label">Время запуска</div><div class="summary-value">${nowTime()}</div>
               <div class="summary-label">Статус</div><div class="summary-value">подготовка данных</div>
             </div>
@@ -1847,7 +1805,7 @@
         `<div class="status-card">
           <div class="status-head">Создание КП запущено</div>
           <div class="status-body">
-            <div class="status-line"><span class="status-stage" data-status-stage>Подготавливаем исходные данные…</span><span class="status-percent" data-status-percent>25%</span></div>
+            <div class="status-line"><span class="status-stage" data-status-stage>Подготавливаем исходные данные…</span><span class="status-percent" data-status-percent>20%</span></div>
             <div class="progress-track"><div class="progress-bar" data-progress-bar></div></div>
           </div>
         </div>`
@@ -1878,13 +1836,14 @@
     function startProgress() {
       const bubble = createStatusMessage();
       const bar = bubble.querySelector('[data-progress-bar]');
-      requestAnimationFrame(() => bar.style.width = '25%');
+      requestAnimationFrame(() => bar.style.width = '20%');
 
       const stages = [
-        { delay: 1200, stage: 'Анализируем поисковую выдачу…', percent: 50 },
-        { delay: 2600, stage: 'Формируем коммерческое предложение…', percent: 80 },
-        { delay: 4100, stage: 'Выполняем финальную проверку документа…', percent: 95 },
-        { delay: 5600, stage: 'Готово', percent: 100 }
+        { delay: 1100, stage: `Собираем данные из ${searchEnginesLabel()}…`, percent: 40 },
+        { delay: 2300, stage: 'Формируем внутренние анализы Вебтроники…', percent: 65 },
+        { delay: 3600, stage: 'Формируем коммерческое предложение…', percent: 82 },
+        { delay: 4900, stage: 'Проверяем пакет документов…', percent: 95 },
+        { delay: 6100, stage: 'Готово', percent: 100 }
       ];
 
       state.progressTimers = stages.map(item => setTimeout(() => {
@@ -1904,16 +1863,21 @@
           <div class="result-body">
             <div class="summary-grid">
               <div class="summary-label">Сайт</div><div class="summary-value">${escapeHtml(state.siteDomain)}</div>
-              <div class="summary-label">Поисковая система</div><div class="summary-value">${escapeHtml(state.searchEngine)}</div>
               <div class="summary-label">Регион</div><div class="summary-value">${escapeHtml(state.region)}</div>
+              <div class="summary-label">Поисковые системы</div><div class="summary-value">${escapeHtml(searchEnginesLabel())}</div>
               <div class="summary-label">Номер задачи</div><div class="summary-value">${escapeHtml(state.taskId)}</div>
             </div>
+            <div class="info-note" style="margin-top:12px">Готово КП и внутренние документы, на основе которых оно было сформировано.</div>
           </div>
         </div>`,
         [
-          { label: 'Открыть КП', className: 'primary', onClick: openProposalPreview },
-          { label: 'Скачать PDF', onClick: downloadDemoPdf },
-          { label: 'Открыть в Вебтронике', onClick: openWebtronicaDemo },
+          { label: '📄 Открыть КП', className: 'primary', onClick: openProposalPreview },
+          { label: '⬇️ Скачать PDF', onClick: downloadDemoPdf },
+          { label: '🔎 Анализ конкурентов', onClick: () => openInternalDocumentDemo('Анализ конкурентов') },
+          { label: '📊 Анализ КФ', onClick: () => openInternalDocumentDemo('Анализ КФ') },
+          { label: '🛠 Технический SEO-аудит', onClick: () => openInternalDocumentDemo('Технический SEO-аудит') },
+          { label: '⚠️ Ошибки на сайте', onClick: () => openInternalDocumentDemo('Ошибки на сайте') },
+          { label: 'Открыть задачу в Вебтронике', onClick: openWebtronicaDemo },
           { label: 'Создать ещё одно КП', className: 'brand', onClick: resetState }
         ],
         { columns: 1, disableAfterClick: false }
@@ -1939,8 +1903,8 @@
     function openProposalPreview() {
       els.previewDomain.textContent = state.siteDomain;
       els.previewDetails.innerHTML = `
-        <div class="summary-label">Поисковая система</div><div class="summary-value">${escapeHtml(state.searchEngine)}</div>
         <div class="summary-label">Регион</div><div class="summary-value">${escapeHtml(state.region)}</div>
+        <div class="summary-label">Поисковые системы</div><div class="summary-value">${escapeHtml(searchEnginesLabel())}</div>
         <div class="summary-label">Обязательные домены</div><div class="summary-value">${listHtml(state.requiredDomains)}</div>
         <div class="summary-label">Исключения</div><div class="summary-value">${listHtml(state.excludedDomains)}</div>`;
       els.proposalModal.classList.add('show');
@@ -1954,15 +1918,19 @@
       showToast('Демонстрация: в рабочей версии откроется задача в Вебтронике');
     }
 
+    function openInternalDocumentDemo(name) {
+      showToast(`Демонстрация: откроется внутренний документ «${name}» в Вебтронике`);
+    }
+
     function showToast(message) {
       els.toast.textContent = message;
       els.toast.classList.add('show');
       clearTimeout(showToast.timer);
-      showToast.timer = setTimeout(() => els.toast.classList.remove('show'), 2600);
+      showToast.timer = setTimeout(() => els.toast.classList.remove('show'), 3000);
     }
 
     function downloadDemoPdf() {
-      // Минимальный валидный PDF для демонстрации кнопки скачивания.
+      // Минимальный валидный PDF для демонстрации кнопки скачивания КП.
       const safeDomain = state.siteDomain.replace(/[^a-z0-9.-]/gi, '_');
       const text = `Commercial proposal for ${safeDomain}`;
       const stream = `BT /F1 20 Tf 72 730 Td (${text.replace(/[()\\]/g, '\\$&')}) Tj ET`;
