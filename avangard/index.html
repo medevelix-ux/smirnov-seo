@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Интерактивный HTML-прототип страницы имплантации Lenmiriot стоматологической клиники «Авангард» в Самаре.">
+  <title>Имплантация Lenmiriot в Самаре — клиника «Авангард»</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <defs>
+      <symbol id="scenario-one" viewBox="0 0 92 52">
+        <path d="M5 11c3-4 10-4 13 0v15c0 8-3 16-6.5 16S5 34 5 26V11Zm18 0c3-4 10-4 13 0v15c0 8-3 16-6.5 16S23 34 23 26V11Zm36 0c3-4 10-4 13 0v15c0 8-3 16-6.5 16S59 34 59 26V11Zm18 0c3-4 10-4 13 0v15c0 8-3 16-6.5 16S77 34 77 26V11Z"/>
+        <path d="M41 10h13v25H41z" class="svg-gap"/>
+        <path d="M44 38h7" class="svg-accent"/>
+      </symbol>
+      <symbol id="scenario-several" viewBox="0 0 92 52">
+        <path d="M5 11c3-4 10-4 13 0v15c0 8-3 16-6.5 16S5 34 5 26V11Zm69 0c3-4 10-4 13 0v15c0 8-3 16-6.5 16S74 34 74 26V11Z"/>
+        <path d="M24 10h13v25H24zM41 10h13v25H41zM58 10h10v25H58z" class="svg-gap"/>
+        <path d="M28 39h36" class="svg-accent"/>
+      </symbol>
+      <symbol id="scenario-extract" viewBox="0 0 92 52">
+        <path d="M5 11c3-4 10-4 13 0v15c0 8-3 16-6.5 16S5 34 5 26V11Zm18 0c3-4 10-4 13 0v15c0 8-3 16-6.5 16S23 34 23 26V11Zm36 0c3-4 10-4 13 0v15c0 8-3 16-6.5 16S59 34 59 26V11Zm18 0c3-4 10-4 13 0v15c0 8-3 16-6.5 16S77 34 77 26V11Z"/>
+        <path d="M41 11c3-4 10-4 13 0v15c0 8-3 16-6.5 16S41 34 41 26V11Z" class="svg-alert"/>
+        <path d="M47.5 27V3m0 0-5 6m5-6 5 6" class="svg-accent"/>
+      </symbol>
+      <symbol id="scenario-all" viewBox="0 0 92 52">
+        <path d="M7 18c10-13 68-13 78 0M9 27c13 10 61 10 74 0" class="svg-arch"/>
+        <path d="M14 16v10m11-15v20m14-22v24m14-24v24m14-22v20m11-15v10"/>
+        <circle cx="23" cy="39" r="3" class="svg-accent"/><circle cx="39" cy="42" r="3" class="svg-accent"/><circle cx="53" cy="42" r="3" class="svg-accent"/><circle cx="69" cy="39" r="3" class="svg-accent"/>
+      </symbol>
+      <symbol id="scenario-bone" viewBox="0 0 92 52">
+        <path d="M5 31c13-8 23 2 34-4 13-7 23-7 48 2v17H5V31Z" class="svg-bone"/>
+        <path d="M45 8h12v10l-2 3v19H47V21l-2-3V8Z" class="svg-implant"/>
+        <path d="M47 25h8m-8 5h8m-8 5h8" class="svg-detail"/>
+      </symbol>
+      <symbol id="scenario-comfort" viewBox="0 0 92 52">
+        <path d="M46 4 72 13v13c0 12-10 19-26 23-16-4-26-11-26-23V13L46 4Z" class="svg-shield"/>
+        <path d="M37 18c4-5 7-2 9 0 2-2 5-5 9 0 5 7-3 16-9 20-6-4-14-13-9-20Z"/>
+      </symbol>
+      <symbol id="solution-implant" viewBox="0 0 180 112">
+        <path d="M18 66c25-12 119-12 144 0v34H18V66Z" class="svg-bone"/>
+        <path d="M74 20c7-10 25-10 32 0v25c0 10-7 18-16 18s-16-8-16-18V20Z"/>
+        <path d="M83 62h14l5 8-5 31H83l-5-31 5-8Z" class="svg-implant"/>
+        <path d="M82 72h16M81 80h18M80 88h20M79 96h22" class="svg-detail"/>
+      </symbol>
+      <symbol id="solution-bridge" viewBox="0 0 180 112">
+        <path d="M18 76c26-9 118-9 144 0v24H18V76Z" class="svg-bone"/>
+        <path d="M35 31c6-10 22-10 28 0v22c0 13-6 23-14 23S35 66 35 53V31Zm41 0c6-10 22-10 28 0v22c0 13-6 23-14 23S76 66 76 53V31Zm41 0c6-10 22-10 28 0v22c0 13-6 23-14 23s-14-10-14-23V31Z"/>
+        <path d="M48 72v25m83-25v25" class="svg-detail"/>
+        <path d="M38 25h104" class="svg-accent"/>
+      </symbol>
+      <symbol id="solution-removable" viewBox="0 0 180 112">
+        <path d="M25 61c20-30 110-30 130 0-8 31-122 31-130 0Z" class="svg-denture"/>
+        <path d="M39 57c13-18 89-18 102 0-21 14-81 14-102 0Z" class="svg-bone"/>
+        <path d="M43 45c5-8 17-8 22 0v15H43V45Zm24-8c5-8 17-8 22 0v23H67V37Zm24 0c5-8 17-8 22 0v23H91V37Zm24 8c5-8 17-8 22 0v15h-22V45Z"/>
+      </symbol>
+    </defs>
+  </svg>
+  <div class="prototype-note" role="note">
+    <div class="container prototype-note__inner">
+      <span><strong>HTML-прототип.</strong> Цены, рейтинги, сроки и медицинские формулировки требуют проверки перед публикацией.</span>
+      <button class="prototype-note__close" type="button" data-close-note aria-label="Закрыть уведомление">×</button>
+    </div>
+  </div>
+
+  <header class="site-header" id="top">
+    <div class="header-top">
+      <div class="container header-top__inner">
+        <a href="#clinic">Самара, ул. Мичурина, 132</a>
+        <span>Пн–Пт 9:00–20:00 · Сб–Вс 9:00–18:00</span>
+        <a href="tel:+79379894554">+7 (937) 989-45-54</a>
+      </div>
+    </div>
+    <div class="container header-main">
+      <a class="brand" href="#top" aria-label="Авангард — на главную">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img">
+            <path d="M13 9c4-4 8-5 11-2 3-3 7-2 11 2 7 7 2 15-1 21-3 6-4 12-8 12-3 0-2-11-4-11s-1 11-4 11c-4 0-5-6-8-12C7 24 2 16 13 9Z" fill="none" stroke="currentColor" stroke-width="2.6"/>
+            <path d="M15 13c3 2 5 3 9 3s6-1 9-3" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span><strong>АВАНГАРД</strong><small>стоматологическая клиника</small></span>
+      </a>
+
+      <button class="menu-toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="main-nav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">Открыть меню</span>
+      </button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Основная навигация">
+        <a href="#solutions">Решения</a>
+        <a href="#prices">Цены</a>
+        <a href="#doctors">Врачи</a>
+        <a href="#cases">Работы</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#clinic">Контакты</a>
+      </nav>
+
+      <a class="button button--primary header-cta" href="#consultation">Получить план лечения</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero section">
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <div class="eyebrow"><span></span> Имплантация в Самаре</div>
+          <h1>Новый зуб на импланте <em>Lenmiriot</em></h1>
+          <p class="hero__lead">Восстановим функцию и эстетику зуба по понятному плану — от диагностики до постоянной коронки.</p>
+
+          <div class="hero-price" aria-label="Акционная цена">
+            <span class="hero-price__label">Установка импланта</span>
+            <strong>22 000 ₽</strong>
+            <del>27 000 ₽</del>
+          </div>
+
+          <div class="hero__actions">
+            <a class="button button--primary button--large" href="#consultation">Записаться на консультацию</a>
+            <a class="button button--light button--large" href="#prices">Посмотреть цены</a>
+          </div>
+
+          <ul class="hero-benefits" aria-label="Ключевые преимущества">
+            <li><span>✓</span> Лечение по договору</li>
+            <li><span>✓</span> План и стоимость до старта</li>
+            <li><span>✓</span> Сопровождение по этапам</li>
+          </ul>
+        </div>
+
+        <div class="hero__visual">
+          <img src="https://optim.tildacdn.com/tild6261-3536-4462-a362-333336656432/-/format/webp/_.png.webp" alt="Команда врачей стоматологической клиники «Авангард»">
+          <div class="hero__visual-shade"></div>
+          <div class="hero-floating-card hero-floating-card--top">
+            <span class="status-dot"></span>
+            <div><small>Первый шаг</small><strong>Диагностика и план</strong></div>
+          </div>
+          <div class="hero-floating-card hero-floating-card--bottom">
+            <strong>3 специалиста</strong>
+            <span>хирург · ортопед · терапевт</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="proof-strip" aria-label="Факты о клинике">
+      <div class="container proof-strip__grid">
+        <div class="proof-item"><strong>4,9</strong><span>пример рейтинга<br>на независимой площадке</span></div>
+        <div class="proof-item"><strong>12 лет</strong><span>средний стаж<br>ключевых специалистов</span></div>
+        <div class="proof-item"><strong>КЛКТ</strong><span>цифровая диагностика<br>перед лечением</span></div>
+        <div class="proof-item"><strong>до 10 лет</strong><span>пример срока гарантии<br>по условиям договора</span></div>
+      </div>
+    </section>
+
+    <nav class="anchor-nav" aria-label="Навигация по странице">
+      <div class="container anchor-nav__inner">
+        <a href="#solutions">Ваша ситуация</a>
+        <a href="#prices">Стоимость</a>
+        <a href="#systems">Системы</a>
+        <a href="#doctors">Врачи</a>
+        <a href="#process">Этапы</a>
+        <a href="#cases">Работы</a>
+        <a href="#faq">FAQ</a>
+      </div>
+    </nav>
+
+    <section class="section" id="solutions">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Начните с вашей ситуации</span>
+            <h2>Какой результат вам нужен?</h2>
+          </div>
+          <p>Выберите близкий вариант — прототип покажет пример подходящего маршрута. Окончательное решение принимает врач после диагностики.</p>
+        </div>
+
+        <div class="scenario-layout">
+          <div class="scenario-grid" role="group" aria-label="Выбор клинической ситуации">
+            <button class="scenario-card is-active" type="button" data-scenario="one" aria-pressed="true">
+              <span class="scenario-card__icon"><svg viewBox="0 0 92 52" aria-hidden="true"><use href="#scenario-one"></use></svg></span>
+              <strong>Нет одного зуба</strong>
+              <small>Вернуть отдельный зуб без опоры на соседние</small>
+            </button>
+            <button class="scenario-card" type="button" data-scenario="several" aria-pressed="false">
+              <span class="scenario-card__icon"><svg viewBox="0 0 92 52" aria-hidden="true"><use href="#scenario-several"></use></svg></span>
+              <strong>Нет нескольких зубов</strong>
+              <small>Восстановить участок несъёмной конструкцией</small>
+            </button>
+            <button class="scenario-card" type="button" data-scenario="extract" aria-pressed="false">
+              <span class="scenario-card__icon"><svg viewBox="0 0 92 52" aria-hidden="true"><use href="#scenario-extract"></use></svg></span>
+              <strong>Зуб нужно удалить</strong>
+              <small>Проверить возможность одномоментной установки</small>
+            </button>
+            <button class="scenario-card" type="button" data-scenario="all" aria-pressed="false">
+              <span class="scenario-card__icon"><svg viewBox="0 0 92 52" aria-hidden="true"><use href="#scenario-all"></use></svg></span>
+              <strong>Нет большинства зубов</strong>
+              <small>Рассмотреть All-on-4 или All-on-6</small>
+            </button>
+            <button class="scenario-card" type="button" data-scenario="bone" aria-pressed="false">
+              <span class="scenario-card__icon"><svg viewBox="0 0 92 52" aria-hidden="true"><use href="#scenario-bone"></use></svg></span>
+              <strong>Недостаточно кости</strong>
+              <small>Оценить объём тканей по КЛКТ</small>
+            </button>
+            <button class="scenario-card" type="button" data-scenario="fear" aria-pressed="false">
+              <span class="scenario-card__icon"><svg viewBox="0 0 92 52" aria-hidden="true"><use href="#scenario-comfort"></use></svg></span>
+              <strong>Боюсь операции</strong>
+              <small>Обсудить обезболивание и комфорт</small>
+            </button>
+          </div>
+
+          <aside class="scenario-result" aria-live="polite">
+            <span class="scenario-result__badge">Предварительный маршрут</span>
+            <h3 id="scenario-title">Восстановление одного зуба</h3>
+            <p id="scenario-description">Проверим объём кости, положение соседних зубов и прикус. Если условия подходят, составим план установки импланта и будущей коронки.</p>
+            <ol id="scenario-steps">
+              <li>Консультация и анализ КЛКТ</li>
+              <li>Установка импланта</li>
+              <li>Постоянная коронка после приживления</li>
+            </ol>
+            <div class="scenario-result__footer">
+              <span><small>Первый шаг</small><strong id="scenario-first-step">План лечения</strong></span>
+              <a class="button button--white" href="#consultation">Обсудить с врачом</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="consultation">
+      <div class="container consultation-card">
+        <div class="consultation-card__content">
+          <span class="kicker">Первичная консультация</span>
+          <h2>Получите понятный план лечения</h2>
+          <p>После консультации вы будете понимать последовательность, сроки и ориентировочный бюджет восстановления зуба.</p>
+          <div class="check-grid">
+            <div><span>01</span><p><strong>Осмотр специалистов</strong><small>Хирург, ортопед и терапевт по показаниям</small></p></div>
+            <div><span>02</span><p><strong>Анализ диагностики</strong><small>Оценка кости, десны, прикуса и соседних зубов</small></p></div>
+            <div><span>03</span><p><strong>План по этапам</strong><small>Что, когда и в какой последовательности проводится</small></p></div>
+            <div><span>04</span><p><strong>Варианты бюджета</strong><small>Понятное сравнение подходящих решений</small></p></div>
+          </div>
+        </div>
+
+        <form class="lead-form js-demo-form" novalidate>
+          <div class="lead-form__head">
+            <span>Запись на консультацию</span>
+            <strong>Оставьте номер — администратор согласует удобное время</strong>
+          </div>
+          <label>
+            <span>Имя</span>
+            <input name="name" autocomplete="name" placeholder="Как к вам обращаться?">
+          </label>
+          <label>
+            <span>Телефон</span>
+            <input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" required>
+          </label>
+          <label>
+            <span>Что вас беспокоит?</span>
+            <select name="topic">
+              <option>Нет одного зуба</option>
+              <option>Нет нескольких зубов</option>
+              <option>Нужна полная имплантация</option>
+              <option>Хочу узнать стоимость</option>
+              <option>Нужна консультация врача</option>
+            </select>
+          </label>
+          <button class="button button--primary button--block" type="submit">Получить план лечения</button>
+          <p class="form-note">Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.</p>
+          <p class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="section" id="prices">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Прозрачная стоимость</span>
+            <h2>Выберите формат лечения</h2>
+          </div>
+          <p>Карточки разделяют цену установки импланта и полный путь до готового зуба. Финальная смета формируется после диагностики.</p>
+        </div>
+
+        <div class="price-grid">
+          <article class="price-card">
+            <span class="price-card__tag">Хирургический этап</span>
+            <h3>Установка Lenmiriot</h3>
+            <p class="price-card__desc">Для пациента, которому сейчас нужен только хирургический этап.</p>
+            <div class="price-card__value"><span>от</span><strong>22 000 ₽</strong></div>
+            <ul>
+              <li>Имплант Lenmiriot</li>
+              <li>Работа хирурга</li>
+              <li>Установка импланта</li>
+              <li class="is-muted">Коронка рассчитывается отдельно</li>
+            </ul>
+            <a class="button button--outline button--block" href="#consultation">Уточнить стоимость</a>
+          </article>
+
+          <article class="price-card price-card--featured">
+            <div class="price-card__popular">Чаще выбирают</div>
+            <span class="price-card__tag">Готовый зуб</span>
+            <h3>Имплантация «под ключ»</h3>
+            <p class="price-card__desc">Полный план от диагностики до постоянной коронки.</p>
+            <div class="price-card__value"><span>расчёт</span><strong>после КЛКТ</strong></div>
+            <ul>
+              <li>Диагностика и планирование</li>
+              <li>Имплант и работа хирурга</li>
+              <li>Абатмент и формирователь</li>
+              <li>Постоянная коронка</li>
+            </ul>
+            <a class="button button--primary button--block" href="#consultation">Получить точный расчёт</a>
+          </article>
+
+          <article class="price-card">
+            <span class="price-card__tag">Полная реабилитация</span>
+            <h3>All-on-4 / All-on-6</h3>
+            <p class="price-card__desc">Несъёмное восстановление зубного ряда на нескольких имплантах.</p>
+            <div class="price-card__value"><span>цена</span><strong>индивидуально</strong></div>
+            <ul>
+              <li>Планирование всей челюсти</li>
+              <li>4 или 6 имплантов</li>
+              <li>Временная конструкция</li>
+              <li>Контроль адаптации</li>
+            </ul>
+            <a class="button button--outline button--block" href="#consultation">Обсудить мой случай</a>
+          </article>
+        </div>
+
+        <details class="price-details">
+          <summary>Посмотреть пример полной сметы</summary>
+          <div class="price-table-wrap">
+            <table>
+              <thead><tr><th>Этап</th><th>Что может входить</th><th>Как определяется цена</th></tr></thead>
+              <tbody>
+                <tr><td>Диагностика</td><td>Осмотр, КЛКТ, фотопротокол, план</td><td>По необходимому объёму исследований</td></tr>
+                <tr><td>Хирургия</td><td>Имплант, анестезия, установка, материалы</td><td>По системе и сложности случая</td></tr>
+                <tr><td>Ортопедия</td><td>Абатмент, слепки или сканирование, коронка</td><td>По материалу конструкции</td></tr>
+                <tr><td>Контроль</td><td>Осмотры, снимки, коррекция прикуса</td><td>Фиксируется в плане лечения</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section section--soft section--systems" id="systems">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Сравнение систем</span>
+            <h2>Не самый дорогой, а подходящий имплант</h2>
+          </div>
+          <p>Система выбирается после оценки клинических условий. Ниже — пример интерфейса сравнения, а не медицинская рекомендация.</p>
+        </div>
+
+        <div class="system-tabs" role="tablist" aria-label="Имплантационные системы">
+          <button class="system-tab is-active" type="button" role="tab" aria-selected="true" data-system="lenmiriot">Lenmiriot</button>
+          <button class="system-tab" type="button" role="tab" aria-selected="false" data-system="osstem">Osstem</button>
+          <button class="system-tab" type="button" role="tab" aria-selected="false" data-system="neodent">Neodent</button>
+          <button class="system-tab" type="button" role="tab" aria-selected="false" data-system="straumann">Straumann</button>
+        </div>
+
+        <div class="system-panel" aria-live="polite">
+          <div class="implant-visual" aria-hidden="true">
+            <div class="implant-visual__crown"></div>
+            <div class="implant-visual__neck"></div>
+            <div class="implant-visual__body"><span></span><span></span><span></span><span></span><span></span></div>
+          </div>
+          <div class="system-panel__content">
+            <span class="system-panel__origin" id="system-origin">Россия</span>
+            <h3 id="system-name">Lenmiriot</h3>
+            <p id="system-summary">Пример доступного решения для стандартных клинических случаев. Возможность применения определяется врачом после КЛКТ.</p>
+            <dl class="system-specs">
+              <div><dt>Сегмент</dt><dd id="system-segment">Доступный</dd></div>
+              <div><dt>Формат</dt><dd id="system-format">Установка / под ключ</dd></div>
+              <div><dt>Гарантия</dt><dd id="system-warranty">По паспорту и договору</dd></div>
+              <div><dt>Стоимость</dt><dd id="system-price">от 22 000 ₽ за установку</dd></div>
+            </dl>
+            <a class="button button--primary" href="#consultation">Подобрать систему</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="comparison">
+      <div class="container">
+        <div class="section-heading">
+          <span class="kicker">Сравнение решений</span>
+          <h2>Имплант, мост или съёмный протез?</h2>
+          <p>Короткое сравнение помогает понять логику выбора. Конкретные показания и ограничения оценивает врач.</p>
+        </div>
+        <div class="solution-visuals" aria-label="Визуальное сравнение конструкций">
+          <article class="solution-visual solution-visual--primary">
+            <svg viewBox="0 0 180 112" aria-hidden="true"><use href="#solution-implant"></use></svg>
+            <div><strong>Имплант</strong><span>Отдельная опора устанавливается в кости, сверху фиксируется коронка.</span></div>
+          </article>
+          <article class="solution-visual">
+            <svg viewBox="0 0 180 112" aria-hidden="true"><use href="#solution-bridge"></use></svg>
+            <div><strong>Мост</strong><span>Несколько соединённых коронок опираются на соседние зубы.</span></div>
+          </article>
+          <article class="solution-visual">
+            <svg viewBox="0 0 180 112" aria-hidden="true"><use href="#solution-removable"></use></svg>
+            <div><strong>Съёмный протез</strong><span>Конструкция опирается на слизистую и снимается для ухода.</span></div>
+          </article>
+        </div>
+        <div class="comparison-wrap">
+          <table class="comparison-table">
+            <thead>
+              <tr><th>Критерий</th><th class="is-highlighted">Имплант</th><th>Мост</th><th>Съёмный протез</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Опора</td><td class="is-highlighted">Самостоятельная, в кости</td><td>На соседние зубы</td><td>На зубы и слизистую</td></tr>
+              <tr><td>Обточка соседних зубов</td><td class="is-highlighted">Обычно не требуется</td><td>Как правило, требуется</td><td>Не всегда требуется</td></tr>
+              <tr><td>Ощущения при жевании</td><td class="is-highlighted">Близки к естественным</td><td>Зависят от опор</td><td>Нужна адаптация</td></tr>
+              <tr><td>Срок лечения</td><td class="is-highlighted">Несколько этапов</td><td>Обычно быстрее</td><td>Обычно быстрее</td></tr>
+              <tr><td>Выбор</td><td class="is-highlighted">После диагностики кости</td><td>После оценки опорных зубов</td><td>По анатомии и образу жизни</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="medical-note">Информация носит ознакомительный характер. Оптимальный способ восстановления определяется на очной консультации.</p>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="doctors">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Командный подход</span>
+            <h2>Врачи, отвечающие за результат</h2>
+          </div>
+          <p>Не просто список специалистов: в каждой карточке показана роль врача в общем маршруте имплантации.</p>
+        </div>
+
+        <div class="doctor-grid">
+          <article class="doctor-card">
+            <div class="doctor-card__photo doctor-card__photo--one">
+              <img src="https://optim.tildacdn.com/tild3532-3364-4636-b861-313131316331/-/cover/520x520/center/center/-/format/webp/foto_34__89.png.webp" alt="Авраменко Антон Владимирович" loading="lazy" decoding="async">
+            </div>
+            <div class="doctor-card__body">
+              <span class="doctor-card__role">Главный врач · контроль плана</span>
+              <h3>Авраменко<br>Антон Владимирович</h3>
+              <p>Координирует комплексные планы лечения и контролирует результат на ключевых этапах.</p>
+              <div class="doctor-card__meta"><span>Основатель клиники</span><span>План лечения</span></div>
+              <a href="#consultation">Записаться к врачу →</a>
+            </div>
+          </article>
+          <article class="doctor-card">
+            <div class="doctor-card__photo doctor-card__photo--two">
+              <img src="https://optim.tildacdn.com/tild3634-3833-4933-b064-613137313839/-/cover/520x520/center/center/-/format/webp/foto_14__89.png.webp" alt="Ломакин Константин Юрьевич" loading="lazy" decoding="async">
+            </div>
+            <div class="doctor-card__body">
+              <span class="doctor-card__role">Хирург · имплантолог</span>
+              <h3>Ломакин<br>Константин Юрьевич</h3>
+              <p>Проводит хирургический этап, оценивает объём кости и контролирует приживление импланта.</p>
+              <div class="doctor-card__meta"><span>30+ лет практики</span><span>Хирургия</span></div>
+              <a href="#consultation">Записаться к врачу →</a>
+            </div>
+          </article>
+          <article class="doctor-card">
+            <div class="doctor-card__photo doctor-card__photo--three">
+              <img src="https://optim.tildacdn.com/tild3530-3432-4138-b430-353238653837/-/cover/520x520/center/center/-/format/webp/noroot.png.webp" alt="Токарева Наталия Евгеньевна" loading="lazy" decoding="async">
+            </div>
+            <div class="doctor-card__body">
+              <span class="doctor-card__role">Стоматолог-ортопед</span>
+              <h3>Токарева<br>Наталия Евгеньевна</h3>
+              <p>Планирует форму будущего зуба, подбирает материал коронки и восстанавливает прикус.</p>
+              <div class="doctor-card__meta"><span>29 лет практики</span><span>Коронки</span></div>
+              <a href="#consultation">Записаться к врачу →</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="safety">
+      <div class="container">
+        <div class="section-heading">
+          <span class="kicker">Доказательства вместо обещаний</span>
+          <h2>Как контролируется качество лечения</h2>
+        </div>
+
+        <div class="quality-grid">
+          <article><span>01</span><div><h3>Диагностика</h3><p>КЛКТ, осмотр тканей и анализ прикуса до выбора системы и позиции импланта.</p></div></article>
+          <article><span>02</span><div><h3>Цифровой план</h3><p>Будущая коронка учитывается ещё до хирургического этапа.</p></div></article>
+          <article><span>03</span><div><h3>Фотопротокол</h3><p>Фиксация исходной ситуации, ключевых этапов и результата лечения.</p></div></article>
+          <article><span>04</span><div><h3>Контроль результата</h3><p>Контрольный снимок, оценка заживления и настройка контактов прикуса.</p></div></article>
+        </div>
+
+        <div class="technology-banner">
+          <div class="technology-banner__image">
+            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Современный стоматологический кабинет">
+          </div>
+          <div class="technology-banner__content">
+            <span class="kicker">Технологии клиники</span>
+            <h3>Показываем оборудование, которое действительно влияет на лечение</h3>
+            <ul class="tech-list">
+              <li><strong>КЛКТ</strong><span>оценка объёма и анатомии кости</span></li>
+              <li><strong>3D-планирование</strong><span>позиция импланта под будущую коронку</span></li>
+              <li><strong>Цифровое сканирование</strong><span>точная модель зубного ряда</span></li>
+              <li><strong>Стерилизация</strong><span>контроль обработки инструментов</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="process">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Маршрут лечения</span>
+            <h2>От консультации до готового зуба</h2>
+          </div>
+          <p>Срок зависит от состояния кости и выбранного протокола. Каждый этап заранее фиксируется в плане лечения.</p>
+        </div>
+
+        <div class="process-tabs" role="tablist" aria-label="Протоколы имплантации">
+          <button class="process-tab is-active" type="button" role="tab" aria-selected="true" data-protocol="classic">Классический</button>
+          <button class="process-tab" type="button" role="tab" aria-selected="false" data-protocol="immediate">Одномоментный</button>
+          <button class="process-tab" type="button" role="tab" aria-selected="false" data-protocol="full">All-on-4 / 6</button>
+        </div>
+
+        <div class="protocol-intro" aria-live="polite">
+          <div><small>Примерный срок</small><strong id="protocol-duration">3–6 месяцев</strong></div>
+          <p id="protocol-description">Сначала имплант приживается в кости, затем врач фиксирует постоянную коронку. Это наиболее понятный базовый маршрут.</p>
+        </div>
+
+        <ol class="timeline">
+          <li><span>1</span><div><small>Первый визит</small><h3>Консультация и диагностика</h3><p>Осмотр, КЛКТ, фотопротокол и обсуждение возможных вариантов лечения.</p></div></li>
+          <li><span>2</span><div><small>Подготовка</small><h3>Санация и цифровой план</h3><p>При необходимости проводится лечение воспалений, гигиена или подготовка костной ткани.</p></div></li>
+          <li><span>3</span><div><small>Хирургический этап</small><h3>Установка импланта</h3><p>Процедура проходит с подобранным обезболиванием и контролем положения импланта.</p></div></li>
+          <li><span>4</span><div><small>Заживление</small><h3>Приживление и контроль</h3><p>Врач наблюдает состояние тканей и определяет готовность к постоянной нагрузке.</p></div></li>
+          <li><span>5</span><div><small>Финальный этап</small><h3>Постоянная коронка</h3><p>Форма и цвет подбираются под зубной ряд, затем проверяются контакты прикуса.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="cases">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Клинические случаи</span>
+            <h2>Результат с объяснением</h2>
+          </div>
+          <div class="slider-controls" aria-label="Переключение примеров работ">
+            <button type="button" class="slider-button" data-case-prev aria-label="Предыдущая работа">←</button>
+            <span><strong id="case-current">1</strong> / <span id="case-total">2</span></span>
+            <button type="button" class="slider-button" data-case-next aria-label="Следующая работа">→</button>
+          </div>
+        </div>
+
+        <div class="case-slider" aria-live="polite">
+          <article class="case-slide is-active">
+            <div class="case-images">
+              <figure class="case-photo case-photo--before"><img src="https://optim.tildacdn.com/tild6461-3564-4439-b865-376433336132/-/cover/920x690/center/center/-/format/webp/20210320_140741.jpg.webp" alt="Исходная ситуация до замены старых коронок" loading="lazy" decoding="async"><figcaption>До</figcaption></figure>
+              <figure class="case-photo case-photo--after"><img src="https://optim.tildacdn.com/tild3832-6234-4234-b939-393961653435/-/cover/920x690/center/center/-/format/webp/DSC_0476.jpg.webp" alt="Результат после протезирования и имплантации" loading="lazy" decoding="async"><figcaption>После</figcaption></figure>
+            </div>
+            <div class="case-info">
+              <span class="case-info__label">Кейс 01 · комплексная реабилитация</span>
+              <h3>Замена старых коронок и восстановление жевания</h3>
+              <dl>
+                <div><dt>Исходная ситуация</dt><dd>Старые штампованные коронки, дискомфорт и сложности при жевании</dd></div>
+                <div><dt>Решение</dt><dd>Металлокерамические коронки и имплантация в боковом отделе</dd></div>
+                <div><dt>Срок</dt><dd>1,5 месяца по описанию клиники</dd></div>
+                <div><dt>Команда</dt><dd>Ортопед, терапевт и имплантолог</dd></div>
+              </dl>
+              <a class="text-button" href="https://avangard-roott.ru/works" target="_blank" rel="noopener">Источник фотопротокола →</a>
+            </div>
+          </article>
+
+          <article class="case-slide" hidden>
+            <div class="case-images">
+              <figure class="case-photo case-photo--before"><img src="https://optim.tildacdn.com/tild3562-3039-4935-b661-343831376664/-/cover/920x690/center/center/-/format/webp/DSC_0199.jpeg.webp" alt="Импланты нижней челюсти до установки постоянной конструкции" loading="lazy" decoding="async"><figcaption>До протеза</figcaption></figure>
+              <figure class="case-photo case-photo--after"><img src="https://optim.tildacdn.com/tild3462-6662-4533-b437-633464343336/-/cover/920x690/center/center/-/format/webp/noroot.png.webp" alt="Несъёмная конструкция после лечения" loading="lazy" decoding="async"><figcaption>После</figcaption></figure>
+            </div>
+            <div class="case-info">
+              <span class="case-info__label">Кейс 02 · нижняя челюсть</span>
+              <h3>Несъёмная конструкция на имплантах</h3>
+              <dl>
+                <div><dt>Исходная ситуация</dt><dd>Корни зубов нижней челюсти и выраженный эстетический дискомфорт</dd></div>
+                <div><dt>Решение</dt><dd>8 компрессионных имплантатов ROOTT и несъёмный протез</dd></div>
+                <div><dt>Срок</dt><dd>Протез установлен через 1,5 недели по описанию клиники</dd></div>
+                <div><dt>Врач</dt><dd>Ломакин Константин Юрьевич</dd></div>
+              </dl>
+              <a class="text-button" href="https://avangard-roott.ru/works" target="_blank" rel="noopener">Источник фотопротокола →</a>
+            </div>
+          </article>
+        </div>
+        <p class="case-source-note">Фотографии и описания взяты с действующей страницы «Наши работы» клиники. Перед публикацией нужно повторно подтвердить согласия пациентов и медицинские формулировки.</p>
+      </div>
+    </section>
+
+    <section class="section section--soft section--assurance" id="guarantees">
+      <div class="container assurance-grid">
+        <div>
+          <span class="kicker">Стоимость и гарантии</span>
+          <h2>Условия понятны до начала лечения</h2>
+          <p>В итоговой версии здесь должны быть не рекламные обещания, а точные выдержки из договора и гарантийного положения клиники.</p>
+          <div class="assurance-list">
+            <article><span>✓</span><div><h3>План и смета</h3><p>Этапы и согласованная стоимость фиксируются до старта лечения.</p></div></article>
+            <article><span>✓</span><div><h3>Гарантия производителя</h3><p>Условия подтверждаются документами и паспортом импланта.</p></div></article>
+            <article><span>✓</span><div><h3>Гарантия клиники</h3><p>Срок и обязательные контрольные осмотры прописываются в договоре.</p></div></article>
+          </div>
+        </div>
+
+        <div class="finance-card">
+          <span class="finance-card__label">Калькулятор платежа</span>
+          <h3>Оцените нагрузку на бюджет</h3>
+          <label>
+            <span>Примерная стоимость лечения</span>
+            <select id="finance-price">
+              <option value="57000">57 000 ₽ · один зуб</option>
+              <option value="165000">165 000 ₽ · All-on-4</option>
+              <option value="230000">230 000 ₽ · комплексный план</option>
+            </select>
+          </label>
+          <label>
+            <span>Срок: <strong id="finance-months-label">12 месяцев</strong></span>
+            <input id="finance-months" type="range" min="3" max="24" step="3" value="12">
+          </label>
+          <div class="finance-result">
+            <small>Примерный платёж</small>
+            <strong id="finance-result">4 750 ₽/мес.</strong>
+          </div>
+          <p>Расчёт демонстрационный, без учёта условий банка. Не является офертой.</p>
+          <a class="button button--primary button--block" href="#consultation">Узнать варианты оплаты</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="medical-info">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Подготовка без неизвестности</span>
+            <h2>Что важно знать до и после процедуры</h2>
+          </div>
+          <p>Короткие практические блоки заменяют перегруженный медицинский текст и помогают подготовить вопросы врачу.</p>
+        </div>
+
+        <div class="info-columns">
+          <details open>
+            <summary><span>01</span> Кому может подойти имплантация</summary>
+            <div><p>При отсутствии одного, нескольких или большинства зубов, когда требуется самостоятельная опора без нагрузки на соседние зубы.</p></div>
+          </details>
+          <details>
+            <summary><span>02</span> Когда сначала нужна подготовка</summary>
+            <div><p>При воспалении, недостатке костной ткани, заболеваниях дёсен или необходимости санации полости рта лечение начинается с подготовительного этапа.</p></div>
+          </details>
+          <details>
+            <summary><span>03</span> Противопоказания и ограничения</summary>
+            <div><p>Общее здоровье, лекарства и хронические заболевания обязательно обсуждаются с врачом. Часть ограничений временная и требует предварительной стабилизации состояния.</p></div>
+          </details>
+          <details>
+            <summary><span>04</span> Как подготовиться</summary>
+            <div><p>Потребуются осмотр, диагностика и санация по показаниям. Индивидуальные рекомендации по питанию, лекарствам и курению выдаёт лечащий врач.</p></div>
+          </details>
+          <details>
+            <summary><span>05</span> Восстановление после установки</summary>
+            <div><p>Следуйте персональным рекомендациям по гигиене, питанию и нагрузке. Не проверяйте имплант «на прочность» до разрешения врача.</p></div>
+          </details>
+          <details>
+            <summary><span>06</span> Когда связаться с клиникой</summary>
+            <div><p>Если самочувствие заметно ухудшается или появляются симптомы, которых врач не описывал как ожидаемые, свяжитесь с клиникой для внепланового осмотра.</p></div>
+          </details>
+        </div>
+        <p class="medical-note">Раздел необходимо проверить и утвердить ответственному врачу клиники перед публикацией.</p>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="reviews">
+      <div class="container">
+        <div class="section-heading section-heading--split">
+          <div>
+            <span class="kicker">Социальное доказательство</span>
+            <h2>Отзывы на независимых площадках</h2>
+          </div>
+          <p>В готовой версии карточки должны загружать реальные оценки и вести на профили клиники.</p>
+        </div>
+
+        <div class="rating-grid">
+          <a href="#reviews" class="rating-card" aria-label="Пример рейтинга на Яндекс Картах">
+            <span class="rating-card__head"><span class="rating-platform-icon rating-platform-icon--yandex" aria-hidden="true">Я</span><span class="rating-card__source">Яндекс Карты</span></span><strong>4,9</strong><span>★★★★★</span><small>подключить реальные отзывы</small>
+          </a>
+          <a href="#reviews" class="rating-card" aria-label="Пример рейтинга в 2ГИС">
+            <span class="rating-card__head"><span class="rating-platform-icon rating-platform-icon--gis" aria-hidden="true"><svg viewBox="0 0 30 30"><path d="M7 8.5 12 6l6 2.5L23 6v15.5L18 24l-6-2.5L7 24V8.5Z"/><path d="M12 6v15.5M18 8.5V24"/></svg></span><span class="rating-card__source">2ГИС</span></span><strong>4,8</strong><span>★★★★★</span><small>подключить реальные отзывы</small>
+          </a>
+          <a href="#reviews" class="rating-card" aria-label="Пример рейтинга на ПроДокторов">
+            <span class="rating-card__head"><span class="rating-platform-icon rating-platform-icon--pro" aria-hidden="true"><svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="12"/><path d="M15 9v12M9 15h12"/></svg></span><span class="rating-card__source">ПроДокторов</span></span><strong>—</strong><span>Профиль клиники</span><small>добавить проверенную ссылку</small>
+          </a>
+        </div>
+
+        <div class="review-placeholder">
+          <div class="review-placeholder__quote">“</div>
+          <div>
+            <span class="review-placeholder__label">Место для проверенного отзыва</span>
+            <p>В отзыве полезно показать не общую благодарность, а путь пациента: исходную проблему, понятность плана, ощущения во время лечения и результат после адаптации.</p>
+            <small>Имя пациента · площадка · дата · ссылка на оригинал</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container faq-layout">
+        <div class="section-heading faq-layout__heading">
+          <span class="kicker">Коротко о главном</span>
+          <h2>Частые вопросы</h2>
+          <p>Не нашли ответа? Задайте вопрос имплантологу — администратор уточнит детали и поможет выбрать формат консультации.</p>
+          <a class="button button--outline" href="#consultation">Задать вопрос врачу</a>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button type="button" aria-expanded="false"><span>Больно ли устанавливать имплант?</span><i>+</i></button>
+            <div class="faq-item__answer" hidden><p>Процедура проводится с обезболиванием. Врач заранее обсуждает варианты анестезии, ожидаемые ощущения и рекомендации на период восстановления.</p></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-expanded="false"><span>Что означает цена «под ключ»?</span><i>+</i></button>
+            <div class="faq-item__answer" hidden><p>Состав пакета должен быть перечислен по пунктам: диагностика, имплант, хирургический этап, ортопедические компоненты, коронка и контроль. Состав уточняется в плане лечения.</p></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-expanded="false"><span>Можно ли поставить имплант сразу после удаления?</span><i>+</i></button>
+            <div class="faq-item__answer" hidden><p>Иногда это возможно, если состояние тканей позволяет получить стабильную и безопасную установку. Решение принимается после осмотра и диагностики.</p></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-expanded="false"><span>Всегда ли требуется костная пластика?</span><i>+</i></button>
+            <div class="faq-item__answer" hidden><p>Нет. Необходимость дополнительной подготовки зависит от объёма и качества кости, позиции будущего импланта и общей клинической ситуации.</p></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-expanded="false"><span>Как долго приживается имплант?</span><i>+</i></button>
+            <div class="faq-item__answer" hidden><p>Срок индивидуален и зависит от зоны установки, состояния кости и выбранного протокола. Ориентиры врач назовёт после диагностики.</p></div>
+          </div>
+          <div class="faq-item">
+            <button type="button" aria-expanded="false"><span>Что будет, если отложить восстановление зуба?</span><i>+</i></button>
+            <div class="faq-item__answer" hidden><p>Со временем может меняться положение соседних зубов и объём кости в зоне дефекта. Насколько это критично в конкретном случае, покажет диагностика.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--clinic" id="clinic">
+      <div class="container clinic-grid">
+        <div class="clinic-map" aria-label="Схематичная карта расположения клиники">
+          <div class="map-grid"></div>
+          <div class="map-road map-road--one"></div>
+          <div class="map-road map-road--two"></div>
+          <div class="map-pin"><span>А</span></div>
+          <div class="map-label"><strong>Авангард</strong><span>ул. Мичурина, 132</span></div>
+        </div>
+        <div class="clinic-content">
+          <span class="kicker">Клиника рядом</span>
+          <h2>Ждём вас в Самаре</h2>
+          <p class="clinic-address">ул. Мичурина, 132</p>
+          <div class="clinic-facts">
+            <div><small>Режим работы</small><strong>Пн–Пт 9:00–20:00<br>Сб–Вс 9:00–18:00</strong></div>
+            <div><small>Телефон</small><strong><a href="tel:+79379894554">+7 (937) 989-45-54</a></strong></div>
+            <div><small>Ориентир</small><strong>Добавить ближайшую остановку и вход</strong></div>
+            <div><small>Парковка</small><strong>Уточнить условия парковки</strong></div>
+          </div>
+          <div class="clinic-actions">
+            <a class="button button--primary" href="https://yandex.ru/maps/?text=%D0%A1%D0%B0%D0%BC%D0%B0%D1%80%D0%B0%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9C%D0%B8%D1%87%D1%83%D1%80%D0%B8%D0%BD%D0%B0%2C%20132" target="_blank" rel="noopener">Построить маршрут</a>
+            <a class="button button--outline" href="tel:+79379894554">Позвонить</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section final-cta">
+      <div class="container final-cta__grid">
+        <div>
+          <span class="kicker kicker--light">Начните с диагностики</span>
+          <h2>Узнайте, подходит ли вам имплантация Lenmiriot</h2>
+          <p>Получите понятный маршрут лечения, сроки и варианты стоимости для вашей ситуации.</p>
+        </div>
+        <form class="quick-form js-demo-form" novalidate>
+          <label><span class="sr-only">Ваш телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required></label>
+          <button class="button button--white" type="submit">Записаться</button>
+          <p class="form-status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand brand--footer" href="#top">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 48 48"><path d="M13 9c4-4 8-5 11-2 3-3 7-2 11 2 7 7 2 15-1 21-3 6-4 12-8 12-3 0-2-11-4-11s-1 11-4 11c-4 0-5-6-8-12C7 24 2 16 13 9Z" fill="none" stroke="currentColor" stroke-width="2.6"/></svg>
+          </span>
+          <span><strong>АВАНГАРД</strong><small>стоматологическая клиника</small></span>
+        </a>
+        <p>Интерактивный прототип посадочной страницы. Не является публичной офертой или медицинской рекомендацией.</p>
+      </div>
+      <div><h3>Имплантация</h3><a href="#solutions">Решения</a><a href="#prices">Стоимость</a><a href="#systems">Системы</a><a href="#process">Этапы</a></div>
+      <div><h3>Клиника</h3><a href="#doctors">Врачи</a><a href="#cases">Наши работы</a><a href="#reviews">Отзывы</a><a href="#clinic">Контакты</a></div>
+      <div><h3>Связаться</h3><a href="tel:+79379894554">+7 (937) 989-45-54</a><a href="#consultation">Заказать звонок</a><span>Самара, ул. Мичурина, 132</span><span>Avangard.stomat@yandex.ru</span></div>
+    </div>
+    <div class="container footer-bottom">
+      <span>© 2026 Стоматологическая клиника «Авангард»</span>
+      <a href="#">Политика обработки персональных данных</a>
+    </div>
+    <div class="medical-warning">ИМЕЮТСЯ ПРОТИВОПОКАЗАНИЯ. НЕОБХОДИМА КОНСУЛЬТАЦИЯ СПЕЦИАЛИСТА</div>
+  </footer>
+
+  <div class="mobile-contact-bar" aria-label="Быстрые контакты">
+    <a href="tel:+79379894554"><span>☎</span>Позвонить</a>
+    <a href="#consultation"><span>✎</span>Написать</a>
+    <a href="#consultation"><span>＋</span>Записаться</a>
+  </div>
+
+  <dialog class="case-dialog" id="case-dialog">
+    <button class="case-dialog__close" type="button" data-close-case aria-label="Закрыть">×</button>
+    <span class="kicker">Фотопротокол</span>
+    <h2>Здесь будет подробный клинический кейс</h2>
+    <p>Для финальной версии добавьте реальные фотографии с согласия пациента, диагноз, план лечения, сроки, используемую систему и комментарий врача.</p>
+    <button class="button button--primary" type="button" data-close-case>Понятно</button>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
