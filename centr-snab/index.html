@@ -221,20 +221,99 @@
     .page-btn:hover, .page-btn.is-active { background: var(--red); color: #fff; border-color: var(--red); }
     .load-more { width: auto; padding: 0 22px; margin-right: 10px; font-weight: 750; }
 
-    .seo-card { margin: 8px 0 42px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; display: grid; grid-template-columns: minmax(0, 1fr) 310px; gap: 34px; }
-    .seo-card h2 { margin: 0 0 12px; font-size: 25px; }
-    .seo-card p { margin: 0 0 10px; color: #535861; font-size: 15px; }
-    .expert { background: #f5f6f8; border-radius: 12px; padding: 20px; }
-    .expert strong { display: block; margin-bottom: 7px; }
-    .expert p { font-size: 13px; }
-    .expert button { border: 0; background: transparent; color: var(--red); padding: 0; font-weight: 750; cursor: pointer; }
+    .category-guide { --guide-soft: #f6f7f9; --guide-red-soft: #fff1f2; margin: 12px 0 52px; color: #30343b; font-size: 15px; line-height: 1.65; }
+    .guide-card { margin-bottom: 20px; padding: 26px; background: #fff; border: 1px solid var(--line); border-radius: 15px; box-shadow: 0 7px 22px rgba(21, 28, 38, .045); }
+    .guide-card--intro { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 32px; align-items: center; border-left: 4px solid var(--red); }
+    .guide-card--soft { background: var(--guide-soft); box-shadow: none; }
+    .guide-card h2, .guide-card h3, .guide-card h4 { margin-top: 0; color: var(--ink); line-height: 1.25; }
+    .guide-card h2 { margin-bottom: 12px; font-size: clamp(24px, 2.4vw, 31px); }
+    .guide-card h3 { margin-bottom: 15px; font-size: 21px; }
+    .guide-card h4 { margin-bottom: 7px; font-size: 16px; }
+    .guide-card p { margin: 0 0 11px; color: #565c66; }
+    .guide-card p:last-child { margin-bottom: 0; }
+    .guide-kicker { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 10px; color: var(--red); font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+    .guide-kicker::before { content: ""; width: 18px; height: 2px; background: currentColor; }
+    .guide-consultant { padding: 21px; border-radius: 13px; background: linear-gradient(145deg, #f3f4f6, #fff); border: 1px solid #e4e6ea; }
+    .guide-consultant strong { display: block; margin-bottom: 7px; color: var(--ink); font-size: 17px; }
+    .guide-consultant p { font-size: 13px; }
+    .guide-link-button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; margin-top: 6px; padding: 0 16px; border: 0; border-radius: 8px; background: var(--red); color: #fff; font-weight: 750; cursor: pointer; }
+    .guide-link-button:hover { background: var(--red-dark); }
+    .guide-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .guide-mini-card { padding: 18px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+    .guide-mini-card__icon { display: grid; place-items: center; width: 38px; height: 38px; margin-bottom: 12px; border-radius: 10px; background: var(--guide-red-soft); color: var(--red); font-weight: 850; }
+    .guide-mini-card p { color: #626873; font-size: 14px; }
+    .guide-list, .guide-check-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .guide-list li, .guide-check-list li { position: relative; padding-left: 24px; color: #4e545e; }
+    .guide-list li::before { content: ""; position: absolute; left: 3px; top: .72em; width: 7px; height: 7px; border-radius: 50%; background: var(--red); }
+    .guide-check-list li::before { content: "✓"; position: absolute; left: 0; top: -1px; color: var(--red); font-weight: 900; }
+    .guide-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .guide-table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+    .guide-table { width: 100%; min-width: 750px; border-collapse: collapse; background: #fff; }
+    .guide-table th, .guide-table td { padding: 14px 16px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .guide-table th { background: #f4f5f7; color: var(--ink); font-size: 13px; }
+    .guide-table td { color: #555b65; font-size: 14px; }
+    .guide-table tr:last-child td { border-bottom: 0; }
+    .guide-note { margin-top: 16px; padding: 15px 17px; border-left: 3px solid var(--red); border-radius: 0 10px 10px 0; background: var(--guide-red-soft); color: #4d5159; }
+    .guide-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; counter-reset: guide-step; }
+    .guide-step { position: relative; padding: 54px 17px 17px; border: 1px solid var(--line); border-radius: 12px; background: #fff; counter-increment: guide-step; }
+    .guide-step::before { content: counter(guide-step); position: absolute; left: 17px; top: 15px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--red); color: #fff; font-size: 13px; font-weight: 850; }
+    .guide-step strong { display: block; margin-bottom: 5px; color: var(--ink); }
+    .guide-step span { color: #626873; font-size: 13px; line-height: 1.5; }
+    .guide-faq { display: grid; gap: 9px; }
+    .guide-faq details { overflow: hidden; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    .guide-faq summary { position: relative; padding: 15px 48px 15px 17px; color: var(--ink); font-weight: 750; cursor: pointer; list-style: none; }
+    .guide-faq summary::-webkit-details-marker { display: none; }
+    .guide-faq summary::after { content: "+"; position: absolute; right: 17px; top: 50%; transform: translateY(-50%); color: var(--red); font-size: 23px; font-weight: 500; }
+    .guide-faq details[open] summary::after { content: "−"; }
+    .guide-faq details p { margin: 0; padding: 0 17px 16px; font-size: 14px; }
+    .guide-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 28px; border-radius: 15px; background: radial-gradient(circle at 90% 20%, rgba(223,0,28,.35), transparent 30%), #202329; color: #fff; }
+    .guide-cta h3 { margin: 0 0 6px; color: #fff; font-size: 23px; }
+    .guide-cta p { margin: 0; color: #c8ccd3; }
+    .guide-cta .guide-link-button { flex: 0 0 auto; margin: 0; padding-inline: 22px; }
 
-    footer { background: #1d2025; color: #fff; padding: 32px 0; }
-    .footer-inner { display: grid; grid-template-columns: 1.2fr 1fr 1fr 1fr; gap: 40px; }
-    footer img { width: 190px; filter: brightness(0) invert(1); opacity: .95; }
-    footer strong { display: block; margin-bottom: 12px; }
-    footer a, footer p { display: block; margin: 7px 0; color: #bdc1c8; font-size: 13px; }
-    footer a:hover { color: #fff; }
+    .site-footer { position: relative; overflow: hidden; padding: 0; border-top: 5px solid var(--red); background: #25272b; color: #fff; }
+    .site-footer::before { content: ""; position: absolute; inset: 0 0 auto; height: 260px; background: radial-gradient(circle at 80% 0, rgba(223,0,28,.11), transparent 33%); pointer-events: none; }
+    .footer-main { position: relative; padding: 42px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: .9fr .95fr 1.05fr 1.75fr; gap: 46px; }
+    .footer-title { display: block; margin-bottom: 14px; color: #fff; font-size: 16px; }
+    .footer-nav { display: grid; gap: 9px; }
+    .site-footer a { color: #c9cbd0; transition: color .18s ease; }
+    .site-footer a:hover { color: #fff; }
+    .footer-nav a { font-size: 14px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .footer-social { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 50%; color: #fff !important; font-size: 12px; font-weight: 850; box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+    .footer-social--vk { background: #2787f5; }
+    .footer-social--tg { background: #27a7e7; font-size: 17px; }
+    .footer-social--ok { background: #ff9205; }
+    .footer-contacts { display: grid; gap: 5px; color: #ebedf0; font-size: 14px; }
+    .footer-phones { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-bottom: 12px; }
+    .footer-phones a { color: #ff3850; font-size: 16px; font-weight: 800; }
+    .footer-contact-line { display: flex; align-items: flex-start; gap: 8px; color: #e6e8eb; }
+    .footer-contact-line svg { flex: 0 0 auto; width: 17px; height: 17px; margin-top: 3px; color: #ff3850; }
+    .footer-trust { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 32px; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.11); border-bottom: 1px solid rgba(255,255,255,.11); }
+    .trust-card { display: flex; align-items: center; min-height: 96px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.22); border-radius: 10px; background: rgba(255,255,255,.045); color: #fff !important; }
+    .trust-card:hover { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.075); }
+    .trust-card__body { display: block; width: 100%; }
+    .trust-card__top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 3px; color: #fff; }
+    .trust-score { font-size: 31px; font-weight: 850; line-height: 1; }
+    .trust-name { color: #d1d4d9; font-size: 12px; font-weight: 700; }
+    .trust-stars { color: #ffd900; letter-spacing: 1px; }
+    .trust-meta { color: #bdc1c8; font-size: 11px; }
+    .trust-status { color: #5ee67a; font-size: 22px; font-weight: 850; line-height: 1.2; }
+    .trust-shield { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; }
+    .trust-shield__number { display: grid; place-items: center; width: 54px; height: 62px; clip-path: polygon(50% 0, 100% 18%, 90% 78%, 50% 100%, 10% 78%, 0 18%); background: #8dd7ad; color: #fff; font-size: 25px; font-weight: 850; }
+    .footer-bottom { display: grid; grid-template-columns: 80px 1fr auto; align-items: center; gap: 22px; padding: 21px 0 25px; }
+    .footer-sitemap { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; }
+    .footer-sitemap svg { width: 18px; height: 18px; }
+    .footer-copy { margin: 0; color: #e2e4e8; font-size: 13px; text-align: center; }
+    .payment-methods { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 10px; }
+    .payment-mark { display: inline-flex; align-items: center; justify-content: center; min-width: 39px; height: 25px; padding: 0 6px; border-radius: 5px; background: rgba(255,255,255,.08); color: #fff; font-size: 11px; font-weight: 850; letter-spacing: -.02em; }
+    .payment-mark--mir { color: #69d082; }
+    .payment-mark--visa { color: #62a9ff; font-style: italic; }
+    .payment-mark--mc { position: relative; width: 43px; background: transparent; font-size: 0; }
+    .payment-mark--mc::before, .payment-mark--mc::after { content: ""; position: absolute; top: 5px; width: 16px; height: 16px; border-radius: 50%; }
+    .payment-mark--mc::before { left: 8px; background: #ef333f; }
+    .payment-mark--mc::after { right: 8px; background: #ff9d1c; mix-blend-mode: screen; }
 
     .scrim { position: fixed; z-index: 75; inset: 0; background: rgba(14,17,22,.45); opacity: 0; visibility: hidden; transition: .18s ease; }
     .scrim.is-open { opacity: 1; visibility: visible; }
@@ -290,8 +369,11 @@
       .filters.is-open { transform: translateX(0); }
       .mobile-filter-btn { display: inline-flex; align-items: center; gap: 7px; height: 40px; border: 0; border-radius: 8px; background: var(--red); color: #fff; padding: 0 12px; font-size: 14px; font-weight: 750; cursor: pointer; }
       .product-grid.is-list .product-card { display: flex; }
-      .seo-card { grid-template-columns: 1fr; }
-      .footer-inner { grid-template-columns: repeat(2, 1fr); }
+      .guide-card--intro { grid-template-columns: 1fr; }
+      .guide-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .guide-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .footer-trust { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 620px) {
@@ -323,8 +405,16 @@
       .product-grid { grid-template-columns: 1fr; }
       .product-card__visual { height: 220px; }
       .product-card__visual img { height: 205px; }
-      .footer-inner { grid-template-columns: 1fr; }
-      .footer-inner > div:nth-child(n+3) { display: none; }
+      .category-guide { font-size: 14px; }
+      .guide-card { padding: 20px; }
+      .guide-grid, .guide-columns, .guide-steps { grid-template-columns: 1fr; }
+      .guide-cta { align-items: flex-start; flex-direction: column; padding: 22px; }
+      .footer-main { padding-top: 32px; }
+      .footer-grid, .footer-trust { grid-template-columns: 1fr; gap: 24px; }
+      .footer-trust { gap: 10px; }
+      .footer-bottom { grid-template-columns: 1fr; justify-items: center; }
+      .footer-copy { order: 3; }
+      .payment-methods { justify-content: center; }
       .toast { right: 12px; left: 12px; bottom: 12px; max-width: none; }
       .desktop-only { display: none; }
     }
@@ -552,14 +642,170 @@
         </section>
       </div>
 
-      <section class="seo-card">
-        <div><h2>Как выбрать снегоуборщик</h2><p>Для дорожек и свежего снега подойдёт компактная электрическая или аккумуляторная модель. Для участка, парковки и плотного снега выбирайте самоходную бензиновую машину со стальным шнеком.</p><p>На сложном рельефе полезен гусеничный ход, для работы утром и вечером — фара, а электрозапуск заметно упрощает пуск двигателя в мороз.</p></div>
-        <div class="expert"><strong>Нужна помощь специалиста?</strong><p>Подберём модель по площади участка, глубине снега и бюджету. Подготовим счёт для организации.</p><button type="button" data-open-modal>Получить консультацию →</button></div>
-      </section>
+      <article class="category-guide" aria-labelledby="guide-title">
+        <section class="guide-card guide-card--intro">
+          <div>
+            <span class="guide-kicker">Гид по выбору</span>
+            <h2 id="guide-title">Как выбрать снегоуборщик для дома, дачи или предприятия</h2>
+            <p>Снегоуборщик помогает быстро очистить дорожки, двор, парковку и подъездные пути без тяжёлой ручной работы. Чтобы техника справлялась со снегом и не была избыточной по цене, важно заранее учесть площадь уборки, тип покрытия, глубину и плотность снега.</p>
+            <p>В каталоге Центра Снабжения представлены электрические, аккумуляторные и бензиновые модели: от компактных несамоходных машин до мощных колёсных и гусеничных снегоуборщиков с электрозапуском, фарой и металлическим шнеком.</p>
+          </div>
+          <aside class="guide-consultant">
+            <strong>Нужна помощь специалиста?</strong>
+            <p>Подберём модель по площади участка, условиям эксплуатации и бюджету. Для организаций подготовим счёт и комплект документов.</p>
+            <button class="guide-link-button" type="button" data-open-modal>Получить консультацию</button>
+          </aside>
+        </section>
+
+        <section class="guide-card guide-card--soft">
+          <h3>Какой тип снегоуборщика подойдёт вам</h3>
+          <div class="guide-grid">
+            <div class="guide-mini-card">
+              <div class="guide-mini-card__icon">01</div>
+              <h4>Электрический</h4>
+              <p>Практичный вариант для крыльца, дорожек и небольшого двора. Легко запускается, не требует топлива и удобен там, где доступна розетка.</p>
+            </div>
+            <div class="guide-mini-card">
+              <div class="guide-mini-card__icon">02</div>
+              <h4>Аккумуляторный</h4>
+              <p>Подходит для быстрой уборки свежего снега без кабеля. Время работы зависит от ёмкости батареи, температуры и нагрузки.</p>
+            </div>
+            <div class="guide-mini-card">
+              <div class="guide-mini-card__icon">03</div>
+              <h4>Бензиновый</h4>
+              <p>Оптимален для больших участков, глубокого и слежавшегося снега. Самоходные модели снижают усилие оператора и увереннее идут под нагрузкой.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="guide-card">
+          <h3>Подбор по площади и условиям уборки</h3>
+          <div class="guide-table-wrap">
+            <table class="guide-table">
+              <thead><tr><th>Задача</th><th>Рекомендуемый тип</th><th>Ориентиры по характеристикам</th><th>Полезные функции</th></tr></thead>
+              <tbody>
+                <tr><td>Крыльцо и узкие дорожки</td><td>Электрический или аккумуляторный</td><td>Ковш 30–50 см, небольшая масса</td><td>Складная рукоятка, поворот желоба</td></tr>
+                <tr><td>Дача и двор до 300–500 м²</td><td>Компактный бензиновый или мощный аккумуляторный</td><td>Ковш 46–56 см, одноступенчатая или двухступенчатая система</td><td>Фара, регулировка выброса</td></tr>
+                <tr><td>Участок, парковка, длинный подъезд</td><td>Самоходный бензиновый</td><td>Около 6–8 л.с., ковш 56–66 см, несколько передач</td><td>Электрозапуск, разблокировка колёс</td></tr>
+                <tr><td>Большая территория, сугробы и уклон</td><td>Мощный колёсный или гусеничный</td><td>От 8 л.с., широкий ковш, металлический шнек</td><td>Подогрев ручек, фара, усиленный редуктор</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="guide-note"><strong>Важно:</strong> значения в таблице — ориентир. На выбор также влияют рельеф, тип покрытия, частота уборки и то, насколько мокрым или слежавшимся бывает снег.</div>
+        </section>
+
+        <section class="guide-card guide-card--soft">
+          <div class="guide-columns">
+            <div>
+              <h3>Ключевые характеристики</h3>
+              <ul class="guide-list">
+                <li><strong>Ширина ковша.</strong> Узкая машина манёвреннее на дорожках, широкая быстрее очищает открытую площадку.</li>
+                <li><strong>Мощность двигателя.</strong> Запас мощности особенно важен при глубоком, мокром и плотном снеге.</li>
+                <li><strong>Дальность выброса.</strong> Для просторной территории удобны модели с выбросом более 10 м и дистанционной регулировкой желоба.</li>
+                <li><strong>Объём топливного бака.</strong> Чем он больше, тем дольше можно работать без дозаправки, но тем тяжелее техника.</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Ходовая часть и рабочий механизм</h3>
+              <ul class="guide-check-list">
+                <li><strong>Колёсные модели</strong> манёвренны и подходят для ровных дворов и парковок.</li>
+                <li><strong>Гусеничные модели</strong> лучше держатся на уклонах, рыхлом снегу и сложном рельефе.</li>
+                <li><strong>Стальной шнек</strong> эффективнее дробит наст и плотный снег; на деликатном покрытии важна аккуратная настройка высоты.</li>
+                <li><strong>Двухступенчатая система</strong> сначала собирает снег шнеком, затем выбрасывает его отдельной крыльчаткой.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="guide-card">
+          <h3>Функции, которые делают работу удобнее</h3>
+          <div class="guide-grid">
+            <div class="guide-mini-card"><h4>Электрозапуск</h4><p>Упрощает пуск холодного бензинового двигателя. В зависимости от модели стартер питается от сети или аккумулятора.</p></div>
+            <div class="guide-mini-card"><h4>Фара</h4><p>Помогает безопаснее работать ранним утром и вечером, когда зимой естественного света недостаточно.</p></div>
+            <div class="guide-mini-card"><h4>Подогрев рукояток</h4><p>Повышает комфорт при длительной уборке на морозе и позволяет увереннее контролировать машину.</p></div>
+            <div class="guide-mini-card"><h4>Несколько скоростей</h4><p>Позволяют подобрать темп под глубину снега и сложность участка, а задний ход облегчает маневрирование.</p></div>
+            <div class="guide-mini-card"><h4>Управление желобом</h4><p>Меняет направление и высоту выброса, чтобы снег не попадал на очищенную дорожку, автомобиль или фасад.</p></div>
+            <div class="guide-mini-card"><h4>Разблокировка колёс</h4><p>Облегчает разворот тяжёлого самоходного снегоуборщика без лишнего усилия со стороны оператора.</p></div>
+          </div>
+        </section>
+
+        <section class="guide-card guide-card--soft">
+          <h3>Как оформить заказ</h3>
+          <div class="guide-steps">
+            <div class="guide-step"><strong>Выберите модель</strong><span>Используйте быстрые ссылки и фильтры по мощности, ковшу, приводу и оснащению.</span></div>
+            <div class="guide-step"><strong>Уточните наличие</strong><span>Оставьте заявку или позвоните — менеджер проверит комплектацию и срок поставки.</span></div>
+            <div class="guide-step"><strong>Согласуйте условия</strong><span>Подберём способ оплаты, доставки или самовывоза. Для юрлиц выставим счёт.</span></div>
+            <div class="guide-step"><strong>Получите технику</strong><span>Проверьте комплектность, документы и рекомендации по первому запуску.</span></div>
+          </div>
+        </section>
+
+        <section class="guide-card">
+          <h3>Частые вопросы</h3>
+          <div class="guide-faq">
+            <details><summary>Самоходный или несамоходный снегоуборщик — что выбрать?</summary><p>Несамоходная модель легче и удобна на небольшой ровной площадке со свежим снегом. Для большой территории, сугробов и плотного снега практичнее самоходная машина: двигатель вращает не только шнек, но и колёса или гусеницы.</p></details>
+            <details><summary>Нужен ли электрозапуск бензиновому снегоуборщику?</summary><p>Это не обязательная, но полезная функция для регулярной работы в мороз. Она сокращает усилия при запуске холодного двигателя; перед покупкой уточните, нужен ли модели доступ к сети 220 В.</p></details>
+            <details><summary>Что лучше для участка — колёса или гусеницы?</summary><p>Колёса обеспечивают хорошую манёвренность на ровном покрытии. Гусеницы предпочтительнее на уклонах, неровном грунте и при глубоком снеге, но такая техника обычно тяжелее и дороже.</p></details>
+            <details><summary>Можно ли убирать мокрый и слежавшийся снег?</summary><p>Да, если мощности и конструкции машины достаточно. Для таких условий выбирайте двухступенчатую бензиновую модель с металлическим зубчатым шнеком и очищайте желоб только после полной остановки двигателя.</p></details>
+            <details><summary>Как хранить снегоуборщик после сезона?</summary><p>Очистите и просушите технику, выполните обслуживание по инструкции производителя. Для бензиновой модели особенно важны рекомендации по топливу, маслу и консервации двигателя.</p></details>
+          </div>
+        </section>
+
+        <section class="guide-cta">
+          <div><h3>Подберём снегоуборщик под ваши условия</h3><p>Расскажите о площади, покрытии и типичном снеге — предложим подходящие варианты без лишних функций.</p></div>
+          <button class="guide-link-button" type="button" data-open-modal>Проконсультироваться</button>
+        </section>
+      </article>
     </div>
   </main>
 
-  <footer><div class="container footer-inner"><div><img src="assets/logo.png" alt="Центр Снабжения"><p>Профессиональная техника и оборудование с доставкой по России.</p></div><div><strong>Покупателям</strong><a href="#">Оплата и доставка</a><a href="#">Гарантия</a><a href="#">Возврат</a></div><div><strong>Компания</strong><a href="#">О нас</a><a href="#">Отзывы</a><a href="#">Контакты</a></div><div><strong>Связаться</strong><a href="tel:+79213079546">+7 (921) 307-95-46</a><a href="mailto:mail@centr-snab.ru">mail@centr-snab.ru</a><p>Пн–Пт: 09:00–18:00</p></div></div></footer>
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-grid">
+        <div>
+          <strong class="footer-title">Компания</strong>
+          <nav class="footer-nav" aria-label="О компании"><a href="#">О компании</a><a href="#">Новости</a><a href="#">Политика конфиденциальности</a><a href="#">Кредит</a><a href="#">Лизинг</a></nav>
+        </div>
+        <div>
+          <strong class="footer-title">Информация</strong>
+          <nav class="footer-nav" aria-label="Информация покупателям"><a href="#">Как оформить заказ</a><a href="#">Доставка</a><a href="#">Вопрос-ответ</a><a href="#">Бренды</a><a href="#">Информация для клиентов</a></nav>
+        </div>
+        <div>
+          <strong class="footer-title">Оставайтесь на связи</strong>
+          <div class="footer-socials"><a class="footer-social footer-social--vk" href="#" aria-label="Центр Снабжения во ВКонтакте">VK</a><a class="footer-social footer-social--tg" href="#" aria-label="Центр Снабжения в Telegram">➤</a><a class="footer-social footer-social--ok" href="#" aria-label="Центр Снабжения в Одноклассниках">OK</a></div>
+        </div>
+        <div>
+          <strong class="footer-title">Наши контакты</strong>
+          <div class="footer-contacts">
+            <div class="footer-phones"><a href="tel:+78126404001">+7 (812) 640-40-01</a><a href="tel:+74956404001">+7 (495) 640-40-01</a></div>
+            <div class="footer-contact-line"><svg class="icon"><use href="#i-mail"/></svg><a href="mailto:mail@centr-snab.ru">mail@centr-snab.ru</a></div>
+            <div class="footer-contact-line"><svg class="icon"><use href="#i-phone"/></svg><span>Пн–Пт: 09:00–18:00 · Сб–Вс: выходные</span></div>
+            <div class="footer-contact-line"><svg class="icon"><use href="#i-pin"/></svg><span>Москва, Лобненская, 18 / СПб, Софийская, 14</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-trust" aria-label="Рейтинги и доверие">
+        <a class="trust-card" href="#" aria-label="Рейтинг на Яндекс Картах">
+          <span class="trust-card__body"><span class="trust-card__top"><span class="trust-score">5.0</span><span class="trust-name">Яндекс Карты</span></span><span class="trust-stars">★★★★★</span><br><span class="trust-meta">100 отзывов · 140 оценок</span></span>
+        </a>
+        <a class="trust-card" href="#" aria-label="Рейтинг компании на RusProfile">
+          <span class="trust-card__body"><span class="trust-card__top"><span class="trust-name">Рейтинг на RusProfile</span></span><span class="trust-status">Высокий ↑</span><br><span class="trust-meta">Проверить профиль компании</span></span>
+        </a>
+        <a class="trust-card" href="#" aria-label="Статус надёжной компании">
+          <span class="trust-shield"><span class="trust-shield__number">89</span><span><strong>Надёжная компания</strong><br><span class="trust-meta">Портал «Всероссийский бизнес-центр»</span></span></span>
+        </a>
+        <a class="trust-card" href="#" aria-label="Индекс благонадёжности 95">
+          <span class="trust-card__body"><span class="trust-card__top"><span class="trust-score">95</span><span class="trust-name">из 100</span></span><strong>Индекс благонадёжности</strong><br><span class="trust-meta">Оценка деловой репутации</span></span>
+        </a>
+      </div>
+
+      <div class="footer-bottom">
+        <a class="footer-sitemap" href="#" aria-label="Карта сайта"><svg class="icon"><use href="#i-grid"/></svg><span>Карта сайта</span></a>
+        <p class="footer-copy">© ООО «Группа Компаний „ЦЕНТР“», 2014–2026</p>
+        <div class="payment-methods" aria-label="Способы оплаты"><span class="payment-mark payment-mark--mir">МИР</span><span class="payment-mark payment-mark--mc">Mastercard</span><span class="payment-mark payment-mark--visa">VISA</span><span class="payment-mark">СБП</span><span class="payment-mark">SberPay</span></div>
+      </div>
+    </div>
+  </footer>
 
   <div class="scrim" id="scrim"></div>
   <section class="modal" id="callback-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true"><button class="modal-close" type="button" aria-label="Закрыть"><svg class="icon icon-sm"><use href="#i-close"/></svg></button><h2 id="modal-title">Перезвоним и поможем</h2><p>Оставьте контакты — специалист уточнит задачу и предложит подходящие модели.</p><form id="callback-form"><label>Ваше имя<input type="text" placeholder="Александр" required></label><label>Телефон<input type="tel" placeholder="+7 (___) ___-__-__" required></label><button class="modal-submit" type="submit">Заказать звонок</button><small>Нажимая кнопку, вы соглашаетесь на обработку персональных данных.</small></form></section>
