@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HTML-прототип презентации SEO-прогноза и сравнительного анализа сайта.">
+  <title>SEO-презентация — HTML-прототип</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23865ae8'/%3E%3Cpath d='M17 39l10-10 8 7 13-15' fill='none' stroke='white' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #242735;
+      --muted: #696c7d;
+      --purple: #8659e8;
+      --purple-2: #a989f2;
+      --purple-soft: #d7c2ff;
+      --line: #e3e6ef;
+      --panel: rgba(255, 255, 255, 0.94);
+      --success: #0ab982;
+      --danger: #e84f62;
+      --warning: #f2a51a;
+      --shadow: 0 24px 60px rgba(84, 73, 138, 0.14);
+      --radius: 34px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      background: #f3f1fb;
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      font-size: 16px;
+    }
+
+    button, summary { font: inherit; }
+
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid rgba(134, 89, 232, 0.35);
+      outline-offset: 3px;
+    }
+
+    .deck-toolbar {
+      position: sticky;
+      z-index: 20;
+      top: 0;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      min-height: 66px;
+      padding: 10px clamp(18px, 3vw, 46px);
+      border-bottom: 1px solid rgba(92, 78, 145, 0.12);
+      background: rgba(246, 245, 252, 0.92);
+      backdrop-filter: blur(18px);
+    }
+
+    .deck-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.94rem;
+      font-weight: 760;
+      letter-spacing: -0.01em;
+    }
+
+    .deck-brand::before {
+      width: 12px;
+      height: 12px;
+      border-radius: 4px;
+      background: var(--purple);
+      box-shadow: 8px 8px 0 var(--purple-soft);
+      content: "";
+    }
+
+    .slide-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 5px;
+      border: 1px solid rgba(99, 82, 158, 0.12);
+      border-radius: 999px;
+      background: #fff;
+      box-shadow: 0 8px 24px rgba(89, 72, 145, 0.08);
+    }
+
+    .slide-tab {
+      min-width: 92px;
+      padding: 9px 15px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: #696b78;
+      cursor: pointer;
+      font-weight: 680;
+      transition: 160ms ease;
+    }
+
+    .slide-tab:hover { background: #f5f1ff; }
+
+    .slide-tab[aria-selected="true"] {
+      background: var(--purple);
+      color: #fff;
+    }
+
+    .deck-status {
+      justify-self: end;
+      color: #77798a;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .deck-shell {
+      width: 100%;
+      padding: clamp(22px, 3vw, 44px) 24px 56px;
+    }
+
+    .stage-wrap {
+      position: relative;
+      width: min(1600px, 100%);
+      margin: 0 auto;
+    }
+
+    .slide {
+      position: relative;
+      display: none;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.85);
+      background:
+        radial-gradient(circle at 35% 28%, rgba(188, 169, 243, 0.18), transparent 26%),
+        radial-gradient(circle at 85% 76%, rgba(154, 136, 237, 0.11), transparent 31%),
+        linear-gradient(135deg, #f4f4ff 0%, #fbfbff 50%, #f0effd 100%);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .slide.is-active { display: block; }
+
+    .slide::before,
+    .slide::after {
+      position: absolute;
+      z-index: -1;
+      width: 39%;
+      height: 48%;
+      border: 4px solid rgba(255,255,255,0.72);
+      border-radius: 50%;
+      content: "";
+      transform: rotate(-18deg);
+    }
+
+    .slide::before { top: -24%; right: -9%; }
+    .slide::after { bottom: -29%; left: -17%; }
+
+    .slide-inner {
+      width: 100%;
+      height: 100%;
+      padding: 4.8% 5.8% 5.4%;
+    }
+
+    .slide-one .slide-inner {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 3.1%;
+    }
+
+    .stage-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      min-height: clamp(32px, 3.4vw, 54px);
+      padding: 0 32px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 12px 32px rgba(76, 67, 122, 0.12);
+      font-size: clamp(0.85rem, 1.34vw, 1.35rem);
+      font-weight: 760;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-one-grid {
+      display: grid;
+      grid-template-columns: 45.2% 54.8%;
+      gap: 1.7%;
+      min-height: 0;
+    }
+
+    .card {
+      border: 1px solid rgba(255,255,255,0.82);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: 0 18px 48px rgba(74, 67, 114, 0.11);
+    }
+
+    .plan-card {
+      position: relative;
+      height: 100%;
+      padding: 8.4% 6.3% 4.5%;
+    }
+
+    .plan-label {
+      position: absolute;
+      top: clamp(-28px, -1.75vw, -16px);
+      left: 5%;
+      display: inline-flex;
+      align-items: center;
+      min-height: clamp(32px, 3.45vw, 55px);
+      padding: 0 24px;
+      border-radius: 999px;
+      background: #c6a8f7;
+      font-size: clamp(0.95rem, 1.45vw, 1.5rem);
+      font-weight: 770;
+      letter-spacing: -0.02em;
+    }
+
+    .plan-list {
+      display: grid;
+      gap: 1.4%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: clamp(0.56rem, 1.13vw, 1.17rem);
+      line-height: 1.35;
+    }
+
+    .plan-list li {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .plan-list li::before {
+      position: absolute;
+      top: 0.58em;
+      left: 5px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--purple);
+      content: "";
+    }
+
+    .plan-list a {
+      color: var(--purple);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    .forecast-column {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 2.2%;
+      min-width: 0;
+    }
+
+    .forecast-card { padding: 6.2% 5.4% 4.7%; }
+
+    .forecast-title {
+      max-width: 590px;
+      margin: 0 0 5.6%;
+      font-size: clamp(0.95rem, 1.4vw, 1.48rem);
+      line-height: 1.23;
+      letter-spacing: -0.02em;
+    }
+
+    .table-shell {
+      overflow: hidden;
+      border: 1px solid #dce2ee;
+      border-radius: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .forecast-table { table-layout: fixed; }
+    .forecast-table col:first-child { width: 30%; }
+
+    .forecast-table th {
+      height: clamp(38px, 4.6vw, 74px);
+      padding: 8px 10px;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      background: var(--purple);
+      color: #fff;
+      font-size: clamp(0.67rem, 0.97vw, 1rem);
+      line-height: 1.13;
+      text-align: center;
+    }
+
+    .forecast-table th:first-child { color: transparent; }
+
+    .forecast-table td {
+      height: clamp(35px, 4.35vw, 70px);
+      padding: 10px 14px;
+      border-top: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      font-size: clamp(0.7rem, 1.06vw, 1.1rem);
+      text-align: center;
+    }
+
+    .forecast-table td:first-child {
+      padding-left: 18px;
+      text-align: left;
+      white-space: normal;
+    }
+
+    .forecast-table th:last-child,
+    .forecast-table td:last-child { border-right: 0; }
+
+    .metric-label {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .source-badges {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .source-badge {
+      display: inline-grid;
+      width: clamp(16px, 1.32vw, 21px);
+      height: clamp(16px, 1.32vw, 21px);
+      place-items: center;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 850;
+      line-height: 1;
+    }
+
+    .source-badge.yandex { background: #e74444; }
+    .source-badge.google { background: #4285f4; }
+
+    .growth {
+      color: var(--success);
+      font-weight: 720;
+    }
+
+    .disclaimer-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 3%;
+      padding: 3.2% 4.2%;
+    }
+
+    .alert-icon {
+      display: grid;
+      width: clamp(36px, 3.9vw, 62px);
+      height: clamp(36px, 3.9vw, 62px);
+      place-items: center;
+      border-radius: 50%;
+      background: #ff9e00;
+      color: #fff;
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    .disclaimer-card p {
+      margin: 0;
+      font-size: clamp(0.56rem, 1.05vw, 1.07rem);
+      line-height: 1.4;
+    }
+
+    .slide-two .slide-inner {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 3.5%;
+      padding-top: 4.2%;
+      padding-bottom: 2.2%;
+    }
+
+    .slide-title {
+      margin: 0 0 0.9%;
+      font-size: clamp(1.35rem, 2.45vw, 2.55rem);
+      line-height: 1.06;
+      letter-spacing: -0.035em;
+    }
+
+    .slide-subtitle {
+      margin: 0;
+      color: #333644;
+      font-size: clamp(0.77rem, 1.25vw, 1.27rem);
+      line-height: 1.35;
+    }
+
+    .comparison-card {
+      position: relative;
+      min-height: 0;
+      padding: 0 1.5% 6.5%;
+    }
+
+    .comparison-table { table-layout: fixed; }
+    .comparison-table col:nth-child(1) { width: 33%; }
+    .comparison-table col:nth-child(2) { width: 18%; }
+    .comparison-table col:nth-child(3) { width: 21%; }
+    .comparison-table col:nth-child(4) { width: 28%; }
+
+    .comparison-table thead th {
+      height: clamp(38px, 4.55vw, 73px);
+      padding: 4px 14px;
+      background: var(--purple);
+      color: #fff;
+      font-size: clamp(0.58rem, 1.14vw, 1.16rem);
+      line-height: 1.1;
+      text-align: left;
+    }
+
+    .comparison-table thead th:first-child { border-radius: 22px 0 0 22px; }
+    .comparison-table thead th:last-child { border-radius: 0 22px 22px 0; }
+
+    .comparison-table tbody td {
+      height: clamp(31px, 3.75vw, 60px);
+      padding: 3px 14px;
+      border-bottom: 1px solid #dfe3ec;
+      font-size: clamp(0.56rem, 1.04vw, 1.08rem);
+      line-height: 1.15;
+      vertical-align: middle;
+    }
+
+    .comparison-table tbody tr:last-child td { border-bottom: 0; }
+
+    .metric-value {
+      display: inline-block;
+      margin-right: 5px;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-weight: 780;
+      white-space: nowrap;
+    }
+
+    .metric-value.red { background: #ffe5e9; color: #d9364d; }
+    .metric-value.yellow { background: #fff0ca; color: #a86a00; }
+    .metric-value.green { background: #dff7ee; color: #087a58; }
+
+    .benchmark-value {
+      color: var(--purple);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .benchmark-note {
+      display: block;
+      margin-top: 2px;
+      color: #7c70b4;
+      font-size: clamp(0.46rem, 0.65vw, 0.67rem);
+      line-height: 1;
+    }
+
+    .comparison-result strong {
+      color: var(--purple);
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .loss-banner {
+      position: absolute;
+      right: 7%;
+      bottom: 3.2%;
+      left: 7%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: clamp(36px, 3.45vw, 55px);
+      padding: 8px 24px;
+      border-radius: 999px;
+      background: #c7aafa;
+      color: #211a3b;
+      font-size: clamp(0.54rem, 1.08vw, 1.08rem);
+      font-weight: 780;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(107, 69, 185, 0.14);
+    }
+
+    .deck-arrow {
+      position: absolute;
+      z-index: 5;
+      top: 50%;
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border: 1px solid rgba(106, 88, 164, 0.14);
+      border-radius: 50%;
+      background: rgba(255,255,255,0.93);
+      color: var(--purple);
+      box-shadow: 0 10px 30px rgba(83, 70, 131, 0.16);
+      cursor: pointer;
+      font-size: 1.45rem;
+      transform: translateY(-50%);
+      transition: 160ms ease;
+    }
+
+    .deck-arrow:hover { transform: translateY(-50%) scale(1.05); }
+    .deck-arrow.prev { left: -22px; }
+    .deck-arrow.next { right: -22px; }
+    .deck-arrow:disabled { opacity: 0.3; cursor: default; transform: translateY(-50%); }
+
+    .notes-stack {
+      width: min(1160px, 100%);
+      margin: 24px auto 0;
+    }
+
+    .developer-notes {
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(100, 81, 164, 0.14);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 14px 38px rgba(77, 64, 122, 0.08);
+    }
+
+    .developer-notes.is-active { display: block; }
+
+    .developer-notes summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 64px;
+      padding: 0 24px;
+      cursor: pointer;
+      font-weight: 780;
+      list-style: none;
+    }
+
+    .developer-notes summary::-webkit-details-marker { display: none; }
+
+    .developer-notes summary::after {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f0eaff;
+      color: var(--purple);
+      content: "+";
+      font-size: 1.3rem;
+      line-height: 28px;
+      text-align: center;
+    }
+
+    .developer-notes[open] summary::after { content: "−"; }
+
+    .notes-content {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px 34px;
+      padding: 6px 24px 28px;
+      border-top: 1px solid #eeebf6;
+    }
+
+    .notes-content h3 {
+      margin: 20px 0 8px;
+      font-size: 1rem;
+    }
+
+    .notes-content p,
+    .notes-content li {
+      color: #565969;
+      font-size: 0.94rem;
+      line-height: 1.55;
+    }
+
+    .notes-content ul { margin: 0; padding-left: 20px; }
+
+    .formula {
+      margin: 10px 0 0;
+      padding: 14px 16px;
+      overflow-x: auto;
+      border: 1px solid #e5def6;
+      border-radius: 12px;
+      background: #f8f5ff;
+      color: #39304f;
+      font: 0.88rem/1.55 Consolas, "SFMono-Regular", monospace;
+      white-space: pre-wrap;
+    }
+
+    .formula-human {
+      margin-top: 10px;
+      padding: 14px 16px;
+      border: 1px solid #d9ccf8;
+      border-left: 4px solid var(--purple);
+      border-radius: 12px;
+      background: #f3efff;
+    }
+
+    .formula-human__label {
+      display: block;
+      margin-bottom: 7px;
+      color: #6845bd;
+      font-size: 0.76rem;
+      font-weight: 820;
+      letter-spacing: 0.055em;
+      text-transform: uppercase;
+    }
+
+    .formula-human p {
+      margin: 5px 0 0;
+      color: #3f3c4d;
+      font-size: 0.91rem;
+      line-height: 1.5;
+    }
+
+    .formula-human p:first-of-type { margin-top: 0; }
+
+    .notes-wide { grid-column: 1 / -1; }
+
+    .variable-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 30px;
+      margin: 4px 0 0;
+    }
+
+    .variable-item {
+      display: grid;
+      grid-template-columns: minmax(138px, 0.62fr) 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #ece8f5;
+    }
+
+    .variable-item dt,
+    .variable-item dd { margin: 0; }
+
+    .variable-item dt {
+      color: #5f3fb1;
+      font: 0.86rem/1.45 Consolas, "SFMono-Regular", monospace;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .variable-item dd {
+      color: #565969;
+      font-size: 0.9rem;
+      line-height: 1.48;
+    }
+
+    @media (max-width: 980px) {
+      .deck-toolbar { grid-template-columns: 1fr auto; }
+      .slide-tabs { order: 3; grid-column: 1 / -1; margin-top: 8px; justify-self: center; }
+      .deck-status { grid-column: 2; grid-row: 1; }
+      .deck-shell { padding: 20px 14px 40px; }
+      .deck-arrow { width: 42px; height: 42px; }
+      .deck-arrow.prev { left: -8px; }
+      .deck-arrow.next { right: -8px; }
+      .notes-content { grid-template-columns: 1fr; }
+      .notes-wide { grid-column: auto; }
+      .variable-list { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 721px) and (max-width: 1100px) {
+      .slide { aspect-ratio: 16 / 10.4; }
+    }
+
+    @media (max-width: 720px) {
+      .deck-brand { font-size: 0.82rem; }
+      .deck-status { font-size: 0.8rem; }
+      .slide-tab { min-width: 76px; padding-inline: 11px; font-size: 0.84rem; }
+      .slide {
+        aspect-ratio: auto;
+        overflow: hidden;
+        border-radius: 24px;
+      }
+      .slide-inner { height: auto; padding: 28px 18px 32px; }
+      .slide-one .slide-inner,
+      .slide-two .slide-inner { display: block; }
+      .stage-kicker { min-height: 46px; padding: 0 20px; font-size: 1rem; }
+      .slide-one-grid { display: block; }
+      .plan-card { margin-top: 50px; padding: 48px 22px 26px; }
+      .plan-label { top: -24px; min-height: 48px; font-size: 1.1rem; }
+      .plan-list { gap: 10px; font-size: 0.95rem; }
+      .forecast-column { display: block; }
+      .forecast-card, .disclaimer-card { margin-top: 18px; padding: 24px 18px; }
+      .forecast-title { font-size: 1.2rem; }
+      .table-shell { overflow-x: auto; }
+      .forecast-table { min-width: 650px; }
+      .forecast-table th, .forecast-table td { font-size: 0.9rem; }
+      .disclaimer-card { grid-template-columns: auto 1fr; }
+      .alert-icon { width: 46px; height: 46px; font-size: 1.2rem; }
+      .disclaimer-card p { font-size: 0.9rem; }
+      .slide-two .slide-inner { padding-top: 32px; }
+      .slide-title { font-size: 1.8rem; }
+      .slide-subtitle { margin-top: 10px; font-size: 1rem; }
+      .comparison-card { margin-top: 26px; padding: 0 0 100px; }
+      .comparison-table { min-width: 920px; }
+      .comparison-table thead th,
+      .comparison-table tbody td { font-size: 0.9rem; }
+      .loss-banner { right: 18px; bottom: 24px; left: 18px; font-size: 0.9rem; }
+      .deck-arrow { display: none; }
+      .notes-stack { margin-top: 16px; }
+      .developer-notes summary { min-height: 58px; padding: 0 18px; }
+      .notes-content { padding: 4px 18px 22px; }
+      .variable-item { grid-template-columns: 1fr; gap: 3px; }
+    }
+
+    @media (max-width: 520px) {
+      .deck-toolbar { grid-template-columns: 1fr; }
+      .deck-brand { justify-self: center; }
+      .deck-status { display: none; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .deck-toolbar, .deck-arrow, .notes-stack { display: none !important; }
+      .deck-shell { padding: 0; }
+      .stage-wrap { width: 100%; }
+      .slide { display: block !important; break-after: page; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="deck-toolbar">
+    <div class="deck-brand">SEO-презентация · прототип</div>
+    <div class="slide-tabs" role="tablist" aria-label="Слайды презентации">
+      <button class="slide-tab" type="button" role="tab" aria-selected="true" aria-controls="slide-1" data-go="0">01 · Прогноз</button>
+      <button class="slide-tab" type="button" role="tab" aria-selected="false" aria-controls="slide-2" data-go="1">02 · Сравнение</button>
+    </div>
+    <div class="deck-status"><span data-current-slide>1</span> / 2 · используйте ← →</div>
+  </header>
+
+  <main class="deck-shell">
+    <div class="stage-wrap">
+      <button class="deck-arrow prev" type="button" aria-label="Предыдущий слайд" data-prev>←</button>
+
+      <article class="slide slide-one is-active" id="slide-1" role="tabpanel" aria-label="Слайд 1. Прогноз SEO-продвижения">
+        <div class="slide-inner">
+          <div class="stage-kicker">Этап II: Системное SEO-продвижение и развитие сайта</div>
+
+          <div class="slide-one-grid">
+            <section class="card plan-card" aria-labelledby="plan-title">
+              <h2 class="plan-label" id="plan-title">План работ:</h2>
+              <ul class="plan-list">
+                <li>ежемесячный технический аудит и устранение возникающих ошибок на сайте</li>
+                <li>реструктуризация каталога, приведение карточек товаров к единому формату, заполнение контентом (5–10 шт.)</li>
+                <li>сбор и актуализация семантического ядра</li>
+                <li>оптимизация текстов в карточках товаров, на коммерческих страницах и в статьях в блог (5–10 шт.)</li>
+                <li>заполнение метаданных Title, Description</li>
+                <li>устранение битых ссылок и технических ошибок на сайте</li>
+                <li>настройка корректных редиректов</li>
+                <li>закрытие от индексации технических страниц и дубликатов контента</li>
+                <li>внедрение технологии <a href="#developer-notes-1">«умного тегирования»</a> на продвигаемые страницы</li>
+                <li>настройка внутренней перелинковки</li>
+                <li>повышение скорости загрузки сайта</li>
+                <li>наращивание внешней ссылочной массы</li>
+                <li>доработка структуры и дизайна страниц (3–5 шт.)</li>
+              </ul>
+            </section>
+
+            <div class="forecast-column">
+              <section class="card forecast-card" aria-labelledby="forecast-title">
+                <h2 class="forecast-title" id="forecast-title">Прогнозируемый результат относительно<br>текущих показателей</h2>
+                <div class="table-shell">
+                  <table class="forecast-table">
+                    <colgroup><col><col><col><col><col></colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Показатель</th>
+                        <th scope="col">Текущие<br>данные</th>
+                        <th scope="col">Через<br>3 месяца</th>
+                        <th scope="col">Через<br>6 месяцев</th>
+                        <th scope="col">Через<br>год</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="metric-label">Трафик
+                            <span class="source-badges" aria-label="Источник: Яндекс и Google">
+                              <span class="source-badge yandex" title="Яндекс">Я</span>
+                              <span class="source-badge google" title="Google">G</span>
+                            </span>
+                          </span>
+                        </td>
+                        <td data-current-traffic>1 204</td>
+                        <td class="growth" data-traffic-growth="3">—</td>
+                        <td class="growth" data-traffic-growth="6">—</td>
+                        <td class="growth" data-traffic-growth="12">—</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="metric-label">Запросов в ТОП-10
+                            <span class="source-badges" aria-label="Источник: Яндекс и Google">
+                              <span class="source-badge yandex" title="Яндекс">Я</span>
+                              <span class="source-badge google" title="Google">G</span>
+                            </span>
+                          </span>
+                        </td>
+                        <td data-current-top>25</td>
+                        <td class="growth" data-top-growth="3">—</td>
+                        <td class="growth" data-top-growth="6">—</td>
+                        <td class="growth" data-top-growth="12">—</td>
+                      </tr>
+                      <tr>
+                        <td>Лиды</td>
+                        <td data-current-leads>12</td>
+                        <td class="growth" data-lead-growth="3">—</td>
+                        <td class="growth" data-lead-growth="6">—</td>
+                        <td class="growth" data-lead-growth="12">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+
+              <aside class="card disclaimer-card" aria-label="Примечание к прогнозу">
+                <div class="alert-icon" aria-hidden="true">!</div>
+                <p>Прогноз основан на текущих метриках сайта и средних показателях в нише. Значения носят ориентировочный характер. Фактические результаты могут отличаться, так как зависят от состояния сайта, конкуренции, изменений поисковых алгоритмов и сезонности.</p>
+              </aside>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="slide slide-two" id="slide-2" role="tabpanel" aria-label="Слайд 2. Сравнение сайта с конкурентом" hidden>
+        <div class="slide-inner">
+          <header>
+            <h1 class="slide-title">Почему важно начать SEO-продвижение уже сейчас?</h1>
+            <p class="slide-subtitle">Сравним текущие показатели сайта с отраслевыми и оценим объём недополученного трафика.</p>
+          </header>
+
+          <section class="card comparison-card" aria-label="Сравнение показателей эффективности SEO">
+            <div class="table-shell" style="border:0;border-radius:22px;overflow-x:auto">
+              <table class="comparison-table">
+                <colgroup><col><col><col><col></colgroup>
+                <thead>
+                  <tr>
+                    <th scope="col">Показатель эффективности SEO</th>
+                    <th scope="col">Наш сайт</th>
+                    <th scope="col">Средняя по отрасли/<br>ключевой конкурент</th>
+                    <th scope="col">Результат сравнения</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-current="2.8" data-benchmark="1.4" data-direction="lower" data-weight="0.10">
+                    <td>Скорость загрузки десктопной версии сайта</td>
+                    <td><span class="metric-value yellow">2.8</span> секунд</td>
+                    <td><span class="benchmark-value">1.4</span> секунд<span class="benchmark-note">средняя по отрасли</span></td>
+                    <td class="comparison-result">скорость ниже отраслевой <strong>в 2 раза</strong></td>
+                  </tr>
+                  <tr data-current="5.4" data-benchmark="1.2" data-direction="lower" data-weight="0.15">
+                    <td>Скорость загрузки мобильной версии сайта</td>
+                    <td><span class="metric-value red">5.4</span> секунд</td>
+                    <td><span class="benchmark-value">1.2</span> секунд<span class="benchmark-note">средняя по отрасли</span></td>
+                    <td class="comparison-result">скорость ниже отраслевой <strong>в 5 раз</strong></td>
+                  </tr>
+                  <tr data-current="674" data-benchmark="1864" data-direction="higher" data-weight="0.20">
+                    <td>Количество посадочных страниц</td>
+                    <td><span class="metric-value yellow">674</span> страниц</td>
+                    <td><span class="benchmark-value">1 864</span> страниц<span class="benchmark-note">ключевой конкурент</span></td>
+                    <td class="comparison-result">у конкурента больше <strong>в 3 раза</strong></td>
+                  </tr>
+                  <tr data-current="12984" data-benchmark="46248" data-direction="higher" data-weight="0.10">
+                    <td>Количество ссылок на сайт</td>
+                    <td><span class="metric-value green">12 984</span> ссылок</td>
+                    <td><span class="benchmark-value">46 248</span> ссылок<span class="benchmark-note">ключевой конкурент</span></td>
+                    <td class="comparison-result">у конкурента больше <strong>в 4 раза</strong></td>
+                  </tr>
+                  <tr data-current="1646" data-benchmark="6890" data-direction="higher" data-weight="0.15">
+                    <td>Видимость сайта в ТОП-50 в Yandex</td>
+                    <td><span class="metric-value red">1 646</span> запросов</td>
+                    <td><span class="benchmark-value">6 890</span> запросов<span class="benchmark-note">ключевой конкурент</span></td>
+                    <td class="comparison-result">у конкурента больше <strong>в 6 раз</strong></td>
+                  </tr>
+                  <tr data-current="1248" data-benchmark="5742" data-direction="higher" data-weight="0.15">
+                    <td>Видимость сайта в ТОП-50 в Google</td>
+                    <td><span class="metric-value red">1 248</span> запросов</td>
+                    <td><span class="benchmark-value">5 742</span> запросов<span class="benchmark-note">ключевой конкурент</span></td>
+                    <td class="comparison-result">у конкурента больше <strong>в 4 раза</strong></td>
+                  </tr>
+                  <tr data-current="124" data-benchmark="352" data-direction="higher" data-weight="0.15">
+                    <td>Количество используемых доменов</td>
+                    <td><span class="metric-value green">124</span> доменов</td>
+                    <td><span class="benchmark-value">352</span> доменов<span class="benchmark-note">ключевой конкурент</span></td>
+                    <td class="comparison-result">у конкурента больше <strong>в 3 раза</strong></td>
+                  </tr>
+                  <tr data-current="1323567" data-benchmark="12323567" data-direction="higher" data-weight="0">
+                    <td>Трафик на сайт в месяц</td>
+                    <td><span class="metric-value yellow">1 323 567</span> посетителей</td>
+                    <td><span class="benchmark-value">12 323 567</span> посетителей<span class="benchmark-note">ключевой конкурент</span></td>
+                    <td class="comparison-result">у конкурента больше <strong>в 12 раз</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="loss-banner">Из-за выявленных проблем сайт недополучает около&nbsp;<span data-loss-percent>—</span>% потенциальных клиентов ежемесячно</div>
+          </section>
+        </div>
+      </article>
+
+      <button class="deck-arrow next" type="button" aria-label="Следующий слайд" data-next>→</button>
+    </div>
+
+    <section class="notes-stack" aria-label="Описание для программиста">
+      <details class="developer-notes is-active" id="developer-notes-1" data-notes="0">
+        <summary>Описание и логика расчёта для программиста</summary>
+        <div class="notes-content">
+          <div>
+            <h3>Исходные данные</h3>
+            <ul>
+              <li>Трафик, запросы в ТОП-10 и количество страниц сайта и конкурентов берутся из Keys.so.</li>
+              <li>По конкурентам используется обычное среднее арифметическое по всем выбранным сайтам.</li>
+              <li>Темп создания страниц задаётся параметром в диапазоне 10–50 страниц в месяц.</li>
+              <li>Демо прототипа: 20 страниц в месяц, средние конкурента — 8 000 трафика, 400 страниц и 100 запросов в ТОП-10.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Источник поисковых данных</h3>
+            <ul>
+              <li><code>yandex</code> — рядом с названием строки выводится красная «Я».</li>
+              <li><code>google</code> — выводится синяя «G».</li>
+              <li><code>combined</code> — выводятся обе иконки «Я + G».</li>
+              <li>Иконки показываются только у трафика и запросов в ТОП-10. У лидов иконки нет.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Трафик и потенциал структуры</h3>
+            <pre class="formula">avgTraffic = Σ trafficCompetitor / competitorsCount
+avgPages = Σ pagesCompetitor / competitorsCount
+trafficPerPage = avgTraffic / avgPages
+pagePotential = max(0, avgPages − sitePages)
+
+ΔTraffic(H) = Σ(newPagesInMonth × trafficPerPage × ageCoefficient)</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Формула словами</span>
+              <p><strong>Средний трафик конкурентов</strong> равен сумме трафика всех конкурентов, делённой на их количество.</p>
+              <p><strong>Среднее количество страниц конкурентов</strong> равно сумме их страниц, делённой на количество конкурентов.</p>
+              <p><strong>Трафик одной страницы</strong> равен среднему трафику конкурентов, делённому на среднее количество их страниц.</p>
+              <p><strong>Потенциал расширения структуры</strong> равен разнице между средним количеством страниц конкурентов и количеством страниц нашего сайта, но не может быть меньше нуля.</p>
+              <p><strong>Прирост трафика к выбранному сроку</strong> равен сумме результатов всех созданных страниц: количество страниц умножается на трафик одной страницы и коэффициент их возраста.</p>
+            </div>
+          </div>
+          <div>
+            <h3>Набор результата страницей</h3>
+            <pre class="formula">1 месяц — 10%   2 месяца — 25%
+3 месяца — 45%  4 месяца — 65%
+5 месяцев — 80% 6 месяцев — 90%
+с 7 месяца — 100%</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Как читать</span>
+              <p>Каждая новая страница выходит на расчётный потенциал постепенно. В первый месяц учитывается 10% результата страницы, через три месяца — 45%, через шесть — 90%, а начиная с седьмого месяца — 100%.</p>
+            </div>
+          </div>
+          <div>
+            <h3>Запросы в ТОП-10</h3>
+            <pre class="formula">avgTop10 = Σ top10Competitor / competitorsCount
+top10Potential = max(0, avgTop10 − currentTop10)
+structureShare = effectiveNewPages / pagePotential
+ΔTop10(H) = round(top10Potential × min(1, structureShare))</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Формула словами</span>
+              <p><strong>Среднее количество запросов в ТОП-10</strong> равно сумме запросов в ТОП-10 у всех конкурентов, делённой на их количество.</p>
+              <p><strong>Потенциал роста ТОП-10</strong> равен разнице между средним показателем конкурентов и текущим показателем сайта, но не может быть меньше нуля.</p>
+              <p><strong>Доля освоения структуры</strong> равна эффективному количеству новых страниц, делённому на общий потенциал расширения.</p>
+              <p><strong>Прирост запросов в ТОП-10</strong> равен потенциалу роста, умноженному на долю освоения структуры. Доля ограничена 100%, итог округляется до целого запроса.</p>
+            </div>
+            <p>Показателя «запросов в ТОП-10 на страницу» нет и в расчёте он не используется.</p>
+          </div>
+          <div>
+            <h3>Лиды и отображение результата</h3>
+            <pre class="formula">currentLeads = round(currentTraffic × 0.01)
+ΔLeads(H) = round(ΔTraffic(H) × 0.01)</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Формула словами</span>
+              <p><strong>Текущие лиды</strong> равны 1% от текущего трафика сайта.</p>
+              <p><strong>Прирост лидов к выбранному сроку</strong> равен 1% от рассчитанного прироста трафика. Оба результата округляются до целого количества лидов.</p>
+            </div>
+            <p>В прогнозных столбцах показывается абсолютный прирост со знаком «+», а не проценты и не итоговое значение.</p>
+          </div>
+          <div class="notes-wide">
+            <h3>Расшифровка переменных</h3>
+            <dl class="variable-list">
+              <div class="variable-item"><dt>H</dt><dd>горизонт прогноза в месяцах: 3, 6 или 12.</dd></div>
+              <div class="variable-item"><dt>competitorsCount</dt><dd>количество конкурентов, включённых в выборку Keys.so.</dd></div>
+              <div class="variable-item"><dt>trafficCompetitor</dt><dd>месячный трафик отдельного конкурента по данным Keys.so.</dd></div>
+              <div class="variable-item"><dt>avgTraffic</dt><dd>средний месячный трафик всех выбранных конкурентов.</dd></div>
+              <div class="variable-item"><dt>pagesCompetitor</dt><dd>количество страниц отдельного конкурента по данным Keys.so.</dd></div>
+              <div class="variable-item"><dt>avgPages</dt><dd>среднее количество страниц у выбранных конкурентов.</dd></div>
+              <div class="variable-item"><dt>sitePages</dt><dd>текущее количество страниц продвигаемого сайта.</dd></div>
+              <div class="variable-item"><dt>trafficPerPage</dt><dd>расчётный потенциал трафика одной страницы в нише.</dd></div>
+              <div class="variable-item"><dt>pagePotential</dt><dd>максимальное количество страниц, на которое можно расширить структуру сайта.</dd></div>
+              <div class="variable-item"><dt>newPagesInMonth</dt><dd>количество новых или полноценно переработанных страниц за месяц.</dd></div>
+              <div class="variable-item"><dt>ageCoefficient</dt><dd>коэффициент набора результата страницей в зависимости от её возраста.</dd></div>
+              <div class="variable-item"><dt>effectiveNewPages</dt><dd>новые страницы с учётом их возраста и коэффициента набора результата.</dd></div>
+              <div class="variable-item"><dt>currentTraffic</dt><dd>текущий месячный трафик продвигаемого сайта из Keys.so.</dd></div>
+              <div class="variable-item"><dt>ΔTraffic(H)</dt><dd>абсолютный прирост месячного трафика к выбранному горизонту.</dd></div>
+              <div class="variable-item"><dt>currentTop10</dt><dd>текущее количество запросов сайта в ТОП-10 из Keys.so.</dd></div>
+              <div class="variable-item"><dt>top10Competitor</dt><dd>количество запросов в ТОП-10 у отдельного конкурента.</dd></div>
+              <div class="variable-item"><dt>avgTop10</dt><dd>среднее количество запросов в ТОП-10 у конкурентов.</dd></div>
+              <div class="variable-item"><dt>top10Potential</dt><dd>разница между средним показателем конкурентов и текущим показателем сайта.</dd></div>
+              <div class="variable-item"><dt>structureShare</dt><dd>доля освоенного потенциала расширения структуры, от 0 до 1.</dd></div>
+              <div class="variable-item"><dt>ΔTop10(H)</dt><dd>абсолютный прирост количества запросов в ТОП-10.</dd></div>
+              <div class="variable-item"><dt>currentLeads</dt><dd>текущее расчётное количество лидов: 1% от текущего трафика.</dd></div>
+              <div class="variable-item"><dt>ΔLeads(H)</dt><dd>абсолютный прирост лидов: 1% от прироста трафика.</dd></div>
+            </dl>
+          </div>
+          <div class="notes-wide">
+            <h3>Ограничения прогноза</h3>
+            <p>Количество создаваемых страниц ограничивается потенциалом расширения структуры. Расчёт является ориентировочным и не учитывает сезонность, изменения алгоритмов, задержки индексации и различия в качестве отдельных страниц.</p>
+          </div>
+        </div>
+      </details>
+
+      <details class="developer-notes" id="developer-notes-2" data-notes="1">
+        <summary>Описание и логика расчёта для программиста</summary>
+        <div class="notes-content">
+          <div>
+            <h3>Цветовая подсветка</h3>
+            <p>Красный, жёлтый и зелёный цвета значений в столбце «Наш сайт» используются только как визуальные акценты макета. Автоматическая логика, пороги и связь цветов с расчётом не требуются.</p>
+          </div>
+          <div>
+            <h3>Показатели в расчёте</h3>
+            <p>Учитываются скорость десктопной и мобильной версии, страницы, ссылки, видимость в Яндексе и Google и домены. Строка трафика имеет вес 0, поскольку трафик является результатом остальных факторов.</p>
+          </div>
+          <div>
+            <h3>Нормализация отклонений</h3>
+            <pre class="formula">Если больше — лучше:
+gap = clamp(1 − site / benchmark, 0, 1)
+
+Если меньше — лучше:
+gap = clamp(1 − benchmark / site, 0, 1)</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Формула словами</span>
+              <p><strong>Если большее значение считается лучшим</strong>, доля отставания равна единице минус отношение показателя нашего сайта к показателю конкурента.</p>
+              <p><strong>Если меньшее значение считается лучшим</strong>, например время загрузки, доля отставания равна единице минус отношение показателя конкурента к показателю нашего сайта.</p>
+              <p>Полученное значение всегда ограничивается диапазоном от 0 до 1: отрицательный результат заменяется нулём, а результат выше единицы — единицей.</p>
+            </div>
+          </div>
+          <div>
+            <h3>Веса</h3>
+            <pre class="formula">Скорость десктопа — 10%
+Скорость мобильной версии — 15%
+Количество страниц — 20%
+Количество ссылок — 10%
+Видимость в Яндексе — 15%
+Видимость в Google — 15%
+Количество доменов — 15%</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Как читать</span>
+              <p>Каждое рассчитанное отклонение умножается на вес соответствующего показателя. Чем выше вес, тем сильнее этот показатель влияет на итоговый индекс проблем. Сумма всех весов равна 100%.</p>
+            </div>
+          </div>
+          <div>
+            <h3>Процент потери</h3>
+            <pre class="formula">E = Σ(gap × weight)
+lossPercent = round(E × 40%)</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Формула словами</span>
+              <p><strong>Совокупный индекс проблем</strong> равен сумме отклонений по всем показателям, предварительно умноженных на их веса.</p>
+              <p><strong>Процент недополученных клиентов</strong> равен совокупному индексу проблем, умноженному на максимальную границу влияния 40%. Результат округляется до целого процента.</p>
+            </div>
+            <p>40% — установленная максимальная граница влияния SEO-проблем. На демонстрационных данных индекс равен примерно 0,695, поэтому слайд показывает около 28%.</p>
+          </div>
+          <div>
+            <h3>Абсолютное количество клиентов</h3>
+            <pre class="formula">currentLeads = currentTraffic × 0.01
+potentialLeads = currentLeads / (1 − lossPercent)
+missedLeads = potentialLeads − currentLeads</pre>
+            <div class="formula-human">
+              <span class="formula-human__label">Формула словами</span>
+              <p><strong>Текущие клиенты</strong> равны 1% от текущего месячного трафика.</p>
+              <p><strong>Потенциальные клиенты</strong> равны текущему количеству клиентов, делённому на единицу минус расчётная доля потери. Например, 28% в формуле используется как 0,28.</p>
+              <p><strong>Недополученные клиенты</strong> равны разнице между потенциальным и текущим количеством клиентов.</p>
+            </div>
+            <p>Конверсия трафика в лид зафиксирована на уровне 1%. При необходимости абсолютное значение можно вывести рядом с процентом.</p>
+          </div>
+          <div class="notes-wide">
+            <h3>Расшифровка переменных</h3>
+            <dl class="variable-list">
+              <div class="variable-item"><dt>site</dt><dd>текущее значение показателя продвигаемого сайта.</dd></div>
+              <div class="variable-item"><dt>benchmark</dt><dd>средний отраслевой показатель или значение выбранного ключевого конкурента.</dd></div>
+              <div class="variable-item"><dt>gap</dt><dd>нормализованная доля отставания сайта по конкретному показателю, от 0 до 1.</dd></div>
+              <div class="variable-item"><dt>clamp(value, 0, 1)</dt><dd>ограничение результата диапазоном от 0 до 1.</dd></div>
+              <div class="variable-item"><dt>weight</dt><dd>вес показателя в итоговом индексе проблем.</dd></div>
+              <div class="variable-item"><dt>E</dt><dd>совокупный взвешенный индекс выявленных проблем, от 0 до 1.</dd></div>
+              <div class="variable-item"><dt>lossPercent</dt><dd>расчётная доля недополученных потенциальных клиентов; в формулах используется как десятичная дробь.</dd></div>
+              <div class="variable-item"><dt>currentTraffic</dt><dd>текущий месячный трафик сайта.</dd></div>
+              <div class="variable-item"><dt>currentLeads</dt><dd>текущее расчётное количество клиентов: 1% от трафика.</dd></div>
+              <div class="variable-item"><dt>potentialLeads</dt><dd>расчётное количество клиентов при отсутствии оцениваемых потерь.</dd></div>
+              <div class="variable-item"><dt>missedLeads</dt><dd>абсолютное количество недополученных клиентов за месяц.</dd></div>
+              <div class="variable-item"><dt>round(value)</dt><dd>округление значения до ближайшего целого числа.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const formatNumber = new Intl.NumberFormat('ru-RU');
+
+      const forecastModel = {
+        currentTraffic: 1204,
+        currentTop10: 25,
+        sitePages: 280,
+        pagesPerMonth: 20,
+        competitors: [
+          { traffic: 7200, pages: 360, top10: 88 },
+          { traffic: 8000, pages: 410, top10: 105 },
+          { traffic: 8800, pages: 430, top10: 107 }
+        ]
+      };
+
+      const average = (key) => forecastModel.competitors.reduce((sum, item) => sum + item[key], 0) / forecastModel.competitors.length;
+      const maturity = (age) => age >= 7 ? 1 : [0, 0.10, 0.25, 0.45, 0.65, 0.80, 0.90][age];
+
+      const calculateForecast = (horizon) => {
+        const avgTraffic = average('traffic');
+        const avgPages = average('pages');
+        const avgTop10 = average('top10');
+        const trafficPerPage = avgTraffic / avgPages;
+        const pagePotential = Math.max(0, avgPages - forecastModel.sitePages);
+        let remainingPages = pagePotential;
+        let effectivePages = 0;
+
+        for (let month = 1; month <= horizon && remainingPages > 0; month += 1) {
+          const newPages = Math.min(forecastModel.pagesPerMonth, remainingPages);
+          const ageAtHorizon = horizon - month + 1;
+          effectivePages += newPages * maturity(ageAtHorizon);
+          remainingPages -= newPages;
+        }
+
+        const trafficGrowth = Math.round(effectivePages * trafficPerPage);
+        const structureShare = pagePotential ? Math.min(1, effectivePages / pagePotential) : 0;
+        const topGrowth = Math.round(Math.max(0, avgTop10 - forecastModel.currentTop10) * structureShare);
+        const leadGrowth = Math.round(trafficGrowth * 0.01);
+        return { trafficGrowth, topGrowth, leadGrowth };
+      };
+
+      document.querySelector('[data-current-traffic]').textContent = formatNumber.format(forecastModel.currentTraffic);
+      document.querySelector('[data-current-top]').textContent = formatNumber.format(forecastModel.currentTop10);
+      document.querySelector('[data-current-leads]').textContent = formatNumber.format(Math.round(forecastModel.currentTraffic * 0.01));
+
+      [3, 6, 12].forEach((horizon) => {
+        const result = calculateForecast(horizon);
+        document.querySelector(`[data-traffic-growth="${horizon}"]`).textContent = `+${formatNumber.format(result.trafficGrowth)}`;
+        document.querySelector(`[data-top-growth="${horizon}"]`).textContent = `+${formatNumber.format(result.topGrowth)}`;
+        document.querySelector(`[data-lead-growth="${horizon}"]`).textContent = `+${formatNumber.format(result.leadGrowth)}`;
+      });
+
+      const comparisonRows = [...document.querySelectorAll('.comparison-table tbody tr[data-weight]')];
+      const problemIndex = comparisonRows.reduce((total, row) => {
+        const current = Number(row.dataset.current);
+        const benchmark = Number(row.dataset.benchmark);
+        const weight = Number(row.dataset.weight);
+        const rawGap = row.dataset.direction === 'lower'
+          ? 1 - benchmark / current
+          : 1 - current / benchmark;
+        const normalizedGap = Math.min(1, Math.max(0, rawGap));
+        return total + normalizedGap * weight;
+      }, 0);
+      document.querySelector('[data-loss-percent]').textContent = Math.round(problemIndex * 40);
+
+      const slides = [...document.querySelectorAll('.slide')];
+      const notes = [...document.querySelectorAll('[data-notes]')];
+      const tabs = [...document.querySelectorAll('[data-go]')];
+      const previousButton = document.querySelector('[data-prev]');
+      const nextButton = document.querySelector('[data-next]');
+      const currentLabel = document.querySelector('[data-current-slide]');
+      let currentSlide = 0;
+
+      const showSlide = (index) => {
+        currentSlide = Math.min(slides.length - 1, Math.max(0, index));
+        slides.forEach((slide, slideIndex) => {
+          const active = slideIndex === currentSlide;
+          slide.classList.toggle('is-active', active);
+          slide.hidden = !active;
+        });
+        notes.forEach((note, noteIndex) => note.classList.toggle('is-active', noteIndex === currentSlide));
+        tabs.forEach((tab, tabIndex) => tab.setAttribute('aria-selected', String(tabIndex === currentSlide)));
+        previousButton.disabled = currentSlide === 0;
+        nextButton.disabled = currentSlide === slides.length - 1;
+        currentLabel.textContent = String(currentSlide + 1);
+      };
+
+      tabs.forEach((tab) => tab.addEventListener('click', () => showSlide(Number(tab.dataset.go))));
+      previousButton.addEventListener('click', () => showSlide(currentSlide - 1));
+      nextButton.addEventListener('click', () => showSlide(currentSlide + 1));
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') showSlide(currentSlide - 1);
+        if (event.key === 'ArrowRight') showSlide(currentSlide + 1);
+      });
+
+      showSlide(0);
+    })();
+  </script>
+</body>
+</html>
