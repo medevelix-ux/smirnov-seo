@@ -280,7 +280,7 @@
     }
 
     .forecast-table { table-layout: fixed; }
-    .forecast-table col:first-child { width: 30%; }
+    .forecast-table col:first-child { width: 28%; }
 
     .forecast-table th {
       height: clamp(38px, 4.6vw, 74px);
@@ -297,7 +297,7 @@
 
     .forecast-table td {
       height: clamp(35px, 4.35vw, 70px);
-      padding: 10px 14px;
+      padding: 10px 6px;
       border-top: 1px solid var(--line);
       border-right: 1px solid var(--line);
       font-size: clamp(0.7rem, 1.06vw, 1.1rem);
@@ -341,9 +341,42 @@
     .source-badge.yandex { background: #e74444; }
     .source-badge.google { background: #4285f4; }
 
-    .growth {
-      color: var(--success);
+    .forecast-result {
+      display: inline-grid;
+      grid-template-columns: auto auto;
+      grid-template-rows: 0.8em 1.18em;
+      align-items: end;
+      justify-items: center;
+      column-gap: 0.24em;
+      white-space: nowrap;
+      line-height: 1;
+    }
+
+    .forecast-result__total {
+      grid-column: 1;
+      grid-row: 2;
+      color: var(--ink);
+      font-size: 1.05em;
       font-weight: 720;
+    }
+
+    .forecast-result__arrow {
+      grid-column: 2;
+      grid-row: 2;
+      color: var(--success);
+      font-size: 1.12em;
+      font-weight: 750;
+      line-height: 1;
+    }
+
+    .forecast-result__increase {
+      grid-column: 2;
+      grid-row: 1;
+      align-self: end;
+      color: var(--success);
+      font-size: 0.8em;
+      font-weight: 750;
+      line-height: 1;
     }
 
     .disclaimer-card {
@@ -974,7 +1007,7 @@ structureShare = effectiveNewPages / pagePotential
               <p><strong>Текущие лиды</strong> равны 1% от текущего трафика сайта.</p>
               <p><strong>Прирост лидов к выбранному сроку</strong> равен 1% от рассчитанного прироста трафика. Оба результата округляются до целого количества лидов.</p>
             </div>
-            <p>В прогнозных столбцах показывается абсолютный прирост со знаком «+», а не проценты и не итоговое значение.</p>
+            <p>В прогнозных столбцах основным числом показывается итоговое значение: текущий показатель плюс рассчитанный прирост. Рядом — стрелка вверх, а прирост в абсолютных единицах со знаком «+» расположен справа сверху. Проценты не используются.</p>
           </div>
           <div class="notes-wide">
             <h3>Расшифровка переменных</h3>
@@ -1143,9 +1176,31 @@ missedLeads = potentialLeads − currentLeads</pre>
 
       [3, 6, 12].forEach((horizon) => {
         const result = calculateForecast(horizon);
-        document.querySelector(`[data-traffic-growth="${horizon}"]`).textContent = `+${formatNumber.format(result.trafficGrowth)}`;
-        document.querySelector(`[data-top-growth="${horizon}"]`).textContent = `+${formatNumber.format(result.topGrowth)}`;
-        document.querySelector(`[data-lead-growth="${horizon}"]`).textContent = `+${formatNumber.format(result.leadGrowth)}`;
+        const currentLeads = Math.round(forecastModel.currentTraffic * 0.01);
+        const renderForecast = (selector, current, growth, unit) => {
+          const cell = document.querySelector(selector);
+          const total = current + growth;
+          const value = document.createElement('span');
+          const totalLabel = document.createElement('span');
+          const arrow = document.createElement('span');
+          const increase = document.createElement('sup');
+
+          value.className = 'forecast-result';
+          value.setAttribute('role', 'text');
+          value.setAttribute('aria-label', `Итого ${formatNumber.format(total)} ${unit}, прирост ${formatNumber.format(growth)} ${unit}`);
+          totalLabel.className = 'forecast-result__total';
+          totalLabel.textContent = formatNumber.format(total);
+          arrow.className = 'forecast-result__arrow';
+          arrow.textContent = '↑';
+          increase.className = 'forecast-result__increase';
+          increase.textContent = `+${formatNumber.format(growth)}`;
+          value.append(totalLabel, arrow, increase);
+          cell.replaceChildren(value);
+        };
+
+        renderForecast(`[data-traffic-growth="${horizon}"]`, forecastModel.currentTraffic, result.trafficGrowth, 'визитов в месяц');
+        renderForecast(`[data-top-growth="${horizon}"]`, forecastModel.currentTop10, result.topGrowth, 'запросов в ТОП-10');
+        renderForecast(`[data-lead-growth="${horizon}"]`, currentLeads, result.leadGrowth, 'лидов в месяц');
       });
 
       const comparisonRows = [...document.querySelectorAll('.comparison-table tbody tr[data-weight]')];
