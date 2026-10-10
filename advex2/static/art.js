@@ -1,0 +1,33 @@
+// Original, code-native technical illustrations for the demonstration catalog.
+export function drawing(type, variant=0) {
+ const dark='#20251F',lime='#D2F65A', mid='#AEB7A5', edge='#CFD5C8';
+ const r=(x,y,w,h,fill='#fff',rx=0)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${fill}" stroke="${edge}" stroke-width="1.4"/>`;
+ const line=(a,b,c,d,stroke=dark,width=4)=>`<path d="M${a} ${b}L${c} ${d}" stroke="${stroke}" stroke-width="${width}" fill="none" stroke-linecap="round"/>`;
+ const brand=(x,y,w,h)=>`${r(x,y,w,h,dark,2)}<path d="M${x+w*.15} ${y+h*.75}L${x+w*.48} ${y+h*.16}L${x+w*.83} ${y+h*.75}M${x+w*.3} ${y+h*.51}L${x+w*.66} ${y+h*.51}" stroke="${lime}" stroke-width="${Math.max(3,w*.07)}" fill="none"/><path d="M${x+w*.15} ${y+h*.9}H${x+w*.65}" stroke="#fff" stroke-width="2"/>`;
+ let s='';
+ switch(type){
+ case 'roll-up': s=line(150,190,150,33,mid,3)+brand(103,40,94,150)+r(94,190,112,13,mid,3)+line(110,207,132,203,mid,5)+line(169,204,190,209,mid,5); break;
+ case 'banner-stands':s=line(96,31,204,207,mid,4)+line(203,32,97,207,mid,4)+brand(100,39,100,155); break;
+ case 'pop-up':s=`<path d="M48 61Q150 83 252 61V189Q150 211 48 189Z" fill="${dark}" stroke="${edge}"/><path d="M52 155Q150 176 248 155V188Q150 208 52 188Z" fill="${lime}"/>`+line(51,63,51,196,mid,3)+line(249,63,249,196,mid,3)+line(105,72,105,200,mid,1)+line(197,72,197,200,mid,1)+brand(111,100,75,57);break;
+ case 'fold-up':s=`<path d="M35 58L110 74V204L35 188Z" fill="${dark}"/><path d="M110 74L190 55V188L110 204Z" fill="${lime}"/><path d="M190 55L264 77V207L190 188Z" fill="#fff" stroke="${edge}"/>`+line(47,98,97,109,'#fff',3)+line(47,112,89,121,'#fff',2)+line(206,117,249,128,dark,4)+line(206,133,249,145,mid,3);break;
+ case 'press-wall':s=line(47,39,47,208,mid,4)+line(253,39,253,208,mid,4)+r(46,42,208,143,'#fff')+line(30,209,63,209,mid,4)+line(237,209,269,209,mid,4)+[0,1,2,3].flatMap(i=>[0,1,2].map(j=>brand(62+i*49,57+j*39,28,22))).join('');break;
+ case 'fabric-stands':s=`<path d="M59 44Q149 20 241 44V191Q150 219 59 191Z" fill="${dark}" stroke="${edge}"/><path d="M61 133Q150 95 239 137V188Q150 218 61 190Z" fill="${lime}"/><path d="M89 85H172M89 98H146" stroke="#fff" stroke-width="5"/>`;break;
+ case 'exhibition-builds':s=`<path d="M35 174L160 136L274 175L149 218Z" fill="#dce1d5"/><path d="M49 71L161 36L161 146L49 178Z" fill="${dark}"/><path d="M161 36L258 64V178L161 146Z" fill="#fff" stroke="${edge}"/><path d="M36 48L159 13L274 48L155 84Z" fill="#fff" stroke="${edge}"/><path d="M36 48V69L155 102L274 69V48L155 81Z" fill="${lime}"/>`+r(249,65,7,111)+r(47,70,6,107)+brand(100,94,43,62)+r(176,141,57,38,'#fff',2)+line(192,177,192,190,mid,4);break;
+ case 'reception':case 'counter': s=`<path d="M59 90L182 61L245 87L119 118Z" fill="#fff" stroke="${edge}"/><path d="M59 90L119 118V202L59 169Z" fill="#dce1d5"/><path d="M119 118L245 87V171L119 202Z" fill="${dark}"/>`+`<path d="M155 158L174 127L194 149M164 143L185 138" stroke="${lime}" stroke-width="5" fill="none"/>`;break;
+ case 'printing':s=`<path d="M68 94L139 55L232 125L162 181Z" fill="${mid}"/><path d="M63 85L136 42L232 114L158 167Z" fill="${dark}"/><path d="M71 171L160 146L232 178L141 210Z" fill="${lime}"/><path d="M119 94L142 68L178 100M107 113L153 149" stroke="${lime}" stroke-width="4"/>`;break;
+ case 'promo-counters':case 'promo':s=r(79,135,143,69,dark,6)+r(73,130,155,9,'#fff',3)+line(86,132,86,52,mid,4)+line(216,132,216,52,mid,4)+r(77,39,149,35,lime,3)+brand(122,150,52,36);break;
+ case 'signage':s=r(40,79,220,90,dark,5)+`<path d="M70 140L91 101L112 140M80 122H101M128 103L145 138L162 103M174 105L201 140M201 105L174 140" stroke="${lime}" stroke-width="7" fill="none"/>`;break;
+ case 'brochure-holders':case 'info': s=line(121,195,155,46,mid,5)+r(98,195,92,9,dark,2)+[0,1,2].map(i=>`<path d="M${130-i*10} ${46+i*47}L${190-i*10} ${46+i*47}L${172-i*10} ${81+i*47}L${112-i*10} ${81+i*47}Z" fill="${i===1?lime:'#fff'}" stroke="${edge}"/>`).join('');break;
+ case 'round-table':case 'high-table':s=line(151,type==='high-table'?73:102,151,198,mid,9)+`<ellipse cx="151" cy="201" rx="49" ry="10" fill="${dark}"/><ellipse cx="151" cy="${type==='high-table'?73:102}" rx="89" ry="27" fill="#fff" stroke="${edge}" stroke-width="2"/>`;break;
+ case 'table':s=line(60,119,60,198,mid,6)+line(240,101,240,180,mid,6)+line(124,144,124,216,mid,6)+line(183,81,183,161,mid,6)+`<path d="M43 111L186 72L256 102L116 148Z" fill="#fff" stroke="${edge}"/>`;break;
+ case 'chair':case 'soft-chair':case 'bar-chair':{const high=type==='bar-chair', upholstery=type==='soft-chair'?mid:'#fff';s=line(117,143,96,211,'#aa987e',7)+line(181,143,201,211,'#aa987e',7)+line(121,130,136,200,'#aa987e',5)+line(170,130,160,199,'#aa987e',5)+r(101,high?40:58,96,75,upholstery,24)+`<path d="M98 120Q150 140 199 120L201 145Q149 166 96 145Z" fill="${upholstery}" stroke="${edge}"/>`+(high?line(104,180,191,180,mid,3):'');break;}
+ case 'sofa':case 'sofa-dark':case 'armchair':{const x=type==='armchair'?90:48,w=type==='armchair'?120:204,color=type==='sofa-dark'?dark:'#fff';s=r(x+10,182,8,23,dark,2)+r(x+w-18,182,8,23,dark,2)+r(x+10,85,w-20,83,color,15)+r(x,133,w,56,color,12)+r(x+19,139,w-38,25,color,9)+r(x,111,22,73,color,9)+r(x+w-22,111,22,73,color,9)+(type!=='armchair'?line(150,96,150,138,edge,2):'');break;}
+ case 'case':s=r(99,28,102,167,'#eaf0e8',2)+r(99,184,102,21,dark)+[0,1,2].map(i=>line(101,70+i*37,199,70+i*37,mid,2)).join('')+line(104,31,104,184,mid,3)+line(195,31,195,184,mid,3)+line(118,39,173,166,'#fff',3);break;
+ case 'display-counter':s=r(57,83,186,61,'#eaf0e8',3)+r(57,144,186,55,'#fff')+line(151,84,151,142,mid,3)+line(64,113,234,113,mid,2);break;
+ case 'plinth':s=`<path d="M105 80L164 58L207 84L146 107Z" fill="#fff" stroke="${edge}"/><path d="M105 80L146 107V212L105 187Z" fill="#dce1d5"/><path d="M146 107L207 84V187L146 212Z" fill="#fff" stroke="${edge}"/>`;break;
+ case 'screen':case 'screen-small':s=line(150,104,150,204,mid,9)+r(110,202,81,9,dark,3)+r(type==='screen-small'?68:45,36,type==='screen-small'?164:210,120,dark,6)+brand(84,65,134,65);break;
+ case 'audio':s=line(96,160,96,212,mid,4)+line(210,159,210,212,mid,4)+line(78,217,115,217,mid,3)+line(191,217,229,217,mid,3)+[62,176].map(x=>r(x,54,67,114,dark,7)+`<circle cx="${x+34}" cy="124" r="21" fill="#404b3f"/><circle cx="${x+34}" cy="78" r="10" fill="${mid}"/>`).join('');break;
+ default:s=r(95,60,110,135,dark,8)+brand(111,88,80,73);
+ }
+ return `<svg class="product-art" viewBox="0 0 300 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><ellipse cx="150" cy="217" rx="108" ry="9" fill="#20251f" opacity=".055"/><g transform="${variant%2?'translate(-37 -27) scale(1.25)':'translate(0 0)'}">${s}</g></svg>`;
+}
