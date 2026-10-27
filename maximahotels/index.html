@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#9e0a4f">
+<meta name="description" content="Косметический редизайн главной страницы Управляющей компании Максима Хотелс — интерактивный HTML-прототип.">
+<title>Максима Хотелс — современная версия главной | Концепт</title>
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden">
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+<symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+<symbol id="i-left" viewBox="0 0 24 24"><path d="M19 12H5m7 7-7-7 7-7"/></symbol>
+<symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.7"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="m21 16.8-3.8-1.8a1.7 1.7 0 0 0-2 .4l-1.6 1.6a16 16 0 0 1-6.6-6.6l1.6-1.6a1.7 1.7 0 0 0 .4-2L7.2 3a1.7 1.7 0 0 0-2-.8L3 2.9c-1.3.5-1.8 2-1.4 3.4 2 7.6 8.1 13.7 15.7 15.7 1.4.4 2.9-.1 3.4-1.4l.7-2.2a1.7 1.7 0 0 0-.8-2Z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m3 6 9 7 9-7"/></symbol>
+<symbol id="i-hotel" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M2 21h20M9 21v-5h6v5M7 7h2m6 0h2M7 11h2m6 0h2"/></symbol>
+<symbol id="i-clipboard" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4h6V2H9v2Zm0 7h6m-6 4h6"/></symbol>
+<symbol id="i-ruler" viewBox="0 0 24 24"><path d="m3 16 13-13 5 5-13 13-5-5Zm6-5 2 2m1-5 2 2m-8 4 2 2"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.7 2.7L16.5 9"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="5"/><path d="m12 12 9-9v5h-4v4h-4"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 20V4m0 16h18M7 15l4-5 4 3 5-7"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 2.8 6.3 6.8.6-5.2 4.5 1.5 6.6-5.9-3.5-5.9 3.5 1.5-6.6L2.4 8.9l6.8-.6L12 2Z"/></symbol>
+</svg>
+<header class="head-shell" id="siteHeader">
+ <div class="container header">
+  <a href="#top" class="brand-logo" aria-label="Максима Хотелс — наверх"><img src="assets/images/maxima-logo.png" alt="Максима Хотелс" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=&quot;color:#a80753;font-weight:850;font-size:23px;letter-spacing:-.06em&quot;>MAXIMA <small style=&quot;color:#777;font-size:13px&quot;>HOTELS</small></span>'"></a>
+  <nav class="topnav" aria-label="Основная навигация"><a href="#about">О компании</a><a href="#services">Услуги</a><a href="#blog">Блог</a><a href="#vacancies">Вакансии</a><a href="#contacts">Контакты</a></nav>
+  <div class="header-tools">
+   <a class="header-phone" href="tel:+74957887272"><small>Единый телефон</small><strong>+7 (495) 788-72-72</strong></a>
+   <div class="hotel-chooser" id="hotelChooser">
+    <button class="chooser-btn" id="chooseBtn" aria-label="Выбрать отель" aria-expanded="false" aria-controls="choosePanel"><svg class="icon"><use href="#i-hotel"/></svg>Выбрать отель<svg class="icon"><use href="#i-chevron"/></svg></button>
+    <div class="choose-panel" id="choosePanel"><h3>Отели сети Maxima Hotels</h3><div id="hotelOptions"></div></div>
+   </div>
+   <div class="lang"><span>RU</span><span style="color:#dfdfe3">/</span><a href="https://maximahotels.ru/en/" title="English version">EN</a></div>
+   <button class="menu-toggle" id="menuToggle" aria-label="Открыть меню"><svg class="icon"><use href="#i-menu"/></svg></button>
+  </div>
+ </div>
+</header>
+<main id="top">
+ <section class="hero-wrap container" aria-label="Отели Maxima Hotels">
+  <div class="hero-frame" id="heroFrame">
+   <div id="heroSlides"></div>
+   <div class="hero-shade"></div>
+   <div class="hero-slide-name"><svg class="icon"><use href="#i-pin"/></svg><span id="heroName">Максима Домодедово Аэропорт Отель</span></div>
+   <div class="hero-copy"><span class="hero-label">Сеть отелей Максима Хотелс</span><h2>Искреннее<br><em>гостеприимство.</em></h2><p class="hero-desc">Откройте для себя мир искреннего гостеприимства с сетью отелей Максима Хотелс.</p><a class="btn" href="#about">О компании <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+   <div class="hero-dots" id="heroDots" aria-label="Выбор слайда"></div>
+   <div class="hero-controls"><div class="hero-counter"><strong id="heroCounter">01</strong> <span>/ 05</span></div><button class="circle-control" id="prevHero" aria-label="Предыдущий слайд"><svg class="icon"><use href="#i-left"/></svg></button><button class="circle-control" id="nextHero" aria-label="Следующий слайд"><svg class="icon"><use href="#i-right"/></svg></button></div>
+  </div>
+  <form class="reservation" id="reservationForm" aria-label="Поиск номера">
+   <label class="res-cell"><b>Ваш отель</b><select id="bookHotel" required aria-label="Выберите отель"></select></label>
+   <label class="res-cell"><b>Дата заезда</b><input type="date" id="checkIn" required aria-label="Дата заезда"></label>
+   <label class="res-cell"><b>Дата выезда</b><input type="date" id="checkOut" required aria-label="Дата выезда"></label>
+   <label class="res-cell"><b>Гости</b><select id="guests" aria-label="Количество гостей"><option value="1">1 гость</option><option value="2" selected>2 гостя</option><option value="3">3 гостя</option><option value="4">4 гостя</option><option value="5">5 гостей</option><option value="6">6 гостей</option></select></label>
+   <button type="submit" class="res-search">Найти номер <svg class="icon"><use href="#i-arrow"/></svg></button>
+  </form>
+  <p class="res-note">Демо-форма: после выбора параметров откроется официальный сайт отеля. Даты в систему бронирования не передаются.</p>
+ </section>
+ <section class="intro" id="about"><div class="container intro-grid">
+  <div class="intro-copy reveal"><div class="eyebrow">О компании</div><h1>Управляющая компания Максима Хотелс, Москва</h1><p class="lede">Откройте для себя мир искреннего гостеприимства с сетью отелей Максима Хотелс.</p><p>С 2004 года мы с любовью и заботой создаем для вас уютные уголки в динамичной Москве и живописном Подмосковье. Где бы вы ни остановились — в одном из наших современных городских отелей или в загородном клубе — вас всегда ждет неизменно высокий уровень сервиса, теплая атмосфера и наше радушие.</p><a href="https://maximahotels.ru/about/" class="btn btn-outline" target="_blank" rel="noopener">Подробнее о компании <svg class="icon"><use href="#i-arrow"/></svg></a></div>
+  <div class="intro-photo reveal"><img loading="lazy" src="assets/images/hotel-park.jpeg" alt="Интерьер гостиницы Максима Хотелс"><div class="photo-sticker"><strong>2004</strong><span>Год основания<br>Maxima Hotels</span></div></div>
+ </div></section>
+ <section class="services" id="services"><div class="container"><div class="section-top reveal"><div><div class="eyebrow">Управление и развитие</div><h2 class="title">Наши услуги</h2></div><p class="subcopy">Комплексная поддержка гостиничных проектов — от первой идеи до ежедневной работы отеля.</p></div><div class="service-grid" id="servicesGrid"></div></div></section>
+ <section class="blog" id="blog"><div class="container"><div class="blog-head reveal"><div><div class="eyebrow">Новости и вдохновение</div><h2 class="title">Блог</h2></div><div class="blog-links"><a class="btn btn-outline" href="https://maximahotels.ru/blog/" target="_blank" rel="noopener">Все записи блога <svg class="icon"><use href="#i-arrow"/></svg></a><button class="slider-arrow" id="blogPrev" aria-label="Предыдущие статьи"><svg class="icon"><use href="#i-left"/></svg></button><button class="slider-arrow" id="blogNext" aria-label="Следующие статьи"><svg class="icon"><use href="#i-right"/></svg></button><div class="blog-progress"><strong id="blogPosition">01</strong> / <span id="blogCount">35</span></div></div></div><div class="articles-viewport" id="blogViewport"><div class="articles-track" id="articlesTrack"></div></div><div class="blog-bottom"><a href="https://maximahotels.ru/blog/" target="_blank" rel="noopener" class="btn btn-light">Смотреть все публикации <svg class="icon"><use href="#i-arrow"/></svg></a></div></div></section>
+ <section class="careers" id="vacancies"><div class="container"><div class="career-frame reveal"><div class="career-photo"><img loading="lazy" src="assets/images/hotel-osovec.jpeg" alt="Современный интерьер отеля Максима Хотелс"></div><div class="career-content"><div class="eyebrow">Карьера с Maxima</div><h2 class="title">Вакансии</h2><p>Управляющая компания Максима Хотелс предлагает следующие вакансии.<br>За всеми подробностями можно обратиться по телефону <a href="tel:+74957887272" style="color:#23252d;font-weight:750">8 (495) 788-72-72</a>.</p><a class="btn" href="https://maximahotels.ru/vacancies/" target="_blank" rel="noopener">Посмотреть вакансии <svg class="icon"><use href="#i-arrow"/></svg></a></div></div></div></section>
+ <section class="contacts" id="contacts"><div class="container contact-grid"><div class="contact-side reveal"><div class="eyebrow">Всегда на связи</div><h2 class="title">Контакты</h2><div class="contact-unit"><div class="contact-ico"><svg class="icon"><use href="#i-pin"/></svg></div><div><span>Адрес управляющей компании</span><strong>127106, Россия, Москва,<br>Гостиничная, 4/9</strong></div></div><div class="contact-unit"><div class="contact-ico"><svg class="icon"><use href="#i-phone"/></svg></div><div><span>Телефон</span><a href="tel:+74957887272">+7 (495) 788-72-72</a></div></div><div class="contact-unit"><div class="contact-ico"><svg class="icon"><use href="#i-mail"/></svg></div><div><span>Электронная почта</span><a href="mailto:development@maximahotels.ru">development@maximahotels.ru</a></div></div><a class="btn btn-outline" href="https://maximahotels.ru/contacts/" target="_blank" rel="noopener">Все контакты <svg class="icon"><use href="#i-arrow"/></svg></a></div><div class="contact-map reveal"><iframe loading="lazy" title="Максима Хотелс на карте Москвы" src="https://yandex.ru/map-widget/v1/?ll=37.5808%2C55.8435&z=15&pt=37.5808%2C55.8435%2Cpm2rdm" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="map-caption"><span>Москва, Гостиничная улица, 4/9</span><a href="https://yandex.ru/maps/?ll=37.5808%2C55.8435&z=16&pt=37.5808%2C55.8435%2Cpm2rdm" target="_blank" rel="noopener">Открыть карту ↗</a></div></div></div></section>
+</main>
+<footer class="footer"><div class="container"><div class="footer-top"><div class="foot-brand foot-col"><a href="#top" class="foot-logo"><span class="foot-mark">◢</span><span><strong>MAXIMA</strong><small>HOTELS</small></span></a><p class="foot-about">Искреннее гостеприимство, уютная атмосфера и забота о каждом госте с 2004 года.</p><a class="foot-contact" href="tel:+74957887272">+7 (495) 788-72-72</a></div><div class="foot-col"><h4>Гостиницы сети</h4><div class="foot-hotels"><a href="https://zarya.maximahotels.ru/">Максима Заря Отель</a><a href="https://irbis.maximahotels.ru/">Максима Ирбис Отель</a><a href="https://panorama.maximahotels.ru/">Максима Панорама Отель</a><a href="https://slavia.maximahotels.ru/">Максима Славия Отель</a><a href="https://park.maximahotels.ru/">Максима Парк Отель</a><a href="https://domodedovo.maximahotels.ru/">Максима Домодедово Аэропорт</a><a href="https://osovec.maximahotels.ru/">Усадьба Осовец</a></div></div><div class="foot-col"><h4>Навигация</h4><a href="#about">О компании</a><a href="#services">Услуги</a><a href="#blog">Блог</a><a href="#vacancies">Вакансии</a><a href="#contacts">Контакты</a></div></div><div class="foot-bottom"><span>© Управляющая компания Максима Хотелс, 2026. Официальный сайт.</span><div class="foot-legal"><a href="https://maximahotels.ru/" target="_blank" rel="noopener">Оригинальный сайт</a><a href="https://maximahotels.ru/legal-information/" target="_blank" rel="noopener">Правовая информация</a><a href="https://maximahotels.ru/upload/iblock/3dc/6r94dr580zdh0rqa8co3el9hr4n8eias.pdf" target="_blank" rel="noopener">Политика обработки персональных данных</a><a href="https://maximahotels.ru/upload/iblock/166/w7eztv4zrqsnasgq08vx3n68rnmv92ow.pdf" target="_blank" rel="noopener">Политика cookie</a></div></div></div></footer>
+<div class="mobile-nav" id="mobileNav" aria-hidden="true"><div class="mobile-pane"><div class="mob-top"><img src="assets/images/maxima-logo.png" alt="Maxima Hotels"><button class="mob-close" id="mobClose" aria-label="Закрыть меню"><svg class="icon"><use href="#i-x"/></svg></button></div><a class="mob-link" href="#about">О компании</a><a class="mob-link" href="#services">Услуги</a><a class="mob-link" href="#blog">Блог</a><a class="mob-link" href="#vacancies">Вакансии</a><a class="mob-link" href="#contacts">Контакты</a><div class="mob-extra"><a href="https://maximahotels.ru/en/">English version →</a><a href="https://maximahotels.ru/">Перейти на официальный сайт →</a></div><div class="mob-bottom"><a class="btn" href="tel:+74957887272" style="width:100%">+7 (495) 788-72-72</a></div></div></div>
+<div class="cookie" id="cookieBanner"><p>Мы используем файлы cookie, чтобы улучшать сайт. Продолжая просмотр, вы соглашаетесь с <a href="https://maximahotels.ru/upload/iblock/166/w7eztv4zrqsnasgq08vx3n68rnmv92ow.pdf">политикой cookie</a>.</p><button class="btn" id="cookieAccept">Хорошо</button></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<button class="to-top" id="toTop" aria-label="Наверх"><svg class="icon"><use href="#i-arrow-up"/></svg></button>
+<script src="assets/app.js" defer></script>
+</body>
+</html>
