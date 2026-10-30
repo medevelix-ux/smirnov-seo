@@ -1,0 +1,13 @@
+{
+  "configurations": {},
+  "overrides": {},
+  "rules": [
+    {"pattern":"АКПП", "field":"transmission", "value":"automatic"},
+    {"pattern":"вариатор", "field":"transmission", "value":"cvt"},
+    {"pattern":"МКПП", "field":"transmission", "value":"manual"},
+    {"pattern":"роботизирован|РКПП|DSG", "field":"transmission", "value":"robot"},
+    {"pattern":"дизел|накаливания", "field":"powertrain", "value":"diesel"},
+    {"pattern":"раздаточ", "field":"drive", "value":"awd"}
+  ],
+  "electricExclusions": "масла.*двигател|масла и масляного|ГРМ|сцеплен|свеч|выхлоп|дизел|карбюратор|ДВС"
+}

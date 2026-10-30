@@ -1,0 +1,262 @@
+[
+  {
+    "slug": "baic",
+    "label": "BAIC",
+    "url": "/servis/baic/"
+  },
+  {
+    "slug": "belgee",
+    "label": "BELGEE",
+    "url": "/servis/belgee/"
+  },
+  {
+    "slug": "bestune",
+    "label": "Bestune",
+    "url": "/servis/bestune/"
+  },
+  {
+    "slug": "chery",
+    "label": "CHERY",
+    "url": "/servis/chery/"
+  },
+  {
+    "slug": "chrysler",
+    "label": "CHRYSLER",
+    "url": "/servis/chrysler/"
+  },
+  {
+    "slug": "citroen",
+    "label": "CITROEN",
+    "url": "/servis/citroen/"
+  },
+  {
+    "slug": "faw",
+    "label": "FAW",
+    "url": "/servis/faw/"
+  },
+  {
+    "slug": "geely",
+    "label": "GEELY",
+    "url": "/servis/geely/"
+  },
+  {
+    "slug": "genesis",
+    "label": "GENESIS",
+    "url": "/servis/genesis/"
+  },
+  {
+    "slug": "great-wall",
+    "label": "Great Wall",
+    "url": "/servis/great-wall/"
+  },
+  {
+    "slug": "hyundai",
+    "label": "HYUNDAI",
+    "url": "/servis/hyundai/"
+  },
+  {
+    "slug": "jac",
+    "label": "JAC",
+    "url": "/servis/jac/"
+  },
+  {
+    "slug": "jaecoo",
+    "label": "JAECOO",
+    "url": "/servis/jaecoo/"
+  },
+  {
+    "slug": "jeep",
+    "label": "Jeep",
+    "url": "/servis/jeep/"
+  },
+  {
+    "slug": "jeland",
+    "label": "JELAND",
+    "url": "/servis/jeland/"
+  },
+  {
+    "slug": "jetour",
+    "label": "JETOUR",
+    "url": "/servis/jetour/"
+  },
+  {
+    "slug": "jetta",
+    "label": "JETTA",
+    "url": "/servis/jetta/"
+  },
+  {
+    "slug": "kaiyi",
+    "label": "KAIYI",
+    "url": "/servis/kaiyi/"
+  },
+  {
+    "slug": "kgm",
+    "label": "KGM",
+    "url": "/servis/kgm/"
+  },
+  {
+    "slug": "kia",
+    "label": "Kia",
+    "url": "/servis/kia/"
+  },
+  {
+    "slug": "knewstar",
+    "label": "KNEWSTAR",
+    "url": "/servis/knewstar/"
+  },
+  {
+    "slug": "lada",
+    "label": "LADA",
+    "url": "/servis/lada/"
+  },
+  {
+    "slug": "lifan",
+    "label": "LIFAN",
+    "url": "/servis/lifan/"
+  },
+  {
+    "slug": "mitsubishi",
+    "label": "MITSUBISHI",
+    "url": "/servis/mitsubishi/"
+  },
+  {
+    "slug": "nordcross",
+    "label": "Nordcross",
+    "url": "/servis/nordcross/"
+  },
+  {
+    "slug": "omoda",
+    "label": "OMODA",
+    "url": "/servis/omoda/"
+  },
+  {
+    "slug": "peugeot",
+    "label": "PEUGEOT",
+    "url": "/servis/peugeot/"
+  },
+  {
+    "slug": "ravon",
+    "label": "RAVON",
+    "url": "/servis/ravon/"
+  },
+  {
+    "slug": "renault",
+    "label": "RENAULT",
+    "url": "/servis/renault/"
+  },
+  {
+    "slug": "solaris",
+    "label": "SOLARIS",
+    "url": "/servis/solaris/"
+  },
+  {
+    "slug": "soueast",
+    "label": "SOUEAST",
+    "url": "/servis/soueast/"
+  },
+  {
+    "slug": "ssangyong",
+    "label": "SsangYong",
+    "url": "/servis/ssangyong/"
+  },
+  {
+    "slug": "suzuki",
+    "label": "SUZUKI",
+    "url": "/servis/suzuki/"
+  },
+  {
+    "slug": "tenet",
+    "label": "TENET",
+    "url": "/servis/tenet/"
+  },
+  {
+    "slug": "tenet-plus",
+    "label": "Tenet Plus",
+    "url": "/servis/tenet-plus/"
+  },
+  {
+    "slug": "volga",
+    "label": "VOLGA",
+    "url": "/servis/volga/"
+  },
+  {
+    "slug": "xcite",
+    "label": "XCITE",
+    "url": "/servis/xcite/"
+  },
+  {
+    "slug": "moskvich",
+    "label": "Москвич",
+    "url": "/servis/moskvich/"
+  },
+  {
+    "slug": "uaz",
+    "label": "УАЗ",
+    "url": "/servis/uaz/"
+  },
+  {
+    "slug": "toyota",
+    "label": "Toyota",
+    "url": "/servis/toyota/"
+  },
+  {
+    "slug": "nissan",
+    "label": "Nissan",
+    "url": "/servis/nissan/"
+  },
+  {
+    "slug": "subaru",
+    "label": "Subaru",
+    "url": "/servis/subaru/"
+  },
+  {
+    "slug": "honda",
+    "label": "Honda",
+    "url": "/servis/honda/"
+  },
+  {
+    "slug": "volkswagen",
+    "label": "Volkswagen",
+    "url": "/servis/volkswagen/"
+  },
+  {
+    "slug": "mercedes-benz",
+    "label": "Mercedes-Benz",
+    "url": "/servis/mercedes-benz/"
+  },
+  {
+    "slug": "bmw",
+    "label": "BMW",
+    "url": "/servis/bmw/"
+  },
+  {
+    "slug": "audi",
+    "label": "Audi",
+    "url": "/servis/audi/"
+  },
+  {
+    "slug": "opel",
+    "label": "Opel",
+    "url": "/servis/opel/"
+  },
+  {
+    "slug": "ford",
+    "label": "Ford",
+    "url": "/servis/ford/"
+  },
+  {
+    "slug": "chevrolet",
+    "label": "Chevrolet",
+    "url": "/servis/chevrolet/"
+  },
+  {
+    "slug": "skoda",
+    "label": "Skoda",
+    "url": "/servis/skoda/"
+  },
+  {
+    "slug": "volvo",
+    "label": "Volvo",
+    "url": "/servis/volvo/"
+  }
+]

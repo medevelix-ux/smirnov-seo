@@ -1,0 +1,31 @@
+{
+  "basis": "Страна происхождения марки; место сборки конкретной модели может отличаться.",
+  "groups": [
+    {"id":"jp","label":"Японские","country":"Япония","brands":["toyota","nissan","mitsubishi","subaru","honda","suzuki"]},
+    {"id":"kr","label":"Корейские","country":"Южная Корея","brands":["hyundai","kia","genesis","kgm","ssangyong"]},
+    {"id":"de","label":"Немецкие","country":"Германия","brands":["volkswagen","mercedes-benz","bmw","audi","opel"]},
+    {"id":"fr","label":"Французские","country":"Франция","brands":["peugeot","citroen","renault"]},
+    {"id":"us","label":"Американские","country":"США","brands":["ford","chevrolet","chrysler","jeep"]},
+    {"id":"ru","label":"Российские","country":"Россия","brands":["lada","uaz","moskvich","solaris","tenet","tenet-plus","jeland","volga","xcite","nordcross"]},
+    {"id":"cn","label":"Китайские","country":"Китай","brands":["baic","bestune","chery","faw","geely","great-wall","jac","jaecoo","jetour","jetta","kaiyi","knewstar","lifan","omoda","soueast"]},
+    {"id":"by","label":"Белорусские","country":"Беларусь","brands":["belgee"]},
+    {"id":"uz","label":"Узбекские","country":"Узбекистан","brands":["ravon"]},
+    {"id":"cz","label":"Чешские","country":"Чехия","brands":["skoda"]},
+    {"id":"se","label":"Шведские","country":"Швеция","brands":["volvo"]}
+  ],
+  "sources": {
+    "belgee":"https://belgee.ru/about-belgee/news/belgee-narashchivaet-prodazhi-v-rossii/",
+    "ravon":"https://uzautomotors.com/companies/brend_ravon",
+    "jeland":"https://agr.auto/news/84",
+    "tenet-plus":"https://tenetplus.ru/",
+    "solaris":"https://agr.auto/solaris",
+    "nordcross":["https://nordcross-auto.ru/","https://companies.rbc.ru/trademark/1111749/nordcross/"],
+    "knewstar":"https://autoreview.ru/news/tugella-v-rossii-teper-pod-novoy-markoy-knewstar"
+  },
+  "notes": {
+    "nordcross":"Локальный бренд, правообладатель ООО «Слава Моторс Рус» (Россия); автомобили производятся в Китае. Не относится к шведским маркам по происхождению технологии.",
+    "jetta":"Самостоятельная китайская марка совместного предприятия FAW–Volkswagen, не модель Volkswagen Jetta.",
+    "solaris":"Отдельная российская марка, не модель Hyundai Solaris.",
+    "volvo":"Шведское происхождение марки сохраняется независимо от структуры владения."
+  }
+}

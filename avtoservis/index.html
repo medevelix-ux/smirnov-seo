@@ -2,6 +2,12 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<base href="/">
+<script>if(location.pathname!=='/')document.documentElement.classList.add('catalog-loading');</script>
+<style>.catalog-loading main{visibility:hidden}</style>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="/src/catalog.css">
+<script type="module" src="/src/catalog.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>LFG Service — автосервис: ремонт, диагностика и ТО автомобилей</title>
 <meta name="description" content="Автосервис LFG Service: техническое обслуживание, компьютерная диагностика, ремонт двигателя и подвески, выездная техпомощь и эвакуатор. Смета до начала работ, гарантия до 12 месяцев.">
@@ -11,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"AutoRepair","name":"LFG Service","url":"https://lfg-service.ru","telephone":"+7 (495) 000-00-00","email":"info@lfg-service.ru","address":{"@type":"PostalAddress","streetAddress":"ул. Промышленная, 12, стр. 3","addressLocality":"Москва","addressCountry":"RU"},"openingHours":"Mo-Su 09:00-21:00","priceRange":"₽₽"}
+{"@context":"https://schema.org","@type":"AutoRepair","name":"LFG Service","url":"https://lfg-service.ru","telephone":"+7 (904) 567-88-71","email":"info@lfg-service.ru","address":{"@type":"PostalAddress","streetAddress":"Островецкое шоссе, 17","addressLocality":"деревня Верея","addressRegion":"Московская область","addressCountry":"RU"},"openingHours":"Mo-Su 09:00-21:00","priceRange":"₽₽"}
 </script>
 <style>
 :root{
@@ -86,7 +92,7 @@ html,body{overflow-x:clip}
 .nav-btn .ico{width:16px;height:16px;transition:transform .2s}
 .nav-btn:hover,.nav-item.open .nav-btn{background:var(--surface-2)}
 .nav-item.open .nav-btn .ico{transform:rotate(180deg)}
-.drop{position:absolute;top:calc(100% - 4px);left:50%;transform:translate(-50%,6px);min-width:300px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);box-shadow:0 24px 60px -20px rgba(15,19,23,.35);padding:10px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
+.drop{position:absolute;top:calc(100% + 2px);left:50%;transform:translate(-50%,6px);min-width:300px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);box-shadow:0 24px 60px -20px rgba(15,19,23,.35);padding:10px;opacity:0;visibility:hidden;transition:opacity .18s,transform .18s,visibility .18s}
 .drop.wide{min-width:560px;display:grid;grid-template-columns:1fr 1fr;column-gap:6px}
 .nav-item.open .drop{opacity:1;visibility:visible;transform:translate(-50%,0)}
 .nav-item:first-child .drop{left:0;transform:translateY(6px)}
@@ -137,7 +143,7 @@ html,body{overflow-x:clip}
 @keyframes kb{from{transform:scale(1.06)}to{transform:scale(1)}}
 .slide-copy{position:relative;z-index:2}
 .hero-tag{display:inline-flex;align-items:center;gap:8px;padding:7px 12px 7px 8px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--on-dark-line);font-size:13.5px;color:var(--on-dark-muted);margin-bottom:26px}
-.hero-tag i{width:8px;height:8px;border-radius:50%;background:var(--signal);box-shadow:0 0 0 4px rgba(245,196,0,.2)}
+.hero-tag i{width:8px;height:8px;border-radius:50%;background:var(--signal)}
 .slide h1,.slide .h1{font-family:var(--font-d);font-weight:600;font-size:clamp(28px,2.6vw + 18px,54px);line-height:1.08;letter-spacing:-.025em;margin:0 0 22px;text-wrap:balance}
 .slide p{color:var(--on-dark-muted);font-size:clamp(16px,1.3vw,18.5px);margin:0 0 32px;max-width:540px}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px}
@@ -220,7 +226,7 @@ html,body{overflow-x:clip}
 
 /* ===== Sections ===== */
 .sec[hidden]{display:none!important}
-h1,h2,h3,.h1{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+h1,h2,h3,.h1{overflow-wrap:break-word;hyphens:manual;-webkit-hyphens:manual}
 .sec{padding:clamp(48px,4.2vw + 34px,104px) 0}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px 40px;margin-bottom:clamp(24px,2.4vw + 14px,48px);flex-wrap:wrap}
 .sec-head:has(.scroll-ctrl){flex-wrap:nowrap}
@@ -756,12 +762,12 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
 /* 2) + 3) первый экран на узких телефонах */
 @media (max-width:518px){ .slide{align-content:start;padding-top:44px} }
 @media (max-width:708px){
-  .slide-bg.has-photo[data-photo="hero1"]{background-image:url("img/slide1m.png")!important}
-  .slide-bg.has-photo[data-photo="hero2"]{background-image:url("img/slide2m.png")!important}
-  .slide-bg.has-photo[data-photo="hero3"]{background-image:url("img/slide3m.png")!important}
+  .slide-bg.has-photo[data-photo="hero1"]{background-image:url("img/slide1m-converted.webp")!important}
+  .slide-bg.has-photo[data-photo="hero2"]{background-image:url("img/slide2m-converted.webp")!important}
+  .slide-bg.has-photo[data-photo="hero3"]{background-image:url("img/slide3m-converted.webp")!important}
 }
 /* 4) мобильная картинка в «Почему к нам возвращаются» */
-@media (max-width:1080px){ .adv-visual .ph.has-photo{background-image:url("img/p1_mobile.png")!important} }
+@media (max-width:1080px){ .adv-visual .ph.has-photo{background-image:url("img/p1_mobile-converted.webp")!important} }
 /* 5) популярные услуги */
 @media (max-width:497px){
   #popular .sec-head{flex-wrap:nowrap;align-items:center;gap:16px}
@@ -806,6 +812,123 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
   .map-card{order:-1}
   .map-frame{position:static;height:300px;width:auto;margin:0 var(--gut);border-radius:var(--r-l)}
 }
+/* SmartWidgets: theme scoped to the reviews section; slider sizes remain managed by the widget. */
+#reviewsWidget{min-width:0}
+#reviews #reviewsWidget .sw-app{
+  font-family:var(--font-t)!important;color:var(--text)!important;
+  background:transparent!important;border:0!important;padding:0!important;width:100%!important;max-width:100%!important;
+  --e92c23787b7c821cf9c25faad1a94082-item-name-color:var(--text)!important;
+  --e92c23787b7c821cf9c25faad1a94082-item-text-color:var(--text)!important;
+  --e92c23787b7c821cf9c25faad1a94082-item-date-color:var(--muted)!important;
+  --e92c23787b7c821cf9c25faad1a94082-item-readmore-color:var(--steel)!important;
+  --e92c23787b7c821cf9c25faad1a94082-item-main_rating-color:var(--on-dark)!important;
+  --e92c23787b7c821cf9c25faad1a94082-item-main_count-color:var(--on-dark-muted)!important;
+  --e92c23787b7c821cf9c25faad1a94082-main-title-color:var(--on-dark)!important;
+  --e92c23787b7c821cf9c25faad1a94082-item-main_active_tab-color:var(--signal-ink)!important;
+}
+#reviews #reviewsWidget .sw-app-body{width:100%!important;max-width:100%!important;padding:0!important}
+#reviews #reviewsWidget .sw-review-box{background:var(--asphalt)!important;color:var(--on-dark)!important;border:1px solid var(--on-dark-line)!important;border-radius:var(--r-l)!important;padding:28px!important;box-shadow:none!important}
+#reviews #reviewsWidget .sw-review-box-title,
+#reviews #reviewsWidget .sw-reviews-rating{font-family:var(--font-d)!important;color:var(--on-dark)!important}
+#reviews #reviewsWidget .sw-reviews-count{color:var(--on-dark-muted)!important}
+#reviews #reviewsWidget .sw-review-box-tab{background:var(--asphalt-2)!important;color:var(--on-dark)!important;border:1px solid var(--on-dark-line)!important;border-radius:12px!important}
+#reviews #reviewsWidget .sw-review-box-tab.active{background:var(--signal)!important;color:var(--signal-ink)!important;border-color:var(--signal)!important}
+#reviews #reviewsWidget .sw-review-item{background:var(--surface)!important;color:var(--text)!important;border:1px solid var(--line)!important;border-radius:var(--r-l)!important;padding:24px!important;box-shadow:none!important}
+#reviews #reviewsWidget .sw-review-item-author{font-family:var(--font-t)!important;font-weight:600!important;color:var(--text)!important}
+#reviews #reviewsWidget .sw-review-item-body{font-size:15px!important;line-height:1.6!important;color:var(--text)!important}
+#reviews #reviewsWidget .sw-reviews-btn{font-family:var(--font-t)!important;background:var(--signal)!important;color:var(--signal-ink)!important;border:1px solid var(--signal)!important;border-radius:12px!important;font-weight:600!important;padding:14px 24px!important;box-shadow:none!important}
+#reviews #reviewsWidget .sw-reviews-btn:hover{background:var(--signal-hover)!important}
+#reviews #reviewsWidget .sw-swiper-button-prev,
+#reviews #reviewsWidget .sw-swiper-button-next{width:46px!important;height:46px!important;flex-basis:46px!important;background:var(--signal)!important;color:var(--signal-ink)!important;border-radius:12px!important}
+#reviews #reviewsWidget .sw-swiper-button-prev:after,
+#reviews #reviewsWidget .sw-swiper-button-next:after{line-height:46px!important}
+#reviews #reviewsWidget .swiper-pagination-bullet-active{background:var(--signal)!important}
+@media(max-width:640px){
+  #reviews #reviewsWidget .sw-review-box{padding:20px!important}
+  #reviews #reviewsWidget .sw-review-item{padding:20px!important}
+}
+/* Keep platform labels legible against the dark rating panel. */
+#reviews #reviewsWidget .sw-review-box-tab-name,
+#reviews #reviewsWidget .sw-review-box-tab-rating{color:inherit!important}
+#reviews #reviewsWidget .sw-review-box-tab:not(.active){background:var(--surface)!important;color:#000!important;border-color:var(--line)!important}
+#reviews #reviewsWidget .sw-review-box-tab:not(.active) img{filter:none!important}
+#reviews #reviewsWidget .sw-review-box-tabs-body{gap:14px!important}
+#reviews #reviewsWidget .sw-review-box-tab{margin-left:0!important;margin-right:0!important}
+/* Original promotion arrow pattern in the desktop rating panel. */
+@media(min-width:1200px){
+  #reviews #reviewsWidget .sw-review-box{
+    background-image:url("img/reviews-promo-arrows.svg")!important;
+    background-repeat:no-repeat!important;
+    background-position:right 20% center!important;
+    background-size:400px 400px!important;
+  }
+}
+#popular .price-quote{display:block;max-width:180px;white-space:normal;font-family:var(--font-t);font-size:14px;font-weight:500;line-height:1.4;letter-spacing:0}
+
+/* Promotions retain their card layout in a horizontal slider. */
+#promoGrid{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 36px)/3);overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+#promoGrid::-webkit-scrollbar{display:none}
+#promoGrid .promo{min-width:0;scroll-snap-align:start}
+#promoGrid:focus-visible{outline:2px solid var(--signal);outline-offset:5px;border-radius:var(--r-l)}
+#promo .promo-controls{display:flex;align-items:center;gap:16px;margin-top:20px}
+#promo .promo-position{font-size:14px;color:var(--muted)}
+#promo .promo-controls button:disabled{opacity:.35;cursor:default}
+@media(min-width:900px) and (max-width:1199px){#promoGrid{grid-auto-columns:calc((100% - 18px)/2)}}
+@media(max-width:899px){#promoGrid{grid-auto-columns:min(340px,84%)}}
+
+#promo .promo-heading{display:flex;align-items:center;justify-content:space-between;gap:24px}
+#promo .promo-heading-copy{min-width:0;display:flex;flex-direction:column;gap:18px}
+#promo .promo-heading-copy p{max-width:none}
+#promo .promo-heading .scroll-ctrl{flex:none;align-self:center}
+#promo .promo-heading button:disabled{opacity:.35;cursor:default}
+@media(max-width:640px){#promo .promo-heading{gap:12px}#promo .promo-heading h2{font-size:clamp(22px,5vw,28px)}#promo .promo-heading .scroll-ctrl{gap:6px}#promo .promo-heading .scroll-ctrl button{width:40px;height:40px}}
+/* Larger brand marks with balanced vertical space at every breakpoint. */
+.navbar .logo-img,.f-brand .logo-img{height:66px;max-width:none;width:auto;flex-shrink:0}
+.navbar .wrap{height:auto;min-height:94px;padding-top:14px;padding-bottom:14px}
+@media(max-width:640px){
+  .navbar .logo-img,.drawer .logo-img{height:51px;max-width:none;width:auto}
+  .navbar .wrap{height:auto;min-height:79px;padding-top:14px;padding-bottom:14px}
+}
+@media(max-width:360px){
+  .navbar .wrap{gap:8px}
+}
+.navbar .header-description{display:flex;flex-direction:column;gap:3px;max-width:218px;line-height:1.35}
+.navbar .header-description strong{font-size:14px;font-weight:600;color:var(--text)}
+.navbar .header-description>span{font-size:11px;font-weight:400;color:var(--muted)}
+.navbar .logo{gap:16px}
+@media(min-width:1200px) and (max-width:1439px){
+  .navbar .wrap{gap:16px}
+  .navbar .nav-btn{font-size:13px;padding-left:8px;padding-right:8px}
+  .navbar .header-description{max-width:190px}
+  .navbar .header-description strong{font-size:13px}
+}
+@media(max-width:640px){.navbar .header-description{display:none}}
+/* Keep promotion words whole, including in WebKit browsers. */
+#promo,#promo h2,#promo h3,#promo p,#promo .term,#promo .btn{hyphens:none!important;-webkit-hyphens:none!important;word-break:normal!important;overflow-wrap:normal!important}
+.hero-tag{background:rgba(36,42,49,.64);color:#FFFFFF;border-color:rgba(255,255,255,.4);box-shadow:0 4px 16px rgba(0,0,0,.22)}
+.hero-tag i{flex-shrink:0}
+
+/* Three complete lines per promotion, without splitting words or clipping text. */
+#promoGrid .promo{container-type:inline-size}
+#promoGrid .promo h3{font-size:clamp(16px,8cqi,21px);line-height:1.25;max-width:none}
+#promoGrid .promo h3>span{display:block;white-space:nowrap}
+/* Preserve the landline in markup while hiding it from the page. */
+a[href="tel:+74950000000"]{display:none!important}
+/* Match review navigation spacing to the site's 8px slider controls. */
+#reviews #reviewsWidget .sw-review-bottom .sw-swiper-button-prev{margin-right:8px!important}
+#reviews #reviewsWidget .sw-review-bottom .sw-swiper-button-next{margin-left:0!important}
+@media(max-width:640px){
+  #reviews #reviewsWidget .sw-review-box{margin-bottom:20px!important}
+  #reviews #reviewsWidget .sw-review-list{padding-top:3.5px!important}
+}
+
+/* Cookie notice matches the site palette and sits above the mobile action bar. */
+.cookie-notice{position:fixed;left:50%;bottom:calc(var(--cookie-mobile-bar,0px) + 16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:70;width:min(1260px,calc(100% - 32px));display:flex;align-items:center;gap:24px;padding:18px 22px;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:20px;box-shadow:0 8px 36px rgba(0,0,0,.16);font-family:var(--font-t)}
+.cookie-notice[hidden]{display:none}
+.cookie-notice p{margin:0;flex:1;font-size:14px;line-height:1.5}
+.cookie-notice a{color:var(--steel);text-decoration:underline;text-underline-offset:3px}
+.cookie-notice .btn{flex:none;min-width:86px;height:44px}
+@media(max-width:640px){.cookie-notice{width:calc(100% - 24px);padding:16px;gap:12px;border-radius:18px}.cookie-notice p{font-size:12px}.cookie-notice .btn{min-width:62px;padding:0 14px}}
 </style>
 </head>
 <body>
@@ -894,14 +1017,15 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
 <!-- ============ ШАПКА: верхний уровень ============ -->
 <div class="topbar">
   <div class="wrap">
-    <div class="tb-item"><svg class="ico"><use href="#i-pin"/></svg><span>Москва, ул. Промышленная, 12, стр. 3</span></div>
+    <div class="tb-item"><svg class="ico"><use href="#i-pin"/></svg><span>д. Верея, Островецкое шоссе, 17</span></div>
     <div class="tb-item tb-hide-l"><svg class="ico"><use href="#i-clock"/></svg><span>Ежедневно 9:00–21:00</span></div>
     <div class="tb-item tb-hide-l"><svg class="ico"><use href="#i-mail"/></svg><a href="mailto:info@lfg-service.ru">info@lfg-service.ru</a></div>
     <div class="tb-right">
       <a class="tb-phone" href="tel:+74950000000"><small>Городской</small>+7 (495) 000-00-00</a>
-      <a class="tb-phone" href="tel:+79776120752"><small>Мобильный</small>+7 (977) 612-07-52</a>
-      <a class="msg" href="https://t.me/" target="_blank" rel="noopener" aria-label="Написать в Telegram"><img src="img/icon/telegram.svg" alt="Telegram" width="32" height="32" onerror="this.outerHTML='TG'"></a>
-      <a class="msg" href="https://max.ru/" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="img/icon/max.svg" alt="MAX" width="32" height="32" onerror="this.outerHTML='MAX'"></a>
+      <a class="tb-phone" href="tel:+79045678871"><small>Мобильный</small>+7 (904) 567-88-71</a>
+      <a class="msg" href="https://t.me/La_Frace_Garage" target="_blank" rel="noopener" aria-label="Написать в Telegram"><img src="img/icon/telegram.svg" alt="Telegram" width="32" height="32" onerror="this.outerHTML='TG'"></a>
+      <a class="msg" href="https://max.ru/u/f9LHodD0cOJihnt5V8nGIMprjqknsNqtun1prPGWl3hqawBqmjN8SAUUOSo" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="img/icon/max.svg" alt="MAX" width="32" height="32" onerror="this.outerHTML='MAX'"></a>
+<a class="msg" href="https://wa.me/79776120752" target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><img src="img/icon/whatsapp.svg" alt="WhatsApp" width="32" height="32" onerror="this.outerHTML='WhatsApp'"></a>
       <button class="btn btn-signal" data-open="callback">Заказать звонок</button>
     </div>
   </div>
@@ -912,7 +1036,8 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
   <div class="wrap">
     <a class="logo" href="#top" aria-label="LFG Service, на главную">
       <!-- Логотип для светлого фона -->
-      <img class="logo-img" src="img/lfg-service-light.svg" alt="LFG Service" height="44">
+      <img class="logo-img" src="img/icon/logo.svg" alt="LFG Service" height="44">
+      <span class="header-description"><strong>Ремонт и обслуживание авто</strong><span>Бесплатная диагностика</span></span>
     </a>
     <nav class="nav" aria-label="Основное меню">
       <div class="nav-item"><button class="nav-btn" aria-expanded="false">Техническое обслуживание<svg class="ico"><use href="#i-chev"/></svg></button>
@@ -937,10 +1062,11 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
         </div></div>
     </nav>
     <div class="nav-cta">
-      <a class="nav-phone-m" href="tel:+74950000000"><span>+7 (495) 000-00-00</span><small>Ежедневно 9:00–21:00</small></a>
+      <a class="nav-phone-m" href="tel:+79045678871"><span>+7 (904) 567-88-71</span><small>Ежедневно 9:00–21:00</small></a>
       <div class="nav-msg">
-        <a class="msg" href="https://t.me/" target="_blank" rel="noopener" aria-label="Написать в Telegram"><img src="img/icon/telegram.svg" alt="Telegram" width="30" height="30" onerror="this.outerHTML='TG'"></a>
-        <a class="msg" href="https://max.ru/" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="img/icon/max.svg" alt="MAX" width="30" height="30" onerror="this.outerHTML='MAX'"></a>
+        <a class="msg" href="https://t.me/La_Frace_Garage" target="_blank" rel="noopener" aria-label="Написать в Telegram"><img src="img/icon/telegram.svg" alt="Telegram" width="30" height="30" onerror="this.outerHTML='TG'"></a>
+        <a class="msg" href="https://max.ru/u/f9LHodD0cOJihnt5V8nGIMprjqknsNqtun1prPGWl3hqawBqmjN8SAUUOSo" target="_blank" rel="noopener" aria-label="Написать в MAX"><img src="img/icon/max.svg" alt="MAX" width="30" height="30" onerror="this.outerHTML='MAX'"></a>
+<a class="msg" href="https://wa.me/79776120752" target="_blank" rel="noopener" aria-label="Написать в WhatsApp"><img src="img/icon/whatsapp.svg" alt="WhatsApp" width="30" height="30" onerror="this.outerHTML='WhatsApp'"></a>
       </div>
       <button class="burger" aria-label="Открыть меню" data-drawer><svg class="ico" style="width:22px;height:22px"><use href="#i-menu"/></svg></button>
     </div>
@@ -951,12 +1077,12 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
 <div class="drawer" id="drawer" aria-hidden="true">
   <div class="drawer-bg" data-drawer-close></div>
   <div class="drawer-panel" role="dialog" aria-label="Меню">
-    <div class="drawer-head"><span class="logo"><img class="logo-img" src="img/lfg-service-light.svg" alt="LFG Service" height="44"></span><button class="icon-btn" data-drawer-close aria-label="Закрыть меню"><svg class="ico"><use href="#i-x"/></svg></button></div>
+    <div class="drawer-head"><span class="logo"><img class="logo-img" src="img/icon/logo.svg" alt="LFG Service" height="44"></span><button class="icon-btn" data-drawer-close aria-label="Закрыть меню"><svg class="ico"><use href="#i-x"/></svg></button></div>
     <div class="drawer-body" id="drawerBody"></div>
     <div class="drawer-contacts">
       <a class="row" href="tel:+74950000000"><svg class="ico"><use href="#i-phone"/></svg><b>+7 (495) 000-00-00</b></a>
-      <a class="row" href="tel:+79776120752"><svg class="ico"><use href="#i-phone"/></svg><b>+7 (977) 612-07-52</b></a>
-      <div class="row" style="color:var(--muted);font-size:14px"><svg class="ico"><use href="#i-pin"/></svg>Москва, ул. Промышленная, 12, стр. 3</div>
+      <a class="row" href="tel:+79045678871"><svg class="ico"><use href="#i-phone"/></svg><b>+7 (904) 567-88-71</b></a>
+      <div class="row" style="color:var(--muted);font-size:14px"><svg class="ico"><use href="#i-pin"/></svg>д. Верея, Островецкое шоссе, 17</div>
       <button class="btn btn-signal" data-open="callback">Заказать звонок</button>
     </div>
   </div>
@@ -975,15 +1101,15 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
           <h1>Ремонт и ТО автомобиля с гарантией до 12 месяцев</h1>
           <p>Называем цену после диагностики и фиксируем её в смете. Дороже без вашего согласия не станет.</p>
           <div class="hero-cta"><button class="btn btn-signal" data-open="callback" data-title="Запись на ремонт">Записаться на ремонт</button><a class="btn btn-ghost" href="#prices">Смотреть цены</a></div>
-          <ul class="hero-points"><li><svg class="ico"><use href="#i-shield"/></svg>Гарантия на работы</li><li><svg class="ico"><use href="#i-doc"/></svg>Смета до начала работ</li><li><svg class="ico"><use href="#i-camera"/></svg>Фотоотчёт в мессенджер</li></ul>
+          <ul class="hero-points"><li><svg class="ico"><use href="#i-shield"/></svg>Гарантия на работы</li><li><svg class="ico"><use href="#i-doc"/></svg>Смета до начала работ</li><li><svg class="ico"><use href="#i-camera"/></svg>Фотоотчёт в мессенджер по просьбе</li></ul>
         </div>
       </div>
       <!-- Слайд 2. Фон: укажите путь в PHOTOS.hero2 (рекомендуемый размер 2400×1200, JPG/WebP) -->
       <div class="slide" aria-roledescription="slide" aria-label="2 из 3">
         <div class="slide-bg ph" data-photo="hero2"><span class="slide-bg-hint" aria-hidden="true">Фон слайда 2, 2400×1200</span></div>
         <div class="slide-copy">
-          <div class="hero-tag"><i></i>Компьютерная диагностика от 1 200 ₽</div>
-          <div class="h1" role="heading" aria-level="2">Диагностика за 40 минут, отчёт — вам в телефон</div>
+          <div class="hero-tag"><i></i>Диагностика всегда бесплатна для всех</div>
+          <div class="h1" role="heading" aria-level="2">Бесплатная диагностика за 40 минут</div>
           <p>Проверяем двигатель, коробку, ходовую и электрику на дилерском оборудовании. Показываем каждую неисправность и объясняем, что можно отложить.</p>
           <div class="hero-cta"><button class="btn btn-signal" data-open="callback" data-title="Запись на диагностику">Записаться на диагностику</button><a class="btn btn-ghost" href="#services">Все виды диагностики</a></div>
           <ul class="hero-points"><li><svg class="ico"><use href="#i-scan"/></svg>Дилерские сканеры</li><li><svg class="ico"><use href="#i-clock"/></svg>Без очереди по записи</li></ul>
@@ -996,7 +1122,7 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
           <div class="hero-tag"><i></i>Техпомощь работает круглосуточно</div>
           <div class="h1" role="heading" aria-level="2">Заглохли в дороге? Приедем за 40 минут</div>
           <p>Выездная диагностика, запуск двигателя, замена колеса и эвакуатор до нашего сервиса. Стоимость называем сразу по телефону.</p>
-          <div class="hero-cta"><a class="btn btn-signal" href="tel:+79776120752">Вызвать техпомощь</a><button class="btn btn-ghost" data-svc-open="Услуги эвакуатора">Заказать эвакуатор</button></div>
+          <div class="hero-cta"><a class="btn btn-signal" href="tel:+79045678871">Вызвать техпомощь</a><button class="btn btn-ghost" data-svc-open="Услуги эвакуатора">Заказать эвакуатор</button></div>
           <ul class="hero-points"><li><svg class="ico"><use href="#i-truck"/></svg>Эвакуатор от 3 500 ₽</li><li><svg class="ico"><use href="#i-clock"/></svg>24/7 без выходных</li></ul>
         </div>
       </div>
@@ -1057,16 +1183,16 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
         </div></div>
         <div class="adv-copy">
           <h2>Почему к нам возвращаются</h2>
-          <p>12 постов, собственный склад запчастей и мастера со стажем от 7 лет. Работаем так, как хотели бы, чтобы обслуживали наши машины.</p>
+          <p>3 поста ремонта, собственный склад запчастей и мастера со стажем от 7 лет. Работаем так, как хотели бы, чтобы обслуживали наши машины.</p>
         </div>
       </div>
       <div class="adv-grid">
         <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-doc"/></svg></div><h3>Смета до начала работ</h3><p>Фиксируем цену после диагностики и не меняем её без вашего согласия.</p></div>
         <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-shield"/></svg></div><h3>Гарантия до 12 месяцев</h3><p>На выполненные работы и запчасти, купленные у нас.</p></div>
         <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-box"/></svg></div><h3>Запчасти под любой бюджет</h3><p>Предлагаем оригинал и проверенные аналоги, решение за вами.</p></div>
-        <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-camera"/></svg></div><h3>Фото- и видеоотчёт</h3><p>Присылаем в Telegram или MAX, что нашли и что заменили.</p></div>
+        <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-camera"/></svg></div><h3>Фото- и видеоотчёт</h3><p>По вашей просьбе присылаем в Telegram или MAX, что нашли и что заменили.</p></div>
         <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-award"/></svg></div><h3>Сертифицированные мастера</h3><p>Регулярное обучение и допуски на работу с дизелями и АКПП.</p></div>
-        <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-coffee"/></svg></div><h3>Можно подождать у нас</h3><p>Зона отдыха с кофе и Wi‑Fi, а за ремонтом видно через стекло.</p></div>
+        <div class="adv-cell"><div class="adv-ic"><svg class="ico"><use href="#i-coffee"/></svg></div><h3>Можно подождать у нас</h3><p>Зона отдыха с кофе и Wi‑Fi.</p></div>
       </div>
     </div>
   </div>
@@ -1075,7 +1201,7 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
 <!-- ============ Популярные услуги ============ -->
 <section class="sec" id="popular" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><h2>Популярные услуги</h2><a class="link-more" href="#prices">Все<svg class="ico" style="width:18px;height:18px"><use href="#i-arrow"/></svg></a></div>
+    <div class="sec-head"><h2>Популярные услуги</h2><a class="link-more" href="#prices">Смотреть все<svg class="ico" style="width:18px;height:18px"><use href="#i-arrow"/></svg></a></div>
     <div class="svc-grid" id="svcGrid"></div>
   </div>
 </section>
@@ -1083,8 +1209,9 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
 <!-- ============ Действующие акции ============ -->
 <section class="sec" id="promo" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><h2>Действующие акции</h2><p>Условия акций не суммируются. Подробности уточняйте у мастера-приёмщика.</p></div>
-    <div class="promo-grid" id="promoGrid"></div>
+    <div class="sec-head promo-heading"><div class="promo-heading-copy"><h2>Действующие акции</h2><p>Условия акций не суммируются. Подробности уточняйте у мастера-приёмщика.</p></div><div class="scroll-ctrl"><button type="button" data-promo-step="-1" aria-label="Предыдущая акция" aria-controls="promoGrid"><svg class="ico"><use href="#i-left"/></svg></button><button type="button" data-promo-step="1" aria-label="Следующая акция" aria-controls="promoGrid"><svg class="ico"><use href="#i-right"/></svg></button></div></div>
+    <div class="promo-grid" id="promoGrid" role="region" aria-label="Слайдер акций" tabindex="0"></div>
+
   </div>
 </section>
 
@@ -1121,25 +1248,15 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
   </div>
 </section>
 
-<!-- ============ Отзывы (smartwidgets) ============ -->
+<!-- ============ Отзывы (SmartWidgets) ============ -->
 <section class="sec" id="reviews" style="padding-top:0">
   <div class="wrap">
-    <div class="sec-head"><h2>Отзывы клиентов</h2><div class="scroll-ctrl"><button data-rev="-1" aria-label="Предыдущие отзывы"><svg class="ico"><use href="#i-left"/></svg></button><button data-rev="1" aria-label="Следующие отзывы"><svg class="ico"><use href="#i-right"/></svg></button></div></div>
-    <!-- SMARTWIDGETS: замените содержимое #reviewsWidget кодом виджета smartwidgets.ru -->
-    <div class="rev-layout" id="reviewsWidget">
-      <div class="rev-sum">
-        <div class="rev-score">4,9</div>
-        <div class="stars" aria-label="Оценка 4,9 из 5"><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg><svg><use href="#star"/></svg></div>
-        <p>Средняя оценка по 640 отзывам на картах. Читаем каждый и отвечаем на все.</p>
-        <div class="rev-src">
-          <!-- Логотипы площадок: укажите путь в src, ссылку на страницу отзывов — в href -->
-          <a href="#" target="_blank" rel="noopener"><span class="rs-name"><img class="rs-logo" src="img/reviews/yandex-maps.svg" alt="" width="28" height="28" onerror="this.remove()">Яндекс Карты</span><b>4,9</b></a>
-          <a href="#" target="_blank" rel="noopener"><span class="rs-name"><img class="rs-logo" src="img/reviews/2gis.svg" alt="" width="28" height="28" onerror="this.remove()">2ГИС</span><b>4,9</b></a>
-          <a href="#" target="_blank" rel="noopener"><span class="rs-name"><img class="rs-logo" src="img/reviews/google-maps.svg" alt="" width="28" height="28" onerror="this.remove()">Google Maps</span><b>4,8</b></a>
-        </div>
-      </div>
-      <div class="rev-slider"><div class="rev-track" id="revGrid" aria-live="off"></div><div class="rev-nav"><button data-rev="-1" aria-label="Предыдущие отзывы"><svg class="ico"><use href="#i-left"/></svg></button><div class="rev-bar" aria-hidden="true"><span id="revBar"></span></div><button data-rev="1" aria-label="Следующие отзывы"><svg class="ico"><use href="#i-right"/></svg></button></div></div>
+    <div class="sec-head"><h2>Отзывы клиентов</h2><p>Отзывы с независимых площадок — о работе наших мастеров и сервисе.</p></div>
+    <div class="reviews-widget" id="reviewsWidget">
+      <div class="sw-app" data-app="e92c23787b7c821cf9c25faad1a94082"></div>
+      <noscript><p>Для просмотра отзывов включите JavaScript или <a href="https://yandex.ru/maps/org/129568798727/reviews/" target="_blank" rel="noopener">откройте отзывы на Яндекс Картах</a>.</p></noscript>
     </div>
+    <script src="https://res.smartwidgets.ru/app.js" async></script>
   </div>
 </section>
 
@@ -1177,8 +1294,9 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
           <li><div>Отремонтируем и выдадим гарантию<small>До 12 месяцев на работы</small></div></li>
         </ol>
         <div class="lead-msg">
-          <a class="btn btn-ghost" href="https://t.me/" target="_blank" rel="noopener"><img class="mi" src="img/icon/telegram.svg" alt="" width="28" height="28" onerror="this.remove()">Telegram</a>
-          <a class="btn btn-ghost" href="https://max.ru/" target="_blank" rel="noopener"><img class="mi" src="img/icon/max.svg" alt="" width="28" height="28" onerror="this.remove()">Написать в MAX</a>
+          <a class="btn btn-ghost" href="https://t.me/La_Frace_Garage" target="_blank" rel="noopener"><img class="mi" src="img/icon/telegram.svg" alt="" width="28" height="28" onerror="this.remove()">Telegram</a>
+          <a class="btn btn-ghost" href="https://max.ru/u/f9LHodD0cOJihnt5V8nGIMprjqknsNqtun1prPGWl3hqawBqmjN8SAUUOSo" target="_blank" rel="noopener"><img class="mi" src="img/icon/max.svg" alt="" width="28" height="28" onerror="this.remove()">Написать в MAX</a>
+<a class="btn btn-ghost" href="https://wa.me/79776120752" target="_blank" rel="noopener"><img class="mi" src="img/icon/whatsapp.svg" alt="" width="28" height="28" onerror="this.remove()">Написать в WhatsApp</a>
         </div>
       </div>
       <form class="lead-form js-form" data-kind="Заявка с главной" novalidate>
@@ -1204,9 +1322,9 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
     <iframe class="map-frame" id="map_559701309" title="LFG Service на карте 2ГИС" width="100%" height="100%" loading="lazy" src="https://makemap.2gis.ru/widget?data=eJw1j0FvgzAMhf-LdyxCSSCQcuul3aRq4jJtY-qBgrtFCkkUUmkd4r_P0M0ny-89-_MELvQYsD-gGzAGjSNUHxPEm0eoYI9tvAaEBHxwHkNc9Qk6Z1wg_eHCz4JfSI86miVBbY9jF7SP2lka1I-7zfnQ2OPbs-ls49_Fizpmuw0Zf55sj99QcfZfcwKfd5DbcuaPonbaRvJ3jmC1beMKmamUZSXPVSJlWjDFCn6ivO5poSznUwJD62s36jvIBKaNUJFXKsVULrdCCiW2CZhFzspUcVlwVgqeCZ5LwnNuWOBoKT3kjHn9QjTNOo3hivMvNElg3g" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"></iframe>
     <div class="map-card">
       <h3>Как нас найти</h3>
-      <div class="mc-row"><svg class="ico"><use href="#i-pin"/></svg><div>Москва, ул. Промышленная, 12, стр. 3<small>Въезд со стороны шлагбаума, парковка для клиентов бесплатная</small></div></div>
+      <div class="mc-row"><svg class="ico"><use href="#i-pin"/></svg><div>д. Верея, Островецкое шоссе, 17<small>Въезд со стороны шлагбаума, парковка для клиентов бесплатная</small></div></div>
       <div class="mc-row"><svg class="ico"><use href="#i-clock"/></svg><div>Ежедневно 9:00–21:00<small>Техпомощь и эвакуатор — круглосуточно</small></div></div>
-      <div class="mc-row"><svg class="ico"><use href="#i-phone"/></svg><div><a href="tel:+74950000000">+7 (495) 000-00-00</a><small><a href="tel:+79776120752">+7 (977) 612-07-52</a></small></div></div>
+      <div class="mc-row"><svg class="ico"><use href="#i-phone"/></svg><div><a href="tel:+74950000000">+7 (495) 000-00-00</a><small><a href="tel:+79045678871">+7 (904) 567-88-71</a></small></div></div>
       <div class="btns"><a class="btn btn-signal btn-sm" href="https://yandex.ru/maps/" target="_blank" rel="noopener">Построить маршрут</a><button class="btn btn-line btn-sm" data-open="callback">Заказать звонок</button></div>
     </div>
   </div>
@@ -1216,12 +1334,13 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
       <div class="f-grid">
         <div class="f-brand">
           <!-- Логотип для тёмного фона -->
-          <a class="logo" href="#top" aria-label="LFG Service, на главную"><img class="logo-img" src="img/lfg-service-dark.svg" alt="LFG Service" height="44"></a>
-          <div class="f-legal">ООО «ЛФГ Сервис»<br>ИНН 0000000000, ОГРН 0000000000000<br>Москва, ул. Промышленная, 12, стр. 3</div>
-          <div class="f-phones"><a href="tel:+74950000000">+7 (495) 000-00-00</a><a href="tel:+79776120752">+7 (977) 612-07-52</a></div>
+          <a class="logo" href="#top" aria-label="LFG Service, на главную"><img class="logo-img" src="img/icon/logo.svg" alt="LFG Service" height="44"></a>
+          <div class="f-legal">ООО «ЛФГ Сервис»<br>ИНН 0000000000, ОГРН 0000000000000<br>д. Верея, Островецкое шоссе, 17</div>
+          <div class="f-phones"><a href="tel:+74950000000">+7 (495) 000-00-00</a><a href="tel:+79045678871">+7 (904) 567-88-71</a></div>
           <div class="f-msg">
-            <a href="https://t.me/" target="_blank" rel="noopener" aria-label="Telegram"><img src="img/icon/telegram.svg" alt="Telegram" width="36" height="36" onerror="this.outerHTML='TG'"></a>
-            <a href="https://max.ru/" target="_blank" rel="noopener" aria-label="MAX"><img src="img/icon/max.svg" alt="MAX" width="36" height="36" onerror="this.outerHTML='MAX'"></a>
+            <a href="https://t.me/La_Frace_Garage" target="_blank" rel="noopener" aria-label="Telegram"><img src="img/icon/telegram.svg" alt="Telegram" width="36" height="36" onerror="this.outerHTML='TG'"></a>
+            <a href="https://max.ru/u/f9LHodD0cOJihnt5V8nGIMprjqknsNqtun1prPGWl3hqawBqmjN8SAUUOSo" target="_blank" rel="noopener" aria-label="MAX"><img src="img/icon/max.svg" alt="MAX" width="36" height="36" onerror="this.outerHTML='MAX'"></a>
+<a href="https://wa.me/79776120752" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="img/icon/whatsapp.svg" alt="WhatsApp" width="36" height="36" onerror="this.outerHTML='WhatsApp'"></a>
           </div>
         </div>
         <div class="f-col"><h4>Виды работ</h4><ul>
@@ -1244,11 +1363,11 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
 <div class="fabs">
   <button class="to-top" id="toTop" aria-label="Наверх"><svg class="ico"><use href="#i-up"/></svg></button>
 </div>
-<a class="fab-call" id="fabCall" href="tel:+74950000000" aria-label="Позвонить: +7 (495) 000-00-00"><span class="fab-tip">+7 (495) 000-00-00<small>Нажмите, чтобы заказать звонок</small></span><svg class="ico"><use href="#i-phone"/></svg></a>
+<a class="fab-call" id="fabCall" href="tel:+79045678871" aria-label="Позвонить: +7 (904) 567-88-71"><span class="fab-tip">+7 (904) 567-88-71<small>Нажмите, чтобы заказать звонок</small></span><svg class="ico"><use href="#i-phone"/></svg></a>
 
 <!-- mobile action bar -->
 <div class="mbar">
-  <a class="icon-btn" href="tel:+79776120752" aria-label="Позвонить: +7 (977) 612-07-52"><svg class="ico"><use href="#i-phone"/></svg></a>
+  <a class="icon-btn" href="tel:+79045678871" aria-label="Позвонить: +7 (904) 567-88-71"><svg class="ico"><use href="#i-phone"/></svg></a>
   <a class="icon-btn" href="mailto:info@lfg-service.ru" aria-label="Написать на почту: info@lfg-service.ru"><svg class="ico"><use href="#i-mail"/></svg></a>
   <button class="btn btn-signal" data-open="callback" data-title="Запись на ремонт">Записаться</button>
 </div>
@@ -1292,20 +1411,30 @@ dialog[open]{animation:dlg .28s cubic-bezier(.2,.8,.2,1)}
    заменится на него. Пример: hero1: '/img/hero-1.jpg'
    ========================================================= */
 const PHOTOS = {
+  'offer-zoon':'img/akcii/zoon-varied-v4.webp',
+  'offer-review':'img/akcii/review-varied-v4.webp',
+  'offer-birthday':'img/akcii/birthday-varied-v4.webp',
+  'offer-suspension':'img/akcii/suspension-varied-v4.webp',
+  'offer-codes':'img/akcii/codes-varied-v4.webp',
+  'popular-engine':'img/popuslugi/engine-v2.webp',
+  'popular-alternator':'img/popuslugi/alternator-v2.webp',
+  'popular-pads':'img/popuslugi/pads-v2.webp',
+  'popular-discs':'img/popuslugi/discs-v2.webp',
+  'popular-steering':'img/popuslugi/steering-v2.webp',
   /* АКЦИИ: фото для 1-й и 3-й карточки, например 'img/akcii/akciya-1.png' */
-  'promo-1':'img/sale/promo%201.png', 'promo-3':'img/sale/promo%202.png',
-  hero1:'img/slide1.png', hero2:'img/slide2.png', hero3:'img/slide3.png', workshop:'img/p1.png',
-  'svc-oil':'img/popuslugi/01-zamena-masla.png', 'svc-scan':'img/popuslugi/02-kompyuternaya-diagnostika.png', 'svc-susp':'img/popuslugi/03-remont-podveski.png',
-  'svc-belt':'img/popuslugi/04-zamena-remnya-grm.png', 'svc-gearbox':'img/popuslugi/05-diagnostika-akpp.png', 'svc-brake':'img/popuslugi/06-zamena-tormoznoy-zhidkosti.png',
+  'promo-1':'img/sale/promo%201-converted.webp', 'promo-3':'img/sale/promo%202-converted.webp',
+  hero1:'img/slide1-converted.webp', hero2:'img/slide2-converted.webp', hero3:'img/slide3-converted.webp', workshop:'img/p1-converted.webp',
+  'svc-oil':'img/popuslugi/01-zamena-masla-converted-compressed.webp', 'svc-scan':'img/popuslugi/02-kompyuternaya-diagnostika-converted-compressed.webp', 'svc-susp':'img/popuslugi/03-remont-podveski-converted-compressed.webp',
+  'svc-belt':'img/popuslugi/04-zamena-remnya-grm-converted-compressed.webp', 'svc-gearbox':'img/popuslugi/05-diagnostika-akpp-converted-compressed.webp', 'svc-brake':'img/popuslugi/06-zamena-tormoznoy-zhidkosti-converted-compressed.webp',
   'vid-1':'', 'vid-2':'', 'vid-3':'', 'vid-4':''
 };
 /* ЛОГОТИПЫ МАРОК: путь к SVG/PNG, например Toyota: '/img/brands/toyota.svg' */
 const BRAND_LOGOS = {
-  'Toyota':'img/logo/toyota.png', 'Nissan':'img/logo/nissan.png', 'Mitsubishi':'img/logo/mitsubishi.png',
-  'Subaru':'img/logo/subaru.png', 'Honda':'img/logo/honda.png', 'Hyundai':'img/logo/hyundai.svg', 'Kia':'img/logo/kia.png',
-  'Volkswagen':'img/logo/volkswagen.png', 'Mercedes‑Benz':'img/logo/mercedes-benz.png', 'BMW':'img/logo/bmw.png',
-  'Audi':'img/logo/audi.png', 'Opel':'img/logo/opel.png', 'Peugeot':'img/logo/peugeot.png', 'Citroën':'img/logo/citroen.png', 'Renault':'img/logo/renault.png',
-  'Ford':'img/logo/ford.png', 'Chevrolet':'img/logo/chevrolet.png', 'Skoda':'img/logo/skoda.png', 'Volvo':'img/logo/volvo.webp'
+  'Toyota':'img/logo/toyota-converted-compressed.webp', 'Nissan':'img/logo/nissan-converted-compressed.webp', 'Mitsubishi':'img/logo/mitsubishi-converted-compressed.webp',
+  'Subaru':'img/logo/subaru-converted-compressed.webp', 'Honda':'img/logo/honda-converted-compressed.webp', 'Hyundai':'img/logo/hyundai-converted-compressed.webp', 'Kia':'img/logo/kia-converted-compressed.webp',
+  'Volkswagen':'img/logo/volkswagen-converted-compressed.webp', 'Mercedes‑Benz':'img/logo/mercedes-benz-converted-compressed.webp', 'BMW':'img/logo/bmw-converted-compressed.webp',
+  'Audi':'img/logo/audi-converted-compressed.webp', 'Opel':'img/logo/opel-converted-compressed.webp', 'Peugeot':'img/logo/peugeot-converted-compressed.webp', 'Citroën':'img/logo/citroen-converted-compressed.webp', 'Renault':'img/logo/renault-converted-compressed.webp',
+  'Ford':'img/logo/ford-converted-compressed.webp', 'Chevrolet':'img/logo/chevrolet-converted-compressed.webp', 'Skoda':'img/logo/skoda-converted-compressed.webp', 'Volvo':'img/logo/volvo-compressed.webp'
 };
 /* ВИДЕООТЗЫВЫ: ссылки на embed (VK Видео, Rutube, YouTube) */
 const VIDEOS = {'vid-1':'', 'vid-2':'', 'vid-3':'', 'vid-4':''};
@@ -1327,33 +1456,210 @@ const BRANDS = [
 const COUNTRY = {jp:'Япония',kr:'Корея',de:'Германия',fr:'Франция',us:'США',eu:'Европа'};
 
 const POPULAR = [
-  {k:'svc-oil',i:'i-oil',h:38,t:'Замена масла и масляного фильтра',d:'Подберём масло по допуску производителя, проверим уровень всех жидкостей бесплатно.',p:990},
-  {k:'svc-scan',i:'i-scan',h:200,t:'Компьютерная диагностика',d:'Считываем ошибки всех блоков управления и проверяем параметры двигателя в движении.',p:1200},
-  {k:'svc-susp',i:'i-susp',h:20,t:'Ремонт подвески',d:'Замена амортизаторов, рычагов, сайлентблоков и стоек стабилизатора с развалом-схождением.',p:2500},
-  {k:'svc-belt',i:'i-belt',h:48,t:'Замена ремня ГРМ',d:'Меняем комплектом с роликами и помпой, чтобы не возвращаться к узлу через полгода.',p:4900},
-  {k:'svc-gearbox',i:'i-gearbox',h:210,t:'Диагностика АКПП',d:'Проверяем давление, адаптации и состояние масла. Объясним, нужен ремонт или обслуживание.',p:1500},
-  {k:'svc-brake',i:'i-brake',h:8,t:'Замена тормозной жидкости',d:'Прокачка всей системы с проверкой суппортов и шлангов. Около 40 минут.',p:1100}
+  {
+    "k": "popular-engine",
+    "i": "i-engine",
+    "h": 20,
+    "t": "Ремонт двигателя",
+    "d": "Найдём причину неисправности и согласуем объём ремонта. Стоимость определим после осмотра.",
+    "p": null,
+    "quote": "По договорённости"
+  },
+  {
+    "k": "popular-alternator",
+    "i": "i-bolt",
+    "h": 20,
+    "t": "Замена генератора",
+    "d": "Проверим систему зарядки и заменим неисправный генератор. Проконтролируем работу после установки.",
+    "p": null,
+    "quote": "Уточняйте по телефону"
+  },
+  {
+    "k": "popular-pads",
+    "i": "i-brake",
+    "h": 20,
+    "t": "Замена тормозных колодок",
+    "d": "Заменим изношенные колодки, проверим состояние дисков и направляющих тормозных суппортов.",
+    "p": 1500
+  },
+  {
+    "k": "popular-discs",
+    "i": "i-brake",
+    "h": 20,
+    "t": "Замена тормозных дисков",
+    "d": "Заменим тормозные диски и проверим работу тормозного механизма перед выдачей автомобиля.",
+    "p": 1500
+  },
+  {
+    "k": "popular-steering",
+    "i": "i-wrench",
+    "h": 20,
+    "t": "Ремонт рулевой рейки",
+    "d": "Проверим причину стука, люфта или течи. Согласуем необходимые работы и восстановим рулевую рейку.",
+    "p": null,
+    "quote": "Уточняйте по телефону"
+  },
+  {
+    "k": "svc-oil",
+    "i": "i-oil",
+    "h": 38,
+    "t": "Замена моторного масла",
+    "fixed": true,
+    "d": "Заменим моторное масло и масляный фильтр. Подберём масло по допускам производителя и проверим уровень после замены.",
+    "p": 1500
+  }
 ];
 
 const PROMOS = [
-  {cls:'',photo:'promo-1',fig:'',t:'Скидка на плановое ТО в октябре',term:'до 31 октября 2026',
-    text:'Скидка 15% на работы по плановому техническому обслуживанию для всех марок автомобилей.',
-    conds:['Скидка действует на стоимость работ, запчасти оплачиваются отдельно','Нужна предварительная запись по телефону или через сайт','Не суммируется с другими акциями'],
-    g:`<svg class="promo-graphic" viewBox="0 0 200 200"><circle cx="100" cy="100" r="80" fill="none" stroke="#1A1F24" stroke-opacity=".12" stroke-width="24"/><circle cx="100" cy="100" r="80" fill="none" stroke="#1A1F24" stroke-opacity=".45" stroke-width="24" stroke-dasharray="75 503" transform="rotate(-90 100 100)"/></svg>`},
-  {cls:'dark',fig:'0<sup>₽</sup>',t:'Диагностика бесплатно при ремонте у нас',term:'до 30 ноября 2026',
-    text:'Если после компьютерной диагностики вы ремонтируете автомобиль у нас, стоимость диагностики вычитаем из счёта.',
-    conds:['Сумма ремонта от 5 000 ₽','Ремонт в течение 7 дней после диагностики','Распространяется на компьютерную диагностику и диагностику ходовой'],
-    g:`<svg class="promo-graphic" viewBox="0 0 200 200"><g fill="none" stroke="#F5C400" stroke-opacity=".5" stroke-width="2"><circle cx="110" cy="90" r="70"/><circle cx="110" cy="90" r="48"/><circle cx="110" cy="90" r="26"/></g><path d="M40 90h30l12-24 18 48 12-24h48" fill="none" stroke="#F5C400" stroke-width="4" stroke-linejoin="round"/></svg>`},
-  {cls:'',photo:'promo-3',fig:'',t:'Проверим машину перед зимой бесплатно',term:'до 15 ноября 2026',
-    text:'Проверяем 25 пунктов: аккумулятор, антифриз, свечи, ремни, тормоза, свет и дворники. Займёт 30 минут.',
-    conds:['Для всех легковых автомобилей','По предварительной записи','Результаты проверки отправим в мессенджер'],
-    g:`<svg class="promo-graphic" viewBox="0 0 200 200"><g stroke="#3D5A6C" stroke-opacity=".35" stroke-width="5" stroke-linecap="round" fill="none"><path d="M100 30v140M40 65l120 70M40 135l120-70"/><path d="M85 40l15 12 15-12M85 160l15-12 15 12M44 82l19-3-7-17M156 118l-19 3 7 17M44 118l19 3-7 17M156 82l-19-3 7-17"/></g></svg>`}
+  {
+    "cls": "",
+    "photo": "offer-zoon",
+    "fig": "",
+    "t": "Скидка 10% по кодовому слову «ZOON»",
+    "term": "до 20 октября 2026",
+    "text": "Назовите кодовое слово «ZOON» при обращении в сервис и получите скидку 10%.",
+    "conds": [
+      "Кодовое слово: ZOON",
+      "Подробности применения скидки уточняйте у мастера-приёмщика"
+    ],
+    "titleLines": [
+      "Скидка 10%",
+      "по кодовому слову",
+      "«ZOON»"
+    ]
+  },
+  {
+    "cls": "",
+    "photo": "offer-review",
+    "fig": "",
+    "t": "Оставьте отзыв об автосервисе и получите скидку 10%",
+    "term": "Постоянно",
+    "text": "Оставьте отзыв о посещении нашего сервиса и получите скидку 10%.",
+    "conds": [
+      "Расскажите о своём опыте обслуживания",
+      "Порядок получения скидки уточняйте у мастера-приёмщика"
+    ],
+    "titleLines": [
+      "Оставьте отзыв",
+      "об автосервисе",
+      "и получите скидку 10%"
+    ]
+  },
+  {
+    "cls": "",
+    "photo": "offer-birthday",
+    "fig": "",
+    "t": "Специальная скидка на обслуживание для именинников",
+    "term": "Постоянно",
+    "text": "Для именинников действует специальная скидка на обслуживание автомобиля.",
+    "conds": [
+      "Размер скидки и условия её получения уточняйте у мастера-приёмщика"
+    ],
+    "titleLines": [
+      "Специальная скидка",
+      "на обслуживание",
+      "для именинников"
+    ]
+  },
+  {
+    "cls": "",
+    "photo": "offer-suspension",
+    "fig": "",
+    "t": "Диагностика подвески вашего автомобиля всегда бесплатно",
+    "term": "Постоянно",
+    "text": "Проверим состояние подвески и объясним, какие узлы требуют внимания. Диагностика бесплатна для всех и при любых условиях.",
+    "conds": [
+      "Для всех клиентов",
+      "Без обязательного ремонта у нас",
+      "Без ограничений по срокам и сумме ремонта"
+    ],
+    "titleLines": [
+      "Диагностика подвески",
+      "вашего автомобиля",
+      "всегда бесплатно"
+    ]
+  },
+  {
+    "cls": "",
+    "photo": "offer-codes",
+    "fig": "",
+    "t": "Чтение кодов ошибок вашего автомобиля всегда бесплатно",
+    "term": "Постоянно",
+    "text": "Считаем коды ошибок электронных блоков автомобиля и объясним результаты проверки. Услуга всегда бесплатна.",
+    "conds": [
+      "Для всех клиентов",
+      "Без обязательного ремонта у нас",
+      "По вашей просьбе отправим результаты в мессенджер"
+    ],
+    "titleLines": [
+      "Чтение кодов ошибок",
+      "вашего автомобиля",
+      "всегда бесплатно"
+    ]
+  }
 ];
 
 const CATS = [
-  ['i-wrench','Плановое ТО автомобиля',12],['i-scan','Компьютерная диагностика',6],['i-engine','Ремонт двигателя',14],['i-susp','Ремонт подвески',11],
-  ['i-gearbox','Ремонт и диагностика АКПП и вариатора',8],['i-fuel','Ремонт топливной аппаратуры дизелей',7],['i-exhaust','Ремонт выхлопных систем',6],['i-carb','Ремонт карбюраторов',4],
-  ['i-bolt','Диагностика и ремонт электрики',9],['i-temp','Ремонт системы охлаждения',5],['i-pin','Выездная диагностика',3],['i-truck','Техпомощь и эвакуатор',4]
+  [
+    "i-oil",
+    "Замена масла в двигателе",
+    1
+  ],
+  [
+    "i-scan",
+    "Компьютерная диагностика",
+    6
+  ],
+  [
+    "i-engine",
+    "Ремонт двигателя",
+    14
+  ],
+  [
+    "i-susp",
+    "Ремонт подвески",
+    11
+  ],
+  [
+    "i-gearbox",
+    "Замена сцепления",
+    1
+  ],
+  [
+    "i-fuel",
+    "Ремонт топливной аппаратуры дизелей",
+    7
+  ],
+  [
+    "i-exhaust",
+    "Ремонт выхлопных систем",
+    6
+  ],
+  [
+    "i-belt",
+    "Замена ремня ГРМ",
+    1
+  ],
+  [
+    "i-bolt",
+    "Диагностика и ремонт электрики",
+    9
+  ],
+  [
+    "i-temp",
+    "Ремонт системы охлаждения",
+    5
+  ],
+  [
+    "i-pin",
+    "Выездная диагностика",
+    3
+  ],
+  [
+    "i-truck",
+    "Техпомощь и эвакуатор",
+    4
+  ]
 ];
 
 const PRICES = {
@@ -1362,13 +1668,13 @@ const PRICES = {
     ['Замена тормозной жидкости','40 мин',1100],['Замена жидкости ГУР','40 мин',1200],['Замена ремня ГРМ','от 3 ч',4900],['Замена цепи ГРМ','от 6 ч',9900],
     ['Замена свечей зажигания','30 мин',800],['Замена свечей накаливания','1 ч',1200],['Замена салонного фильтра','15 мин',400],['Замена воздушного фильтра','15 мин',400]],
   'Диагностика':[
-    ['Компьютерная диагностика','40 мин',1200],['Диагностика АКПП','1 ч',1500],['Диагностика вариатора','1 ч',1800],['Диагностика ходовой','30 мин',900],
-    ['Диагностика электрики авто','от 1 ч',1500],['Диагностика системы охлаждения двигателя','40 мин',1200]],
+    ['Компьютерная диагностика','40 мин',0],['Диагностика АКПП','1 ч',0],['Диагностика вариатора','1 ч',0],['Диагностика ходовой','30 мин',0],
+    ['Диагностика электрики авто','от 1 ч',0],['Диагностика системы охлаждения двигателя','40 мин',0]],
   'Слесарный ремонт':[
     ['Ремонт двигателя','от 1 дня',15000],['Ремонт подвески','от 1 ч',2500],['Ремонт карбюраторов','от 2 ч',3500],['Ремонт топливной аппаратуры дизельных двигателей','от 3 ч',4500],
     ['Ремонт выхлопных систем','от 1 ч',2000],['Ремонт дизельных двигателей','от 2 дней',18000],['Мелкосрочный ремонт','от 20 мин',700]],
   'Выездные услуги':[
-    ['Выездная диагностика','от 40 мин',2500],['Техпомощь на дороге','от 30 мин',2000],['Услуги эвакуатора','по городу',3500]]
+    ['Выездная диагностика','от 40 мин',0],['Техпомощь на дороге','от 30 мин',2000],['Услуги эвакуатора','по городу',3500]]
 };
 
 const CERTS = [
@@ -1378,17 +1684,6 @@ const CERTS = [
   ['УДОСТОВЕРЕНИЕ','Повышение квалификации: топливные системы Common Rail','2024'],
   ['СЕРТИФИКАТ','Официальный партнёр поставщика оригинальных запчастей','2025'],
   ['БЛАГОДАРНОСТЬ','За обслуживание корпоративного автопарка','2023']
-];
-
-const REVIEWS = [
-  ['Алексей М.','Яндекс Карты','2 недели назад','Kia Sportage','Приехал со стуком в подвеске. Показали на подъёмнике, что именно разбито, сказали цену и сделали в тот же день. Цена не выросла ни на рубль.','#3D5A6C'],
-  ['Ольга Т.','2ГИС','месяц назад','Toyota RAV4','Делала плановое ТО. Понравилось, что прислали фото старых фильтров и колодок в Telegram — сразу видно, что меняли. Кофе в зоне ожидания отличный.','#7A5C3E'],
-  ['Сергей В.','Яндекс Карты','месяц назад','Volkswagen Tiguan','Пинались передачи на DSG. В другом сервисе сказали менять мехатроник, здесь сделали адаптацию и замену масла. Ездит уже два месяца без проблем.','#2E6B57'],
-  ['Марина К.','Google Maps','2 месяца назад','Hyundai Solaris','Заглохла на МКАД вечером. Техпомощь приехала через полчаса, довезли до сервиса, утром машина была готова. Спасибо, выручили.','#6B4A6E'],
-  ['Дмитрий Р.','Яндекс Карты','2 месяца назад','Mitsubishi Pajero Sport','Ремонтировал топливную аппаратуру дизеля. Сначала честно сказали, что форсунки можно восстановить, а не менять. Сэкономил почти половину.','#4A5C7A'],
-  ['Екатерина Л.','2ГИС','3 месяца назад','Renault Duster','Вожу машину сюда третий год на все ТО. Всегда звонят перед заменой чего-то дополнительного, никаких сюрпризов в счёте.','#7A4A4A'],
-  ['Игорь П.','Яндекс Карты','3 месяца назад','BMW X3','Делали цепь ГРМ. Сроки и цену соблюли, старые детали отдали в коробке. Мастер подробно объяснил, что было с натяжителем.','#3E6B6B'],
-  ['Анна С.','Google Maps','4 месяца назад','Skoda Octavia','Удобно, что можно записаться через Telegram и получить там же фотоотчёт. Сделали всё за полдня, пока я работала в зоне ожидания.','#6B5E3E']
 ];
 
 const VIDS = [
@@ -1405,7 +1700,7 @@ const FAQ = [
   ['Может ли итоговая цена оказаться выше сметы?','Нет, без вашего согласия. Если во время ремонта найдём дополнительную неисправность, остановим работы, пришлём фото и новую стоимость, и только после подтверждения продолжим.'],
   ['Как долго действует гарантия?','На работы — до 12 месяцев в зависимости от вида ремонта, на запчасти — по гарантии производителя, но не меньше 6 месяцев. Срок указан в заказ-наряде.'],
   ['Можно ли оплатить картой или по безналу для юрлиц?','Принимаем наличные, карты, оплату по QR-коду через СБП. Для компаний работаем по договору с отсрочкой платежа и закрывающими документами.'],
-  ['Есть ли где подождать, пока делают машину?','Да, у нас есть зона отдыха с кофе, Wi‑Fi и рабочим столом. Через стекло видно, как мастера работают с вашим автомобилем.']
+  ['Есть ли где подождать, пока делают машину?','Да, у нас есть зона отдыха с кофе, Wi‑Fi и рабочим столом.']
 ];
 
 /* ---------- PHOTO SLOTS ---------- */
@@ -1441,7 +1736,7 @@ function goPrice(name){
 $('#svcGrid').innerHTML = POPULAR.map(s=>`<article class="svc">
   <div class="ph" data-photo="${s.k}"><div class="art scene" style="--h:${s.h}">${ico(s.i,'si')}</div></div>
   <div class="svc-body"><h3>${s.t}</h3><p>${s.d}</p>
-  <div class="svc-foot"><span class="price"><small>от</small>${rub(s.p)} ₽</span><button class="btn btn-line btn-sm" data-svc-open="${s.t}" data-price="${s.p}">Подробнее</button></div></div></article>`).join('');
+  <div class="svc-foot"><span class="price">${s.p == null ? '<span class="price-quote">'+s.quote+'</span>' : s.p === 0 ? 'Бесплатно' : (s.fixed ? '' : '<small>от</small>')+rub(s.p)+' ₽'}</span><button class="btn btn-line btn-sm" data-svc-open="${s.t}" data-price="${s.p ?? ''}">Подробнее</button></div></div></article>`).join('');
 
 function promoGeo(){
   let g=''; const r2=Math.SQRT2;
@@ -1454,11 +1749,41 @@ function promoGeo(){
   return `<svg class="promo-geo" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="geoGrad" gradientUnits="userSpaceOnUse" x1="40" y1="400" x2="400" y2="40"><stop offset="0" stop-color="#1B2026" stop-opacity="0"/><stop offset=".5" stop-color="#3D5A6C" stop-opacity=".4"/><stop offset="1" stop-color="#F5C400" stop-opacity=".6"/></linearGradient></defs><g fill="none" stroke="url(#geoGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${g}</g></svg>`;
 }
 $('#promoGrid').innerHTML = PROMOS.map((p,i)=>`<article class="promo ${p.cls}${p.photo?' has-ph':''}">${p.photo ? `<div class="promo-ph ph" data-photo="${p.photo}"><span class="promo-ph-hint">Фото акции</span></div>` : (p.cls==='dark' ? promoGeo() : p.g)}
-  ${p.fig?`<div class="promo-fig">${p.fig}</div>`:''}${p.cap?`<div class="promo-cap">${p.cap}</div>`:''}<h3>${p.t}</h3>
+  ${p.fig?`<div class="promo-fig">${p.fig}</div>`:''}${p.cap?`<div class="promo-cap">${p.cap}</div>`:''}<h3>${p.titleLines.map(line=>`<span>${line}</span>`).join('')}</h3>
   <div class="term">${ico('i-cal')}Действует ${p.term}</div>
   <button class="btn btn-sm" data-promo="${i}">Подробнее</button></article>`).join('');
 
-const CAT_PHOTOS = ['01-planovoe-to','02-kompyuternaya-diagnostika','03-remont-dvigatelya','04-remont-podveski','05-remont-akpp','06-dizelnaya-toplivnaya-apparatura','07-remont-vyhlopnoy-sistemy','08-remont-karbyuratorov','09-remont-elektriki','10-sistema-ohlazhdeniya','11-vyezdnaya-diagnostika','12-tehpomoshch-evakuator'].map(f=>`img/uslugi/${f}.png`);
+
+/* Promotion slider: buttons, keyboard and native touch scrolling. */
+(()=>{
+  const track = $('#promoGrid'), cards = [...track.children];
+  const prev = $('[data-promo-step="-1"]'), next = $('[data-promo-step="1"]');
+  const sync = ()=>{
+    const max = track.scrollWidth-track.clientWidth;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max-2;
+  };
+  const step = d=>track.scrollBy({left:d*(cards[0].getBoundingClientRect().width+18),behavior:reduce?'auto':'smooth'});
+  $$('[data-promo-step]').forEach(button=>button.addEventListener('click',()=>step(+button.dataset.promoStep)));
+  track.addEventListener('keydown',e=>{if(e.target!==track)return;if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();step(e.key==='ArrowRight'?1:-1);}});
+  track.addEventListener('scroll',sync,{passive:true});
+  new ResizeObserver(sync).observe(track);sync();
+})();
+
+const CAT_PHOTOS = [
+  "img/uslugi/oil-category-v2.webp",
+  "img/uslugi/02-kompyuternaya-diagnostika-converted.webp",
+  "img/uslugi/03-remont-dvigatelya-converted.webp",
+  "img/uslugi/04-remont-podveski-converted.webp",
+  "img/uslugi/clutch-category-v2.webp",
+  "img/uslugi/06-dizelnaya-toplivnaya-apparatura-converted.webp",
+  "img/uslugi/07-remont-vyhlopnoy-sistemy-converted.webp",
+  "img/uslugi/belt-category-v2.webp",
+  "img/uslugi/09-remont-elektriki-converted.webp",
+  "img/uslugi/10-sistema-ohlazhdeniya-converted.webp",
+  "img/uslugi/11-vyezdnaya-diagnostika-converted.webp",
+  "img/uslugi/12-tehpomoshch-evakuator-converted.webp"
+];
 $('#catGrid').innerHTML = CATS.map(([i,t,n],k)=>`<div class="cat"><div class="cat-ph"><span class="cat-fallback" aria-hidden="true">${ico(i)}</span><img src="${CAT_PHOTOS[k]}" alt="${t}" loading="lazy" decoding="async" onerror="this.remove()"></div><div class="cat-body"><h3>${t}</h3><div class="cnt">${n} ${n%10===1&&n%100!==11?'вид работ':(n%10>=2&&n%10<=4&&(n%100<12||n%100>14)?'вида работ':'видов работ')}</div><button class="more" data-svc-open="${t}">Подробнее${ico('i-arrow')}</button></div></div>`).join('');
 
 /* prices */
@@ -1469,7 +1794,7 @@ function renderPrices(){
   const rows = q ? Object.values(PRICES).flat().filter(r=>r[0].toLowerCase().includes(q)) : PRICES[curCat];
   $$('.ptab').forEach(t=>t.setAttribute('aria-selected', !q && t.dataset.cat===curCat));
   const pc=$('#pcat'); if(pc && pc.value!==curCat){ pc.value=curCat; pc.dispatchEvent(new Event('change')); }
-  $('#ptbody').innerHTML = rows.length ? rows.map(([n,t,p])=>`<tr><td class="pn">${n}</td><td class="pt">${t}</td><td class="pp">от ${rub(p)} ₽</td><td class="pa"><button class="btn btn-line btn-sm" data-svc-open="${n}" data-price="${p}">Записаться</button></td></tr>`).join('')
+  $('#ptbody').innerHTML = rows.length ? rows.map(([n,t,p])=>`<tr><td class="pn">${n}</td><td class="pt">${t}</td><td class="pp">${p === 0 ? 'Бесплатно' : 'от '+rub(p)+' ₽'}</td><td class="pa"><button class="btn btn-line btn-sm" data-svc-open="${n}" data-price="${p}">Записаться</button></td></tr>`).join('')
     : `<tr><td colspan="4" class="empty">По запросу «${q.replace(/[<>&]/g,'')}» ничего не нашлось. Позвоните нам — подскажем стоимость.</td></tr>`;
 }
 $('#pcat').innerHTML = cats.map(c=>`<option value="${c}">${c}</option>`).join('');
@@ -1488,10 +1813,6 @@ const certHTML = ([t,n,y]) => `<div class="cert-paper"><div class="ct">${t}</div
 $('#certGrid').innerHTML = CERTS.map((c,i)=>`<button class="cert" data-cert="${i}" aria-label="Открыть: ${c[1]}">${certHTML(c)}<div class="cert-cap">${c[1]}<small>Выдан в ${c[2]} году</small></div></button>`).join('');
 $$('[data-scroll]').forEach(b=>b.addEventListener('click',()=>{const s=$('#certGrid'); s.scrollBy({left:(s.clientWidth*0.75)*b.dataset.scroll,behavior:'smooth'});}));
 
-/* reviews */
-const stars = n => `<div class="stars">${Array.from({length:n},()=>'<svg><use href="#star"/></svg>').join('')}</div>`;
-$('#revGrid').innerHTML = REVIEWS.map(([n,src,when,car,txt,col])=>`<article class="rev"><div class="rev-top"><span class="ava" style="background:${col}">${n[0]}</span><div><b>${n}</b><small>${src}, ${when}</small></div></div>${stars(5)}<p>${txt}</p><div class="car">${ico('i-carside')}${car}</div></article>`).join('');
-
 /* videos */
 $('#vidGrid').innerHTML = VIDS.map(([k,t,a,d,h])=>`<button class="vid" data-video="${k}" aria-label="Смотреть видеоотзыв: ${t}"><div class="ph" data-photo="${k}"><div class="art scene" style="--h:${h}"><svg class="mini-car" viewBox="0 0 800 300" style="color:rgba(255,255,255,.08)"><use href="#car-flat"/></svg></div>
   <span class="vid-dur">${d}</span><span class="vid-play"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z"/></svg></span><span class="vid-meta"><b>${t}</b><small>${a}</small></span></div></button>`).join('');
@@ -1508,13 +1829,16 @@ applyPhotos();
 $$('.nav-item').forEach(it=>{
   const btn = it.querySelector('.nav-btn');
   let t;
-  const open = v => { $$('.nav-item').forEach(o=>{ if(o!==it){o.classList.remove('open');o.querySelector('.nav-btn').setAttribute('aria-expanded','false');} }); it.classList.toggle('open',v); btn.setAttribute('aria-expanded',v); };
+  const open = v => {
+    if(v) $$('.nav-item').forEach(o=>{ if(o!==it){o.classList.remove('open');o.querySelector('.nav-btn').setAttribute('aria-expanded','false');} });
+    it.classList.toggle('open',v); btn.setAttribute('aria-expanded',String(v));
+  };
   btn.addEventListener('click',()=>open(!it.classList.contains('open')));
   it.addEventListener('mouseenter',()=>{ if(matchMedia('(hover:hover)').matches){ clearTimeout(t); open(true);} });
-  it.addEventListener('mouseleave',()=>{ if(matchMedia('(hover:hover)').matches){ t=setTimeout(()=>open(false),140);} });
+  it.addEventListener('mouseleave',()=>{ if(matchMedia('(hover:hover)').matches){ clearTimeout(t); t=setTimeout(()=>{ if(!it.matches(':hover')) open(false); },140);} });
 });
 document.addEventListener('click',e=>{ if(!e.target.closest('.nav-item')) $$('.nav-item').forEach(o=>{o.classList.remove('open');o.querySelector('.nav-btn').setAttribute('aria-expanded','false');}); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ $$('.nav-item').forEach(o=>o.classList.remove('open')); closeDrawer(); } });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ $$('.nav-item').forEach(o=>{o.classList.remove('open');o.querySelector('.nav-btn').setAttribute('aria-expanded','false');}); closeDrawer(); } });
 
 /* drawer */
 const drawer = $('#drawer');
@@ -1547,32 +1871,12 @@ hero.addEventListener('touchend',e=>{ if(sx===null) return; const dx=e.changedTo
 document.addEventListener('visibilitychange',()=>{ if(document.hidden) clearTimeout(timer); else go(cur); });
 go(0);
 
-/* ---------- REVIEWS SLIDER ---------- */
-const rt = $('#revGrid'); let rtimer;
-function revStep(d){
-  const card = rt.firstElementChild; if(!card) return;
-  const step = card.getBoundingClientRect().width + 18, max = rt.scrollWidth - rt.clientWidth - 2;
-  let target = rt.scrollLeft + d*step;
-  if(d>0 && rt.scrollLeft >= max) target = 0; else if(d<0 && rt.scrollLeft <= 2) target = max;
-  rt.scrollTo({left:target, behavior:'smooth'});
-}
-function revAuto(){ clearInterval(rtimer); if(reduce || rt._hover || !rt._visible) return; rtimer = setInterval(()=>revStep(1), 5000); }
-function revBar(){ const w = rt.scrollWidth ? (rt.scrollLeft + rt.clientWidth) / rt.scrollWidth * 100 : 0; $('#revBar').style.width = Math.min(100,w) + '%'; }
-$$('[data-rev]').forEach(b=>b.addEventListener('click',()=>{ revStep(+b.dataset.rev); revAuto(); }));
-rt.addEventListener('scroll', revBar, {passive:true});
-rt.addEventListener('mouseenter',()=>{ rt._hover=true; clearInterval(rtimer); });
-rt.addEventListener('mouseleave',()=>{ rt._hover=false; revAuto(); });
-rt.addEventListener('touchstart',()=>{ clearInterval(rtimer); },{passive:true});
-rt.addEventListener('touchend',()=>{ setTimeout(revAuto, 3000); },{passive:true});
-new IntersectionObserver(([e])=>{ rt._visible = e.isIntersecting; revAuto(); }).observe(rt);
-window.addEventListener('resize', revBar); revBar();
-
 /* ---------- FLOATING BUTTONS ---------- */
 const toTop = $('#toTop');
 const onScroll = () => toTop.classList.toggle('show', scrollY > innerHeight * 0.8);
 addEventListener('scroll', onScroll, {passive:true}); onScroll();
 toTop.addEventListener('click',()=>scrollTo({top:0,behavior: reduce ? 'auto' : 'smooth'}));
-$('#fabCall').addEventListener('click',e=>{ if(matchMedia('(hover:hover) and (pointer:fine)').matches){ e.preventDefault(); openCallback({title:'Перезвоним вам', sub:'Оставьте номер, и мастер-приёмщик перезвонит в течение 15 минут. Или позвоните сами: +7 (495) 000-00-00.'}); } });
+$('#fabCall').addEventListener('click',e=>{ if(matchMedia('(hover:hover) and (pointer:fine)').matches){ e.preventDefault(); openCallback({title:'Перезвоним вам', sub:'Оставьте номер, и мастер-приёмщик перезвонит в течение 15 минут. Или позвоните сами: +7 (904) 567-88-71.'}); } });
 
 /* ---------- DIALOGS ---------- */
 const dlgCb = $('#dlgCallback'), cbForm = $('form', dlgCb);
@@ -1584,7 +1888,7 @@ function resetCb(){
 function openCallback({title, sub, service, price}={}){
   resetCb();
   $('#cbTitle').textContent = title || cbDefault.t;
-  $('#cbSub').textContent = sub || (service ? `${price ? 'Стоимость работ от '+rub(+price)+' ₽. ' : ''}Оставьте телефон — мастер уточнит детали и подберёт время.` : cbDefault.s);
+  $('#cbSub').textContent = sub || (service ? `${price === '0' ? 'Диагностика бесплатна при любых условиях. ' : price ? 'Стоимость работ от '+rub(+price)+' ₽. ' : ''}Оставьте телефон — мастер уточнит детали и подберёт время.` : cbDefault.s);
   $('#cbService').value = service || '';
   $('button[type=submit]', dlgCb).textContent = service ? 'Записаться' : 'Жду звонка';
   closeDrawer(); dlgCb.showModal();
@@ -1733,6 +2037,28 @@ $$('.f-col h4').forEach(h=>{
   }
   document.addEventListener('click',e=>all.forEach(c=>{ if(!c.field.contains(e.target)) c.close(); }));
   $$('.field.sel select').forEach(enhance);
+})();
+</script>
+
+<aside class="cookie-notice" id="cookieNotice" aria-label="Использование cookies" hidden>
+  <p>Мы используем cookies и <a href="https://metrica.yandex.ru/about" target="_blank" rel="noopener">Яндекс.Метрику</a>, чтобы улучшать работу сайта.</p>
+  <button class="btn btn-signal" type="button" id="cookieAccept">Ок</button>
+</aside>
+<script>
+(()=>{
+  const notice=document.getElementById('cookieNotice'),key='lfg-cookie-notice-v1';
+  let accepted=false;
+  try{accepted=localStorage.getItem(key)==='accepted';}catch{}
+  if(accepted)return;
+  const bar=document.querySelector('.mbar');
+  const sync=()=>{const height=bar&&getComputedStyle(bar).display!=='none'?bar.getBoundingClientRect().height:0;notice.style.setProperty('--cookie-mobile-bar',height+'px');};
+  sync();notice.hidden=false;
+  const observer=bar?new ResizeObserver(sync):null;
+  observer?.observe(bar);window.addEventListener('resize',sync);
+  document.getElementById('cookieAccept').addEventListener('click',()=>{
+    try{localStorage.setItem(key,'accepted');}catch{}
+    notice.hidden=true;observer?.disconnect();window.removeEventListener('resize',sync);
+  });
 })();
 </script>
 </body>
